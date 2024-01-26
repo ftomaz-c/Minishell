@@ -6,7 +6,7 @@
 /*   By: ftomazc <ftomazc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:37:33 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/26 13:00:54 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/01/26 13:19:28 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void    add_history_file(char *line)
 		return ;
 	}
 	add_history(line);
-	line_count = 0;
 	line_count = count_lines_in_file(".minishell_history");
 	if (line_count == -1)
 	{
