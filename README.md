@@ -8,6 +8,11 @@ Create your own shell
 	- [Bonus Features](#bonus-features)
 3. Usage
 4. [External Functions](#external-functions)
+	- [Standard I/O Functions](#standard-io-functions)
+	- [Memory Management Functions](#memory-management-functions)
+	- [File I/O Functions](#file-io-functions)
+	- [Process and Signal Handling Functions](#process-and-signal-handling-functions)
+	- [Other Functions](#other-functions)
 5. [Authors](#authors)
 6. [Resources](#resources)
 
@@ -100,7 +105,7 @@ These functions are related to process management and signal handling, including
 | kill | Sends a signal to a process or a group of processes | <signal.h> | int | pid_t pid, int sig | kill(pid, SIGTERM); |
 | exit | Terminates the calling process | <stdlib.h> | void | int status | exit(EXIT_SUCCESS); |
 
-### Miscellaneous Functions
+### Other Functions
 
 These functions serve various purposes, including working with directories, environment variables, and terminal settings.
 
