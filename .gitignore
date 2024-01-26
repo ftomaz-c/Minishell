@@ -1,0 +1,12 @@
+#Compiled source
+*.o
+*.a
+
+#Config files
+.env
+
+#history files
+.minishell_history
+
+#Exec file
+minishell
