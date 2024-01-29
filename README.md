@@ -1,7 +1,7 @@
 # Minishell
 <p align= "center"> 
 	Minishell
-	<a href= "https://github.com/CarolinaRVB/Minishell_42/wiki">
+	<a href= "https://github.com/ftomaz-c/Minishell/wiki">
 		wiki
 	</a>
 </p>
