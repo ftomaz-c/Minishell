@@ -1,0 +1,26 @@
+/**
+ * @brief Brief description of the function.
+ * 
+ * Detailed description of the function, including its purpose, behavior, and any important details.
+ * Mention any assumptions, limitations, or dependencies.
+ * 
+ * @param param1 Description of parameter 1.
+ * @param param2 Description of parameter 2.
+ * @param ... Additional parameters if any.
+ * 
+ * @return Description of the return value (if any). Include possible return values and conditions.
+ * 
+ * @note Any additional notes about the function, such as error handling, performance considerations, etc.
+ * 
+ * @warning Any warnings or caveats about using the function.
+ * 
+ * @see Any related functions, structures, or documentation.
+ * 
+ * @example Example usage of the function.
+ * 
+ * ```
+ * // Example code demonstrating how to use the function
+ * // Include any necessary setup or input/output
+ * // Provide comments to explain the example
+ * ```
+ */
