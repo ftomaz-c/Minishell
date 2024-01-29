@@ -1,5 +1,10 @@
 # Minishell
-Create your own shell
+<p align= "center"> 
+	Minishell
+	<a href= "https://github.com/CarolinaRVB/Minishell_42/wiki">
+		wiki
+	</a>
+</p>
 
 ## Overview
 
