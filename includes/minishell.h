@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc <ftomazc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:38:16 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/26 14:45:59 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/01/31 10:07:28 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+
+/*error.c*/
+void	error_check(int argc, char **argv);
 
 /*history.c*/
 void    add_history_file(char *line);
