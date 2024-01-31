@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:37:33 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/31 13:16:28 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:55:54 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		if (!config_tools(&tools, envp))
 		{
-			printf ("Error: Failed to allocate memory for tools->env\n");
+			printf ("Error: Failed to allocate memory for tools\n");
 			free_tools(&tools);
 			exit (EXIT_FAILURE);
 		}
