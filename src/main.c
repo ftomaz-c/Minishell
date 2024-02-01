@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:37:33 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/31 15:55:54 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/02/01 14:40:58 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int main(int argc, char **argv, char **envp)
 	char	*line;
 	t_tools	tools;
 
-	//error_check(argc, argv);
-	(void) argc;
-	(void) argv;
+	error_check(argc, argv);
 	while (1)
 	{
 		if (!config_tools(&tools, envp))
