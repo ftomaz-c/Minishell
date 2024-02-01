@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   history.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 14:43:46 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/29 16:05:33 by ftomazc          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 /**
@@ -27,7 +15,6 @@
  *       The memory for each line is allocated dynamically and freed after use.
  */
 
-// Function to count the number of lines in a file
 int count_lines_in_file(const char *filename)
 {
 	int		fd;
@@ -48,6 +35,54 @@ int count_lines_in_file(const char *filename)
 	free(line);
 	close (fd);
 	return(count);
+}
+
+/**
+ * @brief Writes a line to a history file, appending it with a line count.
+ * 
+ * This function writes a given line to a history file specified by the file descriptor.
+ * It appends the line with a line count, preceded by a period and space.
+ * If the history file cannot be opened, it prints an error message and closes the file descriptor.
+ * 
+ * @param line The line to write to the history file.
+ * @param fd The file descriptor of the history file.
+ * 
+ * @note This function assumes that the history file exists and is writable.
+ * @note The line count is incremented by one for each new line added to the history file.
+ * 
+ * @warning If the history file cannot be opened, this function will print an error message and return without writing anything.
+ * 
+ * @see count_lines_in_file & add_history_file
+ * 
+ * @example
+ * 
+ * ```
+ * // Example usage of the function
+ * int history_fd = open(".minishell_history", O_WRONLY | O_APPEND);
+ * if (history_fd == -1) {
+ *     // Handle error opening history file
+ * }
+ * write_in_history_file("command", history_fd);
+ * close(history_fd);
+ * ```
+ */ 
+
+void	write_in_history_file(char *line, int fd)
+{
+	int	line_count;
+
+	line_count = count_lines_in_file(".minishell_history");
+	if (line_count == -1)
+	{
+		perror("Error opening history file");
+		close(fd);
+		return ;
+	}
+	line_count++;
+	ft_putnbr_fd(line_count, fd);
+	ft_putstr_fd(". ", fd);
+	ft_putstr_fd(line, fd);
+	ft_putstr_fd("\n", fd);
 }
 
 /**
@@ -74,11 +109,9 @@ int count_lines_in_file(const char *filename)
  * @see count_lines_in_file
  */
 
-// Function to add a line to a history file
 void    add_history_file(char *line)
 {
 	int	fd;
-	int	line_count;
 	
 	if (line == NULL)
 	{
@@ -94,18 +127,7 @@ void    add_history_file(char *line)
 			return ;
 		}
 		add_history(line);
-		line_count = count_lines_in_file(".minishell_history");
-		if (line_count == -1)
-		{
-			perror("Error opening history file");
-			close(fd);
-			return ;
-		}
-		line_count++;
-		ft_putnbr_fd(line_count, fd);
-		ft_putstr_fd(". ", fd);
-		ft_putstr_fd(line, fd);
-		ft_putstr_fd("\n", fd);
+		write_in_history_file(line, fd);
 		close(fd);
 	}
 }

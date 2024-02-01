@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 10:38:16 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/02/01 16:50:28 by crebelo-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -31,9 +19,31 @@ typedef struct s_lexer
 	struct	s_lexer *pre;
 }	t_lexer;
 
+typedef struct	s_tools
+{
+	char	**env;
+	char	**path;
+	char	*pwd;
+	char	*oldpwd;
+}	t_tools;
+
+/*tools.c*/
+int		config_tools(t_tools *tools, char **envp);
+char	**get_env(char **envp);
+char	**get_path(char **env);
+char 	*get_var_from_env(char **envp, char *var);
+void	free_tools(t_tools *tools);
+
+/*error.c*/
+void	error_check(int argc, char **argv);
+
 /*history.c*/
 void    add_history_file(char *line);
 int 	count_lines_in_file(const char *filename);
+void	write_in_history_file(char *line, int fd);
+
+/*expander.c*/
+void	expander(char **list, char **env);
 
 /*lexer*/
 int	lex_line(char *line, t_lexer *lexer);
@@ -43,6 +53,6 @@ int		check_if_token(char c);
 int		count_words_quotes(char *s, char c);
 char	*word_alloc(char *s, int start, int end);
 char	**create_split(char *s, char **split, int nwords, char c);
-
 char	**ft_split_quotes(char *s, char c);
+
 #endif
