@@ -3,6 +3,7 @@
 int main(int argc, char **argv, char **envp)
 {
 	char	*line;
+	t_lexer	lexer;
 	t_tools	tools;
 
 	error_check(argc, argv);
@@ -16,6 +17,11 @@ int main(int argc, char **argv, char **envp)
 		}
 		line = readline("\033[1;32mminishell\033[0m \033[1;34m➜\033[0m  ");
 		add_history_file(line);
+		if (!lex_line(line, &lexer))
+		{
+			free(line);
+			return (1);	
+		}
 		free_tools(&tools);
 		free(line);
 	}
