@@ -22,6 +22,9 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
+/*error.c*/
+void	error_check(int argc, char **argv);
+
 /*history.c*/
 void    add_history_file(char *line);
 int 	count_lines_in_file(const char *filename);
