@@ -46,7 +46,7 @@ void	write_in_history_file(char *line, int fd);
 void	expander(char **list, char **env);
 
 /*lexer*/
-int	lex_line(char *line, t_lexer *lexer);
+int		lex_line(char *line, t_lexer *lexer, char **envp);
 int		check_if_token(char c);
 
 /*lexer utils*/

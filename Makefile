@@ -4,8 +4,8 @@ SRC :=	src/main.c \
 		src/tools.c \
 		src/error.c \
 		src/history.c \
-    src/expander.c \
-    src/lexer.c \
+    	src/expander.c \
+    	src/lexer.c \
 		src/lexer_utils.c\
 
 OBJ := $(SRC:.c=.o)

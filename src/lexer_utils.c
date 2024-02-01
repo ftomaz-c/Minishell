@@ -108,7 +108,8 @@ char	**create_split(char *s, char **split, int nwords, char c)
 	i = 0;
 	j = 0;
 	start = 0;
-	while (s[i] && j < nwords)
+	nstart = 0;
+	while (i < (int)ft_strlen(s) && j < nwords)
 	{
 		if (s[i] == '\"' || s[i] == '\'')
 			i = ft_pairedquote(s, i + 1, s[i]);

@@ -85,23 +85,26 @@ int	exit_simple_error(char *msg)
 // 	}
 // }
 
-int	lex_line(char *line, t_lexer *lexer)
+int	lex_line(char *line, t_lexer *lexer, char **envp)
 {
-	char	*line_trimmed;
+	// char	*line_trimmed;
 	char	**line_split_quotes;
 
 	init_lexer(lexer);
-	line_trimmed = ft_strtrim(line, " "); //remove initial and final spaces
+	// line_trimmed = ft_strtrim(line, " "); //remove initial and final spaces
 	// if (line_trimmed && !check_if_quotes_pair(line_trimmed)) // check if quotes are valid (in pairs)
 	// {
 	// 	free(line_trimmed);
 	// 	return (exit_simple_error("error"));	
 	// }
-	line_split_quotes = ft_split_quotes(line_trimmed, ' '); // splits quotes considering the quotes present
+	line_split_quotes = ft_split_quotes(line, ' '); // splits quotes considering the quotes present
 	// line_split_tokens = 
 	// add_line_to_lexer_struct(line_split, lexer); // next step -> separate words from the tokens found
 	
 	// 					Uncomment section bellow to see splitted line
+	// free(line_trimmed);
+	// free(line);
+	expander(line_split_quotes, envp);
 	int	i = 0;
 	while (line_split_quotes[i])
 	{
@@ -109,5 +112,6 @@ int	lex_line(char *line, t_lexer *lexer)
 		free(line_split_quotes[i]);
 		i++;
 	}
+	free(line_split_quotes);
 	return (1);
 }
