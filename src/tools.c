@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:30:46 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/31 15:40:11 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/02/01 14:40:19 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char *get_var_from_env(char **envp, char *var)
 			break ;
 		index++;
 	}
-	value = ft_substr(envp[index], ft_strlen(var), ft_strlen(envp[index]));
+	value = ft_substr(envp[index], ft_strlen(var) + 1, ft_strlen(envp[index]));
 	if (!value)
 		printf("Error: variable not found\n");
 	return (value);
@@ -189,7 +189,7 @@ char	**get_path(char **env)
 	char	*path_from_envp;
 	char	**path_list;
 	
-	path_from_envp = get_var_from_env(env, "PATH=");
+	path_from_envp = get_var_from_env(env, "PATH");
 	path_list = ft_split(path_from_envp, ":");
 	free(path_from_envp);
 	if (!path_list)
@@ -237,10 +237,10 @@ int	config_tools(t_tools *tools, char **envp)
 	tools->path = get_path(envp);
 	if (tools->path == NULL)
 		return (0);
-	tools->pwd = get_var_from_env(envp, "PWD=");
+	tools->pwd = get_var_from_env(envp, "PWD");
 	if (tools->pwd == NULL)
 		return (0);
-	tools->oldpwd = get_var_from_env(envp, "OLDPWD=");
+	tools->oldpwd = get_var_from_env(envp, "OLDPWD");
 	if (tools->oldpwd == NULL)
 		return (0);
 	return (1);
