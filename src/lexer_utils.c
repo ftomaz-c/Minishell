@@ -1,19 +1,19 @@
 #include "../includes/minishell.h"
 
-int	ft_lastchr(char *str, char ch)
+int	ft_pairedquote(char *str, int i, char ch)
 {
-	int	i;
-	int	c;
+	int pair;
 
-	i = 0;
-	c = 0;
-	while (str[i] != '\0')
+	pair = 0;
+	while(str[i] != '\0')
 	{
 		if (str[i] == ch)
-			c = i;
+			pair = 1;
+		if (str[i] == ' ' && pair == 1)
+			break ;
 		i++;
 	}
-	return (c);
+	return (i);
 }
 
 int	count_words_quotes(char *s, char c)
@@ -29,7 +29,7 @@ int	count_words_quotes(char *s, char c)
 		{
 			word++;
 			if (s[i] == '\"' || s[i] == '\'')
-				i = ft_lastchr(s, s[i]) + 1;
+				i = ft_pairedquote(s, i + 1, s[i]) + 1;
 		}
 		else if (s[i] && s[i] == c)
 			while (s[i] == c)
@@ -111,17 +111,17 @@ char	**create_split(char *s, char **split, int nwords, char c)
 	while (s[i] && j < nwords)
 	{
 		if (s[i] == '\"' || s[i] == '\'')
-			i = ft_lastchr(s, s[i]) + 1;
+			i = ft_pairedquote(s, i + 1, s[i]);
 		else if (s[i] && s[i] == c)
 			while (s[i] == c)
+			{
 				i++;
-		else
-		{
-			while (s[i] && s[i] != c && s[i] != '\"' && s[i] != '\'')
-				i++;
-			if (s[i] == '\"' || s[i] == '\'') // for the scenario where a word was glued to the first quote found
-				nstart = i;
-		}
+				start = i;
+			}
+		while (s[i] && s[i] != c && s[i] != '\"' && s[i] != '\'')
+			i++;
+		if (s[i] == '\"' || s[i] == '\'') // for the scenario where a word was glued to the first quote found
+			nstart = i;
 		split[j] = word_alloc(s, start, i);
 		i++;
 		if (nstart)

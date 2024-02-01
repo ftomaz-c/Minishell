@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:38:16 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/31 19:16:54 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:50:28 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ int		check_if_token(char c);
 int		count_words_quotes(char *s, char c);
 char	*word_alloc(char *s, int start, int end);
 char	**create_split(char *s, char **split, int nwords, char c);
+
 char	**ft_split_quotes(char *s, char c);
 #endif
