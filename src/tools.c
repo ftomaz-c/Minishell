@@ -89,9 +89,10 @@ char *get_var_from_env(char **envp, char *var)
 			break ;
 		index++;
 	}
-	value = ft_substr(envp[index], ft_strlen(var) + 1, ft_strlen(envp[index]));
-	if (!value)
-		printf("Error: variable not found\n");
+	if (envp[index])
+		value = ft_substr(envp[index], ft_strlen(var) + 1, ft_strlen(envp[index]));
+	else
+		value = NULL;
 	return (value);
 }
 

@@ -36,4 +36,7 @@ void    add_history_file(char *line);
 int 	count_lines_in_file(const char *filename);
 void	write_in_history_file(char *line, int fd);
 
+/*expander.c*/
+void	expander(char **list, char **env);
+
 #endif
