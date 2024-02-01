@@ -22,8 +22,26 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
+
+typedef struct	s_tools
+{
+	char	**env;
+	char	**path;
+	char	*pwd;
+	char	*oldpwd;
+}	t_tools;
+
+/*tools.c*/
+int		config_tools(t_tools *tools, char **envp);
+char	**get_env(char **envp);
+char	**get_path(char **env);
+char 	*get_var_from_env(char **envp, char *var);
+void	free_tools(t_tools *tools);
+
+
 /*error.c*/
 void	error_check(int argc, char **argv);
+
 
 /*history.c*/
 void    add_history_file(char *line);
