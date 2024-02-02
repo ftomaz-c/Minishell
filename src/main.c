@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:37:33 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/29 16:07:32 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/02/02 15:29:25 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int main(int argc, char **argv, char **envp)
 {
 	char	*line;
 
-	error_check(argc, argv);
+	(void)argc;
+	(void)argv;
+	update_history();
 	(void)envp;
 	while (1)
 	{

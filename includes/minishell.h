@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:38:16 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/31 10:10:27 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/02/02 15:28:55 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 
 /*history.c*/
+void	update_history(void);
 void    add_history_file(char *line);
 int 	count_lines_in_file(const char *filename);
 void	write_in_history_file(char *line, int fd);

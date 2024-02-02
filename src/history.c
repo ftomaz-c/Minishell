@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:43:46 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/01/31 09:49:21 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/02/02 16:01:54 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,4 +142,52 @@ void    add_history_file(char *line)
 		write_in_history_file(line, fd);
 		close(fd);
 	}
+}
+
+void	update_history(void)
+{
+	char	*line;
+	char	*new_line;
+	int		fd;
+	int		i;
+
+	fd = open(".minishell_history", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Error: opening history\n");
+		return ;
+	}
+	line = get_next_line(fd);
+	while(line)
+	{
+		//printf("Original line: %s\n", line);
+		
+		i = 0;
+		if (ft_isdigit(line[i]))
+		{
+			while(ft_isdigit(line[i]))
+				i++;
+			if (line[i] == '.')
+				i++;
+		}
+
+		//printf("Starting index for processing: %d\n", i);
+		
+		new_line = ft_substr(line, i, ft_strlen(line) - i - 1);
+		if (!new_line)
+		{
+			perror("Error: adding to history\n");
+			free(line);
+			close(fd);
+			return ;
+		}
+
+		//printf("Processed line: %s\n", new_line);
+		
+		add_history(new_line);
+		free(new_line);
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
 }
