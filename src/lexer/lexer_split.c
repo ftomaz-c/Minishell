@@ -1,66 +1,5 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	ft_pairedquote(char *str, int i, char ch)
-{
-	int pair;
-
-	pair = 0;
-	while(str[i] != '\0')
-	{
-		if (str[i] == ch)
-			pair = 1;
-		if (str[i] == ' ' && pair == 1)
-			break ;
-		i++;
-	}
-	return (i);
-}
-
-int	count_words_quotes(char *s, char c)
-{
-	size_t	i;
-	int	word;
-
-	i = 0;
-	word = 0;
-	while (s[i] != '\0')
-	{
-		if ((s[i] == 34 || s[i] == 39) && s[i])
-		{
-			word++;
-			if (s[i] == '\"' || s[i] == '\'')
-				i = ft_pairedquote(s, i + 1, s[i]) + 1;
-		}
-		else if (s[i] && s[i] == c)
-			while (s[i] == c)
-				i++;
-		else
-		{
-			word++;
-			while (s[i] && s[i] != c && s[i] != 34 && s[i] != 39)
-				i++;
-		}
-	}
-	return (word);
-}
-
-char	*word_alloc(char *s, int start, int end)
-{
-	char	*word;
-	int		i;
-
-	i = 0;
-	word = (char *)ft_calloc((end - start) + 1, 1);
-	if (word)
-	{
-		while (start < end)
-		{
-			word[i++] = s[start++];
-		}
-		return (word);
-	}
-	return (0);
-}
 /**
  * @brief Brief description of the function create_split.
  * 
@@ -111,39 +50,26 @@ char	**create_split(char *s, char **split, int nwords, char c)
 	nstart = 0;
 	while (i < (int)ft_strlen(s) && j < nwords)
 	{
-		if (s[i] == '\"' || s[i] == '\'')
-			i = ft_pairedquote(s, i + 1, s[i]);
-		else if (s[i] && s[i] == c)
-			while (s[i] == c)
-			{
-				i++;
-				start = i;
-			}
+		if (s[i] == '\"' || s[i] == '\'' || s[i] == ' ')
+			handle_white_spaces_and_quotes(s, &i, &start);
 		while (s[i] && s[i] != c && s[i] != '\"' && s[i] != '\'')
 			i++;
 		if (s[i] == '\"' || s[i] == '\'') // for the scenario where a word was glued to the first quote found
 			nstart = i;
 		split[j] = word_alloc(s, start, i);
 		i++;
-		if (nstart)
-		{
-			start = nstart;
-			i--;
-			nstart = 0;
-		}
-		else
-			start = i;
 		j++;
+		update_start_indexes(&i, &start, &nstart);
 	}
 	return (split);
 }
 
-char	**ft_split_quotes(char *s, char c)
+char	**lexer_split(char *s, char c)
 {
 	char	**split;
 	int		nwords;
 
-	nwords = count_words_quotes(s, c);
+	nwords = count_words_and_quotes(s, c);
 	split = (char **)ft_calloc((nwords + 1), (sizeof(char *)));
 	if (split)
 	{
