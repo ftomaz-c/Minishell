@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc <ftomazc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:18:19 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/01/20 15:54:43 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/02/02 15:40:27 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_putnbr_base_fd(unsigned long nbr, char *base, int fd);
 
 // /* bonus */
-// typedef struct	s_list
-// {
-// 	char			*content;
-// 	struct s_list	*next;
-// }				t_list;
+typedef struct	s_list
+{
+	char			*content;
+	struct s_list	*next;
+}				t_list;
 
 // t_list	*ft_lstnew(void *content);
 // void	ft_lstadd_front(t_list **lst, t_list *new);

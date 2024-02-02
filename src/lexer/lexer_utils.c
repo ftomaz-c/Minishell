@@ -10,7 +10,7 @@ int	check_if_token(char c)
 void	init_lexer(t_lexer *lexer)
 {
 	lexer->words = NULL;
-	lexer->token = NULL;
+	lexer->token = '\0';
 	lexer->i = 0;
 	lexer->next = NULL;
 	lexer->pre = NULL;

@@ -4,14 +4,15 @@
 typedef struct s_lexer
 {
 	char	*words;
-	char	*token;
+	char	token;
 	int		i;
 	struct	s_lexer *next;
 	struct	s_lexer *pre;
 }	t_lexer;
 
 /*lexer*/
-int		lex_line(char *line, t_lexer *lexer, char **envp);
+int		lex_line(char *line, t_lexer **lexer, char **envp);
+void	ft_lstadd_back(t_list **lst, t_list *new);
 
 /*lexer utils*/
 int		check_if_token(char c);
