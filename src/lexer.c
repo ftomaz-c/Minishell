@@ -18,92 +18,22 @@ void	init_lexer(t_lexer *lexer)
 
 }
 
-int	check_if_quotes_pair(char *line) // checks if the quotes are paired, based on the first quote type found
-{
-	int	i;
-	int	first;
-	int	single_quotes;
-	int	double_quotes;
-
-	i = 0;
-	first = 0;
-	single_quotes = 0;
-	double_quotes = 0;
-	while (line[i])
-	{
-		if (line[i] == 34)
-		{
-			if (single_quotes == 0)
-				first = 1;
-			double_quotes += 1;
-		}
-		else if (line[i] == 39)
-		{
-			if (double_quotes == 0)
-				first = 2;
-			single_quotes += 1;	
-		}
-		i++;
-	}
-	if (first == 1)
-	{
-		if (double_quotes && double_quotes % 2 != 0)
-			return (0);	
-	}
-	if (first == 2)
-	{
-		if (single_quotes && single_quotes % 2 != 0)
-			return (0);
-	}
-	return (1);
-}
-
 int	exit_simple_error(char *msg)
 {
 	printf("%s\n", msg);
 	return (0);
 }
-		// newnode = malloc(sizeof(t_lexer));
-		// if (!newnode)
-		// 	return ;
-
-// void	add_line_lexer_struct(char **line_split, t_lexer *lexer)
-// {
-// 	int	i;
-// 	int	j;
-// 	// t_lexer *newnode;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (line_split[i])
-// 	{
-// 		while (line_split[i][j])
-// 		{
-
-// 		}
-
-// 	}
-// }
 
 int	lex_line(char *line, t_lexer *lexer, char **envp)
 {
-	// char	*line_trimmed;
 	char	**line_split_quotes;
 
 	init_lexer(lexer);
-	// line_trimmed = ft_strtrim(line, " "); //remove initial and final spaces
-	// if (line_trimmed && !check_if_quotes_pair(line_trimmed)) // check if quotes are valid (in pairs)
-	// {
-	// 	free(line_trimmed);
-	// 	return (exit_simple_error("error"));	
-	// }
 	line_split_quotes = ft_split_quotes(line, ' '); // splits quotes considering the quotes present
 	// line_split_tokens = 
 	// add_line_to_lexer_struct(line_split, lexer); // next step -> separate words from the tokens found
 	
 	// 					Uncomment section bellow to see splitted line
-	// free(line_trimmed);
-	// free(line);
 	expander(line_split_quotes, envp);
 	int	i = 0;
 	while (line_split_quotes[i])
