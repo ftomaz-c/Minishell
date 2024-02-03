@@ -3,7 +3,7 @@
 int main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	t_lexer	lexer;
+	t_lexer	*lexer = NULL;
 	t_tools	tools;
 
 	error_check(argc, argv);

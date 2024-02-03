@@ -13,11 +13,15 @@ typedef struct s_lexer
 /*lexer*/
 int		lex_line(char *line, t_lexer **lexer, char **envp);
 void	ft_lstadd_back(t_list **lst, t_list *new);
+void	add_word_to_node(char *word, int start, int end, t_lexer **lexer);
+void	add_token_to_node(char token, t_lexer **lexer);
+void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer);
 
 /*lexer utils*/
 int		check_if_token(char c);
-void	init_lexer(t_lexer *lexer);
+void	init_lexer(t_lexer **lexer);
 int		exit_simple_error(char *msg);
+void	ft_lstaddback(t_lexer **lst, t_lexer *new);
 
 /*lexer_split.c*/
 char	**lexer_split(char *s, char c);

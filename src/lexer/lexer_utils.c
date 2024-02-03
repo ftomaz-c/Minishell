@@ -7,18 +7,37 @@ int	check_if_token(char c)
 	return (0);
 }
 
-void	init_lexer(t_lexer *lexer)
+void init_lexer(t_lexer **lexer)
 {
-	lexer->words = NULL;
-	lexer->token = '\0';
-	lexer->i = 0;
-	lexer->next = NULL;
-	lexer->pre = NULL;
-
+	*lexer = malloc(sizeof(t_lexer));
+	if (*lexer == NULL) {
+		// Handle allocation failure
+		return;
+	}
+	(*lexer)->words = NULL;
+	(*lexer)->token = '\0';
+	(*lexer)->next = NULL;
+	(*lexer)->pre = NULL;
 }
 
 int	exit_simple_error(char *msg)
 {
 	printf("%s\n", msg);
 	return (0);
+}
+void	ft_lstaddback(t_lexer **lst, t_lexer *new)
+{
+	t_lexer	*last;
+
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last = *lst;
+	while (last->next)
+		last = last->next;
+	last->next = new;
 }

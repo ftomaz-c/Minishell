@@ -1,38 +1,6 @@
 
 #include "../../includes/minishell.h"
 
-int	last_token(char *str)
-{
-	int	i;
-	int	c;
-
-	i = 0;
-	c = 0;
-	while (str[i] != '\0')
-	{
-		if (check_if_token(str[i]))
-			c = i;
-		i++;
-	}
-	return (c);
-}
-void	ft_lstaddback(t_lexer **lst, t_lexer *new)
-{
-	t_lexer	*last;
-
-	if (!lst || !new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	last = *lst;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-}
-
 void	add_word_to_node(char *word, int start, int end, t_lexer **lexer)
 {
 	t_lexer	*node;
@@ -41,13 +9,17 @@ void	add_word_to_node(char *word, int start, int end, t_lexer **lexer)
 	node = malloc(sizeof(t_lexer));
 	if (!node)
 		return ;
-	segment = ft_substr(word, start, end);
+	segment = ft_substr(word, start, end - start);
+	if (!segment)
+	{
+		free(node);
+		return;
+	}
 	node->words = segment;
 	node->token = '\0';
 	node->next = NULL;
 	node->pre = NULL;
 	ft_lstaddback(lexer, node);
-	free(segment);
 }
 
 void	add_token_to_node(char token, t_lexer **lexer)
@@ -60,82 +32,88 @@ void	add_token_to_node(char token, t_lexer **lexer)
 	node->words = NULL;
 	node->token = token;
 	node->next = NULL;
-	node->next = NULL;
+	node->pre = NULL;
 	ft_lstaddback(lexer, node);
 }
 
-void	split_word_to_nodes(char *word, int start, int position, t_lexer **lexer)
+void add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
 {
-	// int	i;
-	// char	token;
-
-	// i = 0;
-	// token = word[position];
-	add_word_to_node(word, start, position, lexer);
-	add_token_to_node(word[position], lexer);
-	// if (ft_strlen(word) > position)
-	// {
-	// 	position++;
-	// 	while (word[position])
-	// 	{	
-	// 		if (check_if_token(word[position]))
-	// 			split_word_to_nodes(word, position, lexer);
-
-
-	// 	}
-	// }
-}
-
-void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
-{
-	int	i;
-	int	j;
-	int	start;
-	int	last_token_position;
-
-	i = 0;
-	while (line_split[i])
+	int i = 0;
+	while (line_split[i] != NULL)
 	{
-		j = 0;
-		start = 0;
-		last_token_position = last_token(line_split[i]);
-		printf("here\n");
-		while (line_split[i][j])
+		int j = 0;
+		int start = 0;
+		while (line_split[i][j] != '\0')
 		{
 			if (check_if_token(line_split[i][j]))
-			{	
-				split_word_to_nodes(line_split[i], start, j, lexer);
-				start = j++;
+			{
+				if (start < j)
+					add_word_to_node(line_split[i], start, j, lexer);
+				add_token_to_node(line_split[i][j], lexer);
+				start = j + 1;
 			}
-			else
-				j++;
+			j++;
 		}
-		if (j > last_token_position)
-			add_word_to_node(line_split[i], last_token_position + 1, j, lexer);
+		if (start < j)
+			add_word_to_node(line_split[i], start, j, lexer);
 		i++;
 	}
 }
+
+//                   AUXILIARY FUNCTIONS TO PRINT THE LIST AND COUNT NUMBER OF NODES
+
+// void print_lexer(t_lexer **lexer)
+// {
+// 	t_lexer *current = *lexer;
+// 	while (current != NULL)
+// 	{
+// 		if (current->words != NULL)
+// 			printf("Word: %s\n", current->words);
+// 		else //if (current->token != '\0') // if i change to else if, the first Token node doesn't show
+// 			printf("Token: %c\n", current->token);
+// 		current = current->next;
+// 	}
+// }
+
+// int count_nodes(t_lexer *lexer)
+// {
+// 	int count = 0;
+// 	t_lexer *current = lexer;
+
+// 	while (current != NULL)
+// 	{
+// 		count++;
+// 		current = current->next;
+// 	}
+// 	return (count);
+// }
+
+// ------------------------------------------------------------------------------------------------------------------
 
 int	lex_line(char *line, t_lexer **lexer, char **envp)
 {
 	char	**line_split_quotes;
 
-	init_lexer(*lexer);
-	line_split_quotes = lexer_split(line, ' '); // splits quotes considering the quotes present
-	// line_split_tokens = 
-	// add_line_to_lexer_struct(line_split, lexer); // next step -> separate words from the tokens found
-	
-	// 					Uncomment section bellow to see splitted line
+	init_lexer(lexer);
+	line_split_quotes = lexer_split(line, ' ');
 	expander(line_split_quotes, envp);
-	printf("here\n");
 	add_line_to_lexer_struct(line_split_quotes, lexer);
+
+	// ----------------     Uncomment section bellow to see splitted line   ------------------------------------------
 	int	i = 0;
-	while (line_split_quotes[i])
+	while (line_split_quotes[i])  // To see the splitted and expanded array
 	{
 		printf("word: %s\n", line_split_quotes[i]);
 		free(line_split_quotes[i]);
 		i++;
 	}
+
+	printf("\n"); // To separate the splited array from the final structure
+
+	int num_nodes = count_nodes(*lexer);
+	printf("Number of nodes: %d\n", num_nodes);  // To see how many nodes were created. NOTE: It has 1 extra
+	print_lexer(lexer); // To see what's in each node in the list
+
 	free(line_split_quotes);
 	return (1);
 }
