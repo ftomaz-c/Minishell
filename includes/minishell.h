@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 10:38:16 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/02/04 16:16:43 by ftomazc          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -22,6 +10,27 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
+
+typedef struct	s_tools
+{
+	char	**env;
+	char	**path;
+	char	*pwd;
+	char	*oldpwd;
+}	t_tools;
+
+/*tools.c*/
+int		config_tools(t_tools *tools, char **envp);
+char	**get_env(char **envp);
+char	**get_path(char **env);
+char 	*get_var_from_env(char **envp, char *var);
+void	free_tools(t_tools *tools);
+
+
+/*error.c*/
+void	error_check(int argc, char **argv);
+
+
 /*history.c*/
 void	write_in_history_file(char *line, int fd);
 void    add_history_file(char *line);
@@ -32,5 +41,8 @@ char	*add_section_to_history(char *line, char *new_line);
 /*history_utils.c*/
 int 	count_lines_in_file(const char *filename);
 int		history_section(char *line);
+
+/*expander.c*/
+void	expander(char **list, char **env);
 
 #endif
