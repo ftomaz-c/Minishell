@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:43:46 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/02/04 16:09:41 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/02/04 16:17:18 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,10 +214,10 @@ void	update_history(void)
 	new_line = NULL;
 	while(line)
 	{
-		new_line = process_section(line, new_line);
+		new_line = append_section_to_history(line, new_line);
 		free(line);
 		line = get_next_line(fd);
-		new_line = add_section(line, new_line);
+		new_line = add_section_to_history(line, new_line);
 	}
 	free(line);
 	close(fd);

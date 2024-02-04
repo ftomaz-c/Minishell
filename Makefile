@@ -2,6 +2,7 @@ NAME := minishell
 
 SRC :=	src/main.c \
 		src/history.c \
+		src/history_utils.c \
 
 OBJ := $(SRC:.c=.o)
 
