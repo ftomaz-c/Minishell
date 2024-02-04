@@ -7,7 +7,7 @@ void	expander(char **list, char **env)
 	char	*value;
 
 	index = 0;
-	while(list[index])
+	while (list[index])
 	{
 		if (list[index][0] == '$')
 		{

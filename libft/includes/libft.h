@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:18:19 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/02/02 15:40:27 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/02/04 14:16:39 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_isspace(int c);
-
 
 /* string.h */
 size_t	ft_strlen(const char *s);
@@ -66,7 +65,7 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_putnbr_base_fd(unsigned long nbr, char *base, int fd);
 
 // /* bonus */
-typedef struct	s_list
+typedef struct s_list
 {
 	char			*content;
 	struct s_list	*next;
@@ -83,6 +82,6 @@ typedef struct	s_list
 // t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 size_t	count_words(char *str, char *charset);
-int	    extension_check(char *file_name, char *extension);
+int		extension_check(char *file_name, char *extension);
 
 #endif

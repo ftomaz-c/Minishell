@@ -1,39 +1,43 @@
 #include "../../includes/minishell.h"
 
 /**
- * @brief Brief description of the function create_split.
+ * @brief Splits a string into an array of substrings
+ * based on a delimiter character.
  * 
- * Detailed description of the function, including its purpose, behavior, and any important details.
- * Mention any assumptions, limitations, or dependencies.
+ * This function splits the string 's' into 'nwords' substrings,
+ * using the delimiter 'c'.
+ * It allocates memory for 'split' and assigns each substring to the
+ * corresponding index in the array.
+ * It also handles quotes within the string.
  * 
- * @param param1 s is the line to be split.
- * @param param2 split is where the splitted line will be stored.
- * @param param3 the total number of words to be splitted (obtained in count words).
- * @param param4 is the main delimiter, in this case " ".
+ * @param s The string to split.
+ * @param split An array of strings to store the substrings.
+ * @param nwords The maximum number of words to split the string into.
+ * @param c The delimiter character (space).
  * 
- * @return Return value is the splitted array.
+ * @return An array of substrings split from the original string.
+ *         The 'split' array contains pointers to dynamically allocated memory.
  * 
- * @note Any additional notes about the function, such as error handling, performance considerations, etc.
- *  This function splits a sentence by words, considering the space as a delimiter, however if the function encounters quotes,
- *  it will consider all the words between the quotes as one single word, and will store them as such
- * @warning Any warnings or caveats about using the function.
- * 			function create_split is too big!!
- * @see Any related functions, structures, or documentation.
+ * @note This function assumes that the 'split' array is pre-allocated
+ * with enough space to store 'nwords' strings.
+ *       The function modifies the contents of 'split' to contain the substrings.
  * 
- * @example Example usage of the function.
+ * @warning The function assumes that 's' is a null-terminated string.
+ *          It does not check for buffer overflows in 'split' or 's'.
+ *          Make sure 'split' has enough space to accommodate the substrings.
  * 
+ * @see word_alloc(), update_start_indexes(), handle_white_spaces_and_quotes()
+ * 
+ * @example
  * ```
- * // Example code demonstrating how to use the function
- * // Include any necessary setup or input/output
- * // Provide comments to explain the example
- * 
- * minishell ➜  dsj jh sdgh"dihi vj" dkhdsj jh sdgh"dihi vj" dkh oj " rci" erihf e
- *	word: dsj
- *	word: jh
- *	word: sdgh
- *	word: "dihi vj" dkh oj " rci"
- *	word: erihf
- *	word: e
+ * char *s = "Hello, world!";
+ * char *split;
+ * int nwords = 2;
+ * char delimiter = ' ';
+ * create_split(s, split, nwords, delimiter);
+ * // split[0] contains "Hello,"
+ * // split[1] contains "world!"
+ * // split[2] contains NULL (if there are no more words)
  * ```
  */
 
@@ -54,7 +58,7 @@ char	**create_split(char *s, char **split, int nwords, char c)
 			handle_white_spaces_and_quotes(s, &i, &start);
 		while (s[i] && s[i] != c && s[i] != '\"' && s[i] != '\'')
 			i++;
-		if (s[i] == '\"' || s[i] == '\'') // for the scenario where a word was glued to the first quote found
+		if (s[i] == '\"' || s[i] == '\'')
 			nstart = i;
 		split[j] = word_alloc(s, start, i);
 		i++;
@@ -63,6 +67,47 @@ char	**create_split(char *s, char **split, int nwords, char c)
 	}
 	return (split);
 }
+/**
+ * @brief Splits a string into an array of substrings for
+ * lexical analysis.
+ * 
+ * This function splits the string 's' into substrings for lexical
+ * analysis based on the delimiter 'c'.
+ * It first counts the number of words and quotes in 's' to determine the
+ * size of the split array.
+ * Then, it allocates memory for the split array and calls 'create_split()'
+ * to populate it with substrings.
+ * 
+ * @param s The string to split.
+ * @param c The delimiter character.
+ * 
+ * @return An array of substrings split from the original string
+ * for lexical analysis.
+ *         The 'split' array contains pointers to dynamically allocated memory.
+ *         Returns NULL if memory allocation fails.
+ * 
+ * @note This function assumes that 's' is a null-terminated string.
+ *       It allocates memory for the 'split' array based on the number
+ * of words and quotes in 's'.
+ * 
+ * @warning The function does not perform input validation on 's'.
+ *          It may result in unexpected behavior if 's' is not a valid string
+ * or if memory allocation fails.
+ * 
+ * @see create_split(), count_words_and_quotes()
+ * 
+ * @example
+ * ```
+ * char *s = "This is a sample string";
+ * char **result = lexer_split(s, ' ');
+ * // result[0] contains "This"
+ * // result[1] contains "is"
+ * // result[2] contains "a"
+ * // result[3] contains "sample"
+ * // result[4] contains "string"
+ * // result[5] contains NULL (if there are no more words)
+ * ```
+ */
 
 char	**lexer_split(char *s, char c)
 {

@@ -3,11 +3,11 @@
 
 typedef struct s_lexer
 {
-	char	*words;
-	char	token;
-	int		i;
-	struct	s_lexer *next;
-	struct	s_lexer *pre;
+	char			*words;
+	char			token;
+	int				index;
+	struct s_lexer	*next;
+	struct s_lexer	*pre;
 }	t_lexer;
 
 /*lexer*/
@@ -20,8 +20,9 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer);
 /*lexer utils*/
 int		check_if_token(char c);
 void	init_lexer(t_lexer **lexer);
-int		exit_simple_error(char *msg);
 void	ft_lstaddback(t_lexer **lst, t_lexer *new);
+void	free_list(char	**list);
+void	free_lexer(t_lexer **lexer);
 
 /*lexer_split.c*/
 char	**lexer_split(char *s, char c);

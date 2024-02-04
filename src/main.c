@@ -1,9 +1,9 @@
 #include "../includes/minishell.h"
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	t_lexer	*lexer = NULL;
+	t_lexer	*lexer;
 	t_tools	tools;
 
 	error_check(argc, argv);
@@ -20,9 +20,10 @@ int main(int argc, char **argv, char **envp)
 		if (!lex_line(line, &lexer, tools.env))
 		{
 			free(line);
-			return (1);	
+			return (1);
 		}
 		free_tools(&tools);
+		free_lexer(&lexer);
 		free(line);
 	}
 	return (0);
