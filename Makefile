@@ -4,6 +4,7 @@ SRC :=	src/main.c \
 		src/tools.c \
 		src/error.c \
 		src/history.c \
+		src/history_utils.c \
 		src/expander.c \
 
 OBJ := $(SRC:.c=.o)

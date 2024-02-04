@@ -5,6 +5,10 @@ int main(int argc, char **argv, char **envp)
 	char	*line;
 	t_tools	tools;
 
+	(void)argc;
+	(void)argv;
+	update_history();
+	(void)envp;
 	error_check(argc, argv);
 	while (1)
 	{
