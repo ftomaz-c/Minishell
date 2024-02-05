@@ -19,7 +19,6 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer);
 
 /*lexer utils*/
 int		check_if_token(char c);
-void	init_lexer(t_lexer **lexer);
 void	ft_lstaddback(t_lexer **lst, t_lexer *new);
 void	free_list(char	**list);
 void	free_lexer(t_lexer **lexer);

@@ -22,40 +22,7 @@ int	check_if_token(char c)
 		return (1);
 	return (0);
 }
-/**
- * @brief Initializes the lexer structure.
- * 
- * This function allocates memory for a new lexer structure,
- * initializes its fields, and sets the pointer 'lexer' to point to it.
- * 
- * @param lexer Pointer to the pointer to the head of the lexer list.
- * 
- * @note This function assumes that 'lexer' is a valid pointer
- * to a pointer to a lexer structure.
- * 
- * @warning The function does not perform input validation on 'lexer'.
- *          It may result in unexpected behavior if 'lexer' is NULL.
- *          It also does not handle memory allocation failures.
- * 
- * @example
- * ```
- * t_lexer *lexer = NULL;
- * init_lexer(&lexer);
- * // 'lexer' will now point to a new lexer structure with initialized fields
- * ```
- */
 
-void	init_lexer(t_lexer **lexer)
-{
-	*lexer = malloc(sizeof(t_lexer));
-	if (*lexer == NULL)
-		return ;
-	(*lexer)->words = NULL;
-	(*lexer)->token = '\0';
-	(*lexer)->index = 0;
-	(*lexer)->next = NULL;
-	(*lexer)->pre = NULL;
-}
 /**
  * @brief Adds a new node to the end of a lexer list.
  * 
@@ -85,7 +52,7 @@ void	ft_lstaddback(t_lexer **lst, t_lexer *new)
 {
 	t_lexer	*last;
 
-	if (!lst || !new)
+	if (!new)
 		return ;
 	if (*lst == NULL)
 	{
