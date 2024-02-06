@@ -18,7 +18,7 @@
 
 int	check_if_token(char c)
 {
-	if (c == '>' || c == '<' || c == '|' || c == '&')
+	if (c == '>' || c == '<' || c == '|' || c == '&' || c == '\n')
 		return (1);
 	return (0);
 }
