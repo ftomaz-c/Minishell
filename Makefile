@@ -4,6 +4,7 @@ SRC :=	src/main.c \
 		src/tools.c \
 		src/error.c \
 		src/history.c \
+		src/history_utils.c \
     	src/lexer/expander.c \
     	src/lexer/lexer.c \
 		src/lexer/lexer_utils.c \

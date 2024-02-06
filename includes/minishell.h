@@ -30,8 +30,17 @@ void	free_tools(t_tools *tools);
 void	error_check(int argc, char **argv);
 
 /*history.c*/
-void	add_history_file(char *line);
-int		count_lines_in_file(const char *filename);
 void	write_in_history_file(char *line, int fd);
+void    add_history_file(char *line);
+void	update_history(void);
+char	*append_section_to_history(char *line, char *new_line);
+char	*add_section_to_history(char *line, char *new_line);
+
+/*history_utils.c*/
+int 	count_lines_in_file(const char *filename);
+int		history_section(char *line);
+
+/*expander.c*/
+void	expander(char **list, char **env);
 
 #endif
