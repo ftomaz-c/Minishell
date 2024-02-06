@@ -40,7 +40,4 @@ char	*add_section_to_history(char *line, char *new_line);
 int 	count_lines_in_file(const char *filename);
 int		history_section(char *line);
 
-/*expander.c*/
-void	expander(char **list, char **env);
-
 #endif
