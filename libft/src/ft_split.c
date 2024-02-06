@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:03:23 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2023/09/28 14:14:56 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/02/04 14:22:11 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 size_t	count_words(char *str, char *charset)
 {
 	size_t	count;
-	int	in_word;
+	int		in_word;
 
 	count = 0;
 	in_word = 0;
@@ -66,7 +66,7 @@ int	word_lenght(int i, char *str, char *charset)
 	return (word_len);
 }
 
-char **ft_split(char *str, char *charset)
+char	**ft_split(char *str, char *charset)
 {
 	int		i;
 	int		j;
@@ -75,7 +75,7 @@ char **ft_split(char *str, char *charset)
 
 	split = malloc(sizeof(char *) * (count_words(str, charset) + 1));
 	if (!split)
-		return NULL;
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (str[i])

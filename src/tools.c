@@ -3,8 +3,10 @@
 /**
  * @brief Frees the memory allocated for the tools structure.
  * 
- * This function frees the memory allocated for the tools structure, including its
- * environment variables, path list, current working directory, and previous working directory.
+ * This function frees the memory allocated for the tools
+ * structure, including its
+ * environment variables, path list, current working directory,
+ * and previous working directory.
  * 
  * @param tools A pointer to the tools structure.
  * 
@@ -14,7 +16,8 @@
  * 
  * @see config_tools
  * 
- * @warning Make sure to call this function to avoid memory leaks after using the tools structure.
+ * @warning Make sure to call this function to avoid memory leaks
+ * after using the tools structure.
  * 
  */
 
@@ -50,13 +53,15 @@ void	free_tools(t_tools *tools)
 /**
  * @brief Retrieves the value of a variable from the environment.
  * 
- * This function searches the environment variables for a specific variable
+ * This function searches the environment variables
+ * for a specific variable
  * and returns its value.
  * 
  * @param envp The array of environment variables.
  * @param var The name of the variable to retrieve.
  * 
- * @return A pointer to the value of the variable if found, or NULL if not found or on error.
+ * @return A pointer to the value of the variable if found,
+ * or NULL if not found or on error.
  * 
  * @note Assumes envp is a valid array of environment variables.
  * 
@@ -75,7 +80,7 @@ void	free_tools(t_tools *tools)
  * ```
  */
 
-char *get_var_from_env(char **envp, char *var)
+char	*get_var_from_env(char **envp, char *var)
 {
 	int		index;
 	char	*value;
@@ -90,7 +95,8 @@ char *get_var_from_env(char **envp, char *var)
 		index++;
 	}
 	if (envp[index])
-		value = ft_substr(envp[index], ft_strlen(var) + 1, ft_strlen(envp[index]));
+		value = ft_substr(envp[index], ft_strlen(var) + 1,
+				ft_strlen(envp[index]));
 	else
 		value = NULL;
 	return (value);
@@ -99,18 +105,22 @@ char *get_var_from_env(char **envp, char *var)
 /**
  * @brief Copies the environment variables into a new array.
  * 
- * This function creates a copy of the environment variables and stores them
+ * This function creates a copy of the environment variables
+ * and stores them
  * in a new dynamically allocated array.
  * 
  * @param envp The array of environment variables.
  * 
- * @return A pointer to the new array of environment variables, or NULL on error.
+ * @return A pointer to the new array of environment variables,
+ * or NULL on error.
  * 
- * @note Memory allocated for the returned array and its elements must be freed by the caller.
+ * @note Memory allocated for the returned array and its elements
+ * must be freed by the caller.
  * 
  * @see config_tools
  * 
- * @warning The caller is responsible for freeing the memory allocated for the returned array and its elements.
+ * @warning The caller is responsible for freeing the memory allocated
+ * for the returned array and its elements.
  * 
  * @example
  * 
@@ -147,20 +157,24 @@ char	**get_env(char **envp)
 }
 
 /**
- * @brief Retrieves the value of the PATH variable from the environment and splits it into individual paths.
+ * @brief Retrieves the value of the PATH variable from the
+ * environment and splits it into individual paths.
  * 
  * This function retrieves the value of the PATH variable from the environment,
- * splits it into individual paths separated by colons, and stores them in an array.
+ * splits it into individual paths separated by colons, and
+ * stores them in an array.
  * 
  * @param env The array of environment variables.
  * 
  * @return A pointer to the array of path strings, or NULL on error.
  * 
- * @note Memory allocated for the returned array and its elements must be freed by the caller.
+ * @note Memory allocated for the returned array and its elements
+ * must be freed by the caller.
  * 
  * @see config_tools
  * 
- * @warning The caller is responsible for freeing the memory allocated for the returned array and its elements.
+ * @warning The caller is responsible for freeing the memory allocated
+ * for the returned array and its elements.
  * 
  * @example
  * 
@@ -177,7 +191,7 @@ char	**get_path(char **env)
 {
 	char	*path_from_envp;
 	char	**path_list;
-	
+
 	path_from_envp = get_var_from_env(env, "PATH");
 	path_list = ft_split(path_from_envp, ":");
 	free(path_from_envp);
@@ -190,7 +204,8 @@ char	**get_path(char **env)
  * @brief Configures the tools structure with environment information.
  * 
  * This function configures the tools structure with environment information,
- * including environment variables, the PATH variable, current working directory,
+ * including environment variables, the PATH variable,
+ * current working directory,
  * and previous working directory.
  * 
  * @param tools A pointer to the tools structure to be configured.
@@ -198,7 +213,8 @@ char	**get_path(char **env)
  * 
  * @return 1 on success, 0 on failure.
  * 
- * @note The tools structure must be properly initialized before calling this function.
+ * @note The tools structure must be properly initialized before calling
+ * this function.
  * 
  * @see free_tools
  * 

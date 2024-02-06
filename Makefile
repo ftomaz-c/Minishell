@@ -5,7 +5,11 @@ SRC :=	src/main.c \
 		src/error.c \
 		src/history.c \
 		src/history_utils.c \
-		src/expander.c \
+    	src/lexer/expander.c \
+    	src/lexer/lexer.c \
+		src/lexer/lexer_utils.c \
+		src/lexer/lexer_split.c \
+		src/lexer/lexer_split_utils.c 
 
 OBJ := $(SRC:.c=.o)
 

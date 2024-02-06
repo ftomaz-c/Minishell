@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Expands variables in a list based on environment variables.
@@ -40,19 +40,19 @@ void	expander(char **list, char **env)
 	char	*value;
 
 	index = 0;
-	while(list[index])
+	while (list[index])
 	{
 		if (list[index][0] == '$')
 		{
 			var = ft_substr(list[index], 1, strlen(list[index]) - 1);
 			value = get_var_from_env(env, var);
+			free(var);
+			free(list[index]);
 			if (value == NULL)
 				list[index] = ft_strdup("");
 			else
 				list[index] = ft_strdup(value);
-			free(list[index]);
 			free(value);
-			free(var);
 		}
 		index++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc <ftomazc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:18:19 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/01/20 15:54:43 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/02/04 14:16:39 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_isspace(int c);
-
 
 /* string.h */
 size_t	ft_strlen(const char *s);
@@ -66,11 +65,11 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_putnbr_base_fd(unsigned long nbr, char *base, int fd);
 
 // /* bonus */
-// typedef struct	s_list
-// {
-// 	char			*content;
-// 	struct s_list	*next;
-// }				t_list;
+typedef struct s_list
+{
+	char			*content;
+	struct s_list	*next;
+}				t_list;
 
 // t_list	*ft_lstnew(void *content);
 // void	ft_lstadd_front(t_list **lst, t_list *new);
@@ -83,6 +82,6 @@ void	ft_putnbr_base_fd(unsigned long nbr, char *base, int fd);
 // t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 size_t	count_words(char *str, char *charset);
-int	    extension_check(char *file_name, char *extension);
+int		extension_check(char *file_name, char *extension);
 
 #endif
