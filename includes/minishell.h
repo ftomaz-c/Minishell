@@ -22,8 +22,8 @@ typedef struct s_tools
 /*tools.c*/
 int		config_tools(t_tools *tools, char **envp);
 char	**get_env(char **envp);
-char	**get_path(char **env);
-char	*get_var_from_env(char **envp, char *var);
+char	**get_path(void);
+char	*get_var_from_env(char *var);
 void	free_tools(t_tools *tools);
 
 /*error.c*/

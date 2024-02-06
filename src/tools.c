@@ -54,49 +54,44 @@ void	free_tools(t_tools *tools)
  * @brief Retrieves the value of a variable from the environment.
  * 
  * This function searches the environment variables
- * for a specific variable
- * and returns its value.
+ * for a specific variable and returns its value.
  * 
- * @param envp The array of environment variables.
- * @param var The name of the variable to retrieve.
+ * @param var The name of the variable to retrieve, in the form "NAME=". 
  * 
  * @return A pointer to the value of the variable if found,
  * or NULL if not found or on error.
  * 
- * @note Assumes envp is a valid array of environment variables.
+ * @note This function relies on the system's getenv function to retrieve
+ * the value of the variable. It assumes that var is provided in the format
+ * "NAME=", where NAME is the name of the environment variable.
  * 
- * @see get_env
- * 
- * @warning Make sure to free the memory allocated for the returned string.
+ * @warning The returned string is allocated in memory managed by the system.
+ * The caller should ensure to free the memory allocated for the returned string
+ * using the appropriate deallocation function, such as free(), to prevent memory leaks.
  * 
  * @example
  * 
  * ```
- * char *value = get_var_from_env(envp, "PATH=");
+ * char *value = get_var_from_env("PATH=");
  * if (value != NULL) {
  *     printf("PATH: %s\n", value);
- *     free(value);
+ *     free(value); // Ensure to free the memory allocated for the returned string.
  * }
  * ```
+ * 
+ * @see getenv
  */
 
-char	*get_var_from_env(char **envp, char *var)
+char	*get_var_from_env(char *var)
 {
-	int		index;
 	char	*value;
+	char	*env;
 
-	index = 0;
-	if (!envp || !var)
+	if (!var)
 		return (NULL);
-	while (envp[index])
-	{
-		if (!ft_strncmp(envp[index], var, ft_strlen(var)))
-			break ;
-		index++;
-	}
-	if (envp[index])
-		value = ft_substr(envp[index], ft_strlen(var) + 1,
-				ft_strlen(envp[index]));
+	env = getenv(var);
+	if (env)
+		value = ft_substr(env, 0, ft_strlen(env));
 	else
 		value = NULL;
 	return (value);
@@ -187,12 +182,12 @@ char	**get_env(char **envp)
  * ```
  */
 
-char	**get_path(char **env)
+char	**get_path(void)
 {
 	char	*path_from_envp;
 	char	**path_list;
 
-	path_from_envp = get_var_from_env(env, "PATH");
+	path_from_envp = get_var_from_env("PATH");
 	path_list = ft_split(path_from_envp, ":");
 	free(path_from_envp);
 	if (!path_list)
@@ -239,13 +234,13 @@ int	config_tools(t_tools *tools, char **envp)
 	tools->env = get_env(envp);
 	if (tools->env == NULL)
 		return (0);
-	tools->path = get_path(envp);
+	tools->path = get_path();
 	if (tools->path == NULL)
 		return (0);
-	tools->pwd = get_var_from_env(envp, "PWD");
+	tools->pwd = get_var_from_env("PWD");
 	if (tools->pwd == NULL)
 		return (0);
-	tools->oldpwd = get_var_from_env(envp, "OLDPWD");
+	tools->oldpwd = get_var_from_env("OLDPWD");
 	if (tools->oldpwd == NULL)
 		return (0);
 	return (1);
