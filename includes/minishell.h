@@ -33,8 +33,8 @@ void	error_check(int argc, char **argv);
 void	write_in_history_file(char *line, int fd);
 void    add_history_file(char *line);
 void	update_history(void);
-char	*append_section_to_history(char *line, char *new_line);
-char	*add_section_to_history(char *line, char *new_line);
+void	add_history_file(char *line);
+void	append_to_history(char *line);
 
 /*history_utils.c*/
 int 	count_lines_in_file(const char *filename);

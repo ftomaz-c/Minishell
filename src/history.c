@@ -113,100 +113,76 @@ void	add_history_file(char *line)
 }
 
 /**
- * @brief Appends a section of a line to the history_line.
+ * @brief Appends a line to the history section.
  * 
- * This function appends a section of a line to the history_line.
- * If the new line is NULL, it allocates memory for an empty string.
- * It then finds the index of the history section in the line, and appends the
- * section starting from that index to the new line. Finally, it frees the old
- * new line and returns the updated new line.
+ * This function appends a line to the history section, removing any leading section marker.
+ * It ensures that the line added to the history does not end with a newline character.
  * 
- * @param line The line from which to extract the history section.
- * @param new_line The current state of the new line being built for history.
+ * @param line The line to be appended to the history.
  * 
- * @return char* The updated new line with the history section appended.
+ * @return void
  * 
- * @note This function assumes that the `ft_strdup()` and `ft_strjoin()` functions
- *       are available for string manipulation. It also assumes that the
- *       `history_section()` function is available to find the index of the history
- *       section in a line.
+ * @note This function assumes that the history_section function determines the starting index of the actual command in the line.
+ * @note Assumes that the add_history function is available and handles the addition of the line to the history.
+ * @note Assumes that ft_substr and ft_strlen functions are available to manipulate strings.
  * 
- * @warning The returned pointer points to dynamically allocated memory. It is the
- *          caller's responsibility to free this memory when it is no longer needed
- *          to prevent memory leaks.
+ * @warning It's the responsibility of the caller to ensure that the input line is properly formatted and does not exceed memory bounds.
+ * 
+ * @see history_section, add_history, ft_substr, ft_strlen
+ * 
+ * @example
+ * 
  */
 
-char	*append_section_to_history(char *line, char *new_line)
+void	append_to_history(char *line)
 {
-	char	*tmp;
-	int		i;
-	
-	if (new_line == NULL)
-		new_line = ft_strdup("");
+	char *new_line;
+	int	i;
+	int	j;
+
 	i = history_section(line);
-	tmp = ft_strjoin(new_line, line + i);
+	new_line = ft_substr(line, i, ft_strlen(line) - i);
+	j = 0;
+	while(new_line[j] != '\n' && new_line[j])
+		j++;
+	if (new_line[j] == '\n')
+		new_line[j] = '\0';
+	add_history(new_line);
 	free(new_line);
-	return(tmp);
-}
-
-/**
- * @brief Adds a line to the history.
- * 
- * This function adds a line to the history if it contains a history section
- * or if the line is NULL. It removes the newline character from the end of
- * the line if it exists, adds the line to the history, frees the memory
- * allocated for the line, and sets the new line pointer to NULL.
- * 
- * @param line The line to add to the history.
- * @param new_line The line being built for history.
- * 
- * @return char* The updated new line pointer.
- * 
- * @note This function assumes that the `ft_strlen()` function is available for
- *       string length calculation and that the `add_history()` function is available
- *       to add a line to the history.
- * 
- * @warning This function modifies the `new_line` parameter by removing the newline
- *          character if it exists. If the `new_line` parameter is NULL or not properly
- *          allocated, it may result in undefined behavior.
- */
-
-char	*add_section_to_history(char *line, char *new_line)
-{
-	if (history_section(line) || line == NULL)
-	{
-		if (new_line[ft_strlen(new_line) - 1] == '\n')
-   			new_line[ft_strlen(new_line) - 1] = '\0';
-		add_history(new_line);
-		free(new_line);
-		new_line = NULL;
-	}
-	return (new_line);
 }
 
 /**
  * @brief Updates the history with lines processed.
  * 
- * This function updates the history with lines processed. It reads lines from
- * the ".minishell_history" file, processes each line to extract the history
- * section, adds the section to the new line being built, and adds the line to
- * the history if it contains a history section or if it is NULL. Finally, it
+ * This function updates the history with lines processed by reading lines from
+ * the ".minishell_history" file, processing each line to extract the history
+ * section, and adding the section to the new line being built. If the line contains
+ * a history section or if it is NULL, it adds the line to the history. Finally, it
  * closes the file and frees the memory allocated for the lines.
  * 
- * @note This function relies on the `process_section()` function to extract the
- *       history section from each line and the `get_next_line()` function to read
- *       lines from the file.
+ * @note This function relies on the `append_to_history()` function to add lines
+ *       to the history and the `get_next_line()` function to read lines from the file.
  * 
  * @warning This function assumes that the ".minishell_history" file exists and can
  *          be opened for reading. Failure to open the file may result in errors or
  *          unexpected behavior.
+ * 
+ * @see append_to_history, get_next_line
+ * 
+ * @example
+ * 
+ * ```
+ * // Example usage of update_history function
+ * update_history();
+ * // Updates the command history with lines from ".minishell_history" file
+ * ```
  */
+
 
 void	update_history(void)
 {
 	char	*line;
 	int		fd;
-	char	*new_line;
 
 	fd = open(".minishell_history", O_RDONLY);
 	if (fd == -1)
@@ -215,13 +191,11 @@ void	update_history(void)
 		return ;
 	}
 	line = get_next_line(fd);
-	new_line = NULL;
 	while(line)
 	{
-		new_line = append_section_to_history(line, new_line);
+		append_to_history(line);
 		free(line);
 		line = get_next_line(fd);
-		new_line = add_section_to_history(line, new_line);
 	}
 	free(line);
 	close(fd);
