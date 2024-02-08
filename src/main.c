@@ -3,44 +3,55 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
+	// t_lexer	*lexer;
 	t_tools	tools;
 
 	update_history();
 	error_check(argc, argv);
-	tools.env = get_env(envp);
 	while (1)
 	{
-		if (!config_tools(&tools))
+		if (!config_tools(&tools, envp))
 		{
 			printf ("Error: Failed to allocate memory for tools\n");
 			free_tools(&tools);
 			exit (EXIT_FAILURE);
 		}
+		printf("old dir: %s Cur dir: %s\n", tools.oldpwd, tools.pwd);
 		line = readline("\033[1;32mminishell\033[0m \033[1;34m➜\033[0m  ");
-		add_history_file(line);
-		if (!lex_line(line, &tools))
-		{
-			free(line);
-			free_tools(&tools);
-			return (1);
-		}
-		
-		//print_lexer(&tools);
+		// add_history_file(line);
+		// if (!lex_line(line, &lexer))
+		// {
+		// 	free(line);
+		// 	return (1);
+		// }
+// ------------------------------------
+// ------    Test pwd ------------------
+// ------------------------------------
+		if (!ft_strncmp(line, "pwd", ft_strlen(line)))
+			pwd();
 
-		if (!parse_lexer(&tools))
-		{
-			free(line);
-			free_tools(&tools);
-			free_parser(&tools.parser);
-			free_tools(&tools);
-			return (1);
-		}
+// ------------------------------------
+// ------    Test cd ------------------
+// ------------------------------------
 
-		//print_parser(&tools);
+		char	**cdchr = malloc(3 * sizeof(char *));
+		char	*t;
 		
-		free(line);
-		free_parser(&tools.parser);
+		cdchr[0] = "cd";
+		cdchr[1] = "/hoe";
+		cdchr[2] = NULL;
+		// cdchr[1] = "/ome";
+		// // cdchr[2] = NULL;
+		t = NULL;
+		if (!ft_strncmp(line, "cd", ft_strlen(line)))
+			cd(t, cdchr);
+
+// ------------------------------------
+// ------------------------------------
+		// printf("old dir: %s Cur dir: %s\n", tools.oldpwd, tools.pwd);
 		free_tools(&tools);
+		// free_lexer(&lexer);
+		free(line);
 	}
 	return (0);
 }
