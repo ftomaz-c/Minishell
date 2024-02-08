@@ -1,6 +1,7 @@
 NAME := minishell
 
 SRC :=	src/main.c \
+		src/builtins.c \
 		src/tools.c \
 		src/error.c \
 		src/history.c \

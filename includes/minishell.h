@@ -19,6 +19,11 @@ typedef struct s_tools
 	char	*oldpwd;
 }	t_tools;
 
+typedef struct s_parser
+{
+
+}	t_parser;
+
 /*tools.c*/
 int		config_tools(t_tools *tools, char **envp);
 char	**get_env(char **envp);
@@ -39,5 +44,12 @@ void	append_to_history(char *line);
 /*history_utils.c*/
 int 	count_lines_in_file(const char *filename);
 int		history_section(char *line);
+
+/*Builtins.c*/
+// int	pwd(t_tools *tools, t_parser **command);
+int	pwd();
+
+// int	cd(t_tools *tools, t_parser *command);
+int	cd(char *tools, char **command);
 
 #endif

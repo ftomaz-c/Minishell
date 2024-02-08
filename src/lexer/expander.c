@@ -33,7 +33,7 @@
  * ```
  */
 
-void	expander(char **list, char **env)
+void	expander(char **list)
 {
 	int		index;
 	char	*var;
@@ -45,7 +45,7 @@ void	expander(char **list, char **env)
 		if (list[index][0] == '$')
 		{
 			var = ft_substr(list[index], 1, strlen(list[index]) - 1);
-			value = get_var_from_env(env, var);
+			value = get_var_from_env(var);
 			free(var);
 			free(list[index]);
 			if (value == NULL)

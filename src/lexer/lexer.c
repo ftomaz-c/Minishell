@@ -206,13 +206,13 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
  * ```
  */
 
-int	lex_line(char *line, t_lexer **lexer, char **envp)
+int	lex_line(char *line, t_lexer **lexer)
 {
 	char	**line_split_quotes;
 
 	*lexer = NULL;
 	line_split_quotes = lexer_split(line, ' ');
-	expander(line_split_quotes, envp);
+	expander(line_split_quotes);
 	add_line_to_lexer_struct(line_split_quotes, lexer);
 	free_list(line_split_quotes);
 	return (1);

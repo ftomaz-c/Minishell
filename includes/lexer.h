@@ -11,7 +11,7 @@ typedef struct s_lexer
 }	t_lexer;
 
 /*lexer*/
-int		lex_line(char *line, t_lexer **lexer, char **envp);
+int		lex_line(char *line, t_lexer **lexer);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	add_word_to_node(char *word, int start, int end, t_lexer **lexer);
 void	add_token_to_node(char token, t_lexer **lexer);
@@ -35,6 +35,6 @@ void	handle_white_spaces_and_quotes(char *s, int *i, int *start);
 int		paired_quote(char *str, int i, char ch);
 
 /*expander.c*/
-void	expander(char **list, char **env);
+void	expander(char **list);
 
 #endif
