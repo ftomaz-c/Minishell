@@ -1,4 +1,5 @@
-#include "../../includes/minishell.h"
+#include "../../includes/lexer.h"
+
 /**
  * @brief Adds a word segment to a lexer node.
  * 
@@ -206,14 +207,14 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
  * ```
  */
 
-int	lex_line(char *line, t_lexer **lexer, char **envp)
+int	lex_line(char *line, t_tools *tools)
 {
 	char	**line_split_quotes;
 
-	*lexer = NULL;
+	tools->lexer = NULL;
 	line_split_quotes = lexer_split(line, ' ');
-	expander(line_split_quotes, envp);
-	add_line_to_lexer_struct(line_split_quotes, lexer);
+	expander(tools->env, line_split_quotes);
+	add_line_to_lexer_struct(line_split_quotes, &tools->lexer);
 	free_list(line_split_quotes);
 	return (1);
 }

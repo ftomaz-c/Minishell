@@ -33,7 +33,7 @@
  * ```
  */
 
-void	expander(char **list, char **env)
+void	expander(char **env, char **list)
 {
 	int		index;
 	char	*var;
