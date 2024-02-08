@@ -135,12 +135,12 @@ int	get_command(t_parser **parser, t_lexer *lexer, int start, int end)
 
 	node = ft_calloc(1, sizeof (t_parser));
 	if (!node)
-		return 0;
+		return (0);
 	node->str = ft_calloc(end - start + 1, sizeof(char *));
 	if (!node->str)
 	{
 		free(node);
-		return 0;
+		return (0);
 	}
 	i = 0;
 	while (lexer->index != start)
@@ -155,7 +155,7 @@ int	get_command(t_parser **parser, t_lexer *lexer, int start, int end)
 			if (!node->str[i])
 			{
 				free_parser(&node);
-				return 0;
+				return (0);
 			}
 			i++;
 		}
@@ -171,7 +171,7 @@ int	get_command(t_parser **parser, t_lexer *lexer, int start, int end)
 					if (!redirections_node)
 					{
 						free_parser(&node);
-						return 0;
+						return (0);
 					}
 					redirections_node->index = lexer->index;
 					redirections_node->token = lexer->token;
@@ -195,17 +195,22 @@ int	parse_lexer(t_tools *tools)
 {
 	t_lexer	*current;
 	int		start;
+	int		end;
 
 	tools->pipes = 0;
 	tools->parser = NULL;
 	current = tools->lexer;
 	start = current->index;
+	end = 0;
 	while (current)
 	{
+		end = current->index;
 		if (current->token == '|' || current->next == NULL)
 		{
-			if (!get_command(&tools->parser, tools->lexer, start, current->index))
-				return 0;
+			if (current->next == NULL)
+				end++;
+			if (!get_command(&tools->parser, tools->lexer, start, end))
+				return (0);
 			tools->pipes++;
 			start = current->index;
 		}
