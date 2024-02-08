@@ -9,7 +9,8 @@ SRC :=	src/main.c \
     	src/lexer/lexer.c \
 		src/lexer/lexer_utils.c \
 		src/lexer/lexer_split.c \
-		src/lexer/lexer_split_utils.c 
+		src/lexer/lexer_split_utils.c \
+		src/parser/parser.c \
 
 OBJ := $(SRC:.c=.o)
 
