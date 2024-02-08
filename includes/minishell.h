@@ -34,4 +34,8 @@ void	append_to_history(char *line);
 int 	count_lines_in_file(const char *filename);
 int		history_section(char *line);
 
+/*utils/print.c*/
+void	print_lexer(t_tools *tools);
+void	print_parser(t_tools *tools);
+
 #endif
