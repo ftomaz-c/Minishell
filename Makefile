@@ -12,6 +12,8 @@ SRC :=	src/main.c \
 		src/lexer/lexer_split.c \
 		src/lexer/lexer_split_utils.c \
 		src/parser/parser.c \
+		src/parser/parser_utils.c \
+		src/parser/builtins.c \
 
 OBJ := $(SRC:.c=.o)
 
