@@ -12,6 +12,7 @@
 # include "structs.h"
 # include "lexer.h"
 # include "parser.h"
+# include "builtins.h"
 
 /*tools.c*/
 int		config_tools(t_tools *tools);
@@ -38,12 +39,5 @@ int		history_section(char *line);
 /*utils/print.c*/
 void	print_lexer(t_tools *tools);
 void	print_parser(t_tools *tools);
-
-/*Builtins.c*/
-// int	pwd(t_tools *tools, t_parser **command);
-int	pwd();
-
-// int	cd(t_tools *tools, t_parser *command);
-int	cd(char *tools, char **command);
 
 #endif

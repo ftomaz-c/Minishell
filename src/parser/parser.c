@@ -7,20 +7,6 @@ int	echo(t_tools *tools, t_parser *parser)
 	return(0);
 }
 
-int	cd(t_tools *tools, t_parser *parser)
-{
-	(void)tools;
-	(void)parser;
-	return(0);
-}
-
-int	pwd(t_tools *tools, t_parser *parser)
-{
-	(void)tools;
-	(void)parser;
-	return(0);
-}
-
 int	export(t_tools *tools, t_parser *parser)
 {
 	(void)tools;
@@ -29,13 +15,6 @@ int	export(t_tools *tools, t_parser *parser)
 }
 
 int	unset(t_tools *tools, t_parser *parser)
-{
-	(void)tools;
-	(void)parser;
-	return(0);
-}
-
-int	env(t_tools *tools, t_parser *parser)
 {
 	(void)tools;
 	(void)parser;
@@ -112,7 +91,7 @@ void	free_parser(t_parser **parser)
 	t_parser	*next;
 
 	current = *parser;
-	if (*parser == NULL)
+	if (!parser && *parser == NULL)
 		return ;
 	while (current != NULL)
 	{
@@ -131,6 +110,7 @@ int	get_command(t_parser **parser, t_lexer *lexer, int start, int end)
 {
 	t_parser	*node;
 	t_lexer		*redirections_node;
+	t_lexer		*current;
 	int			i;
 
 	node = ft_calloc(1, sizeof (t_parser));
@@ -143,15 +123,16 @@ int	get_command(t_parser **parser, t_lexer *lexer, int start, int end)
 		return (0);
 	}
 	i = 0;
-	while (lexer->index != start)
-		lexer = lexer->next;
+	current = lexer;
+	while (current->index != start)
+		current = current->next;
 	while (start < end)
 	{
-		if (lexer->words)
+		if (current->words)
 		{
 			if (!node->builtin)
-				node->builtin = is_builtin(lexer->words);
-			node->str[i] = ft_strdup(lexer->words);
+				node->builtin = is_builtin(current->words);
+			node->str[i] = ft_strdup(current->words);
 			if (!node->str[i])
 			{
 				free_parser(&node);
@@ -159,13 +140,13 @@ int	get_command(t_parser **parser, t_lexer *lexer, int start, int end)
 			}
 			i++;
 		}
-		else if (lexer->token)
+		else if (current->token)
 		{
-			if (lexer->token == '>' || lexer->token == '<')
+			if (current->token == '>' || current->token == '<')
 			{
-				while (lexer && lexer->token != '|')
+				while (current && current->token != '|')
 				{
-					if (lexer->token == '>' || lexer->token == '<')
+					if (current->token == '>' || current->token == '<')
 						node->nb_redirections++;
 					redirections_node = ft_calloc(1, sizeof(t_lexer));
 					if (!redirections_node)
@@ -173,19 +154,18 @@ int	get_command(t_parser **parser, t_lexer *lexer, int start, int end)
 						free_parser(&node);
 						return (0);
 					}
-					redirections_node->index = lexer->index;
-					redirections_node->token = lexer->token;
-					redirections_node->words = lexer->words;
-					redirections_node->next = NULL;
-					redirections_node->pre = NULL;
+					redirections_node->index = current->index;
+					redirections_node->token = current->token;
+					if (current->words)
+						redirections_node->words = ft_strdup(current->words);
 					ft_lstaddback(&node->redirections, redirections_node);
-					lexer = lexer->next;
+					current = current->next;
 				}
 				break;
 			}
 		}
 		start++;
-		lexer = lexer->next;
+		current = current->next;
 	}
 	ft_lstadd_parser_back(parser, node);
 	return (1);
