@@ -15,13 +15,13 @@
  *       The memory for each line is allocated dynamically and freed after use.
  */
 
-int count_lines_in_file(const char *filename)
+int count_lines_in_file(const char *file_path)
 {
 	int		fd;
 	int		count;
 	char	*line;
 
-	fd = open(filename, O_RDONLY);
+	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
 		return (-1);
 	count = 0;
@@ -80,4 +80,57 @@ int		history_section(char *line)
 	if (line[i] == '.')
 		return (i + 2);
 	return (0);
+}
+
+/**
+ * @brief Constructs a file path by appending a file name to the user's home directory path.
+ * 
+ * This function constructs a file path by concatenating the user's home directory path
+ * obtained from the HOME environment variable with the provided file name.
+ * 
+ * @param file_name The name of the file to append to the home directory path.
+ * 
+ * @return A dynamically allocated string containing the constructed file path.
+ *         The caller is responsible for freeing the memory allocated for the string.
+ *         Returns NULL if memory allocation fails or if the HOME environment variable is not set.
+ * 
+ * @note The caller must free the memory allocated for the returned string after use to avoid memory leaks.
+ * @note This function relies on the ft_strjoin function to concatenate strings.
+ * @note Assumes that the HOME environment variable is set to the user's home directory path.
+ * 
+ * @warning If memory allocation fails or if the HOME environment variable is not set,
+ *          this function returns NULL without modifying errno.
+ * 
+ * @see ft_strjoin
+ * 
+ * @example
+ * 
+ * ```
+ * // Example usage of the function
+ * char *file_path = get_file_path_from_home("example.txt");
+ * if (file_path) {
+ *     // Use the file_path
+ *     printf("File path: %s\n", file_path);
+ *     // Free the memory allocated for the file path when no longer needed
+ *     free(file_path);
+ * } else {
+ *     // Handle error: unable to retrieve file path
+ *     fprintf(stderr, "Error: Failed to retrieve file path.\n");
+ * }
+ * ```
+ */
+
+char	*get_file_path_from_home(char *file_name)
+{
+	char	*home_var;
+	char	*tmp;
+
+	home_var = ft_strjoin(getenv("HOME"), "/");
+	if (!home_var)
+		return (NULL);
+	tmp = ft_strjoin(home_var, file_name);
+	if (!tmp)
+		return (NULL);
+	free(home_var);
+	return (tmp);
 }
