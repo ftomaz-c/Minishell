@@ -19,4 +19,7 @@ int		env(t_tools *tools, t_parser *command);
 /*builtins/pwd.c*/
 int		pwd(t_tools *tools, t_parser *command);
 
+/*builtins/echo.c*/
+int		echo(t_tools *tools, t_parser *command);
+
 #endif
