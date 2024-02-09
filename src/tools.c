@@ -245,5 +245,7 @@ int	config_tools(t_tools *tools)
 		return (0);
 	tools->pipes = 0;
 	tools->parser = NULL;
+	//printf("pwd: %s\n", tools->pwd);
+	//printf("oldpwd: %s\n", tools->oldpwd);
 	return (1);
 }

@@ -16,7 +16,10 @@
 
 /*tools.c*/
 int		config_tools(t_tools *tools);
+int		config_tools(t_tools *tools);
 char	**get_env(char **envp);
+char	**get_path(char **env);
+char	*get_var_from_env(char **env, char *var);
 char	**get_path(char **env);
 char 	*get_var_from_env(char **env, char *var);
 void	free_tools(t_tools *tools);
@@ -24,16 +27,22 @@ void	free_tools(t_tools *tools);
 /*error.c*/
 void	error_check(int argc, char **argv);
 
+/*prompt.c*/
+char	**handle_home_abreviation(t_tools *tools, char **str);
+char	**generate_prompt(t_tools *tools);
+char	*prompt_line(t_tools *tools);
+
 /*history.c*/
-void	write_in_history_file(char *line, int fd);
-void    add_history_file(char *line);
-void	update_history(void);
-void	add_history_file(char *line);
+void	write_in_history_file(char *line, int fd, char *file_path);
+void    add_history_file(char *line, char *file_name);
+void	update_history(char *file_name);
+void	add_history_file(char *line, char *file_path);
 void	append_to_history(char *line);
 
 /*history_utils.c*/
 int 	count_lines_in_file(const char *filename);
 int		history_section(char *line);
+char	*get_file_path_from_home(char *file_name);
 
 
 /*utils/print.c*/

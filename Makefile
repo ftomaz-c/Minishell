@@ -5,6 +5,7 @@ SRC :=	src/main.c \
 		src/error.c \
 		src/history.c \
 		src/history_utils.c \
+		src/prompt.c \
 		src/utils/print.c \
     	src/lexer/expander.c \
     	src/lexer/lexer.c \
