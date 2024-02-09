@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		}
 
-		print_parser(&tools);
+		//print_parser(&tools);
 
 		free(line);
 		free_lexer(&tools.lexer);
