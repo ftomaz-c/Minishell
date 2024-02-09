@@ -34,7 +34,7 @@ char	**generate_prompt(t_tools *tools)
 	str[5] = ft_strdup("$PWD");
 	str[6] = ft_strdup("\033[0m");
 	expander(tools->env, str);
-	str[7] = ft_strdup(" $");
+	str[7] = ft_strdup("$ ");
 	if (ft_strlen(str[1]) == 0)
 	{
 		free(str[1]);
