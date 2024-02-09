@@ -243,7 +243,7 @@ int	config_tools(t_tools *tools)
 	tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
 	if (tools->oldpwd == NULL)
 		return (0);
-	//printf("pwd: %s\n", tools->pwd);
-	//printf("oldpwd: %s\n", tools->oldpwd);
+	tools->pipes = 0;
+	tools->parser = NULL;
 	return (1);
 }

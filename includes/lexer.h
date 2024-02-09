@@ -1,17 +1,10 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-typedef struct s_lexer
-{
-	char			*words;
-	char			token;
-	int				index;
-	struct s_lexer	*next;
-	struct s_lexer	*pre;
-}	t_lexer;
+# include "minishell.h"
 
 /*lexer*/
-int		lex_line(char *line, t_lexer **lexer, char **envp);
+int		lex_line(char *line, t_tools *tools);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	add_word_to_node(char *word, int start, int end, t_lexer **lexer);
 void	add_token_to_node(char token, t_lexer **lexer);
@@ -35,6 +28,6 @@ void	handle_white_spaces_and_quotes(char *s, int *i, int *start);
 int		paired_quote(char *str, int i, char ch);
 
 /*expander.c*/
-void	expander(char **list, char **env);
+void	expander(char **env, char **list);
 
 #endif
