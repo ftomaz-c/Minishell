@@ -8,7 +8,6 @@ int	main(int argc, char **argv, char **envp)
 	update_history(".minishell_history");
 	error_check(argc, argv);
 	tools.env = get_env(envp);
-	tools.pwd = NULL;
 	while (1)
 	{
 		if (!config_tools(&tools))
@@ -19,7 +18,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		line = prompt_line(&tools);
 		add_history_file(line, ".minishell_history");
-		if (!lex_line(line, &lexer, tools.env))
+		if (!lex_line(line, &tools))
 		{
 			free(line);
 			free_tools(&tools);
