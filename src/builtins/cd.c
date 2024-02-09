@@ -30,7 +30,7 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 	home_var = get_var_from_env(tools->env, "HOME");
 	if (ft_strcmp(tools->pwd, home_var) != 0)
 	{	
-		if (chdir("..") == 0)
+		if (chdir(home_var) == 0)
 		{
 			free(tools->oldpwd);
 			tools->oldpwd = ft_strdup(tools->pwd);
