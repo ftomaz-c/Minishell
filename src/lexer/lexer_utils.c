@@ -1,4 +1,45 @@
 #include "../../includes/minishell.h"
+
+int	check_unclosed_quotes(char *line) // checks if the quotes are paired, based on the first quote type found
+{
+	int	i;
+	int	first;
+	int	single_quotes;
+	int	double_quotes;
+
+	i = 0;
+	first = 0;
+	single_quotes = 0;
+	double_quotes = 0;
+	while (line[i])
+	{
+		if (line[i] == 34)
+		{
+			if (single_quotes == 0)
+				first = 1;
+			double_quotes += 1;
+		}
+		else if (line[i] == 39)
+		{
+			if (double_quotes == 0)
+				first = 2;
+			single_quotes += 1;	
+		}
+		i++;
+	}
+	if (first == 1)
+	{
+		if (double_quotes && double_quotes % 2 != 0)
+			return (0);	
+	}
+	if (first == 2)
+	{
+		if (single_quotes && single_quotes % 2 != 0)
+			return (0);
+	}
+	return (1);
+}
+
 /**
  * @brief Checks if a character is a token.
  * 
