@@ -173,6 +173,8 @@ int	parser(t_tools *tools)
 
 	tools->pipes = 0;
 	tools->parser = NULL;
+	if (!tools->lexer)
+		return (1);
 	current = tools->lexer;
 	start = current->index;
 	while (current)

@@ -34,11 +34,11 @@
  * ```
  */
 
-void	write_in_history_file(char *line, int fd)
+void	write_in_history_file(char *line, int fd, char *file_path)
 {
-	int	line_count;
+	int		line_count;
 
-	line_count = count_lines_in_file(".minishell_history");
+	line_count = count_lines_in_file(file_path);
 	if (line_count == -1)
 	{
 		perror("Error opening history file");
@@ -89,27 +89,32 @@ void	write_in_history_file(char *line, int fd)
  * @see count_lines_in_file
  */
 
-void	add_history_file(char *line)
+void	add_history_file(char *line, char *file_name)
 {
-	int	fd;
+	int		fd;
+	char	*file_path;
 
 	if (line == NULL)
 	{
 		printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}
+	file_path = get_file_path_from_home(file_name);
+	if (!file_path)
+		perror("Error: Failed to retrieve file path. History won't be stored\n");
 	if (line && *line)
 	{		
-		fd = open(".minishell_history", O_WRONLY | O_CREAT | O_APPEND, 0644);
+		fd = open(file_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
 		{
-			perror("Error opening history file");
+			perror("Error: opening history file. History won't be stored\n");
 			return ;
 		}
 		add_history(line);
-		write_in_history_file(line, fd);
+		write_in_history_file(line, fd, file_path);
 		close(fd);
 	}
+	free(file_path);
 }
 
 /**
@@ -178,18 +183,21 @@ void	append_to_history(char *line)
  * ```
  */
 
-
-void	update_history(void)
+void	update_history(char *file_name)
 {
 	char	*line;
+	char	*file_path;
 	int		fd;
 
-	fd = open(".minishell_history", O_RDONLY);
-	if (fd == -1)
+	file_path = get_file_path_from_home(file_name);
+	if (access(file_path, F_OK))
 	{
-		perror("Error: opening history\n");
+		free(file_path);
 		return ;
 	}
+	fd = open(file_path, O_RDONLY);
+	if (fd == -1)
+		return ;
 	line = get_next_line(fd);
 	while(line)
 	{
@@ -197,6 +205,7 @@ void	update_history(void)
 		free(line);
 		line = get_next_line(fd);
 	}
+	free(file_path);
 	free(line);
 	close(fd);
 }

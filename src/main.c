@@ -5,7 +5,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	t_tools	tools;
 
-	update_history();
+	update_history(".minishell_history");
 	error_check(argc, argv);
 	tools.env = get_env(envp);
 	while (1)
@@ -16,8 +16,8 @@ int	main(int argc, char **argv, char **envp)
 			free_tools(&tools);
 			exit (EXIT_FAILURE);
 		}
-		line = readline("\033[1;32mminishell\033[0m \033[1;34m➜\033[0m  ");
-		add_history_file(line);
+		line = prompt_line(&tools);
+		add_history_file(line, ".minishell_history");
 		if (!lex_line(line, &tools))
 		{
 			free(line);
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		}
 		
-		//print_lexer(&tools);
+		print_lexer(&tools);
 
 		if (!parser(&tools))
 		{
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		}
 
-		//print_parser(&tools);
+		print_parser(&tools);
 
 		free(line);
 		free_lexer(&tools.lexer);
