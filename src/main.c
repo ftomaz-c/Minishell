@@ -18,14 +18,14 @@ int	main(int argc, char **argv, char **envp)
 		}
 		line = prompt_line(&tools);
 		add_history_file(line, ".minishell_history");
-		if (!lex_line(line, &lexer, tools.env))
+		if (!lex_line(line, &tools))
 		{
 			free(line);
 			free_tools(&tools);
 			return (1);
 		}
 		
-		//print_lexer(&tools);
+		print_lexer(&tools);
 
 		if (!parser(&tools))
 		{
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		}
 
-		//print_parser(&tools);
+		print_parser(&tools);
 
 		free(line);
 		free_lexer(&tools.lexer);
