@@ -1,5 +1,24 @@
 #include "../../includes/minishell.h"
 
+void	handle_characters(char *s, int *i, int *start)
+{
+	int	tmp;
+
+	while(s[*i] && (s[*i] != ' ' && s[*i] != '\"' && s[*i] != '\''))
+		(*i)++;
+	if (s[*i] == '\"' || s[*i] == '\'')
+	{	
+		if (s[*i - 1] && s[*i - 1] != ' ')
+		{
+			tmp = (*i);
+			while (s[*i] != ' ')
+				(*i)--;
+			*start = ++(*i);
+			(*i) = tmp;
+		}
+		*i = paired_quote(s, *i + 1, s[*i]);
+	}
+}
 /**
  * @brief Splits a string into an array of substrings
  * based on a delimiter character.
@@ -56,10 +75,8 @@ char	**create_split(char *s, char **split, int nwords, char c)
 	{
 		if (s[i] == '\"' || s[i] == '\'' || s[i] == ' ')
 			handle_white_spaces_and_quotes(s, &i, &start);
-		while (s[i] && s[i] != c && s[i] != '\"' && s[i] != '\'')
-			i++;
-		if (s[i] == '\"' || s[i] == '\'')
-			nstart = i;
+		if (s[i] && s[i] != c && s[i] != '\"' && s[i] != '\'')
+			handle_characters(s, &i, &start);
 		split[j] = word_alloc(s, start, i);
 		i++;
 		j++;
@@ -67,6 +84,7 @@ char	**create_split(char *s, char **split, int nwords, char c)
 	}
 	return (split);
 }
+
 /**
  * @brief Splits a string into an array of substrings for
  * lexical analysis.

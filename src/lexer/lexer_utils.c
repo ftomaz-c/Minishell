@@ -1,42 +1,39 @@
 #include "../../includes/minishell.h"
 
-int	check_unclosed_quotes(char *line) // checks if the quotes are paired, based on the first quote type found
+void	handle_quote(char *line, int *flag, int *i, char quote)
 {
-	int	i;
-	int	first;
-	int	single_quotes;
-	int	double_quotes;
+	(*i)++;
+	*flag = -1;
+	while(line[*i] && line[*i] != quote)
+		(*i)++;
+	if (*i < (int)ft_strlen(line))
+		*flag = 1;	
+}
+
+int	check_unclosed_quotes(char *line)
+{
+	int		i;
+	int		flag;
+	char	quote;
 
 	i = 0;
-	first = 0;
-	single_quotes = 0;
-	double_quotes = 0;
-	while (line[i])
+	flag = 0;
+	while (i < (int)ft_strlen(line))
 	{
 		if (line[i] == 34)
 		{
-			if (single_quotes == 0)
-				first = 1;
-			double_quotes += 1;
+			quote = 34;
+			handle_quote(line, &flag, &i, quote);
 		}
-		else if (line[i] == 39)
+		if (line[i] == 39)
 		{
-			if (double_quotes == 0)
-				first = 2;
-			single_quotes += 1;	
+			quote = 39;
+			handle_quote(line, &flag, &i, quote);
 		}
 		i++;
 	}
-	if (first == 1)
-	{
-		if (double_quotes && double_quotes % 2 != 0)
-			return (0);	
-	}
-	if (first == 2)
-	{
-		if (single_quotes && single_quotes % 2 != 0)
-			return (0);
-	}
+	if (i > (int)ft_strlen(line) && flag == -1)
+		return (0);
 	return (1);
 }
 

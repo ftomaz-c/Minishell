@@ -18,32 +18,36 @@ int	main(int argc, char **argv, char **envp)
 		}
 		line = prompt_line(&tools);
 		add_history_file(line, ".minishell_history");
-		if (!lex_line(line, &tools))
+		if (check_unclosed_quotes(line))
 		{
-			free(line);
-			free_tools(&tools);
-			return (1);
-		}
-		
-		//print_lexer(&tools);
+			if (!lex_line(line, &tools))
+			{
+				free(line);
+				free_tools(&tools);
+				return (1);
+			}
+			
+			//print_lexer(&tools);
 
-		if (!parse_lexer(&tools))
-		{
-			free(line);
-			free_tools(&tools);
+			if (!parse_lexer(&tools))
+			{
+				free(line);
+				free_tools(&tools);
+				free_parser(&tools.parser);
+				free_tools(&tools);
+				return (1);
+			}
+			
+			// print_parser(&tools);
+
+			if (tools.parser->builtin)
+				execute_builtin(&tools);
 			free_parser(&tools.parser);
-			free_tools(&tools);
-			return (1);
+			free_lexer(&tools.lexer);
 		}
-		
-		// // print_parser(&tools);
-
-		if (tools.parser->builtin)
-			execute_builtin(&tools);
-		
+		else
+			printf("Error: input with unclosed quotes\n");
 		free(line);
-		free_lexer(&tools.lexer);
-		free_parser(&tools.parser);
 		free_tools(&tools);
 		
 	}

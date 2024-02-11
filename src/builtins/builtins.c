@@ -10,4 +10,6 @@ void	execute_builtin(t_tools *tools)
 		env(tools, tools->parser);
 	else if (ft_strncmp(tools->parser->str[0], "echo", ft_strlen(tools->parser->str[0])) == 0)
 		echo(tools, tools->parser);
+	else if (ft_strncmp(tools->parser->str[0], "exit", ft_strlen(tools->parser->str[0])) == 0)
+		mini_exit(tools, tools->parser);
 }

@@ -22,4 +22,7 @@ int		pwd(t_tools *tools, t_parser *command);
 /*builtins/echo.c*/
 int		echo(t_tools *tools, t_parser *command);
 
+/*builtins/mini_exit.c*/
+int	mini_exit(t_tools *tools, t_parser *parser);
+
 #endif

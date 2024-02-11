@@ -14,13 +14,6 @@ int	unset(t_tools *tools, t_parser *parser)
 	return(0);
 }
 
-int	mini_exit(t_tools *tools, t_parser *parser)
-{
-	(void)tools;
-	(void)parser;
-	return(0);
-}
-
 int	(*is_builtin(char *str))(t_tools *tools, t_parser *parser)
 {
 	static struct {
