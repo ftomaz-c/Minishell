@@ -171,7 +171,6 @@ int	parser(t_tools *tools)
 	int		start;
 	int		end;
 
-	tools->pipes = 0;
 	tools->parser = NULL;
 	if (!tools->lexer)
 		return (1);
@@ -184,9 +183,10 @@ int	parser(t_tools *tools)
 		{
 			if (current->next == NULL)
 				end++;
+			else
+				tools->pipes++;
 			if (!parse_lexer(&tools->parser, tools->lexer, start, end))
 				return (0);
-			tools->pipes++;
 			start = current->index;
 		}
 		current = current->next;

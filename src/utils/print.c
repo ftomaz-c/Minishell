@@ -49,4 +49,5 @@ void	print_parser(t_tools *tools)
 		printf("----------------------------------------------\n");
 		parser = parser->next;
 	}
+	printf("nb_pipes: %i\n", tools->pipes);
 }
