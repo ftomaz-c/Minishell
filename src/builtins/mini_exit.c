@@ -10,7 +10,7 @@ int	mini_exit(t_tools *tools, t_parser *parser)
         printf("Error: exit call with too many arguments\n");
         return (1);
     }
+    tools->exit = true;
     printf("exit\n");
-
 	return (EXIT_SUCCESS);
 }

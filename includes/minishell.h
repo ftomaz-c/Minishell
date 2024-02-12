@@ -9,6 +9,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <stdbool.h>
 # include "structs.h"
 # include "lexer.h"
 # include "parser.h"

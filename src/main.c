@@ -7,8 +7,9 @@ int	main(int argc, char **argv, char **envp)
 
 	update_history(".minishell_history");
 	error_check(argc, argv);
+	tools.exit = false;
 	tools.env = get_env(envp);
-	while (1)
+	while (tools.exit != true)
 	{
 		if (!config_tools(&tools))
 		{
