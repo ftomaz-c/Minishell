@@ -7,14 +7,18 @@ SRC :=	src/main.c \
 		src/history_utils.c \
 		src/prompt.c \
 		src/utils/print.c \
-   	src/lexer/expander.c \
-   	src/lexer/lexer.c \
+		src/lexer/expander.c \
+		src/lexer/lexer.c \
 		src/lexer/lexer_utils.c \
 		src/lexer/lexer_split.c \
 		src/lexer/lexer_split_utils.c \
 		src/parser/parser.c \
 		src/parser/parser_utils.c \
 		src/parser/builtins.c \
+		src/executor/executor.c \
+		src/executor/redirections.c \
+		src/executor/here_doc.c \
+		src/executor/cmd_exec.c \
 
 OBJ := $(SRC:.c=.o)
 
