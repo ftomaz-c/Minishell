@@ -23,30 +23,12 @@
 
 void	free_tools(t_tools *tools)
 {
-	int	i;
-
-	/*i = 0;
-	if (tools->env)
-	{
-		while (tools->env[i])
-		{
-			free(tools->env[i]);
-			i++;
-		}
-		free(tools->env);
-	}*/
-	i = 0;
-	if (tools->path)
-	{
-		while (tools->path[i])
-		{
-			free(tools->path[i]);
-			i++;
-		}
-		free(tools->path);
-	}
+	free_list(tools->env);
+	free_list(tools->path);
 	free(tools->pwd);
 	free(tools->oldpwd);
+	free(tools->home);
+	free(tools->user);
 }
 
 /**
@@ -230,10 +212,11 @@ char	**get_path(char **env)
  * ```
  */
 
-int	config_tools(t_tools *tools)
+int	config_tools(t_tools *tools, char **envp)
 {
 	if (!tools)
 		return (0);
+	tools->env = get_env(envp);
 	tools->path = get_path(tools->env);
 	if (tools->path == NULL)
 		return (0);
@@ -243,9 +226,14 @@ int	config_tools(t_tools *tools)
 	tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
 	if (tools->oldpwd == NULL)
 		return (0);
+	tools->home = get_var_from_env(tools->env, "HOME");
+	if (tools->home == NULL)
+		return (0);
+	tools->user = get_var_from_env(tools->env, "USER");
+	if (tools->user == NULL)
+		return (0);
 	tools->pipes = 0;
+	tools->exit = false;
 	tools->parser = NULL;
-	//printf("pwd: %s\n", tools->pwd);
-	//printf("oldpwd: %s\n", tools->oldpwd);
 	return (1);
 }

@@ -25,4 +25,7 @@ int		echo(t_tools *tools, t_parser *command);
 /*builtins/mini_exit.c*/
 int	mini_exit(t_tools *tools, t_parser *parser);
 
+/*builtins/unset.c*/
+int		unset(t_tools *tools, t_parser *command);
+
 #endif

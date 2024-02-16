@@ -7,6 +7,8 @@ char	**handle_home_abreviation(t_tools *tools, char **str)
 	char	*tmp;
 
 	home_var = get_var_from_env(tools->env, "HOME");
+	if (!home_var)
+		return (str);
 	home_var_len = ft_strlen(home_var);
 	if (ft_strncmp(home_var, str[5], home_var_len) == 0)
 	{
@@ -27,13 +29,12 @@ char	**generate_prompt(t_tools *tools)
 	if (!str)
 		return (NULL);
 	str[0] = ft_strdup("\033[1;32m");
-	str[1] = ft_strdup("$USER");
+	str[1] = ft_strdup(tools->user);
 	str[2] = ft_strdup("@minishell");
 	str[3] = ft_strdup("\033[0m:");
 	str[4] = ft_strdup("\033[1;34m");
-	str[5] = ft_strdup("$PWD");
+	str[5] = ft_strdup(tools->pwd);
 	str[6] = ft_strdup("\033[0m");
-	expander(tools->env, str);
 	str[7] = ft_strdup("$ ");
 	if (ft_strlen(str[1]) == 0)
 	{

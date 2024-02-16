@@ -12,4 +12,6 @@ void	execute_builtin(t_tools *tools)
 		echo(tools, tools->parser);
 	else if (ft_strncmp(tools->parser->str[0], "exit", ft_strlen(tools->parser->str[0])) == 0)
 		mini_exit(tools, tools->parser);
+	else if (ft_strncmp(tools->parser->str[0], "unset", ft_strlen(tools->parser->str[0])) == 0)
+		unset(tools, tools->parser);
 }

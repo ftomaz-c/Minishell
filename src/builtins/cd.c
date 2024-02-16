@@ -27,7 +27,7 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 	char	*home_var;
 
 	(void)command;
-	home_var = get_var_from_env(tools->env, "HOME");
+	home_var = tools->home;
 	if (ft_strcmp(tools->pwd, home_var) != 0)
 	{	
 		if (chdir(home_var) == 0)

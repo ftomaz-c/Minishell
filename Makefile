@@ -19,6 +19,7 @@ SRC :=	src/main.c \
 		src/builtins/cd.c \
 		src/builtins/echo.c \
 		src/builtins/mini_exit.c \
+		src/builtins/unset.c \
 
 OBJ := $(SRC:.c=.o)
 
