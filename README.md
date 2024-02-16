@@ -153,6 +153,15 @@ These functions serve various purposes, including working with directories, envi
 [Book Online: Introduction to Systems Programming: a Hands-on Approach](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/) by
 Gustavo A. Junipero Rodriguez-Rivera and
 Justin Ennen; <br>
+[Minishell: Building a mini-bash (a @42 project)](https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218) - MannBell<br>
+
+---
+
 [maiadegraaf - minishell](https://github.com/maiadegraaf/minishell) - git;<br>
 [madebypixel102](https://github.com/madebypixel02/minishell) - git;<br>
-[Minishell: Building a mini-bash (a @42 project)](https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218) - MannBell<br>
+
+---
+
+testers:<br>
+[hpple42](https://github.com/hepple42/42-minishell/tree/main/tests) - git;<br>
+[mpanic!!!](https://github.com/ChewyToast/mpanic) - git;<br>
