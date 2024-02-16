@@ -8,7 +8,6 @@ typedef struct s_tools
 	char			*pwd;
 	char			*oldpwd;
 	int				pipes;
-	bool			exit;
 	struct s_lexer	*lexer;
 	struct s_parser *parser;
 }	t_tools;

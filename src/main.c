@@ -7,9 +7,8 @@ int	main(int argc, char **argv, char **envp)
 
 	update_history(".minishell_history");
 	error_check(argc, argv);
-	tools.exit = false;
 	tools.env = get_env(envp);
-	while (tools.exit != true)
+	while (1)
 	{
 		if (!config_tools(&tools))
 		{
@@ -28,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 				return (1);
 			}
 			
-			//print_lexer(&tools);
+			// print_lexer(&tools);
 
 			if (!parse_lexer(&tools))
 			{
