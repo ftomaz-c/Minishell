@@ -1,5 +1,15 @@
 #include "../../includes/executor.h"
 
+/**
+ * @brief Sets the stdin flag based on redirection token.
+ * 
+ * This function sets the stdin flag in the parser struct based on the redirection token.
+ * 
+ * @param parser The parser containing redirection information.
+ * 
+ * @return Returns the redirection symbol ("<" or "<<") if stdin redirection is detected, otherwise NULL.
+ */
+
 char	*set_stdin_flag(t_parser *parser)
 {
 	if (parser->redirections->token == '<')
@@ -18,6 +28,16 @@ char	*set_stdin_flag(t_parser *parser)
 	return (NULL);
 }
 
+/**
+ * @brief Sets the stdout flag based on redirection token.
+ * 
+ * This function sets the stdout flag in the parser struct based on the redirection token.
+ * 
+ * @param parser The parser containing redirection information.
+ * 
+ * @return Returns the redirection symbol (">" or ">>") if stdout redirection is detected, otherwise NULL.
+ */
+
 char	*set_stdout_flag(t_parser *parser)
 {
 	if (parser->redirections->token == '>')
@@ -35,6 +55,18 @@ char	*set_stdout_flag(t_parser *parser)
 	}
 	return (NULL);
 }
+
+/**
+ * @brief Handles redirections for a parsed command.
+ * 
+ * This function parses the redirections in a command and sets up stdin and stdout accordingly.
+ * 
+ * @param parser The parser containing redirection information.
+ * 
+ * @note This function assumes that the parser is properly initialized.
+ * 
+ * @see set_stdin_flag, set_stdout_flag
+ */
 
 void	redirection(t_parser *parser)
 {
@@ -64,6 +96,16 @@ void	redirection(t_parser *parser)
 	}
 }
 
+/**
+ * @brief Sets up standard input based on parser data.
+ * 
+ * This function redirects standard input for a command if stdin redirection is detected.
+ * 
+ * @param parser The parser containing redirection information.
+ * 
+ * @note This function assumes that the parser is properly initialized.
+ */
+
 void	set_stdin(t_parser *parser)
 {
 	int fd_infile;
@@ -83,6 +125,16 @@ void	set_stdin(t_parser *parser)
 	else
 		return ;
 }
+
+/**
+ * @brief Sets up standard output based on parser data.
+ * 
+ * This function redirects standard output for a command if stdout redirection is detected.
+ * 
+ * @param parser The parser containing redirection information.
+ * 
+ * @note This function assumes that the parser is properly initialized.
+ */
 
 void	set_stdout(t_parser *parser)
 {

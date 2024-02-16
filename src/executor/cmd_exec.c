@@ -1,5 +1,17 @@
 #include "../../includes/executor.h"
 
+/**
+ * @brief Executes a command with the provided path.
+ * 
+ * This function attempts to execute a command using the specified path list.
+ * 
+ * @param path_list The list of paths to search for the command.
+ * @param cmd_args The command arguments.
+ * @param envp The environment variables.
+ * 
+ * @note This function assumes that the command and path list are properly initialized.
+ */
+
 void	exec_path(char **path_list, char **cmd_args, char **envp)
 {
 	char	*cmd_path;
@@ -20,6 +32,19 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 		execve(cmd_args[0], cmd_args, envp);
 	printf("%s: command not found\n", cmd_args[0]);
 }
+
+/**
+ * @brief Executes a piped command.
+ * 
+ * This function handles execution of commands connected by pipes.
+ * 
+ * @param parser The parser containing command information.
+ * @param tools The tools struct containing necessary information.
+ * 
+ * @warning This function assumes that pipe creation and forking succeed.
+ * 
+ * @see exec_path
+ */
 
 void	minishell_pipex(t_parser *parser, t_tools *tools)
 {

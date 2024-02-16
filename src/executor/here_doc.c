@@ -1,5 +1,20 @@
 #include "../../includes/executor.h"
 
+/**
+ * @brief Reads input until a delimiter is encountered and writes it to a file descriptor.
+ * 
+ * This function reads input from stdin until the specified delimiter is encountered and
+ * writes it to the provided file descriptor.
+ * 
+ * @param limiter The delimiter indicating the end of input.
+ * @param fd The file descriptor to write the input to.
+ * @param original_stdout The original file descriptor for stdout.
+ * 
+ * @note This function assumes that the input is properly terminated.
+ * 
+ * @see get_next_line
+ */
+
 void	get_here_doc(char *limiter, int fd, int original_stdout)
 {
 	char	*line;
@@ -13,6 +28,19 @@ void	get_here_doc(char *limiter, int fd, int original_stdout)
 		ft_putstr_fd("> ", original_stdout);
 	}
 }
+
+/**
+ * @brief Implements here documents functionality.
+ * 
+ * This function creates a child process to handle here documents input.
+ * 
+ * @param limiter The delimiter indicating the end of input.
+ * @param original_stdout The original file descriptor for stdout.
+ * 
+ * @warning This function assumes that pipe creation and forking succeed.
+ * 
+ * @see get_here_doc
+ */
 
 void	here_doc(char *limiter, int original_stdout)
 {
