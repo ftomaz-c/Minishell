@@ -11,10 +11,13 @@ int	env(t_tools *tools, t_parser *command)
 	{
 		if (!ft_strchr(tools->env[i], '='))
 			i++;
-		if (!tools->env[i])
-			break ;
-		printf("%s\n", tools->env[i]);
-		i++;
+		else
+		{
+			if (!tools->env[i])
+				break ;
+			printf("%s\n", tools->env[i]);
+			i++;
+		}
 	}
 	return (0);
 }

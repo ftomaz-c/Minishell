@@ -27,5 +27,20 @@ int		mini_exit(t_tools *tools, t_parser *parser);
 
 /*builtins/export.c*/
 int		export(t_tools *tools, t_parser *parser);
+void	free_env(char **str);
+void	sort_array(char **env_copy);
+int		find_char_position(char *str, char c);
+void	copy_var_name(char *var_path, char *str, int equal_pos);
+char	**get_env_export(char **envp, int i);
+char	*prepare_var(char *str);
+void	substitute_env_var_value(t_tools *tools, char *var_path, char *str);
+void	copy_var_name(char *var_path, char *str, int equal_pos);
+int		find_char_position(char *str, char c);
+
+int		check_var_path(char **env, char *var);
+int		ft_isalpha_plus_underscore(int c);
+void	get_new_var_value(char **var_value, char *str);
+void	get_new_var(char **var, char *str);
+
 
 #endif
