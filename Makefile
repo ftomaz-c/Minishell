@@ -23,6 +23,7 @@ SRC :=	src/main.c \
 		src/builtins/export_utils1.c \
 		src/builtins/export_utils2.c \
 		src/builtins/export_utils3.c \
+		src/builtins/unset.c\
 
 OBJ := $(SRC:.c=.o)
 
