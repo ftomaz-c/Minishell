@@ -5,12 +5,14 @@
 # include "structs.h"
 # include "lexer.h"
 # include "parser.h"
+# include "executor.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 
 /*tools.c*/

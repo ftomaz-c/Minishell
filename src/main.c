@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		}
 		
-		print_lexer(&tools);
+		//print_lexer(&tools);
 
 		if (!parser(&tools))
 		{
@@ -36,8 +36,10 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		}
 
-		print_parser(&tools);
+		//print_parser(&tools);
 
+		executor(&tools);
+		
 		free(line);
 		free_lexer(&tools.lexer);
 		free_parser(&tools.parser);
