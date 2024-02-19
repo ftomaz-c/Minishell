@@ -1,6 +1,6 @@
 #include "../../includes/builtins.h"
 
-int env(t_tools *tools, t_parser *command)
+int	env(t_tools *tools, t_parser *command)
 {
 	int	i;
 
@@ -8,6 +8,16 @@ int env(t_tools *tools, t_parser *command)
 	(void)tools;
 	(void)command;
 	while (tools->env[i])
-		printf("%s\n", tools->env[i++]);
-    return (0);
+	{
+		if (!ft_strchr(tools->env[i], '='))
+			i++;
+		else
+		{
+			if (!tools->env[i])
+				break ;
+			printf("%s\n", tools->env[i]);
+			i++;
+		}
+	}
+	return (0);
 }

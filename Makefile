@@ -19,7 +19,11 @@ SRC :=	src/main.c \
 		src/builtins/cd.c \
 		src/builtins/echo.c \
 		src/builtins/mini_exit.c \
-		src/builtins/unset.c \
+		src/builtins/export.c \
+		src/builtins/export_utils1.c \
+		src/builtins/export_utils2.c \
+		src/builtins/export_utils3.c \
+		src/builtins/unset.c\
 
 OBJ := $(SRC:.c=.o)
 

@@ -1,12 +1,5 @@
 #include "../../includes/parser.h"
 
-int	export(t_tools *tools, t_parser *parser)
-{
-	(void)tools;
-	(void)parser;
-	return(0);
-}
-
 int	(*is_builtin(char *str))(t_tools *tools, t_parser *parser)
 {
 	static struct {

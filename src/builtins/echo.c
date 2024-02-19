@@ -55,10 +55,12 @@ void	echo_print(t_parser *command, int pos)
 		{
 			if (command->str[pos][j] == first_quote)
 				j++;
+			if (j >= (int)ft_strlen(command->str[pos]))
+				break ;
 			printf("%c", command->str[pos][j]);
 			j++;
 		}
-		if (command->str[pos + 1])
+		if (command->str[pos][pos + 1])
 			printf(" ");
 		pos++;
 	}

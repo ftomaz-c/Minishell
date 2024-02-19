@@ -13,7 +13,7 @@ int	main(int argc, char **argv, char **envp)
 		free_tools(&tools);
 		exit (EXIT_FAILURE);
 	}
-	while (tools.exit != true)
+	while (1)
 	{
 		line = prompt_line(&tools);
 		add_history_file(line, ".minishell_history");
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 				return (1);
 			}
 			
-			//print_lexer(&tools);
+			// print_lexer(&tools);
 
 			if (!parse_lexer(&tools))
 			{
