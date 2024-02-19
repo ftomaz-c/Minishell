@@ -130,9 +130,9 @@ void	free_lexer(t_lexer **lexer)
 {
 	t_lexer	*current;
 	t_lexer	*next;
-
+	
 	current = *lexer;
-	if (*lexer == NULL)
+	if (!lexer || *lexer == NULL)
 		return ;
 	while (current != NULL)
 	{

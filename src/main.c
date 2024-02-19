@@ -39,8 +39,7 @@ int	main(int argc, char **argv, char **envp)
 			
 			//print_parser(&tools);
 
-			if (tools.parser->builtin)
-				execute_builtin(&tools);
+			executor(&tools);
 			free_parser(&tools.parser);
 			free_lexer(&tools.lexer);
 		}
