@@ -26,7 +26,7 @@ int		echo(t_tools *tools, t_parser *command);
 int		mini_exit(t_tools *tools, t_parser *parser);
 
 /*builtins/export.c*/
-int		export(t_tools *tools, t_parser *parser);
+int		export(t_tools *tools, t_parser *command);
 void	free_env(char **str);
 void	sort_array(char **env_copy);
 int		find_char_position(char *str, char c);
@@ -44,7 +44,7 @@ void	get_new_var(char **var, char *str);
 int	    copy_var_to_env(t_tools *tools, char **new_array, char *var_value, int i);
 
 /*builtins/unset.c*/
-int	unset(t_tools *tools, t_parser *command);
-int	count_lines(char **list);
+int	    unset(t_tools *tools, t_parser *command);
+int	    count_lines(char **list);
 
 #endif

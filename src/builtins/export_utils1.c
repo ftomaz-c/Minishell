@@ -1,5 +1,19 @@
 #include "../../includes/builtins.h"
 
+/**
+ * @brief Sort an array of strings alphabetically.
+ * 
+ * This function sorts the array of strings alphabetically using a simple bubble sort algorithm.
+ * 
+ * @param env_copy Array of strings to be sorted.
+ * 
+ * @note This function assumes that the array is null-terminated.
+ * 
+ * @see strcmp()
+ * 
+ * @example
+ */
+
 void	sort_array(char **env_copy)
 {
 	int		i;	
@@ -19,6 +33,27 @@ void	sort_array(char **env_copy)
 			i++;
 	}
 }
+/**
+ * @brief Copy variable value surrounded by quotes.
+ * 
+ * This function copies the variable value from the input string starting from the specified position
+ * and surrounds it with double quotes.
+ * 
+ * @param var_path Pointer to the destination string where the value will be copied.
+ * @param str Input string containing the variable and its value.
+ * @param start Starting position from where to copy the value.
+ * 
+ * @note This function assumes that the destination string is large enough to hold the copied value.
+ * 
+ * @example
+ * 
+ * ```
+ * char var_path[50];
+ * char *str = "VAR=\"value\"";
+ * copy_var_value_quotes(var_path, str, 5);
+ * // Now var_path contains "value"
+ * ```
+ */
 
 void	copy_var_value_quotes(char *var_path, char *str, int start)
 {
@@ -44,6 +79,27 @@ void	copy_var_value_quotes(char *var_path, char *str, int start)
 	var_path[++i] = '\0';
 }
 
+/**
+ * @brief Copy variable name.
+ * 
+ * This function copies the variable name from the input string up to the specified position.
+ * 
+ * @param var_path Pointer to the destination string where the name will be copied.
+ * @param str Input string containing the variable and its value.
+ * @param equal_pos Position of the equal sign '=' separating the variable name and value.
+ * 
+ * @note This function assumes that the destination string is large enough to hold the copied name.
+ * 
+ * @example
+ * 
+ * ```
+ * char var_path[50];
+ * char *str = "VAR=value";
+ * copy_var_name(var_path, str, 3);
+ * // Now var_path contains "VAR"
+ * ```
+ */
+
 void	copy_var_name(char *var_path, char *str, int equal_pos)
 {
 	int	i;
@@ -63,6 +119,31 @@ void	copy_var_name(char *var_path, char *str, int equal_pos)
 		}
 	}
 }
+
+/**
+ * @brief Prepare a variable for exporting.
+ * 
+ * This function prepares a variable for exporting by combining its name and value.
+ * 
+ * @param str Input string containing the variable and its value.
+ * 
+ * @return Returns a newly allocated string containing the prepared variable, 
+ * or NULL if memory allocation fails.
+ * 
+ * @note The returned string should be freed by the caller when it is no longer needed.
+ * 
+ * @see find_char_position(), ft_calloc(), copy_var_name(), ft_strlen(), 
+ * copy_var_value_quotes(), ft_strcpy(), ft_strjoin()
+ * 
+ * @example
+ * 
+ * ```
+ * char *str = "VAR=value";
+ * char *prepared_var = prepare_var(str);
+ * // Use prepared_var...
+ * free(prepared_var);
+ * ```
+ */
 
 char	*prepare_var(char *str)
 {
@@ -88,7 +169,30 @@ char	*prepare_var(char *str)
 	free(var_value);
 	return (new_path);
 }
-
+/**
+ * @brief Get environment variables for export.
+ * 
+ * This function prepares environment variables for export by adding "declare -x " prefix to each variable.
+ * 
+ * @param envp Pointer to the array of environment variables.
+ * @param i Index to start scanning the environment variables from.
+ * 
+ * @return Returns a newly allocated array of strings containing the prepared environment variables, or NULL if memory allocation fails.
+ * 
+ * @note The returned array should be freed by the caller when it is no longer needed.
+ * 
+ * @see ft_calloc(), ft_strchr(), prepare_var(), ft_strjoin()
+ * 
+ * @example
+ * 
+ * ```
+ * char **envp = {...};
+ * char **exported_env = get_env_export(envp, 0);
+ * // Use exported_env...
+ * // Free exported_env when done
+ * ```
+ */
+ 
 char	**get_env_export(char **envp, int i)
 {
 	char	**env;
