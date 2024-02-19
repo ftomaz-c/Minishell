@@ -27,24 +27,35 @@ int		mini_exit(t_tools *tools, t_parser *parser);
 
 /*builtins/export.c*/
 int		export(t_tools *tools, t_parser *command);
-void	free_env(char **str);
-void	sort_array(char **env_copy);
-int		find_char_position(char *str, char c);
-void	copy_var_name(char *var_path, char *str, int equal_pos);
+int	    check_if_var_exists(t_tools *tools, char *str);
+void	export_variable_to_env(t_tools *tools, char *str);
+int	    check_valid_export(char *parser);
+void	sort_print_env(t_tools *tools);
+
+/*builtins/export_utils1.c*/
 char	**get_env_export(char **envp, int i);
 char	*prepare_var(char *str);
-void	substitute_env_var_value(t_tools *tools, char *var_path, char *str);
 void	copy_var_name(char *var_path, char *str, int equal_pos);
-int		find_char_position(char *str, char c);
+void	copy_var_value_quotes(char *var_path, char *str, int start);
+void	sort_array(char **env_copy);
 
-int		check_var_path(char **env, char *var);
-int		ft_isalpha_plus_underscore(int c);
+/*builtins/export_utils2.c*/
+void	substitute_env_var_value(t_tools *tools, char *var_path, char *str);
 void	get_new_var_value(char **var_value, char *str);
+void	copy_var_value(char *var_path, char *str, int start);
+int		check_var_path(char **env, char *var);
+
+/*builtins/export_utils3.c*/
+int		copy_var_to_env(t_tools *tools, char **new_array, char *var_value, int i);
 void	get_new_var(char **var, char *str);
-int	    copy_var_to_env(t_tools *tools, char **new_array, char *var_value, int i);
+void	copy_var(char *var_path, char *str);
+int		find_char_position(char *str, char c);
+int		ft_isalpha_plus_underscore(int c);
 
 /*builtins/unset.c*/
-int	    unset(t_tools *tools, t_parser *command);
-int	    count_lines(char **list);
+int		unset(t_tools *tools, t_parser *command);
+int 	check_var(t_tools *tools, char *str);
+void	unset_var_from_env(t_tools *tools, char *str, int i);
+int		count_lines(char **list);
 
 #endif
