@@ -17,7 +17,6 @@
 
 /*tools.c*/
 int		config_tools(t_tools *tools);
-int		config_tools(t_tools *tools);
 char	**get_env(char **envp);
 char	**get_path(char **env);
 char	*get_var_from_env(char **env, char *var);
