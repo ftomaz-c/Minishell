@@ -233,7 +233,6 @@ int	config_tools(t_tools *tools, char **envp)
 	if (tools->user == NULL)
 		return (0);
 	tools->pipes = 0;
-	tools->exit = false;
 	tools->parser = NULL;
 	return (1);
 }

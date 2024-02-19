@@ -31,7 +31,10 @@ int	check_var(t_tools *tools, char *str)
 		return (1);
 	copy_var_name(var_path, str, i);
 	if (check_var_path(tools->env, var_path))
+	{
+		free(var_path);
 		return (1);
+	}
 	free(var_path);
 	return (0);
 }
