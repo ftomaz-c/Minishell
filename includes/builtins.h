@@ -58,4 +58,7 @@ int 	check_var(t_tools *tools, char *str);
 void	unset_var_from_env(t_tools *tools, char *str, int i);
 int		count_lines(char **list);
 
+/*builtins/unset.c*/
+int		unset(t_tools *tools, t_parser *command);
+
 #endif
