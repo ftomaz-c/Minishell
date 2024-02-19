@@ -3,15 +3,6 @@
 
 # include "minishell.h"
 
-int	(*is_builtin(char *str))(t_tools *tools, t_parser *parser);
-int	echo(t_tools *tools, t_parser *parser);
-int	cd(t_tools *tools, t_parser *parser);
-int	pwd(t_tools *tools, t_parser *parser);
-int	export(t_tools *tools, t_parser *parser);
-int	unset(t_tools *tools, t_parser *parser);
-int	env(t_tools *tools, t_parser *parser);
-int	mini_exit(t_tools *tools, t_parser *parser);
-
 /*parser.c*/
 int			parse_words(t_parser *node, t_lexer *current, int *i);
 int			parse_tokens(t_parser *node, t_lexer *current);

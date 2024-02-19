@@ -1,0 +1,3 @@
+This is line 2 with the pattern.
+Another line without the pattern.
+Line 4 with the pattern as well.

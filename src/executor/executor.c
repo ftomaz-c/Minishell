@@ -55,7 +55,12 @@ int	executor(t_tools *tools)
 			if (parser->next)
 				minishell_pipex(parser, tools);
 			else
-				exec_path(tools->path, parser->str, tools->env);
+			{
+				if (parser->builtin)
+					execute_builtin(tools);
+				else
+					exec_path(tools->path, parser->str, tools->env);
+			}
 			parser = parser->next;
 		}
 	}

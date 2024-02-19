@@ -5,6 +5,7 @@
 
 /*builtins/builtins.c*/
 void	execute_builtin(t_tools *tools);
+int		(*is_builtin(char *str))(t_tools *tools, t_parser *parser);
 
 /*builtins/cd.c*/
 void	update_env_vars(t_tools *tools);

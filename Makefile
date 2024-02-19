@@ -12,7 +12,6 @@ SRC :=	src/main.c \
 		src/lexer/lexer_utils.c \
 		src/lexer/lexer_split.c \
 		src/lexer/lexer_split_utils.c \
-		src/parser/parser.c \
 		src/builtins/builtins.c \
 		src/builtins/pwd.c \
 		src/builtins/env.c \
@@ -24,8 +23,8 @@ SRC :=	src/main.c \
 		src/builtins/export_utils2.c \
 		src/builtins/export_utils3.c \
 		src/builtins/unset.c\
+		src/parser/parser.c \
 		src/parser/parser_utils.c \
-		src/parser/builtins.c \
 		src/executor/executor.c \
 		src/executor/redirections.c \
 		src/executor/here_doc.c \

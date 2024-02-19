@@ -59,12 +59,20 @@ void	minishell_pipex(t_parser *parser, t_tools *tools)
 	else if (pid == 0)
 	{
 		if (parser->stdout_flag)
-			exec_path(tools->path, parser->str, tools->env);
+		{
+			if (parser->builtin)
+				execute_builtin(tools);
+			else
+				exec_path(tools->path, parser->str, tools->env);
+		}
 		else
 		{
 			close(pipe_fd[0]);
 			dup2(pipe_fd[1], STDOUT_FILENO);
-			exec_path(tools->path, parser->str, tools->env);
+			if (parser->builtin)
+				execute_builtin(tools);
+			else
+				exec_path(tools->path, parser->str, tools->env);
 		}
 	}
 	else
