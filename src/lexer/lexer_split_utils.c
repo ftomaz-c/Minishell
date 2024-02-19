@@ -175,26 +175,25 @@ int	count_words_and_quotes(char *s, char c)
 
 	i = 0;
 	word = 0;
-	while (s[i] != '\0')
+	while (i < ft_strlen(s))
 	{
-		if ((s[i] == 34 || s[i] == 39) && s[i])
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] && s[i] != c && s[i] != 34 && s[i] != 39)
 		{
 			word++;
-			if (s[i] == '\"' || s[i] == '\'')
+			i++;
+			if ((s[i] == 34 || s[i] == 39) && s[i])
 				i = paired_quote(s, i + 1, s[i]) + 1;
-		}
-		else if (s[i] && s[i] == c)
-			while (s[i] == c)
-				i++;
-		else
-		{
-			word++;
-			while (s[i] && s[i] != c && s[i] != 34 && s[i] != 39)
+			while (s[i] && s[i] != c)
 				i++;
 		}
+		i++;
 	}
 	return (word);
 }
+
+
 /**
  * @brief Allocates memory for a word within a string and copies it.
  * 

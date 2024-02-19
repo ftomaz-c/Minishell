@@ -33,7 +33,7 @@
  * ```
  */
 
-void	expander(char **env, char **list)
+/*void	expander(char **env, char **list)
 {
 	int		index;
 	char	*var;
@@ -54,6 +54,60 @@ void	expander(char **env, char **list)
 				list[index] = ft_strdup(value);
 			free(value);
 		}
+		index++;
+	}
+}*/
+
+int	ft_isalphanum_plus_underscore(int c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= 0 && c <= 9) || c == '_')
+		return (1);
+	return (0);
+}
+
+int	find_char_position_new(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+ 	while (str[i])
+	{
+		if (str[i] == c)
+		return (i);
+	i++;
+	}
+	return (i);
+}
+
+void	expander(char **env, char **list)
+{
+	int		index;
+	char	*var;
+	char	*value;
+	int		position;
+	int		end;
+
+	index = 0;
+	while (list[index])
+	{
+		if (find_char_position_new(list[index], '$') < (int)ft_strlen(list[index]))
+		{
+			position = find_char_position_new(list[index], '$');
+			end = position + 1;
+			//printf("position: %d\n", position);
+ 			while(list[index] && list[index][end] && ft_isalphanum_plus_underscore(list[index][end]))
+ 				end++;
+ 			//printf("end: %d\n", end);
+ 			var = ft_substr(list[index], position + 1, end);
+ 			value = get_var_from_env(env, var);
+ 			free(var);
+ 			free(list[index]);
+			if (value == NULL)
+				list[index] = ft_strdup("");
+			else
+ 				list[index] = ft_strdup(value);
+ 			free(value);
+ 		}
 		index++;
 	}
 }

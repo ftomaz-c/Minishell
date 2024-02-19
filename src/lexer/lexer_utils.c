@@ -1,4 +1,42 @@
 #include "../../includes/minishell.h"
+
+void	handle_quote(char *line, int *flag, int *i, char quote)
+{
+	(*i)++;
+	*flag = -1;
+	while(line[*i] && line[*i] != quote)
+		(*i)++;
+	if (*i < (int)ft_strlen(line))
+		*flag = 1;	
+}
+
+int	check_unclosed_quotes(char *line)
+{
+	int		i;
+	int		flag;
+	char	quote;
+
+	i = 0;
+	flag = 0;
+	while (i < (int)ft_strlen(line))
+	{
+		if (line[i] == 34)
+		{
+			quote = 34;
+			handle_quote(line, &flag, &i, quote);
+		}
+		if (line[i] == 39)
+		{
+			quote = 39;
+			handle_quote(line, &flag, &i, quote);
+		}
+		i++;
+	}
+	if (i > (int)ft_strlen(line) && flag == -1)
+		return (0);
+	return (1);
+}
+
 /**
  * @brief Checks if a character is a token.
  * 

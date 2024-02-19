@@ -13,6 +13,17 @@ SRC :=	src/main.c \
 		src/lexer/lexer_split.c \
 		src/lexer/lexer_split_utils.c \
 		src/parser/parser.c \
+		src/builtins/builtins.c \
+		src/builtins/pwd.c \
+		src/builtins/env.c \
+		src/builtins/cd.c \
+		src/builtins/echo.c \
+		src/builtins/mini_exit.c \
+		src/builtins/export.c \
+		src/builtins/export_utils1.c \
+		src/builtins/export_utils2.c \
+		src/builtins/export_utils3.c \
+		src/builtins/unset.c\
 		src/parser/parser_utils.c \
 		src/parser/builtins.c \
 		src/executor/executor.c \

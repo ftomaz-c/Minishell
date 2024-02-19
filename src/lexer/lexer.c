@@ -218,3 +218,10 @@ int	lex_line(char *line, t_tools *tools)
 	free_list(line_split_quotes);
 	return (1);
 }
+
+	// int	i = 0;
+	// while (line_split_quotes[i])
+	// {
+	// 	printf("%s\n", line_split_quotes[i]);
+	// 	i++;
+	// }

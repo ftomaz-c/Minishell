@@ -7,43 +7,46 @@ int	main(int argc, char **argv, char **envp)
 
 	update_history(".minishell_history");
 	error_check(argc, argv);
-	tools.env = get_env(envp);
+	if (!config_tools(&tools, envp))
+	{
+		printf ("Error: Failed to allocate memory for tools\n");
+		free_tools(&tools);
+		exit (EXIT_FAILURE);
+	}
 	while (1)
 	{
-		if (!config_tools(&tools))
-		{
-			printf ("Error: Failed to allocate memory for tools\n");
-			free_tools(&tools);
-			exit (EXIT_FAILURE);
-		}
 		line = prompt_line(&tools);
 		add_history_file(line, ".minishell_history");
-		if (!lex_line(line, &tools))
+		if (check_unclosed_quotes(line))
 		{
-			free(line);
-			free_tools(&tools);
-			return (1);
-		}
-		
-		//print_lexer(&tools);
+			if (!lex_line(line, &tools))
+			{
+				free(line);
+				free_tools(&tools);
+				return (1);
+			}
+			
+			// print_lexer(&tools);
 
-		if (!parser(&tools))
-		{
-			free(line);
-			free_lexer(&tools.lexer);
+			if (!parse_lexer(&tools))
+			{
+				free(line);
+				free_lexer(&tools.lexer);
+				free_parser(&tools.parser);
+				free_tools(&tools);
+				return (1);
+			}
+			
+			//print_parser(&tools);
+
+			executor(&tools);
 			free_parser(&tools.parser);
-			free_tools(&tools);
-			return (1);
+			free_lexer(&tools.lexer);
 		}
-
-		//print_parser(&tools);
-
-		executor(&tools);
-		
+		else
+			printf("Error: input with unclosed quotes\n");
 		free(line);
-		free_lexer(&tools.lexer);
-		free_parser(&tools.parser);
-		free_tools(&tools);
 	}
+	free_tools(&tools);
 	return (0);
 }

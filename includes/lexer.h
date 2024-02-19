@@ -11,6 +11,7 @@ void	add_token_to_node(char token, t_lexer **lexer);
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer);
 
 /*lexer utils*/
+int		check_unclosed_quotes(char *line);
 int		check_if_token(char c);
 void	ft_lstaddback(t_lexer **lst, t_lexer *new);
 void	free_list(char	**list);

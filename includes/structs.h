@@ -10,6 +10,8 @@ typedef struct s_tools
 {
 	char			**env;
 	char			**path;
+	char			*home;
+	char			*user;
 	char			*pwd;
 	char			*oldpwd;
 	int				pipes;
