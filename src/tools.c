@@ -234,5 +234,6 @@ int	config_tools(t_tools *tools, char **envp)
 		return (0);
 	tools->pipes = 0;
 	tools->parser = NULL;
+	tools->exit = 0;
 	return (1);
 }

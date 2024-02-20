@@ -79,5 +79,5 @@ int	echo(t_tools *tools, t_parser *command)
 		echo_n_print(command, i);
 	else
 		echo_print(command, i);
-	return (0);
+	exit (EXIT_SUCCESS);
 }

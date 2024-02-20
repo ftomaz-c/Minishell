@@ -19,5 +19,5 @@ int	env(t_tools *tools, t_parser *command)
 			i++;
 		}
 	}
-	return (0);
+	exit (EXIT_SUCCESS);
 }
