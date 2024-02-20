@@ -16,19 +16,18 @@ int	check_exit_args(t_parser *parser)
 
 int	mini_exit(t_tools *tools, t_parser *parser)
 {
-	int exit_number;
+	//int exit_number;
 
-	(void)tools;
-	exit_number = 0;
+	//exit_number = 0;
 	if (parser->str[1])
 	{
 		if (parser->str[1])
 		{ 
 			if (!check_exit_args(parser))
 			{
-				exit_number = 255;
+				tools->exit = 255;
 				printf("exit\nbash: exit: %s: numeric argument required\n", parser->str[1]);
-				exit(exit_number);
+				return(tools->exit);
 			}
 		}
 		if (parser->str[2] != NULL)
@@ -37,8 +36,9 @@ int	mini_exit(t_tools *tools, t_parser *parser)
 			return (1);
 		}
 		else
-			exit_number = ft_atoi(parser->str[1]);
+			tools->exit = ft_atoi(parser->str[1]);
 	}
 	printf("exit\n");
-	exit(exit_number);
+	tools->exit = 1;
+	return (tools->exit);
 }

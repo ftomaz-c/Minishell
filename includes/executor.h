@@ -6,6 +6,7 @@
 /*executor.c*/
 int		executor(t_tools *tools);
 void	set_executor(t_parser *parser);
+void	execute_cmd(t_tools *tools, t_parser *parser);
 
 /*redirections.c*/
 void	set_stdout(t_parser *parser);
@@ -20,6 +21,7 @@ void	get_here_doc(char *limiter, int fd, int original_stdout);
 
 /*cmd_exec.c*/
 void	exec_path(char **path_list, char **cmd_args, char **envp);
+int		exec_builtins(t_parser *parser);
 void	minishell_pipex(t_parser *parser, t_tools *tools);
 
 #endif

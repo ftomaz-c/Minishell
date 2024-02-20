@@ -76,7 +76,7 @@ int	unset(t_tools *tools, t_parser *command)
 	i = 1;
 	pos = 0;
 	if(!command->str[i])
-		return (0);
+		printf("\n");
 	while (command->str[i])
 	{
 		if (check_var(tools, command->str[i]))

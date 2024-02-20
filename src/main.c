@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 				return (1);
 			}
 			
-			//print_parser(&tools);
+			// print_parser(&tools);
 
 			executor(&tools);
 			free_parser(&tools.parser);
@@ -46,6 +46,8 @@ int	main(int argc, char **argv, char **envp)
 		else
 			printf("Error: input with unclosed quotes\n");
 		free(line);
+		if (tools.exit)
+			break;
 	}
 	free_tools(&tools);
 	return (0);

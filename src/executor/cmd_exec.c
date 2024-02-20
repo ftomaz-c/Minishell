@@ -1,5 +1,14 @@
 #include "../../includes/executor.h"
 
+int	exec_builtins(t_parser *parser)
+{
+	if (parser->builtin == cd || parser->builtin == pwd 
+		|| parser->builtin == export || parser->builtin == unset 
+		|| parser->builtin == mini_exit)
+		return (1);
+	return (0);
+}
+
 /**
  * @brief Executes a command with the provided path.
  * 
@@ -59,20 +68,12 @@ void	minishell_pipex(t_parser *parser, t_tools *tools)
 	else if (pid == 0)
 	{
 		if (parser->stdout_flag)
-		{
-			if (parser->builtin)
-				execute_builtin(tools);
-			else
-				exec_path(tools->path, parser->str, tools->env);
-		}
+			execute_cmd(tools, parser);
 		else
 		{
 			close(pipe_fd[0]);
 			dup2(pipe_fd[1], STDOUT_FILENO);
-			if (parser->builtin)
-				execute_builtin(tools);
-			else
-				exec_path(tools->path, parser->str, tools->env);
+			execute_cmd(tools, parser);
 		}
 	}
 	else

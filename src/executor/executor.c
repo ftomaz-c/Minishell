@@ -1,5 +1,14 @@
 #include "../../includes/executor.h"
 
+void	execute_cmd(t_tools *tools, t_parser *parser)
+{
+	if (parser->builtin == echo || parser->builtin == env)
+		parser->builtin(tools, parser);
+	else
+		exec_path(tools->path, parser->str, tools->env);
+	return ;
+}
+
 /**
  * @brief Sets up the executor based on parser data.
  * 
@@ -42,8 +51,8 @@ int	executor(t_tools *tools)
 	int 		status;
 
 	parser = tools->parser;
-	if (!parser)
-		return (1);
+	if (exec_builtins(tools->parser))
+		return (parser->builtin(tools, parser));
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
@@ -55,12 +64,7 @@ int	executor(t_tools *tools)
 			if (parser->next)
 				minishell_pipex(parser, tools);
 			else
-			{
-				if (parser->builtin)
-					execute_builtin(tools);
-				else
-					exec_path(tools->path, parser->str, tools->env);
-			}
+				execute_cmd(tools, parser);
 			parser = parser->next;
 		}
 	}
