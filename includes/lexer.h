@@ -16,6 +16,7 @@ int		check_if_token(char c);
 void	ft_lstaddback(t_lexer **lst, t_lexer *new);
 void	free_list(char	**list);
 void	free_lexer(t_lexer **lexer);
+int	check_if_token_valid(char *str, char c, int position);
 
 /*lexer_split.c*/
 char	**lexer_split(char *s, char c);

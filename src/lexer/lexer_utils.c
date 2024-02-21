@@ -61,6 +61,53 @@ int	check_if_token(char c)
 	return (0);
 }
 
+int	check_if_token_valid(char *str, char c, int position)
+{
+	int		i;
+	int		flag;
+	char	quote;
+	int		qposition;
+	// int		pair;
+
+	i = 0;
+	qposition = 0;
+	flag = 0;
+	if (!check_if_token(c))
+	{	
+		return (0);
+	}
+	// printf("here: %c\n", c);
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+		{	
+			qposition = i;
+			quote = str[i];
+			i++;
+			while (str[i] && str[i] != quote)
+				i++;
+			if (str[i] == quote && position < i && position > qposition)
+			{	
+				flag = 1;
+				// printf("here ended\n");
+				return (0);
+			}
+		}
+		// if (i < (int)ft_strlen(str) && flag)
+		if (flag)
+		{	
+			break ;
+		}
+		i++;
+	}
+	// if (position > qposition && position < i)
+	// {	
+	// 	// printf("checked token\n");
+	// 	return (0);
+	// }
+	return (1);
+}
+
 /**
  * @brief Adds a new node to the end of a lexer list.
  * 

@@ -142,34 +142,198 @@ void	add_token_to_node(char token, t_lexer **lexer)
  * and a token ('<')
  * ```
  */
+char	*remove_quotes(char	*str)
+{
+	int		i;
+	int		start;
+	char	quote;
+	char	*word;
+	char	*temp;
+
+	i = 0;
+	start = 0;
+	word = NULL;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i];
+			if (str[i] && (i - 1) >= 0)
+			{
+				// temp = ft_calloc(sizeof(char *), (i - start) + 1);
+				temp = ft_substr(str, start, i - start);
+				if (!word)
+				{	
+					word = ft_calloc(sizeof(char *), (i - start) + 1);
+					ft_strlcpy(word, temp, ft_strlen(temp) + 1);
+				}
+				else
+					word = ft_strjoin(word, temp);
+				free(temp);
+			}
+			start = ++i;
+			while (str[i] && str[i] != quote)
+				i++;
+			// temp = ft_calloc(sizeof(char *), (i - start) + 1);
+			temp = ft_substr(str, start, i - start);
+			if (!word)
+			{	
+				// word = ft_calloc(sizeof(char *), (i - start) + 1);
+				// ft_strlcpy(word, temp, ft_strlen(temp) + 1);
+				word = ft_strdup(temp);
+			}
+			else
+				word = ft_strjoin(word, temp);
+			free(temp);
+			start = ++i;
+		}
+		else
+			i++;
+	}
+	if (start < i)
+	{
+		temp = ft_substr(str, start, i - start);
+		if (!word)
+		{	
+			word = ft_calloc(sizeof(char *), (i - start) + 1);
+			ft_strlcpy(word, temp, ft_strlen(temp) + 1);
+		}
+		else
+			word = ft_strjoin(word, temp);
+		free(temp);
+	}
+	return (word);
+}
+int	find_next_char_position(char *str, int i, char c)
+{
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (i);
+}
 
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
 {
-	int	i;
-	int	j;
-	int	start;
+	int		i;
+	int		j;
+	int		start;
+	char	*word_no_quotes;
+	char 	*new;
 
 	i = 0;
+	word_no_quotes = NULL;
 	while (line_split[i] != NULL)
 	{
 		j = 0;
 		start = 0;
+		word_no_quotes = line_split[i];
+		if (ft_strchr(line_split[i], '\"') || ft_strchr(line_split[i], '\''))
+			word_no_quotes = remove_quotes(line_split[i]);
 		while (line_split[i][j] != '\0')
 		{
-			if (check_if_token(line_split[i][j]))
+			if (check_if_token_valid(line_split[i], line_split[i][j], j))
 			{
 				if (start < j)
-					add_word_to_node(line_split[i], start, j, lexer);
+				{	
+					new = ft_substr(line_split[i], start, j - start);
+					word_no_quotes = remove_quotes(new);
+					add_word_to_node(word_no_quotes, 0, ft_strlen(word_no_quotes), lexer);
+					free(new);
+				}
 				add_token_to_node(line_split[i][j], lexer);
-				start = j + 1;
+				start = ++j;
 			}
-			j++;
+			else
+				j++;
 		}
 		if (start < j)
-			add_word_to_node(line_split[i], start, j, lexer);
+		{
+			new = ft_substr(line_split[i], start, j - start);
+			free(word_no_quotes);
+			word_no_quotes = remove_quotes(new);
+			add_word_to_node(word_no_quotes, 0, ft_strlen(word_no_quotes), lexer);
+		}
+		free(word_no_quotes);
 		i++;
 	}
 }
+// thr"va'>r="hel'lo "th'ere"'" wkufh
+// thr"va'>r="hel'lo "th'ere"'" wk>ufh
+// thrva'>r=hello "there' wk>ufh
+
+// char	*word_no_quotes(char *str, int start, int end)
+// {
+
+// }
+
+//  void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	start;
+// 	char	quote;
+
+// 	i = 0;
+// 	while (line_split[i] != NULL)
+// 	{
+// 		j = 0;
+// 		start = 0;
+// 		while (line_split[i][j] && line_split[i][j] != '\0')
+// 		{
+// 			if (line_split[i][j] == '\"' || line_split[i][j] == '\'')
+// 			{
+// 				quote = line_split[i][j];
+// 				while (line_split[i][j] && line_split[i][j] != quote)
+// 					j++;
+// 				while (line_split[i][j] && line_split[i][j] != '\0')
+// 				{	
+// 					if (check_if_token(line_split[i][j]))
+// 					{
+// 						add_word_to_node(line_split[i], start, j, lexer);
+// 						add_token_to_node(line_split[i][j], lexer);
+// 						break ;
+// 					}
+// 					j++;
+// 				}
+// 				if (start < j)
+// 					add_word_to_node(line_split[i], start, j, lexer);
+// 			}
+// 		}
+// 		i++;
+// 	}
+// }
+
+
+// void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	start;
+
+// 	i = 0;
+// 	while (line_split[i] != NULL)
+// 	{
+// 		j = 0;
+// 		start = 0;
+// 		while (line_split[i][j] != '\0')
+// 		{
+// 			if (check_if_token(line_split[i][j]))
+// 			{
+// 				if (start < j)
+// 					add_word_to_node(line_split[i], start, j, lexer);
+// 				add_token_to_node(line_split[i][j], lexer);
+// 				start = j + 1;
+// 			}
+// 			j++;
+// 		}
+// 		if (start < j)
+// 			add_word_to_node(line_split[i], start, j, lexer);
+// 		i++;
+// 	}
+// }
 /**
  * @brief Lexically analyzes a line and adds it to the lexer structure.
  * 
@@ -215,13 +379,13 @@ int	lex_line(char *line, t_tools *tools)
 	line_split_quotes = lexer_split(line, ' ');
 	expander(tools->env, line_split_quotes);
 	add_line_to_lexer_struct(line_split_quotes, &tools->lexer);
-	free_list(line_split_quotes);
+	// free_list(line_split_quotes);
 	return (1);
 }
 
 	// int	i = 0;
 	// while (line_split_quotes[i])
 	// {
-	// 	printf("%s\n", line_split_quotes[i]);
+	// 	printf("words: %s\n", line_split_quotes[i]);
 	// 	i++;
 	// }
