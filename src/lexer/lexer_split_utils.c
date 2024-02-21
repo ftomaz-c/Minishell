@@ -246,7 +246,7 @@ char	*word_alloc(char *s, int start, int end)
 	int		i;
 
 	i = 0;
-	word = (char *)ft_calloc((end - start) + 1, 1);
+	word = ft_calloc(sizeof(char), (end - start) + 1);
 	if (word)
 	{
 		while (start < end)

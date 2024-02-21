@@ -149,10 +149,12 @@ char	*remove_quotes(char	*str)
 	char	quote;
 	char	*word;
 	char	*temp;
+	char	*new_word;
 
 	i = 0;
 	start = 0;
 	word = NULL;
+	new_word = NULL;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -160,30 +162,33 @@ char	*remove_quotes(char	*str)
 			quote = str[i];
 			if (str[i] && (i - 1) >= 0)
 			{
-				// temp = ft_calloc(sizeof(char *), (i - start) + 1);
 				temp = ft_substr(str, start, i - start);
 				if (!word)
 				{	
-					word = ft_calloc(sizeof(char *), (i - start) + 1);
-					ft_strlcpy(word, temp, ft_strlen(temp) + 1);
+					word = ft_strdup(temp);
+					// word = ft_calloc(sizeof(char *), (i - start) + 1);
+					// ft_strlcpy(word, temp, ft_strlen(temp) + 1);
 				}
 				else
-					word = ft_strjoin(word, temp);
+				{	
+					new_word = ft_strjoin(word, temp);
+					free(word);
+					word = new_word;
+				}
 				free(temp);
 			}
 			start = ++i;
 			while (str[i] && str[i] != quote)
 				i++;
-			// temp = ft_calloc(sizeof(char *), (i - start) + 1);
 			temp = ft_substr(str, start, i - start);
 			if (!word)
-			{	
-				// word = ft_calloc(sizeof(char *), (i - start) + 1);
-				// ft_strlcpy(word, temp, ft_strlen(temp) + 1);
 				word = ft_strdup(temp);
-			}
 			else
-				word = ft_strjoin(word, temp);
+			{	
+				new_word = ft_strjoin(word, temp);
+				free(word);
+				word = new_word;
+			}
 			free(temp);
 			start = ++i;
 		}
@@ -195,11 +200,16 @@ char	*remove_quotes(char	*str)
 		temp = ft_substr(str, start, i - start);
 		if (!word)
 		{	
-			word = ft_calloc(sizeof(char *), (i - start) + 1);
-			ft_strlcpy(word, temp, ft_strlen(temp) + 1);
+			word = ft_strdup(temp);
+			// word = ft_calloc(sizeof(char *), (i - start) + 1);
+			// ft_strlcpy(word, temp, ft_strlen(temp) + 1);
 		}
 		else
-			word = ft_strjoin(word, temp);
+		{	
+			new_word = ft_strjoin(word, temp);
+			free(word);
+			word = new_word;
+		}
 		free(temp);
 	}
 	return (word);
@@ -255,6 +265,7 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
 			free(word_no_quotes);
 			word_no_quotes = remove_quotes(new);
 			add_word_to_node(word_no_quotes, 0, ft_strlen(word_no_quotes), lexer);
+			free(new);
 		}
 		free(word_no_quotes);
 		i++;
