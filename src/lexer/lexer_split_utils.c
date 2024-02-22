@@ -54,7 +54,6 @@ int	paired_quote(char *str, int i, char ch)
 		}
 		i++;
 	}
-	// printf("i val is: %d\n", i);
 	return (i);
 }
 // echo "hello th'ere"iefwg sir>there

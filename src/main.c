@@ -26,22 +26,22 @@ int	main(int argc, char **argv, char **envp)
 				return (1);
 			}
 			
-			print_lexer(&tools);
+			// print_lexer(&tools);
 
-			// if (!parser(&tools))
-			// {
-			// 	free(line);
-			// 	free_lexer(&tools.lexer);
-			// 	free_parser(&tools.parser);
-			// 	free_tools(&tools);
-			// 	return (1);
-			// }
+			if (!parser(&tools))
+			{
+				free(line);
+				free_lexer(&tools.lexer);
+				free_parser(&tools.parser);
+				free_tools(&tools);
+				return (1);
+			}
 			
 			// print_parser(&tools);
 
-			// executor(&tools);
-			// free_parser(&tools.parser);
-			// free_lexer(&tools.lexer);
+			executor(&tools);
+			free_parser(&tools.parser);
+			free_lexer(&tools.lexer);
 		}
 		else
 			printf("Error: input with unclosed quotes\n");

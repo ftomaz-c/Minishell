@@ -210,8 +210,9 @@ void	remove_quotes_add_word(char *line_split, int start, int j, t_lexer **lexer)
 	i = 0;
 	new = ft_substr(line_split, start, j - start);
 	word_no_quotes = remove_quotes(new, i);
-	add_word_to_node(word_no_quotes, 0, ft_strlen(word_no_quotes), lexer);
 	free(new);
+	add_word_to_node(word_no_quotes, 0, ft_strlen(word_no_quotes), lexer);
+	free(word_no_quotes);
 }
 
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
