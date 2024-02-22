@@ -28,14 +28,14 @@ int	main(int argc, char **argv, char **envp)
 			
 			print_lexer(&tools);
 
-			if (!parser(&tools))
-			{
-				free(line);
-				free_lexer(&tools.lexer);
-				free_parser(&tools.parser);
-				free_tools(&tools);
-				return (1);
-			}
+			// if (!parser(&tools))
+			// {
+			// 	free(line);
+			// 	free_lexer(&tools.lexer);
+			// 	free_parser(&tools.parser);
+			// 	free_tools(&tools);
+			// 	return (1);
+			// }
 			
 			// print_parser(&tools);
 
