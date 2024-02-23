@@ -60,11 +60,6 @@ void	handle_characters(char *s, int *i, int *start)
  * ```
  */
 
-//  while str
-// if quote is found, equal to first quote, until next is found, i++. then until white space
-// i++
-// else if no quote is foudn and char is found, start is equal to that, iterate
-
  char	**create_split(char *s, char **split, int nwords, char c)
 {
 	int	i;
@@ -89,31 +84,6 @@ void	handle_characters(char *s, int *i, int *start)
 	}
 	return (split);
 }
-
-// char	**create_split(char *s, char **split, int nwords, char c)
-// {
-// 	int	i;
-// 	int	j;
-// 	int	start;
-// 	int	nstart;
-
-// 	i = 0;
-// 	j = 0;
-// 	start = 0;
-// 	nstart = 0;
-// 	while (i < (int)ft_strlen(s) && j < nwords)
-// 	{
-// 		if (s[i] == '\"' || s[i] == '\'' || s[i] == ' ')
-// 			handle_white_spaces_and_quotes(s, &i, &start);
-// 		if (s[i] && s[i] != c && s[i] != '\"' && s[i] != '\'')
-// 			handle_characters(s, &i, &start);
-// 		split[j] = word_alloc(s, start, i);
-// 		i++;
-// 		j++;
-// 		update_start_indexes(&i, &start, &nstart);
-// 	}
-// 	return (split);
-// }
 
 /**
  * @brief Splits a string into an array of substrings for

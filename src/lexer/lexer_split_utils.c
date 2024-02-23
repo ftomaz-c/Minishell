@@ -56,8 +56,7 @@ int	paired_quote(char *str, int i, char ch)
 	}
 	return (i);
 }
-// echo "hello th'ere"iefwg sir>there
-// echo thr"va'>r="hel'lo "th'ere"'" wk>ufh 09>u
+
 /**
  * @brief Handles white spaces and quotes within a string.
  * 

@@ -112,54 +112,31 @@ void	add_token_to_node(char token, t_lexer **lexer)
 	ft_lstaddback(lexer, node);
 }
 /**
- * @brief Adds a line split into a lexer structure.
+ * @brief Removes quotes from a string.
  * 
- * This function iterates through the array of strings 'line_split',
- * splits each string into words and tokens, and adds them
- * to the lexer structure.
+ * This function removes single and double quotes from a given string and returns a new string without them.
  * 
- * @param line_split An array of strings representing the split line.
- * @param lexer Pointer to the pointer to the head of the lexer list.
+ * @param str The input string from which quotes are to be removed.
+ * @param i Starting index to begin processing the string.
  * 
- * @note This function assumes that 'line_split' is a
- * null-terminated array of strings.
- *       It also assumes that the 'lexer' pointer is pointing
- * to a valid lexer list.
+ * @return A new string without quotes. If no quotes are found, returns NULL.
  * 
- * @warning The function does not perform input validation
- * on 'line_split' or 'lexer'.
- *          It may result in unexpected behavior if 'line_split' is not
- * a valid array of strings or if 'lexer' is NULL.
+ * @note This function allocates memory for the new string. The caller is responsible for freeing this memory.
  * 
- * @see add_word_to_node(), add_token_to_node(), check_if_token()
+ * @warning This function assumes that the input string is null-terminated and does not modify the original string.
+ * 
+ * @see add_temp_to_word() function for adding temporary substrings to the result.
  * 
  * @example
  * ```
- * char *line_split[] = {"echo", "Hello", "world", "<", NULL};
- * t_lexer *lexer = NULL; // Assume lexer is initialized elsewhere
- * add_line_to_lexer_struct(line_split, &lexer);
- * // The lexer list will contain nodes for words ("echo", "Hello", "world")
- * and a token ('<')
+ * // Example usage of remove_quotes() function
+ * char *input = "This 'is' a 'test' string";
+ * int index = 0;
+ * char *result = remove_quotes(input, index);
+ * // The result should be "This is a test string" after removing the quotes.
+ * // Remember to free the memory allocated for 'result' when done.
  * ```
  */
-
-void	add_temp_to_word(char *str, char **word, int start, int i)
-{
-	char	*new_word;
-	char	*temp;
-
-	new_word = NULL;
-	temp = ft_substr(str, start, i - start);
-	if (!(*word))
-		*word = ft_strdup(temp);
-	else
-	{	
-		new_word = ft_strjoin(*word, temp);
-		free(*word);
-		*word = new_word;
-	}
-	free(temp);
-}
 
 char	*remove_quotes(char	*str, int i)
 {
@@ -190,30 +167,37 @@ char	*remove_quotes(char	*str, int i)
 	return (word);
 }
 
-int	find_next_char_position(char *str, int i, char c)
-{
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-void	remove_quotes_add_word(char *line_split, int start, int j, t_lexer **lexer)
-{
-	char 	*new;
-	char	*word_no_quotes;
-	int		i;
-
-	i = 0;
-	new = ft_substr(line_split, start, j - start);
-	word_no_quotes = remove_quotes(new, i);
-	free(new);
-	add_word_to_node(word_no_quotes, 0, ft_strlen(word_no_quotes), lexer);
-	free(word_no_quotes);
-}
+/**
+ * @brief Adds a line split into a lexer structure.
+ * 
+ * This function iterates through the array of strings 'line_split',
+ * splits each string into words and tokens, and adds them
+ * to the lexer structure.
+ * 
+ * @param line_split An array of strings representing the split line.
+ * @param lexer Pointer to the pointer to the head of the lexer list.
+ * 
+ * @note This function assumes that 'line_split' is a
+ * null-terminated array of strings.
+ *       It also assumes that the 'lexer' pointer is pointing
+ * to a valid lexer list.
+ * 
+ * @warning The function does not perform input validation
+ * on 'line_split' or 'lexer'.
+ *          It may result in unexpected behavior if 'line_split' is not
+ * a valid array of strings or if 'lexer' is NULL.
+ * 
+ * @see add_word_to_node(), add_token_to_node(), check_if_token()
+ * 
+ * @example
+ * ```
+ * char *line_split[] = {"echo", "Hello", "world", "<", NULL};
+ * t_lexer *lexer = NULL; // Assume lexer is initialized elsewhere
+ * add_line_to_lexer_struct(line_split, &lexer);
+ * // The lexer list will contain nodes for words ("echo", "Hello", "world")
+ * and a token ('<')
+ * ```
+ */
 
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
 {
