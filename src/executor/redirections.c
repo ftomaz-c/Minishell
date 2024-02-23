@@ -14,12 +14,12 @@ char	*set_stdin_flag(t_parser *parser)
 {
 	if (parser->redirections->token == '<')
 	{
-		if (parser->redirections->next->token == '<')
+		if (parser->redirections->next && parser->redirections->next->token == '<')
 		{
 			parser->stdin_flag = LESS_LESS;
 			return ("<<");
 		}
-		else
+		else if (parser->redirections->next->token != '<')
 		{
 			parser->stdin_flag = LESS;
 			return ("<");
@@ -42,7 +42,7 @@ char	*set_stdout_flag(t_parser *parser)
 {
 	if (parser->redirections->token == '>')
 	{
-		if (parser->redirections->next->token == '>')
+		if (parser->redirections->next && parser->redirections->next->token == '>')
 		{
 			parser->stdout_flag = GREAT_GREAT;
 			return (">>");
@@ -68,6 +68,12 @@ char	*set_stdout_flag(t_parser *parser)
  * @see set_stdin_flag, set_stdout_flag
  */
 
+		/*if (!parser->redirections->next)
+		{
+			printf("bash: syntax error near unexpected token `newline'");
+			exit (EXIT_FAILURE)
+		}*/
+
 void	redirection(t_parser *parser)
 {
 	char	*stdin_flag;
@@ -77,6 +83,7 @@ void	redirection(t_parser *parser)
 	{
 		stdin_flag = set_stdin_flag(parser);
 		stdout_flag = set_stdout_flag(parser);
+
 		parser->redirections = parser->redirections->next;
 		if (stdin_flag != NULL && ft_strncmp(stdin_flag, "<<", 2) == 0)
 		{
@@ -116,7 +123,10 @@ void	set_stdin(t_parser *parser)
 	{
 		fd_infile = open (parser->stdin_file_name, O_RDONLY);
 		if (fd_infile < 0)
+		{
+			printf("bash: there: No such file or directory\n");
 			exit (EXIT_FAILURE);
+		}
 		dup2(fd_infile, STDIN_FILENO);
 		close(fd_infile);
 	}
