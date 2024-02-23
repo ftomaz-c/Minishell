@@ -49,32 +49,29 @@ int	parse_words(t_parser *node, t_lexer *current, int *i)
  * @warning Memory allocated for the redirection node should be freed if the function fails.
  */
 
-int	parse_tokens(t_parser *node, t_lexer *current)
+t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 {
-	t_lexer		*redirections_node;
-
 	if (current->token == '>' || current->token == '<')
 	{
-		while (current && current->token != '|')
+		node->nb_redirections++;
+		current = add_redirection(current, node);
+		if (current && (current->token == '<' || current->token == '>'))
 		{
-			if (current->token == '>' || current->token == '<')
-				node->nb_redirections++;
-			redirections_node = ft_calloc(1, sizeof(t_lexer));
-			if (!redirections_node)
-			{
-				free_parser(&node);
-				return (-1);
-			}
-			redirections_node->index = current->index;
-			redirections_node->token = current->token;
-			if (current->words)
-				redirections_node->words = ft_strdup(current->words);
-			ft_lstaddback(&node->redirections, redirections_node);
-			current = current->next;
+			current = add_redirection(current, node);
+			(*start)++;
 		}
-		return (1);
+		if (current && current->words)
+		{
+			current = add_redirection(current, node);
+			(*start)++;
+		}
+		if (!current->next && (current->token == '<' || current->token == '>'))
+		{
+			printf("bash: syntax error near unexpected token `newline'\n");
+			return (NULL);
+		}
 	}
-	return (0);
+	return (current);
 }
 
 /**
@@ -91,33 +88,30 @@ int	parse_tokens(t_parser *node, t_lexer *current)
  * @note This function assumes that 'node' and 'lexer' are valid pointers.
  */
 
-void	get_command(t_parser *node, t_lexer *lexer, int start, int end)
+int	get_command(t_parser *node, t_lexer *lexer, int *start, int end)
 {
 	t_lexer		*current;
-	int			token;
 	int			i;
 
-	current = start_token(lexer, start);
+	current = start_token(lexer, *start);
 	i = 0;
-	while (start < end)
+	while (*start < end)
 	{
 		if (current->words)
 		{
 			if (!parse_words(node, current, &i))
-				return ;
+				return (0);
+			current = current->next;
 		}
 		else if (current->token)
 		{
-			token = parse_tokens(node, current);
-			if (token == -1)
-				return ;
-			else if (token == 1)
-				break;
+			current = parse_tokens(node, current, start);
+			if (current == NULL)
+				return (0);
 		}
-		start++;
-		current = current->next;
+		(*start)++;
 	}
-	return ;
+	return (1);
 }
 
 /**
@@ -139,14 +133,20 @@ void	get_command(t_parser *node, t_lexer *lexer, int start, int end)
  * @warning Memory allocated for the parser node should be freed if the function fails.
  */
 
-int	parse_lexer(t_parser **parser, t_lexer *lexer, int start, int end)
+int	parse_lexer(t_parser **parser, t_lexer *lexer, int *start, int end)
 {
 	t_parser	*node;
 
-	node = init_parser(start, end);
+	node = init_parser(*start, end);
 	if (!node)
 		return (0);
-	get_command(node, lexer, start, end);
+	if (!get_command(node, lexer, start, end))
+	{
+		free_lexer(&node->redirections);
+		free_parser(&node);
+		free_parser(parser);
+		return (0);
+	}
 	ft_lstadd_parser_back(parser, node);
 	return (1);
 }
@@ -171,23 +171,23 @@ int	parser(t_tools *tools)
 	int		start;
 	int		end;
 
-	tools->parser = NULL;
 	if (!tools->lexer)
 		return (1);
+	tools->parser = NULL;
 	current = tools->lexer;
 	start = current->index;
 	while (current)
 	{
-		end = current->index;
 		if (current->token == '|' || current->next == NULL)
 		{
+			end = current->index;
 			if (current->next == NULL)
 				end++;
 			else
 				tools->pipes++;
-			if (!parse_lexer(&tools->parser, tools->lexer, start, end))
+			if (!parse_lexer(&tools->parser, tools->lexer, &start, end))
 				return (0);
-			start = current->index;
+			start++;
 		}
 		current = current->next;
 	}

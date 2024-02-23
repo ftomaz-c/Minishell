@@ -24,6 +24,7 @@ SRC :=	src/main.c \
 		src/builtins/export_utils3.c \
 		src/builtins/unset.c\
 		src/parser/parser.c \
+		src/parser/parser_redir.c \
 		src/parser/parser_utils.c \
 		src/executor/executor.c \
 		src/executor/redirections.c \
