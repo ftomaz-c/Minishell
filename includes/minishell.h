@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+extern int	global_err;
+
 # include "../libft/includes/libft.h"
 # include "structs.h"
 # include "lexer.h"
@@ -16,6 +18,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <stdbool.h> // For boolean type
+
 
 
 /*tools.c*/
