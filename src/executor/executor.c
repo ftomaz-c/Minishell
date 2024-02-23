@@ -26,11 +26,11 @@ void	set_executor(t_parser *parser)
 {
 	if (parser->redirections != NULL)
 		redirection(parser);
-	printf("stdin_flag: %i\n", parser->stdin_flag);
+	/*printf("stdin_flag: %i\n", parser->stdin_flag);
 	printf("stdin_filename: %s\n", parser->stdin_file_name);
 	printf("stdout_flag: %i\n", parser->stdout_flag);
 	printf("stdout_filename: %s\n", parser->stdout_file_name);
-	printf("heredoc_limiter: %s\n", parser->heredoc_limiter);
+	printf("heredoc_limiter: %s\n", parser->heredoc_limiter);*/
 	set_stdin(parser);
 	set_stdout(parser);
 }

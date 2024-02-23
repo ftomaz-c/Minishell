@@ -1,5 +1,7 @@
 #include "../includes/minishell.h"
 
+int global_err = 0;
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -30,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 
 			parser(&tools);
 
-			//print_parser(&tools);
+			print_parser(&tools);
 
 			if (tools.lexer)
 				free_lexer(&tools.lexer);

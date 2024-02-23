@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+extern int	global_err;
+
 # include "../libft/includes/libft.h"
 # include "structs.h"
 # include "lexer.h"
@@ -15,6 +17,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+
 
 /*tools.c*/
 int		config_tools(t_tools *tools, char **envp);

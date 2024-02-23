@@ -59,7 +59,7 @@ int	find_char_position_new(char *str, char c)
 	{
 		if (str[i] == c)
 			return (i);
-	i++;
+		i++;
 	}
 	return (i);
 }
@@ -131,7 +131,10 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 
 	prefix = ft_substr(str, 0, position);
 	var = ft_substr(str, position + 1, end - position - 1);
- 	value = get_var_from_env(env, var);
+ 	if (ft_strncmp(var, "?", 1) == 0)
+		value = ft_itoa(global_err);
+	else
+ 		value = get_var_from_env(env, var);
 	free(var);
 	suffix = ft_substr(str, end, ft_strlen(str) - end);
 	if (value == NULL)
@@ -184,7 +187,10 @@ void	expander(char **env, char **list)
 		position = find_char_position_new(list[index], '$');
 		if (position < (int)ft_strlen(list[index]))
 		{
-			end = get_end_position(list[index], position);
+			if (list[index][position + 1] == '?')
+				end = position + 2;
+			else
+				end = get_end_position(list[index], position);
 			str = add_prefix_and_suffix(list[index], env, position, end);
 			free(list[index]);
 			list[index] = ft_strdup(str);
