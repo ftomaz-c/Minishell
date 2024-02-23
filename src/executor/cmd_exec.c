@@ -2,9 +2,9 @@
 
 int	exec_builtins(t_parser *parser)
 {
-	if (parser->builtin == cd || parser->builtin == pwd 
+	if (parser && (parser->builtin == cd || parser->builtin == pwd 
 		|| parser->builtin == export || parser->builtin == unset 
-		|| parser->builtin == mini_exit)
+		|| parser->builtin == mini_exit))
 		return (1);
 	return (0);
 }

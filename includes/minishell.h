@@ -15,6 +15,8 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <stdbool.h> // For boolean type
+
 
 /*tools.c*/
 int		config_tools(t_tools *tools, char **envp);

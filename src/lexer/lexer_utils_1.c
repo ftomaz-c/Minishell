@@ -1,42 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	handle_quote(char *line, int *flag, int *i, char quote)
-{
-	(*i)++;
-	*flag = -1;
-	while(line[*i] && line[*i] != quote)
-		(*i)++;
-	if (*i < (int)ft_strlen(line))
-		*flag = 1;	
-}
-
-int	check_unclosed_quotes(char *line)
-{
-	int		i;
-	int		flag;
-	char	quote;
-
-	i = 0;
-	flag = 0;
-	while (i < (int)ft_strlen(line))
-	{
-		if (line[i] == 34)
-		{
-			quote = 34;
-			handle_quote(line, &flag, &i, quote);
-		}
-		if (line[i] == 39)
-		{
-			quote = 39;
-			handle_quote(line, &flag, &i, quote);
-		}
-		i++;
-	}
-	if (i > (int)ft_strlen(line) && flag == -1)
-		return (0);
-	return (1);
-}
-
 /**
  * @brief Checks if a character is a token.
  * 
@@ -177,4 +140,39 @@ void	free_list(char	**list)
 		i++;
 	}
 	free(list);
+}
+/**
+ * @brief Finds the next occurrence of a character in a string.
+ * 
+ * This function searches for the next occurrence of a specified character in the given string starting from the specified index.
+ * 
+ * @param str The input string to search.
+ * @param i Starting index to begin searching.
+ * @param c The character to search for.
+ * 
+ * @return The index of the next occurrence of the character 'c' in the string 'str' starting from index 'i'.
+ * If 'c' is not found, returns the index 'i'.
+ * 
+ * @note This function assumes that the input string is null-terminated.
+ * 
+ * @example
+ * ```
+ * // Example usage of find_next_char_position() function
+ * char *input = "example string";
+ * int index = 0;
+ * char search_char = 'm';
+ * int result = find_next_char_position(input, index, search_char);
+ * // The result should be 5, as 'm' is found at index 5 in "example string".
+ * ```
+ */
+ 
+int	find_next_char_position(char *str, int i, char c)
+{
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (i);
 }

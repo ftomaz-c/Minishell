@@ -32,18 +32,31 @@
 int	paired_quote(char *str, int i, char ch)
 {
 	int	pair;
+	char	quote;
 
 	pair = 0;
+	quote = '\"';
+	if (quote == ch)
+		quote = '\'';
 	while (str[i] != '\0')
 	{
 		if (str[i] == ch)
 			pair = 1;
-		if (str[i] == ' ' && pair == 1)
+		else if (pair && str[i] == quote)
+		{
+			ch = quote;
+			pair = 0;
+		}
+		else if (str[i] == ' ' && pair == 1)
+		{	
+			// i--;
 			break ;
+		}
 		i++;
 	}
 	return (i);
 }
+
 /**
  * @brief Handles white spaces and quotes within a string.
  * 
@@ -231,7 +244,7 @@ char	*word_alloc(char *s, int start, int end)
 	int		i;
 
 	i = 0;
-	word = (char *)ft_calloc((end - start) + 1, 1);
+	word = ft_calloc(sizeof(char), (end - start) + 1);
 	if (word)
 	{
 		while (start < end)
