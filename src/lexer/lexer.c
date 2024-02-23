@@ -289,7 +289,7 @@ int	lex_line(char *line, t_tools *tools)
 	line_split_quotes = lexer_split(line, ' ');
 	expander(tools->env, line_split_quotes);
 	add_line_to_lexer_struct(line_split_quotes, &tools->lexer);
-	// free_list(line_split_quotes);
+	free_list(line_split_quotes);
 	return (1);
 }
 
