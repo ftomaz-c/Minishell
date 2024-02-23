@@ -83,7 +83,6 @@ void	redirection(t_parser *parser)
 	{
 		stdin_flag = set_stdin_flag(parser);
 		stdout_flag = set_stdout_flag(parser);
-
 		parser->redirections = parser->redirections->next;
 		if (stdin_flag != NULL && ft_strncmp(stdin_flag, "<<", 2) == 0)
 		{

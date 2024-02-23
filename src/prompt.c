@@ -10,11 +10,11 @@ char	**handle_home_abreviation(t_tools *tools, char **str)
 	if (!home_var)
 		return (str);
 	home_var_len = ft_strlen(home_var);
-	if (ft_strncmp(home_var, str[5], home_var_len) == 0)
+	if (ft_strncmp(home_var, str[6], home_var_len) == 0)
 	{
-		tmp = ft_substr(str[5], home_var_len, ft_strlen(str[5]) - home_var_len);
-		free(str[5]);
-		str[5] = ft_strjoin("~", tmp);
+		tmp = ft_substr(str[6], home_var_len, ft_strlen(str[6]) - home_var_len);
+		free(str[6]);
+		str[6] = ft_strjoin("~", tmp);
 		free(tmp);
 	}
 	free(home_var);
@@ -25,17 +25,18 @@ char	**generate_prompt(t_tools *tools)
 {
 	char	**str;
 
-	str = calloc(9, sizeof (char *));
+	str = calloc(10, sizeof (char *));
 	if (!str)
 		return (NULL);
 	str[0] = ft_strdup("\033[1;32m");
 	str[1] = ft_strdup(tools->user);
-	str[2] = ft_strdup("@minishell");
-	str[3] = ft_strdup("\033[0m:");
-	str[4] = ft_strdup("\033[1;34m");
-	str[5] = ft_strdup(tools->pwd);
-	str[6] = ft_strdup("\033[0m");
-	str[7] = ft_strdup("$ ");
+	str[2] = ft_strdup("@");
+	str[3] = ft_strdup(tools->name);
+	str[4] = ft_strdup("\033[0m:");
+	str[5] = ft_strdup("\033[1;34m");
+	str[6] = ft_strdup(tools->pwd);
+	str[7] = ft_strdup("\033[0m");
+	str[8] = ft_strdup("$ ");
 	if (ft_strlen(str[1]) == 0)
 	{
 		free(str[1]);

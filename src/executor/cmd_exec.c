@@ -40,6 +40,8 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 	if (cmd_args)
 		execve(cmd_args[0], cmd_args, envp);
 	printf("%s: command not found\n", cmd_args[0]);
+	global_err = 127;
+	exit(global_err);
 }
 
 /**

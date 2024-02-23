@@ -29,6 +29,7 @@ void	free_tools(t_tools *tools)
 	free(tools->oldpwd);
 	free(tools->home);
 	free(tools->user);
+	free(tools->name);
 }
 
 /**
@@ -231,6 +232,9 @@ int	config_tools(t_tools *tools, char **envp)
 		return (0);
 	tools->user = get_var_from_env(tools->env, "USER");
 	if (tools->user == NULL)
+		return (0);
+	tools->name = get_var_from_env(tools->env, "NAME");
+	if (tools->name == NULL)
 		return (0);
 	tools->pipes = 0;
 	tools->parser = NULL;

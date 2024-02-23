@@ -1,5 +1,12 @@
 #include "../../includes/executor.h"
 
+void	wait_status(int pid, int *status)
+{
+	waitpid(pid, status, 0);
+	if (WIFEXITED(*status))
+		global_err = WEXITSTATUS(*status);
+}
+
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
 	if (parser->builtin == echo || parser->builtin == env)
@@ -74,6 +81,6 @@ int	executor(t_tools *tools)
 		}
 	}
 	else
-		waitpid(pid, &status, 0);
-	return (1);
+		wait_status(pid, &status);
+	return (status);
 }

@@ -63,6 +63,7 @@ int	check_valid_export(char *parser)
 	if (ft_strcmp(parser,"=") == 0 || parser[i] == '=' || !ft_isalpha_plus_underscore(parser[i]))
 	{	
 		printf("bash: export: `%s': not a valid identifier\n", parser);
+		global_err = 1;
 		return (0);
 	}
 	i = 1;
@@ -72,6 +73,7 @@ int	check_valid_export(char *parser)
 		if (parser[i] != '_' && parser[i] != '\"' && parser[i] != '\'' && !ft_isalnum(parser[i]))
 		{
 			printf("bash: export: `%s': not a valid identifier\n", parser);
+			global_err = 1;
 			return (0);
 		}
 		i++;

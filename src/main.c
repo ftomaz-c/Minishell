@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 
 			parser(&tools);
 
-			print_parser(&tools);
+			//print_parser(&tools);
 
 			if (tools.lexer)
 				free_lexer(&tools.lexer);

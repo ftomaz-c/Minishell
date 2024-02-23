@@ -14,6 +14,7 @@ typedef struct s_tools
 	char			*user;
 	char			*pwd;
 	char			*oldpwd;
+	char			*name;
 	int				pipes;
 	int				exit;
 	struct s_lexer	*lexer;
