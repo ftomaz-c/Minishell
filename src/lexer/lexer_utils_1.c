@@ -100,7 +100,8 @@ void	free_lexer(t_lexer **lexer)
 	while (current != NULL)
 	{
 		next = current->next;
-		free(current->words);
+		if (current->words)
+			free(current->words);
 		free(current);
 		current = next;
 	}
