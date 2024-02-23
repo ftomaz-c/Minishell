@@ -112,6 +112,62 @@ void	add_token_to_node(char token, t_lexer **lexer)
 	ft_lstaddback(lexer, node);
 }
 /**
+ * @brief Removes quotes from a string.
+ * 
+ * This function removes single and double quotes from a given string and returns a new string without them.
+ * 
+ * @param str The input string from which quotes are to be removed.
+ * @param i Starting index to begin processing the string.
+ * 
+ * @return A new string without quotes. If no quotes are found, returns NULL.
+ * 
+ * @note This function allocates memory for the new string. The caller is responsible for freeing this memory.
+ * 
+ * @warning This function assumes that the input string is null-terminated and does not modify the original string.
+ * 
+ * @see add_temp_to_word() function for adding temporary substrings to the result.
+ * 
+ * @example
+ * ```
+ * // Example usage of remove_quotes() function
+ * char *input = "This 'is' a 'test' string";
+ * int index = 0;
+ * char *result = remove_quotes(input, index);
+ * // The result should be "This is a test string" after removing the quotes.
+ * // Remember to free the memory allocated for 'result' when done.
+ * ```
+ */
+
+char	*remove_quotes(char	*str, int i)
+{
+	int		start;
+	char	quote;
+	char	*word;
+
+	start = 0;
+	word = NULL;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i];
+			if (str[i] && (i - 1) >= 0)
+				add_temp_to_word(str, &word, start, i);
+			start = ++i;
+			while (str[i] && str[i] != quote)
+				i++;
+			add_temp_to_word(str, &word, start, i);
+			start = ++i;
+		}
+		else
+			i++;
+	}
+	if (start < i)
+		add_temp_to_word(str, &word, start, i);
+	return (word);
+}
+
+/**
  * @brief Adds a line split into a lexer structure.
  * 
  * This function iterates through the array of strings 'line_split',
@@ -145,9 +201,9 @@ void	add_token_to_node(char token, t_lexer **lexer)
 
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
 {
-	int	i;
-	int	j;
-	int	start;
+	int		i;
+	int		j;
+	int		start;
 
 	i = 0;
 	while (line_split[i] != NULL)
@@ -156,20 +212,22 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
 		start = 0;
 		while (line_split[i][j] != '\0')
 		{
-			if (check_if_token(line_split[i][j]))
+			if (check_if_token_valid(line_split[i], line_split[i][j], j))
 			{
 				if (start < j)
-					add_word_to_node(line_split[i], start, j, lexer);
+					remove_quotes_add_word(line_split[i], start, j, lexer);
 				add_token_to_node(line_split[i][j], lexer);
-				start = j + 1;
+				start = ++j;
 			}
-			j++;
+			else
+				j++;
 		}
 		if (start < j)
-			add_word_to_node(line_split[i], start, j, lexer);
+			remove_quotes_add_word(line_split[i], start, j, lexer);
 		i++;
 	}
 }
+
 /**
  * @brief Lexically analyzes a line and adds it to the lexer structure.
  * 
@@ -222,6 +280,6 @@ int	lex_line(char *line, t_tools *tools)
 	// int	i = 0;
 	// while (line_split_quotes[i])
 	// {
-	// 	printf("%s\n", line_split_quotes[i]);
+	// 	printf("words: %s\n", line_split_quotes[i]);
 	// 	i++;
 	// }

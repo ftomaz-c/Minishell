@@ -60,7 +60,7 @@ void	handle_characters(char *s, int *i, int *start)
  * ```
  */
 
-char	**create_split(char *s, char **split, int nwords, char c)
+ char	**create_split(char *s, char **split, int nwords, char c)
 {
 	int	i;
 	int	j;
@@ -133,7 +133,7 @@ char	**lexer_split(char *s, char c)
 	int		nwords;
 
 	nwords = count_words_and_quotes(s, c);
-	split = (char **)ft_calloc((nwords + 1), (sizeof(char *)));
+	split = ft_calloc((nwords + 1), (sizeof(char *)));
 	if (split)
 	{
 		split = create_split(s, split, nwords, c);

@@ -3,21 +3,29 @@
 
 # include "minishell.h"
 
-/*lexer*/
+/*lexer/lexer.c*/
+char	*remove_quotes(char	*str, int i);
 int		lex_line(char *line, t_tools *tools);
-void	ft_lstadd_back(t_list **lst, t_list *new);
 void	add_word_to_node(char *word, int start, int end, t_lexer **lexer);
 void	add_token_to_node(char token, t_lexer **lexer);
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer);
 
-/*lexer utils*/
-int		check_unclosed_quotes(char *line);
+/*lexer/lexer_utils_1.c*/
 int		check_if_token(char c);
 void	ft_lstaddback(t_lexer **lst, t_lexer *new);
-void	free_list(char	**list);
 void	free_lexer(t_lexer **lexer);
+void	free_list(char	**list);
+int	    find_next_char_position(char *str, int i, char c);
+
+/*lexer/lexer_utils_2.c*/
+void	handle_quote(char *line, int *flag, int *i, char quote);
+int		check_unclosed_quotes(char *line);
+int	    check_if_token_valid(char *str, char c, int position);
+void	add_temp_to_word(char *str, char **word, int start, int i);
+void	remove_quotes_add_word(char *line_split, int start, int j, t_lexer **lexer);
 
 /*lexer_split.c*/
+void	handle_characters(char *s, int *i, int *start);
 char	**lexer_split(char *s, char c);
 char	**create_split(char *s, char **split, int nwords, char c);
 

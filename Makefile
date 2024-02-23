@@ -9,7 +9,8 @@ SRC :=	src/main.c \
 		src/utils/print.c \
 		src/lexer/expander.c \
 		src/lexer/lexer.c \
-		src/lexer/lexer_utils.c \
+		src/lexer/lexer_utils_1.c \
+		src/lexer/lexer_utils_2.c \
 		src/lexer/lexer_split.c \
 		src/lexer/lexer_split_utils.c \
 		src/builtins/builtins.c \
