@@ -79,6 +79,7 @@ int	executor(t_tools *tools)
 				execute_cmd(tools, parser);
 			parser = parser->next;
 		}
+		free_parser(&parser);
 	}
 	else
 		wait_status(pid, &status);
