@@ -141,3 +141,69 @@ char	**lexer_split(char *s, char c)
 	}
 	return (0);
 }
+
+/**
+ * @brief Checks if a specified position within a string is inside a quoted section.
+ * 
+ * This function iterates through the string starting from index 
+ * i and checks if the specified position
+ * is within a quoted section delimited by single or double quotes.
+ * It helps in identifying whether 
+ * certain characters in the string are inside quotes or not.
+ * 
+ * @param str The string to be checked.
+ * @param i Starting index in the string from where to check.
+ * @param flag Flag indicating whether the specified position is inside a 
+ * quoted section (0 if inside, 1 otherwise).
+ * @param position The position to be checked if it's inside a quoted section.
+ * 
+ * @return Returns 0 if the specified position is inside a quoted section, 1 otherwise.
+ * 
+ * @note This function assumes that the input string is properly null-terminated.
+ * 
+ * @warning This function assumes that the input position is 
+ * within the bounds of the string.
+ * 
+ * @see None.
+ * 
+ * @example
+ * 
+ * ```
+ * // Example usage of the function
+ * char *str = "This is a 'quoted' string";
+ * int flag = 0;
+ * int position = 12; // Index of the character 'q' in the example string
+ * int result = check_token_flag(str, 0, flag, position);
+ * // After the function call, result should be 0 indicating that
+ * the position is inside a quoted section.
+ * ```
+ */
+
+
+int	check_token_flag(char *str, int i, int flag, int position)
+{
+	char quote;
+	int qposition;
+
+	qposition = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+		{   
+			qposition = i;
+			quote = str[i];
+			i++;
+			while (str[i] && str[i] != quote)
+				i++;
+			if (str[i] == quote && position < i && position > qposition)
+			{   
+				flag = 1;
+				return (0);
+			}
+		}
+		if (flag)
+			break ;
+		i++;
+	}
+	return (1);
+}

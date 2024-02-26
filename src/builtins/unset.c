@@ -15,18 +15,12 @@ int	check_var(t_tools *tools, char *str)
 	char	*var_path;
 	int		equal_pos;
 	int		i;
-	int		size;
 
 	i = 0;
 	equal_pos = find_char_position(str, '=');
-	size = 0;
 	while (str[i] && i < equal_pos)
-	{
-		if (str[i] == '\"' || str[i] == '\'')
-			size++;
 		i++;
-	}
-	var_path = ft_calloc(sizeof(char *), (i - size) + 1);
+	var_path = ft_calloc(sizeof(char *), i + 1);
 	if (!var_path)
 		return (1);
 	copy_var_name(var_path, str, i);

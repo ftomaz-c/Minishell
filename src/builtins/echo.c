@@ -1,38 +1,15 @@
 #include "../../includes/builtins.h"
 
-char	first_quote_found(t_parser *command, int pos)
-{
-	char	quote;
-	int		j;
-
-	j = 0;
-	while (command->str[pos][j])
-	{
-		if (command->str[pos][j] && (command->str[pos][j] == 34 
-			|| command->str[pos][j] == 39))
-		{
-			quote = command->str[pos][j];
-			return (quote);
-		}
-		j++;
-	}
-	return ('\0');
-}
-
 void	echo_n_print(t_parser *command, int	pos)
 {
 	int		j;
-	char	first_quote;
 
 	pos++;
 	while (command->str[pos])
 	{
 		j = 0;
-		first_quote = first_quote_found(command, pos);
 		while (command->str[pos][j])
 		{
-			if (command->str[pos][j] == first_quote)
-				j++;
 			printf("%c", command->str[pos][j]);
 			j++;
 		}
@@ -45,18 +22,12 @@ void	echo_n_print(t_parser *command, int	pos)
 void	echo_print(t_parser *command, int pos)
 {
 	int		j;
-	char	first_quote;
 
 	while (command->str[pos])
 	{
 		j = 0;
-		first_quote = first_quote_found(command, pos);
 		while (command->str[pos][j])
 		{
-			if (command->str[pos][j] == first_quote)
-				j++;
-			if (j >= (int)ft_strlen(command->str[pos]))
-				break ;
 			printf("%c", command->str[pos][j]);
 			j++;
 		}

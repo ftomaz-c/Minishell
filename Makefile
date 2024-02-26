@@ -8,6 +8,7 @@ SRC :=	src/main.c \
 		src/utils/prompt.c \
 		src/utils/print.c \
 		src/lexer/expander.c \
+		src/lexer/expander_utils.c \
 		src/lexer/lexer.c \
 		src/lexer/lexer_utils_1.c \
 		src/lexer/lexer_utils_2.c \
