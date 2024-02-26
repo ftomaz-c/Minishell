@@ -6,5 +6,7 @@ int	pwd(t_tools *tools, t_parser *command)
 
 	(void)tools;
 	(void)command;
-	return (printf("%s\n", getcwd(buf, sizeof(buf))));
+	printf("%s\n", getcwd(buf, sizeof(buf)));
+	global_status = EXIT_SUCCESS;
+	return (global_status);
 }

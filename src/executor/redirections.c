@@ -10,22 +10,19 @@
  * @return Returns the redirection symbol ("<" or "<<") if stdin redirection is detected, otherwise NULL.
  */
 
-char	*set_stdin_flag(t_parser *parser)
+t_lexer *set_stdin_flag(t_parser *parser, t_lexer *redirections)
 {
-	if (parser->redirections->token == '<')
+	t_lexer	*current;
+
+	current = redirections;
+	if (current->token == '<')
 	{
-		if (parser->redirections->next && parser->redirections->next->token == '<')
-		{
+		if (current->next && current->next->token == '<')
 			parser->stdin_flag = LESS_LESS;
-			return ("<<");
-		}
-		else if (parser->redirections->next->token != '<')
-		{
+		else if (current->next->words)
 			parser->stdin_flag = LESS;
-			return ("<");
-		}
 	}
-	return (NULL);
+	return (current);
 }
 
 /**
@@ -38,22 +35,28 @@ char	*set_stdin_flag(t_parser *parser)
  * @return Returns the redirection symbol (">" or ">>") if stdout redirection is detected, otherwise NULL.
  */
 
-char	*set_stdout_flag(t_parser *parser)
+t_lexer	*set_stdout_flag(t_parser *parser, t_lexer *redirections)
 {
-	if (parser->redirections->token == '>')
+	t_lexer *current;
+
+	current = redirections;
+	if (current->token == '>' || (current->next && current->next->token == '>'))
 	{
-		if (parser->redirections->next && parser->redirections->next->token == '>')
+		if (current->token == '<' && current->next->token == '>')
+			current = current->next;
+		else if (current->token == '>' && current->next->token == '<')
 		{
+			printf("bash: syntax error near unexpected token `<\n");
+			global_status = 2;
+			free_parser(&parser);
+			exit (global_status);
+		}
+		if (current->next && current->next->token == '>')
 			parser->stdout_flag = GREAT_GREAT;
-			return (">>");
-		}
 		else
-		{
 			parser->stdout_flag = GREAT;
-			return (">");
-		}
 	}
-	return (NULL);
+	return (current);
 }
 
 /**
@@ -74,31 +77,32 @@ char	*set_stdout_flag(t_parser *parser)
 			exit (EXIT_FAILURE)
 		}*/
 
+
 void	redirection(t_parser *parser)
 {
-	char	*stdin_flag;
-	char	*stdout_flag;
+	t_lexer	*current;
 
-	while (parser->redirections)
+	current = parser->redirections;
+	while (current)
 	{
-		stdin_flag = set_stdin_flag(parser);
-		stdout_flag = set_stdout_flag(parser);
-		parser->redirections = parser->redirections->next;
-		if (stdin_flag != NULL && ft_strncmp(stdin_flag, "<<", 2) == 0)
+		current = set_stdin_flag(parser, current);
+		current = set_stdout_flag(parser, current);
+		current = current->next;
+		if (parser->stdin_flag != 0 && parser->stdin_flag == LESS_LESS)
 		{
-			parser->redirections = parser->redirections->next;
-			parser->heredoc_limiter = parser->redirections->words;
+			current = current->next;
+			parser->heredoc_limiter = current->words;
 		}
-		else if (stdin_flag != NULL && ft_strncmp(stdin_flag, "<", 1) == 0)
-			parser->stdin_file_name = parser->redirections->words;
-		if (stdout_flag != NULL && ft_strncmp(stdout_flag, ">>", 2) == 0)
+		else if (parser->stdin_flag != 0 && parser->stdin_flag == LESS)
+			parser->stdin_file_name = current->words;
+		if (parser->stdout_flag != 0 && parser->stdout_flag == GREAT_GREAT)
 		{
-			parser->redirections = parser->redirections->next;
-			parser->stdout_file_name = parser->redirections->words;
+			current = current->next;
+			parser->stdout_file_name = current->words;
 		}
-		else if (stdout_flag != NULL && ft_strncmp(stdout_flag, ">", 1) == 0)
-			parser->stdout_file_name = parser->redirections->words;
-		parser->redirections = parser->redirections->next;
+		else if (parser->stdout_flag != 0 && parser->stdout_flag == GREAT)
+			parser->stdout_file_name = current->words;
+		current = current->next;
 	}
 }
 
@@ -115,22 +119,21 @@ void	redirection(t_parser *parser)
 void	set_stdin(t_parser *parser)
 {
 	int fd_infile;
-	int	original_stdout;
 
-	original_stdout = dup(STDOUT_FILENO);
 	if (parser->stdin_flag == LESS)
 	{
 		fd_infile = open (parser->stdin_file_name, O_RDONLY);
 		if (fd_infile < 0)
 		{
-			printf("bash: there: No such file or directory\n");
-			exit (EXIT_FAILURE);
+			printf("bash: %s: No such file or directory\n", parser->stdin_file_name);
+			global_status = EXIT_FAILURE;
+			return ;
 		}
 		dup2(fd_infile, STDIN_FILENO);
 		close(fd_infile);
 	}
 	else if (parser->stdin_flag == LESS_LESS)
-		here_doc(parser->heredoc_limiter, original_stdout);
+		here_doc(parser->heredoc_limiter, parser->original_stdout);
 	else
 		return ;
 }

@@ -19,5 +19,6 @@ int	env(t_tools *tools, t_parser *command)
 			i++;
 		}
 	}
-	exit (EXIT_SUCCESS);
+	global_status = EXIT_SUCCESS;
+	return (global_status);
 }

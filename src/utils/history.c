@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Writes a line to a history file, appending it with a line count.

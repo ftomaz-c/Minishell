@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	**handle_home_abreviation(t_tools *tools, char **str)
 {

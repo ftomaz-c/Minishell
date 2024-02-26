@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int global_err = 0;
+int global_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -26,6 +26,7 @@ void	get_here_doc(char *limiter, int fd, int original_stdout)
 			exit (EXIT_SUCCESS);
 		write(fd, line, ft_strlen(line));
 		ft_putstr_fd("> ", original_stdout);
+		free(line);
 	}
 }
 

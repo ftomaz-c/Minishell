@@ -35,7 +35,8 @@ int	(*is_builtin(char *str))(t_tools *tools, t_parser *parser)
         {"export", export},
         {"unset", unset},
         {"env", env},
-        {"exit", mini_exit}
+        {"exit", mini_exit},
+		{"history", mini_history}
     };
 	size_t		i;
 
