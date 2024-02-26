@@ -24,19 +24,26 @@ int	    check_if_token_valid(char *str, char c, int position);
 void	add_temp_to_word(char *str, char **word, int start, int i);
 void	remove_quotes_add_word(char *line_split, int start, int j, t_lexer **lexer);
 
-/*lexer_split.c*/
+/*lexer/lexer_split.c*/
 void	handle_characters(char *s, int *i, int *start);
 char	**lexer_split(char *s, char c);
 char	**create_split(char *s, char **split, int nwords, char c);
 
-/*lexer_split_utils.c*/
+/*lexer/lexer_split_utils.c*/
 char	*word_alloc(char *s, int start, int end);
 int		count_words_and_quotes(char *s, char c);
 void	update_start_indexes(int *i, int *start, int *nstart);
 void	handle_white_spaces_and_quotes(char *s, int *i, int *start);
 int		paired_quote(char *str, int i, char ch);
 
-/*expander.c*/
+/*lexer/expander.c*/
 void	expander(char **env, char **list);
+
+/*lexer/expander_utils.c*/
+int		find_single_quote(char *str);
+int		ft_isalphanum_or_underscore(int c);
+int		find_char_position_new(char *str, char c);
+int		get_end_position(char *str, int position);
+char	*add_prefix_and_suffix(char *str, char **env, int position, int end);
 
 #endif
