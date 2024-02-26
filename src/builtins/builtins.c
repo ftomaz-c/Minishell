@@ -43,7 +43,7 @@ int	(*is_builtin(char *str))(t_tools *tools, t_parser *parser)
 	i = 0;
 	while (i < (sizeof(builtin_array) / sizeof(builtin_array[0])))
 	{
-		if (ft_strncmp(builtin_array[i].name, str, ft_strlen(builtin_array[i].name)) == 0)
+		if (ft_strcmp(builtin_array[i].name, str) == 0)
 			return (builtin_array[i].builtin);
 		i++;
 	}
