@@ -86,35 +86,15 @@ int check_unclosed_quotes(char *line)
 
 int check_if_token_valid(char *str, char c, int position)
 {
-	int i;
+	int	i;
 	int flag;
-	char quote;
-	int qposition;
 
 	i = 0;
-	qposition = 0;
 	flag = 0;
 	if (!check_if_token(c))
 		return (0);
-	while (str[i])
-	{
-		if (str[i] == '\"' || str[i] == '\'')
-		{   
-			qposition = i;
-			quote = str[i];
-			i++;
-			while (str[i] && str[i] != quote)
-				i++;
-			if (str[i] == quote && position < i && position > qposition)
-			{   
-				flag = 1;
-				return (0);
-			}
-		}
-		if (flag)
-			break ;
-		i++;
-	}
+	if (!check_token_flag(str, i, flag, position))
+		return (0);
 	return (1);
 }
 

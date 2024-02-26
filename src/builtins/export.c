@@ -58,8 +58,6 @@ int	check_valid_export(char *parser)
 	int	equal_pos;
 
 	i = 0;
-	if (parser[0] == '\"' || parser[0] == '\'')
-		i++;
 	if (ft_strcmp(parser,"=") == 0 || parser[i] == '=' || !ft_isalpha_plus_underscore(parser[i]))
 	{	
 		printf("bash: export: `%s': not a valid identifier\n", parser);
@@ -70,7 +68,7 @@ int	check_valid_export(char *parser)
 	equal_pos = find_char_position(parser, '=');
 	while (parser[i] && i < equal_pos)
 	{
-		if (parser[i] != '_' && parser[i] != '\"' && parser[i] != '\'' && !ft_isalnum(parser[i]))
+		if (parser[i] != '_'  && !ft_isalnum(parser[i]))
 		{
 			printf("bash: export: `%s': not a valid identifier\n", parser);
 			global_err = 1;
@@ -148,18 +146,12 @@ int	check_if_var_exists(t_tools *tools, char *str)
 	char	*var_path;
 	int		equal_pos;
 	int		i;
-	int		size;
 
 	i = 0;
 	equal_pos = find_char_position(str, '=');
-	size = 0;
 	while (str[i] && i < equal_pos)
-	{
-		if (str[i] == '\"' || str[i] == '\'')
-			size++;
 		i++;
-	}
-	var_path = ft_calloc(sizeof(char *), (i - size) + 1);
+	var_path = ft_calloc(sizeof(char *), i + 1);
 	if (!var_path)
 		return (1);
 	copy_var_name(var_path, str, i);

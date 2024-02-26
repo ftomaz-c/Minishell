@@ -55,14 +55,9 @@ void	copy_var_value(char *var_path, char *str, int start)
 	}
 	while (start < (int)ft_strlen(str))
 	{
-		if (str[start] == '\'' || str[start] == '\"')
-			start++;
-		else
-		{
-			var_path[i] = str[start];
-			i++;
-			start++;
-		}
+		var_path[i] = str[start];
+		i++;
+		start++;
 	}
 }
 
@@ -80,7 +75,6 @@ void	get_new_var_value(char **var_value, char *str)
 {
 	int		start;
 	int		i;
-	int		size;
 
 	i = find_char_position(str, '=') + 1;
 	if (i >= (int)ft_strlen(str))
@@ -89,14 +83,9 @@ void	get_new_var_value(char **var_value, char *str)
 		return ;
 	}
 	start = i;
-	size = 0;
 	while (str[i] && i < (int)ft_strlen(str))
-	{
-		if (str[i] == '\"' || str[i] == '\'')
-			size++;
 		i++;
-	}
-	*var_value = ft_calloc(sizeof(char *), (ft_strlen(str) - start - size) + 1);
+	*var_value = ft_calloc(sizeof(char *), (ft_strlen(str) - start) + 1);
 	if (!var_value)
 		return ;
 	copy_var_value(*var_value, str, start);

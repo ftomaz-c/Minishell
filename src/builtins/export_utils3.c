@@ -53,20 +53,12 @@ int	find_char_position(char *str, char c)
 void	copy_var(char *var_path, char *str)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
-	while (j < (int)ft_strlen(str))
+	while (i < (int)ft_strlen(str))
 	{
-		if (str[j] == '\'' || str[j] == '\"')
-			j++;
-		else
-		{
-			var_path[i] = str[j];
-			i++;
-			j++;
-		}
+		var_path[i] = str[i];
+		i++;
 	}
 }
 
@@ -83,17 +75,11 @@ void	copy_var(char *var_path, char *str)
 void	get_new_var(char **var, char *str)
 {
 	int		i;
-	int		size;
 
 	i = 0;
-	size = 0;
 	while (str[i])
-	{
-		if (str[i] == '\"' || str[i] == '\'')
-			size++;
 		i++;
-	}
-	*var = ft_calloc(sizeof(char *), (i - size) + 1);
+	*var = ft_calloc(sizeof(char *), i + 1);
 	if (!var)
 		return ;
 	copy_var(*var, str);
@@ -133,8 +119,8 @@ int	copy_var_to_env(t_tools *tools, char **new_array, char *var_value, int i)
 	new_array[j] = ft_strdup(var_value);
 	if (new_array[j] == NULL)
 	{
-		free(var_value);
 		free_list(new_array);
+		free(var_value);
 		return (0);
 	}
 	return (1);

@@ -28,6 +28,7 @@ void	remove_quotes_add_word(char *line_split, int start, int j, t_lexer **lexer)
 void	handle_characters(char *s, int *i, int *start);
 char	**lexer_split(char *s, char c);
 char	**create_split(char *s, char **split, int nwords, char c);
+int	    check_token_flag(char *str, int i, int flag, int position);
 
 /*lexer/lexer_split_utils.c*/
 char	*word_alloc(char *s, int start, int end);
