@@ -132,7 +132,7 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 	prefix = ft_substr(str, 0, position);
 	var = ft_substr(str, position + 1, end - position - 1);
  	if (ft_strncmp(var, "?", 1) == 0)
-		value = ft_itoa(global_err);
+		value = ft_itoa(global_status);
 	else
  		value = get_var_from_env(env, var);
 	free(var);

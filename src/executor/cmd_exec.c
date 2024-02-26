@@ -4,7 +4,7 @@ int	exec_builtins(t_parser *parser)
 {
 	if (parser && (parser->builtin == cd || parser->builtin == pwd 
 		|| parser->builtin == export || parser->builtin == unset 
-		|| parser->builtin == mini_exit))
+		|| parser->builtin == mini_exit || parser->builtin == mini_history))
 		return (1);
 	return (0);
 }
@@ -21,7 +21,7 @@ int	exec_builtins(t_parser *parser)
  * @note This function assumes that the command and path list are properly initialized.
  */
 
-void	exec_path(char **path_list, char **cmd_args, char **envp)
+void	exec_path(t_parser *parser, char **path_list, char **cmd_args, char **envp)
 {
 	char	*cmd_path;
 	char	*tmp;
@@ -39,9 +39,11 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 	}
 	if (cmd_args)
 		execve(cmd_args[0], cmd_args, envp);
+	dup2(parser->original_stdout, STDOUT_FILENO);
+	close(parser->original_stdout);
 	printf("%s: command not found\n", cmd_args[0]);
-	global_err = 127;
-	exit(global_err);
+	global_status = 127;
+	exit(global_status);
 }
 
 /**
@@ -57,7 +59,7 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
  * @see exec_path
  */
 
-void	minishell_pipex(t_parser *parser, t_tools *tools)
+void	minishell_pipex(t_tools *tools, t_parser *parser)
 {
 	int	pipe_fd[2];
 	int	pid;

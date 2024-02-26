@@ -83,5 +83,6 @@ int	unset(t_tools *tools, t_parser *command)
 			unset_var_from_env(tools, command->str[i], pos);
 		i++;
 	}
-	return (0);
+	global_status = EXIT_SUCCESS;
+	return (global_status);
 }

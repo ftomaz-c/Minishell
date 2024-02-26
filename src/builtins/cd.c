@@ -92,5 +92,6 @@ int	cd(t_tools *tools, t_parser *command)
 	else
 		return(printf("cd: too many arguments\n"));
 	update_env_vars(tools);
-	return (0);
+	global_status = EXIT_SUCCESS;
+	return (global_status);
 }

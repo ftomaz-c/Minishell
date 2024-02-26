@@ -1,11 +1,11 @@
 NAME := minishell
 
 SRC :=	src/main.c \
-		src/tools.c \
-		src/error.c \
-		src/history.c \
-		src/history_utils.c \
-		src/prompt.c \
+		src/utils/tools.c \
+		src/utils/error.c \
+		src/utils/history.c \
+		src/utils/history_utils.c \
+		src/utils/prompt.c \
 		src/utils/print.c \
 		src/lexer/expander.c \
 		src/lexer/lexer.c \
@@ -24,6 +24,7 @@ SRC :=	src/main.c \
 		src/builtins/export_utils2.c \
 		src/builtins/export_utils3.c \
 		src/builtins/unset.c\
+		src/builtins/mini_history.c \
 		src/parser/parser.c \
 		src/parser/parser_redir.c \
 		src/parser/parser_utils.c \

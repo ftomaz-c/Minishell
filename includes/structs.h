@@ -39,7 +39,8 @@ typedef struct	s_parser
 	char			*stdin_file_name;
 	char			*stdout_file_name;
 	int				stdin_flag;
-	int				stdout_flag;	
+	int				stdout_flag;
+	int				original_stdout;
 	t_lexer			*redirections;
 	struct s_parser	*next;
 	struct s_parser	*prev;	

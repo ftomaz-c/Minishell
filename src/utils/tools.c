@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Frees the memory allocated for the tools structure.

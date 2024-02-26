@@ -63,7 +63,7 @@ int	check_valid_export(char *parser)
 	if (ft_strcmp(parser,"=") == 0 || parser[i] == '=' || !ft_isalpha_plus_underscore(parser[i]))
 	{	
 		printf("bash: export: `%s': not a valid identifier\n", parser);
-		global_err = 1;
+		global_status = 1;
 		return (0);
 	}
 	i = 1;
@@ -73,7 +73,7 @@ int	check_valid_export(char *parser)
 		if (parser[i] != '_' && parser[i] != '\"' && parser[i] != '\'' && !ft_isalnum(parser[i]))
 		{
 			printf("bash: export: `%s': not a valid identifier\n", parser);
-			global_err = 1;
+			global_status = 1;
 			return (0);
 		}
 		i++;
@@ -207,6 +207,7 @@ int	export(t_tools *tools, t_parser *command)
 	int	i;
 
 	i = 1;
+	global_status = EXIT_SUCCESS;
 	if (!command->str[1])
 		sort_print_env(tools);
 	else
@@ -227,5 +228,5 @@ int	export(t_tools *tools, t_parser *command)
 				i++;
 		}
 	}
-	return(0);
+	return (global_status);
 }

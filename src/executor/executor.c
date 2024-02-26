@@ -4,15 +4,19 @@ void	wait_status(int pid, int *status)
 {
 	waitpid(pid, status, 0);
 	if (WIFEXITED(*status))
-		global_err = WEXITSTATUS(*status);
+		global_status = WEXITSTATUS(*status);
 }
 
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
 	if (parser->builtin == echo || parser->builtin == env)
+	{
 		parser->builtin(tools, parser);
+		if (parser->next)
+			exit (global_status);
+	}
 	else
-		exec_path(tools->path, parser->str, tools->env);
+		exec_path(parser, tools->path, parser->str, tools->env);
 	return ;
 }
 
@@ -29,17 +33,16 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
  * @see redirection
  */
 
-void	set_executor(t_parser *parser)
+void	set_and_exec(t_tools *tools, t_parser *parser)
 {
 	if (parser->redirections != NULL)
 		redirection(parser);
-	/*printf("stdin_flag: %i\n", parser->stdin_flag);
-	printf("stdin_filename: %s\n", parser->stdin_file_name);
-	printf("stdout_flag: %i\n", parser->stdout_flag);
-	printf("stdout_filename: %s\n", parser->stdout_file_name);
-	printf("heredoc_limiter: %s\n", parser->heredoc_limiter);*/
 	set_stdin(parser);
 	set_stdout(parser);
+	if (parser->next)
+		minishell_pipex(tools, parser);
+	else
+		execute_cmd(tools, parser);
 }
 
 /**
@@ -63,6 +66,7 @@ int	executor(t_tools *tools)
 	int 		status;
 
 	parser = tools->parser;
+	parser->original_stdout = dup(STDOUT_FILENO);
 	if (exec_builtins(tools->parser))
 		return (parser->builtin(tools, parser));
 	pid = fork();
@@ -70,18 +74,16 @@ int	executor(t_tools *tools)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
+		
 		while (parser)
 		{
-			set_executor(parser);
-			if (parser->next)
-				minishell_pipex(parser, tools);
-			else
-				execute_cmd(tools, parser);
+			set_and_exec(tools, parser);
 			parser = parser->next;
 		}
-		free_parser(&parser);
+		exit(global_status);
 	}
 	else
 		wait_status(pid, &status);
 	return (status);
 }
+

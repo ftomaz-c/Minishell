@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int	global_err;
+extern int	global_status;
 
 # include "../libft/includes/libft.h"
 # include "structs.h"

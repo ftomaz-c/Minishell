@@ -61,4 +61,7 @@ int		count_lines(char **list);
 /*builtins/unset.c*/
 int		unset(t_tools *tools, t_parser *command);
 
+/*history.c*/
+int		mini_history(t_tools *tools, t_parser *command);
+
 #endif
