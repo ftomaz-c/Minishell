@@ -1,5 +1,16 @@
 #include "../../includes/minishell.h"
 
+size_t	ft_strlen_nl(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0' && s[i] != '\n')
+	{
+		i++;
+	}
+	return (i);
+}
 /**
  * @brief Writes a line to a history file, appending it with a line count.
  * 
@@ -34,11 +45,27 @@
  * ```
  */
 
-void	write_in_history_file(char *line, int fd, char *file_path)
+int	check_empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while(line[i])
+	{
+		if (!ft_isspace(line[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	write_in_history_file(char **line, int fd, char *file_path)
 {
 	int		line_count;
+	int		i;
 
 	line_count = count_lines_in_file(file_path);
+	i = 0;
 	if (line_count == -1)
 	{
 		perror("Error opening history file");
@@ -47,11 +74,20 @@ void	write_in_history_file(char *line, int fd, char *file_path)
 	}
 	if (line_count != 0)
 		ft_putchar_fd('\n', fd);
-	line_count++;
-	ft_putstr_fd("  ", fd);
-	ft_putnbr_fd(line_count, fd);
-	ft_putstr_fd("  ", fd);
-	ft_putstr_fd(line, fd);
+	while (line[i])
+	{
+		if (!check_empty_line(line[i]))
+			i++;
+		else
+		{
+			line_count++;
+			ft_putstr_fd("  ", fd);
+			ft_putnbr_fd(line_count, fd);
+			ft_putstr_fd("  ", fd);
+			ft_putstr_fd(line[i], fd);
+			i++;
+		}
+	}
 }
 
 /**
@@ -90,10 +126,51 @@ void	write_in_history_file(char *line, int fd, char *file_path)
  * @see count_lines_in_file
  */
 
+int	count_chr(char *line, char c)
+{
+	int	i;
+	int	count;
+	
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+void	treat_line(char ***line_array, char *line)
+{
+	int		i;
+	int		j;
+	int		newline;
+	char	size;
+
+	i = 0;
+	j = 0;
+	newline = 0;
+	size = count_chr(line, '\n') + 1;
+	*line_array = ft_calloc(sizeof(char **), size + 1);
+	if (!(*line_array))
+		return ;
+	while ( newline < (int)ft_strlen(line) && j < size)
+	{
+		newline = find_next_char_position(line, newline, '\n') + 1;
+		(*line_array)[j] = ft_substr(line, i, newline - i);
+		i = newline;
+		j++;
+	}
+	// (*line_array)[j] = NULL;
+}
+
 void	add_history_file(char *line, char *file_name)
 {
 	int		fd;
 	char	*file_path;
+	char	**line_array = NULL;
 
 	if (line == NULL)
 	{
@@ -112,7 +189,9 @@ void	add_history_file(char *line, char *file_name)
 			return ;
 		}
 		add_history(line);
-		write_in_history_file(line, fd, file_path);
+		treat_line(&line_array, line);
+		write_in_history_file(line_array, fd, file_path);
+		free_list(line_array);
 		close(fd);
 	}
 	free(file_path);
@@ -146,6 +225,8 @@ void	add_history_file(char *line, char *file_name)
  * 
  */
 
+
+
 void	append_to_history(char *line)
 {
 	char	*new_line;
@@ -153,7 +234,7 @@ void	append_to_history(char *line)
 	int		j;
 
 	i = history_section(line);
-	new_line = ft_substr(line, i, ft_strlen(line) - i);
+	new_line = ft_substr(line, i, ft_strlen_nl(line) - i);
 	j = 0;
 	while (new_line[j] != '\n' && new_line[j])
 		j++;

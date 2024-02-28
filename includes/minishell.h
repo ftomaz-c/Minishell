@@ -36,7 +36,8 @@ char	**generate_prompt(t_tools *tools);
 char	*prompt_line(t_tools *tools);
 
 /*history.c*/
-void	write_in_history_file(char *line, int fd, char *file_path);
+void	write_in_history_file(char **line, int fd, char *file_path);
+// void	write_in_history_file(char *line, int fd, char *file_path);
 void	add_history_file(char *line, char *file_name);
 void	append_to_history(char *line);
 void	update_history(char *file_name);
