@@ -1,5 +1,46 @@
 #include "../../includes/minishell.h"
 
+int	count_chr(char *line, char c)
+{
+	int	i;
+	int	count;
+	
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+int	check_empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while(line[i])
+	{
+		if (!ft_isspace(line[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+size_t	ft_strlen_nl(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0' && s[i] != '\n')
+	{
+		i++;
+	}
+	return (i);
+}
 /**
  * @brief Counts the number of lines in a file.
  * 

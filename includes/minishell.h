@@ -37,12 +37,14 @@ char	*prompt_line(t_tools *tools);
 
 /*history.c*/
 void	write_in_history_file(char **line, int fd, char *file_path);
-// void	write_in_history_file(char *line, int fd, char *file_path);
 void	add_history_file(char *line, char *file_name);
 void	append_to_history(char *line);
 void	update_history(char *file_name);
 
 /*history_utils.c*/
+int		count_chr(char *line, char c);
+int		check_empty_line(char *line);
+size_t	ft_strlen_nl(const char *s);
 int		count_lines_in_file(const char *filename);
 int		history_section(char *line);
 char	*get_file_path_from_home(char *file_name);

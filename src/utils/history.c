@@ -1,16 +1,5 @@
 #include "../../includes/minishell.h"
 
-size_t	ft_strlen_nl(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0' && s[i] != '\n')
-	{
-		i++;
-	}
-	return (i);
-}
 /**
  * @brief Writes a line to a history file, appending it with a line count.
  * 
@@ -44,20 +33,6 @@ size_t	ft_strlen_nl(const char *s)
  * close(history_fd);
  * ```
  */
-
-int	check_empty_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while(line[i])
-	{
-		if (!ft_isspace(line[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	write_in_history_file(char **line, int fd, char *file_path)
 {
@@ -126,22 +101,6 @@ void	write_in_history_file(char **line, int fd, char *file_path)
  * @see count_lines_in_file
  */
 
-int	count_chr(char *line, char c)
-{
-	int	i;
-	int	count;
-	
-	i = 0;
-	count = 0;
-	while (line[i])
-	{
-		if (line[i] == c)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 void	treat_line(char ***line_array, char *line)
 {
 	int		i;
@@ -163,7 +122,6 @@ void	treat_line(char ***line_array, char *line)
 		i = newline;
 		j++;
 	}
-	// (*line_array)[j] = NULL;
 }
 
 void	add_history_file(char *line, char *file_name)
@@ -224,8 +182,6 @@ void	add_history_file(char *line, char *file_name)
  * @example
  * 
  */
-
-
 
 void	append_to_history(char *line)
 {
