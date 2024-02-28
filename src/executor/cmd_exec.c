@@ -1,10 +1,44 @@
 #include "../../includes/executor.h"
 
+/**
+ * @brief Checks if the provided parser contains a 
+ * builtin command.
+ * 
+ * This function checks if the provided parser struct 
+ * contains a builtin command.
+ * It compares the parser's builtin function pointer with
+ * known builtin commands.
+ * 
+ * @param parser Pointer to the parser struct containing the 
+ * command information.
+ * 
+ * @return 1 if the parser contains a builtin command, 0 otherwise.
+ * 
+ * @note This function assumes the validity of the parser struct.
+ *       It assumes the parser's builtin function pointer
+ * accurately represents the command.
+ * 
+ * @warning Behavior is undefined if parser is NULL.
+ * 
+ * @see cd, pwd, export, unset, mini_exit, mini_history
+ * 
+ * @example
+ * ```
+ * // Example usage of exec_builtins function
+ * t_parser *parser = initialize_parser(); // Initialize
+ *  parser struct
+ * int is_builtin = exec_builtins(parser); // Check if parser
+ *  contains a builtin command
+ * // is_builtin will be 1 if parser contains a builtin 
+ * command, otherwise 0.
+ * ```
+ */
+
 int	exec_builtins(t_parser *parser)
 {
-	if (parser && (parser->builtin == cd || parser->builtin == pwd 
-		|| parser->builtin == export || parser->builtin == unset 
-		|| parser->builtin == mini_exit || parser->builtin == mini_history))
+	if (parser && (parser->builtin == cd || parser->builtin == pwd
+			|| parser->builtin == export || parser->builtin == unset
+			|| parser->builtin == mini_exit || parser->builtin == mini_history))
 		return (1);
 	return (0);
 }
@@ -18,10 +52,11 @@ int	exec_builtins(t_parser *parser)
  * @param cmd_args The command arguments.
  * @param envp The environment variables.
  * 
- * @note This function assumes that the command and path list are properly initialized.
+ * @note This function assumes that the command and path 
+ * list are properly initialized.
  */
 
-void	exec_path(t_parser *parser, char **path_list, char **cmd_args, char **envp)
+void	exec_path(t_parser *parser, char **path_list, char **cmds, char **envp)
 {
 	char	*cmd_path;
 	char	*tmp;
@@ -31,19 +66,19 @@ void	exec_path(t_parser *parser, char **path_list, char **cmd_args, char **envp)
 	while (path_list[i])
 	{
 		tmp = ft_strjoin(path_list[i], "/");
-		cmd_path = ft_strjoin(tmp, cmd_args[0]);
+		cmd_path = ft_strjoin(tmp, cmds[0]);
 		free(tmp);
-		execve(cmd_path, cmd_args, envp);
+		execve(cmd_path, cmds, envp);
 		free(cmd_path);
 		i++;
 	}
-	if (cmd_args)
-		execve(cmd_args[0], cmd_args, envp);
+	if (cmds)
+		execve(cmds[0], cmds, envp);
 	dup2(parser->original_stdout, STDOUT_FILENO);
 	close(parser->original_stdout);
-	printf("%s: command not found\n", cmd_args[0]);
-	global_status = 127;
-	exit(global_status);
+	printf("%s: command not found\n", cmds[0]);
+	g_status = 127;
+	exit(g_status);
 }
 
 /**

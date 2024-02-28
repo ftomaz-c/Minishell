@@ -3,7 +3,8 @@
 /**
  * @brief Check if a variable with a similar path exists in the environment.
  * 
- * This function checks if a variable with a similar path exists in the environment.
+ * This function checks if a variable with a similar
+ * path exists in the environment.
  * 
  * @param env Pointer to the array of environment variables.
  * @param var Pointer to the variable to check.
@@ -12,7 +13,7 @@
  * 
  * @see find_char_position(), ft_strncmp()
  */
-int check_var_path(char **env, char *var)
+int	check_var_path(char **env, char *var)
 {
 	int		index;
 	int		equal_pos;
@@ -35,13 +36,16 @@ int check_var_path(char **env, char *var)
 /**
  * @brief Copy variable value.
  * 
- * This function copies the variable value from the input string starting from the specified position.
+ * This function copies the variable value from the input
+ *  string starting from the specified position.
  * 
- * @param var_path Pointer to the destination string where the value will be copied.
+ * @param var_path Pointer to the destination string 
+ * where the value will be copied.
  * @param str Input string containing the variable and its value.
  * @param start Starting position from where to copy the value.
  * 
- * @note This function assumes that the destination string is large enough to hold the copied value.
+ * @note This function assumes that the destination string 
+ * is large enough to hold the copied value.
  */
 void	copy_var_value(char *var_path, char *str, int start)
 {
@@ -66,7 +70,8 @@ void	copy_var_value(char *var_path, char *str, int start)
  * 
  * This function extracts the new variable value from the input string.
  * 
- * @param var_value Pointer to the destination string where the value will be stored.
+ * @param var_value Pointer to the destination 
+ * string where the value will be stored.
  * @param str Input string containing the variable and its value.
  * 
  * @note This function allocates memory for the new value string.
@@ -94,7 +99,8 @@ void	get_new_var_value(char **var_value, char *str)
 /**
  * @brief Substitute the environment variable value.
  * 
- * This function substitutes the value of the environment variable with the new value.
+ * This function substitutes the value of the 
+ * environment variable with the new value.
  * 
  * @param tools Pointer to the tools structure containing environment variables.
  * @param var_path Pointer to the variable path.
@@ -113,7 +119,7 @@ void	substitute_env_var_value(t_tools *tools, char *var_path, char *str)
 	while (tools->env[i])
 	{
 		equal_pos = find_char_position(tools->env[i], '=');
-		if (var_path && strncmp(tools->env[i], var_path , equal_pos) == 0)
+		if (var_path && strncmp(tools->env[i], var_path, equal_pos) == 0)
 		{
 			free(tools->env[i]);
 			if (!var_value)

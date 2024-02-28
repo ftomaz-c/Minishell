@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int global_status = 0;
+int	g_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -27,13 +27,9 @@ int	main(int argc, char **argv, char **envp)
 				free_tools(&tools);
 				return (1);
 			}
-			
-			//print_lexer(&tools);
-
+			print_lexer(&tools);
 			parser(&tools);
-
-			//print_parser(&tools);
-
+			print_parser(&tools);
 			if (tools.lexer)
 				free_lexer(&tools.lexer);
 			if (tools.parser)
@@ -46,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error: input with unclosed quotes\n");
 		free(line);
 		if (tools.exit)
-			break;
+			break ;
 	}
 	free_tools(&tools);
 	return (0);

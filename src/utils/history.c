@@ -120,18 +120,24 @@ void	add_history_file(char *line, char *file_name)
 /**
  * @brief Appends a line to the history section.
  * 
- * This function appends a line to the history section, removing any leading section marker.
- * It ensures that the line added to the history does not end with a newline character.
+ * This function appends a line to the history section,
+ * removing any leading section marker.
+ * It ensures that the line added to the history does not 
+ * end with a newline character.
  * 
  * @param line The line to be appended to the history.
  * 
  * @return void
  * 
- * @note This function assumes that the history_section function determines the starting index of the actual command in the line.
- * @note Assumes that the add_history function is available and handles the addition of the line to the history.
- * @note Assumes that ft_substr and ft_strlen functions are available to manipulate strings.
+ * @note This function assumes that the history_section function
+ *  determines the starting index of the actual command in the line.
+ * @note Assumes that the add_history function is available and handles
+ *  the addition of the line to the history.
+ * @note Assumes that ft_substr and ft_strlen functions are available 
+ * to manipulate strings.
  * 
- * @warning It's the responsibility of the caller to ensure that the input line is properly formatted and does not exceed memory bounds.
+ * @warning It's the responsibility of the caller to ensure that the
+ *  input line is properly formatted and does not exceed memory bounds.
  * 
  * @see history_section, add_history, ft_substr, ft_strlen
  * 
@@ -141,14 +147,14 @@ void	add_history_file(char *line, char *file_name)
 
 void	append_to_history(char *line)
 {
-	char *new_line;
-	int	i;
-	int	j;
+	char	*new_line;
+	int		i;
+	int		j;
 
 	i = history_section(line);
 	new_line = ft_substr(line, i, ft_strlen(line) - i);
 	j = 0;
-	while(new_line[j] != '\n' && new_line[j])
+	while (new_line[j] != '\n' && new_line[j])
 		j++;
 	if (new_line[j] == '\n')
 		new_line[j] = '\0';
@@ -159,17 +165,25 @@ void	append_to_history(char *line)
 /**
  * @brief Updates the history with lines processed.
  * 
- * This function updates the history with lines processed by reading lines from
- * the ".minishell_history" file, processing each line to extract the history
- * section, and adding the section to the new line being built. If the line contains
- * a history section or if it is NULL, it adds the line to the history. Finally, it
+ * This function updates the history with lines 
+ * processed by reading lines from
+ * the ".minishell_history" file, processing each
+ *  line to extract the history
+ * section, and adding the section to the new line being
+ * built. If the line contains
+ * a history section or if it is NULL, it adds the line to 
+ * the history. Finally, it
  * closes the file and frees the memory allocated for the lines.
  * 
- * @note This function relies on the `append_to_history()` function to add lines
- *       to the history and the `get_next_line()` function to read lines from the file.
+ * @note This function relies on the `append_to_history()`
+ *  function to add lines
+ *       to the history and the `get_next_line()` function 
+ * to read lines from the file.
  * 
- * @warning This function assumes that the ".minishell_history" file exists and can
- *          be opened for reading. Failure to open the file may result in errors or
+ * @warning This function assumes that the ".minishell_history" 
+ * file exists and can
+ *          be opened for reading. Failure to open the file may 
+ * result in errors or
  *          unexpected behavior.
  * 
  * @see append_to_history, get_next_line
@@ -179,7 +193,8 @@ void	append_to_history(char *line)
  * ```
  * // Example usage of update_history function
  * update_history();
- * // Updates the command history with lines from ".minishell_history" file
+ * // Updates the command history with lines from 
+ * ".minishell_history" file
  * ```
  */
 
@@ -199,7 +214,7 @@ void	update_history(char *file_name)
 	if (fd == -1)
 		return ;
 	line = get_next_line(fd);
-	while(line)
+	while (line)
 	{
 		append_to_history(line);
 		free(line);

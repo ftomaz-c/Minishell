@@ -62,7 +62,7 @@ void	free_tools(t_tools *tools)
  * ```
  */
 
-char *get_var_from_env(char **env, char *var)
+char	*get_var_from_env(char **env, char *var)
 {
 	int		index;
 	char	*value;
@@ -77,7 +77,8 @@ char *get_var_from_env(char **env, char *var)
 		index++;
 	}
 	if (env[index])
-		value = ft_substr(env[index], ft_strlen(var) + 1, ft_strlen(env[index]));
+		value = ft_substr(env[index], ft_strlen(var) + 1,
+				ft_strlen(env[index]));
 	else
 		value = NULL;
 	return (value);

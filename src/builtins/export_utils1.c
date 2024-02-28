@@ -3,7 +3,8 @@
 /**
  * @brief Sort an array of strings alphabetically.
  * 
- * This function sorts the array of strings alphabetically using a simple bubble sort algorithm.
+ * This function sorts the array of strings alphabetically 
+ * using a simple bubble sort algorithm.
  * 
  * @param env_copy Array of strings to be sorted.
  * 
@@ -36,14 +37,17 @@ void	sort_array(char **env_copy)
 /**
  * @brief Copy variable value surrounded by quotes.
  * 
- * This function copies the variable value from the input string starting from the specified position
+ * This function copies the variable value from the 
+ * input string starting from the specified position
  * and surrounds it with double quotes.
  * 
- * @param var_path Pointer to the destination string where the value will be copied.
+ * @param var_path Pointer to the destination string 
+ * where the value will be copied.
  * @param str Input string containing the variable and its value.
  * @param start Starting position from where to copy the value.
  * 
- * @note This function assumes that the destination string is large enough to hold the copied value.
+ * @note This function assumes that the destination string 
+ * is large enough to hold the copied value.
  * 
  * @example
  * 
@@ -82,13 +86,17 @@ void	copy_var_value_quotes(char *var_path, char *str, int start)
 /**
  * @brief Copy variable name.
  * 
- * This function copies the variable name from the input string up to the specified position.
+ * This function copies the variable name from the 
+ * input string up to the specified position.
  * 
- * @param var_path Pointer to the destination string where the name will be copied.
+ * @param var_path Pointer to the destination string 
+ * where the name will be copied.
  * @param str Input string containing the variable and its value.
- * @param equal_pos Position of the equal sign '=' separating the variable name and value.
+ * @param equal_pos Position of the equal sign '=' 
+ * separating the variable name and value.
  * 
- * @note This function assumes that the destination string is large enough to hold the copied name.
+ * @note This function assumes that the destination
+ * string is large enough to hold the copied name.
  * 
  * @example
  * 
@@ -115,14 +123,16 @@ void	copy_var_name(char *var_path, char *str, int equal_pos)
 /**
  * @brief Prepare a variable for exporting.
  * 
- * This function prepares a variable for exporting by combining its name and value.
+ * This function prepares a variable for exporting
+ *  by combining its name and value.
  * 
  * @param str Input string containing the variable and its value.
  * 
  * @return Returns a newly allocated string containing the prepared variable, 
  * or NULL if memory allocation fails.
  * 
- * @note The returned string should be freed by the caller when it is no longer needed.
+ * @note The returned string should be freed by the
+ *  caller when it is no longer needed.
  * 
  * @see find_char_position(), ft_calloc(), copy_var_name(), ft_strlen(), 
  * copy_var_value_quotes(), ft_strcpy(), ft_strjoin()
@@ -149,7 +159,8 @@ char	*prepare_var(char *str)
 	if (!var_path)
 		return (NULL);
 	copy_var_name(var_path, str, equal_pos);
-	var_value = ft_calloc(sizeof(char *), (ft_strlen(str) - (equal_pos + 1)) + 3);
+	var_value = ft_calloc(sizeof(char *),
+			(ft_strlen(str) - (equal_pos + 1)) + 3);
 	if (!var_value)
 		return (NULL);
 	if (!str[equal_pos + 1])
@@ -164,14 +175,17 @@ char	*prepare_var(char *str)
 /**
  * @brief Get environment variables for export.
  * 
- * This function prepares environment variables for export by adding "declare -x " prefix to each variable.
+ * This function prepares environment variables for export by 
+ * adding "declare -x " prefix to each variable.
  * 
  * @param envp Pointer to the array of environment variables.
  * @param i Index to start scanning the environment variables from.
  * 
- * @return Returns a newly allocated array of strings containing the prepared environment variables, or NULL if memory allocation fails.
+ * @return Returns a newly allocated array of strings containing
+ *  the prepared environment variables, or NULL if memory allocation fails.
  * 
- * @note The returned array should be freed by the caller when it is no longer needed.
+ * @note The returned array should be freed by the
+ *  caller when it is no longer needed.
  * 
  * @see ft_calloc(), ft_strchr(), prepare_var(), ft_strjoin()
  * 
@@ -184,7 +198,7 @@ char	*prepare_var(char *str)
  * // Free exported_env when done
  * ```
  */
- 
+
 char	**get_env_export(char **envp, int i)
 {
 	char	**env;

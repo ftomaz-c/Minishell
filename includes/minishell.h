@@ -1,8 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int	global_status;
-
 # include "../libft/includes/libft.h"
 # include "structs.h"
 # include "lexer.h"
@@ -17,7 +15,10 @@ extern int	global_status;
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-# include <stdbool.h> // For boolean type
+# include <stdbool.h>
+
+// extern int	global_status;
+extern int	g_status;
 
 /*tools.c*/
 int		config_tools(t_tools *tools, char **envp);
@@ -36,12 +37,12 @@ char	*prompt_line(t_tools *tools);
 
 /*history.c*/
 void	write_in_history_file(char *line, int fd, char *file_path);
-void    add_history_file(char *line, char *file_name);
-void	update_history(char *file_name);
+void	add_history_file(char *line, char *file_name);
 void	append_to_history(char *line);
+void	update_history(char *file_name);
 
 /*history_utils.c*/
-int 	count_lines_in_file(const char *filename);
+int		count_lines_in_file(const char *filename);
 int		history_section(char *line);
 char	*get_file_path_from_home(char *file_name);
 

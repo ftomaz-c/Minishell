@@ -114,18 +114,22 @@ void	add_token_to_node(char token, t_lexer **lexer)
 /**
  * @brief Removes quotes from a string.
  * 
- * This function removes single and double quotes from a given string and returns a new string without them.
+ * This function removes single and double quotes from a given
+ *  string and returns a new string without them.
  * 
  * @param str The input string from which quotes are to be removed.
  * @param i Starting index to begin processing the string.
  * 
  * @return A new string without quotes. If no quotes are found, returns NULL.
  * 
- * @note This function allocates memory for the new string. The caller is responsible for freeing this memory.
+ * @note This function allocates memory for the new string. The 
+ * caller is responsible for freeing this memory.
  * 
- * @warning This function assumes that the input string is null-terminated and does not modify the original string.
+ * @warning This function assumes that the input string is 
+ * null-terminated and does not modify the original string.
  * 
- * @see add_temp_to_word() function for adding temporary substrings to the result.
+ * @see add_temp_to_word() function for adding temporary 
+ * substrings to the result.
  * 
  * @example
  * ```

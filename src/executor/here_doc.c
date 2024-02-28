@@ -1,9 +1,11 @@
 #include "../../includes/executor.h"
 
 /**
- * @brief Reads input until a delimiter is encountered and writes it to a file descriptor.
+ * @brief Reads input until a delimiter is encountered 
+ * and writes it to a file descriptor.
  * 
- * This function reads input from stdin until the specified delimiter is encountered and
+ * This function reads input from stdin until the specified 
+ *delimiter is encountered and
  * writes it to the provided file descriptor.
  * 
  * @param limiter The delimiter indicating the end of input.
@@ -20,10 +22,17 @@ void	get_here_doc(char *limiter, int fd, int original_stdout)
 	char	*line;
 
 	ft_putstr_fd("> ", original_stdout);
-	while ((line = get_next_line(1)))
+	line = NULL;
+	while (1)
 	{
+		line = get_next_line(1);
+		if (!line)
+			break ;
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
-			exit (EXIT_SUCCESS);
+		{
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
 		write(fd, line, ft_strlen(line));
 		ft_putstr_fd("> ", original_stdout);
 		free(line);

@@ -3,19 +3,24 @@
 /**
  * @brief Counts the number of lines in a file.
  * 
- * This function opens the specified file in read-only mode and counts the number of lines
+ * This function opens the specified file in read-only 
+ * mode and counts the number of lines
  * by repeatedly reading lines until the end of the file is reached.
  * 
  * @param filename The name of the file to count lines from.
  * 
- * @return The number of lines in the file if successful, or -1 if an error occurs.
+ * @return The number of lines in the file if successful,
+ *  or -1 if an error occurs.
  * 
- * @note This function assumes that the file exists and is accessible.
- *       It uses the get_next_line function to read lines from the file.
- *       The memory for each line is allocated dynamically and freed after use.
+ * @note This function assumes that the file exists
+ * and is accessible.
+ *       It uses the get_next_line function to read
+ * lines from the file.
+ *       The memory for each line is allocated dynamically 
+ * and freed after use.
  */
 
-int count_lines_in_file(const char *file_path)
+int	count_lines_in_file(const char *file_path)
 {
 	int		fd;
 	int		count;
@@ -39,7 +44,7 @@ int count_lines_in_file(const char *file_path)
 	}
 	free(line);
 	close (fd);
-	return(count);
+	return (count);
 }
 
 /**
@@ -64,13 +69,13 @@ int count_lines_in_file(const char *file_path)
  *          returns 0.
  */
 
-int		history_section(char *line)
+int	history_section(char *line)
 {
 	int	i;
 
 	i = 0;
 	if (line == NULL || *line == '\0')
-        return 0;
+		return (0);
 	while (ft_isdigit(line[i]))
 	{
 		if (line[i] == '\0')
@@ -83,22 +88,32 @@ int		history_section(char *line)
 }
 
 /**
- * @brief Constructs a file path by appending a file name to the user's home directory path.
+ * @brief Constructs a file path by appending a file name 
+ * to the user's home directory path.
  * 
- * This function constructs a file path by concatenating the user's home directory path
- * obtained from the HOME environment variable with the provided file name.
+ * This function constructs a file path by concatenating
+ *  the user's home directory path
+ * obtained from the HOME environment variable with
+ *  the provided file name.
  * 
- * @param file_name The name of the file to append to the home directory path.
+ * @param file_name The name of the file to append to
+ * the home directory path.
  * 
- * @return A dynamically allocated string containing the constructed file path.
- *         The caller is responsible for freeing the memory allocated for the string.
- *         Returns NULL if memory allocation fails or if the HOME environment variable is not set.
+ * @return A dynamically allocated string containing the 
+ * constructed file path.
+ *         The caller is responsible for freeing the memory 
+ * allocated for the string.
+ *         Returns NULL if memory allocation fails or if the
+ *  HOME environment variable is not set.
  * 
- * @note The caller must free the memory allocated for the returned string after use to avoid memory leaks.
+ * @note The caller must free the memory allocated for the 
+ * returned string after use to avoid memory leaks.
  * @note This function relies on the ft_strjoin function to concatenate strings.
- * @note Assumes that the HOME environment variable is set to the user's home directory path.
+ * @note Assumes that the HOME environment variable is set
+ *  to the user's home directory path.
  * 
- * @warning If memory allocation fails or if the HOME environment variable is not set,
+ * @warning If memory allocation fails or if the HOME
+ *  environment variable is not set,
  *          this function returns NULL without modifying errno.
  * 
  * @see ft_strjoin

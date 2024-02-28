@@ -1,10 +1,46 @@
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Handles characters within a string, 
+ * updating the index and start position.
+ * 
+ * This function handles characters within a string, 
+ * updating the index and start position pointers accordingly.
+ * It advances the index until encountering a space, 
+ * double quote, or single quote character.
+ * If a quote character is found, it adjusts the start
+ *  position to exclude the quote character itself and its contents.
+ * 
+ * @param s     Pointer to the string to handle.
+ * @param i     Pointer to the current index within the string.
+ * @param start Pointer to the start position within the string.
+ * 
+ * @note This function assumes the validity of the input 
+ * string and index pointers.
+ *       It modifies the i and start pointers to reflect the
+ *  updated positions.
+ * 
+ * @warning Behavior is undefined if s, i, or start is NULL or 
+ * if the index pointers go out of bounds.
+ * 
+ * @see paired_quote
+ * 
+ * @example
+ * ```
+ * // Example usage of handle_characters function
+ * char *s = "This is a \"quoted string\" with 'single quotes'";
+ * int i = 0, start = 0;
+ * handle_characters(s, &i, &start); // Handle characters in the string
+ * // After function call, i and start will be updated 
+ * based on encountered characters.
+ * ```
+ */
+
 void	handle_characters(char *s, int *i, int *start)
 {
 	int	tmp;
 
-	while(s[*i] && (s[*i] != ' ' && s[*i] != '\"' && s[*i] != '\''))
+	while (s[*i] && (s[*i] != ' ' && s[*i] != '\"' && s[*i] != '\''))
 		(*i)++;
 	if (s[*i] == '\"' || s[*i] == '\'')
 	{	
@@ -60,7 +96,7 @@ void	handle_characters(char *s, int *i, int *start)
  * ```
  */
 
- char	**create_split(char *s, char **split, int nwords, char c)
+char	**create_split(char *s, char **split, int nwords, char c)
 {
 	int	i;
 	int	j;
@@ -143,7 +179,8 @@ char	**lexer_split(char *s, char c)
 }
 
 /**
- * @brief Checks if a specified position within a string is inside a quoted section.
+ * @brief Checks if a specified position within a string is 
+ * inside a quoted section.
  * 
  * This function iterates through the string starting from index 
  * i and checks if the specified position
@@ -157,7 +194,8 @@ char	**lexer_split(char *s, char c)
  * quoted section (0 if inside, 1 otherwise).
  * @param position The position to be checked if it's inside a quoted section.
  * 
- * @return Returns 0 if the specified position is inside a quoted section, 1 otherwise.
+ * @return Returns 0 if the specified position is inside a quoted 
+ * section, 1 otherwise.
  * 
  * @note This function assumes that the input string is properly null-terminated.
  * 
@@ -179,24 +217,23 @@ char	**lexer_split(char *s, char c)
  * ```
  */
 
-
 int	check_token_flag(char *str, int i, int flag, int position)
 {
-	char quote;
-	int qposition;
+	char	quote;
+	int		qposition;
 
 	qposition = 0;
 	while (str[i])
 	{
 		if (str[i] == '\"' || str[i] == '\'')
-		{   
+		{
 			qposition = i;
 			quote = str[i];
 			i++;
 			while (str[i] && str[i] != quote)
 				i++;
 			if (str[i] == quote && position < i && position > qposition)
-			{   
+			{
 				flag = 1;
 				return (0);
 			}

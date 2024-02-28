@@ -1,37 +1,44 @@
 #include "../../includes/minishell.h"
 /**
- * @brief Finds the position of the paired quote character within a string.
+ * @brief Finds the position of the paired quote 
+ * character within a string.
  * 
  * This function searches for the paired quote character 'ch'
  * starting from the index 'i' within the string 'str'.
- * It returns the index of the paired quote character or the position
+ * It returns the index of the paired quote
+ * character or the position
  * of the next space character after 'i' if found.
  * 
  * @param str The string to search within.
  * @param i The starting index for the search.
  * @param ch The quote character to find the pair for.
  * 
- * @return The index of the paired quote character or the position of the
+ * @return The index of the paired quote character
+ *  or the position of the
  * next space character after 'i'.
  * 
- * @note This function assumes that 'str' is a null-terminated string.
+ * @note This function assumes that 'str' is a 
+ * null-terminated string.
  *       It searches for the paired quote character 'ch' starting
  * from the index 'i'.
  * 
- * @warning The function does not perform input validation on 'str'.
- *          It may result in unexpected behavior if 'str' is not a valid string.
+ * @warning The function does not perform input 
+ * validation on 'str'.
+ *          It may result in unexpected behavior if 
+ * 'str' is not a valid string.
  * 
  * @example
  * ```
  * char *str = "This is 'a sample' string";
  * int index = paired_quote(str, 8, '\'');
- * // index will be the position of the paired quote character ('a')
+ * // index will be the position of the paired
+ *  quote character ('a')
  * ```
  */
 
 int	paired_quote(char *str, int i, char ch)
 {
-	int	pair;
+	int		pair;
 	char	quote;
 
 	pair = 0;
@@ -48,10 +55,7 @@ int	paired_quote(char *str, int i, char ch)
 			pair = 0;
 		}
 		else if (str[i] == ' ' && pair == 1)
-		{	
-			// i--;
 			break ;
-		}
 		i++;
 	}
 	return (i);
@@ -188,11 +192,16 @@ int	count_words_and_quotes(char *s, char c)
 
 	i = 0;
 	word = 0;
-	while (i < ft_strlen(s))
+	while (i++ < ft_strlen(s))
 	{
 		while (s[i] && s[i] == c)
 			i++;
-		if (s[i] && s[i] != c && s[i] != 34 && s[i] != 39)
+		if (s[i] == 34 || s[i] == 39)
+		{
+			word++;
+			i = paired_quote(s, i + 1, s[i]) + 1;
+		}
+		else if (s[i] && s[i] != c && s[i] != 34 && s[i] != 39)
 		{
 			word++;
 			i++;
@@ -201,11 +210,9 @@ int	count_words_and_quotes(char *s, char c)
 			while (s[i] && s[i] != c)
 				i++;
 		}
-		i++;
 	}
 	return (word);
 }
-
 
 /**
  * @brief Allocates memory for a word within a string and copies it.
