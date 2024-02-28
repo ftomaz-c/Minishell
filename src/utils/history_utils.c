@@ -76,13 +76,15 @@ int	history_section(char *line)
 	i = 0;
 	if (line == NULL || *line == '\0')
 		return (0);
+	while (line[i] == ' ')
+		i++;
 	while (ft_isdigit(line[i]))
 	{
 		if (line[i] == '\0')
 			return (0);
 		i++;
 	}
-	if (line[i] == '.')
+	if (line[i] == ' ')
 		return (i + 2);
 	return (0);
 }
