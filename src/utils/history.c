@@ -97,7 +97,7 @@ void	add_history_file(char *line, char *file_name)
 	if (line == NULL)
 	{
 		printf("exit\n");
-		exit(EXIT_SUCCESS);
+		exit(global_status);
 	}
 	file_path = get_file_path_from_home(file_name);
 	if (!file_path)

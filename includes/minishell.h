@@ -7,8 +7,8 @@ extern int	global_status;
 # include "structs.h"
 # include "lexer.h"
 # include "parser.h"
-# include "executor.h"
 # include "builtins.h"
+# include "executor.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <readline/readline.h>
@@ -18,6 +18,7 @@ extern int	global_status;
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <stdbool.h> // For boolean type
+# include <limits.h>
 
 /*tools.c*/
 int		config_tools(t_tools *tools, char **envp);

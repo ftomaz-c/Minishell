@@ -1,55 +1,53 @@
 #include "../../includes/builtins.h"
 
-void	echo_n_print(t_parser *command, int	pos)
+int	echo_n_flag(char **str, int	*pos)
 {
-	int		j;
+	size_t	i;
 
-	pos++;
+	i = 0;
+	if (ft_strncmp(str[*pos], "-n", 2) != 0)
+		return (i);
+	while(ft_strncmp(str[*pos], "-n", 2) == 0)
+	{
+		while (str[*pos][i] != ' ' && str[*pos][i])
+			i++;
+		if (i != ft_strlen(str[*pos]))
+		{
+			i = 0;
+			break ;
+		}
+		(*pos)++;
+	}
+	return (i);
+}
+
+void	echo_print(t_parser *command, int pos, int flag)
+{
 	while (command->str[pos])
 	{
-		j = 0;
-		while (command->str[pos][j])
-		{
-			printf("%c", command->str[pos][j]);
-			j++;
-		}
+		printf("%s", command->str[pos]);
 		if (command->str[pos + 1])
 			printf(" ");
 		pos++;
 	}
-}
-
-void	echo_print(t_parser *command, int pos)
-{
-	int		j;
-
-	while (command->str[pos])
-	{
-		j = 0;
-		while (command->str[pos][j])
-		{
-			printf("%c", command->str[pos][j]);
-			j++;
-		}
-		if (command->str[pos][pos + 1])
-			printf(" ");
-		pos++;
-	}
-	printf("\n");
+	if (!flag)
+		printf("\n");
 }
 
 int	echo(t_tools *tools, t_parser *command)
 {
 	int	i;
+	int	flag;
 
 	i = 1;
 	(void)tools;
 	if (!command->str[i])
 		printf("\n");
-	else if (ft_strcmp(command->str[i], "-n") == 0)
-		echo_n_print(command, i);
 	else
-		echo_print(command, i);
+	{
+		flag = echo_n_flag(command->str, &i);
+		echo_print(command, i, flag);
+	}
 	global_status = EXIT_SUCCESS;
 	return (global_status);
 }

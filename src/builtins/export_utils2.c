@@ -92,6 +92,60 @@ void	get_new_var_value(char **var_value, char *str)
 }
 
 /**
+ * @brief Adds a value to an existing environment variable.
+ * 
+ * This function adds a value to an existing environment variable in the `tools` structure. It searches for the variable identified by `var_path` within the `tools->env` array, and if found, appends the new value to the existing variable's value.
+ * 
+ * @param tools A pointer to the tools structure containing environment variables.
+ * @param var_path The path of the variable to which the value will be added.
+ * @param str The string containing the new value to be added.
+ * 
+ * @return void
+ * 
+ * @note This function assumes that `tools->env` is a null-terminated array of strings representing environment variables.
+ * 
+ * @warning This function assumes that `var_path` and `str` are properly formatted and valid C strings. Improper usage may lead to undefined behavior.
+ * 
+ * @see check_if_var_exists(), get_new_var_value()
+ * 
+ * @example
+ * 
+ * ```
+ * // Example usage of the function
+ * t_tools *tools;
+ * char *var_path = "PATH";
+ * char *new_value = "/usr/local/bin";
+ * add_value_to_var(tools, var_path, new_value);
+ * ```
+ */
+
+void	add_value_to_var(t_tools *tools, char *var_path, char *str)
+{
+	int		i;
+	char	*var_value;
+	char	*tmp;
+	int		equal_pos;
+
+	get_new_var_value(&var_value, str);
+	i = 0;
+	while (tools->env[i])
+	{
+		equal_pos = find_char_position(tools->env[i], '=');
+		if (var_path && strncmp(tools->env[i], var_path , equal_pos) == 0)
+		{
+			tmp = ft_strjoin(tools->env[i], var_value);
+			free(tools->env[i]);
+			tools->env[i] = ft_strdup(tmp);
+			free(tmp);
+			break ;
+		}
+		i++;
+	}
+	free(var_value);
+	free(var_path);
+}
+
+/**
  * @brief Substitute the environment variable value.
  * 
  * This function substitutes the value of the environment variable with the new value.

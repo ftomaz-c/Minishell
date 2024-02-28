@@ -188,11 +188,16 @@ int	count_words_and_quotes(char *s, char c)
 
 	i = 0;
 	word = 0;
-	while (i < ft_strlen(s))
+	while (i++ < ft_strlen(s))
 	{
 		while (s[i] && s[i] == c)
 			i++;
-		if (s[i] && s[i] != c && s[i] != 34 && s[i] != 39)
+		if (s[i] == 34 || s[i] == 39)
+		{
+			word++;
+			i = paired_quote(s, i + 1, s[i]) + 1;
+		}
+		else if (s[i] && s[i] != c && s[i] != 34 && s[i] != 39)
 		{
 			word++;
 			i++;
@@ -201,7 +206,6 @@ int	count_words_and_quotes(char *s, char c)
 			while (s[i] && s[i] != c)
 				i++;
 		}
-		i++;
 	}
 	return (word);
 }

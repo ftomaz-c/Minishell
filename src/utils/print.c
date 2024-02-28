@@ -28,7 +28,7 @@ void	print_parser(t_tools *tools)
 		printf("str: ");
 		i = 0;
 		while(parser->str[i])
-			printf("%s ", parser->str[i++]);
+			printf(":%s:", parser->str[i++]);
 		printf("\n");
 		printf("builtin: %p\n", parser->builtin);
 		printf("nb_redirections: %i\n", parser->nb_redirections);

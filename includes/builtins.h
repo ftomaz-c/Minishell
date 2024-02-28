@@ -35,11 +35,12 @@ void	sort_print_env(t_tools *tools);
 /*builtins/export_utils1.c*/
 char	**get_env_export(char **envp, int i);
 char	*prepare_var(char *str);
-void	copy_var_name(char *var_path, char *str, int equal_pos);
+int		copy_var_name(char *var_path, char *str, int equal_pos);
 void	copy_var_value_quotes(char *var_path, char *str, int start);
 void	sort_array(char **env_copy);
 
 /*builtins/export_utils2.c*/
+void	add_value_to_var(t_tools *tools, char *var_path, char *str);
 void	substitute_env_var_value(t_tools *tools, char *var_path, char *str);
 void	get_new_var_value(char **var_value, char *str);
 void	copy_var_value(char *var_path, char *str, int start);
