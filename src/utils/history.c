@@ -101,29 +101,6 @@ void	write_in_history_file(char **line, int fd, char *file_path)
  * @see count_lines_in_file
  */
 
-void	treat_line(char ***line_array, char *line)
-{
-	int		i;
-	int		j;
-	int		newline;
-	char	size;
-
-	i = 0;
-	j = 0;
-	newline = 0;
-	size = count_chr(line, '\n') + 1;
-	*line_array = ft_calloc(sizeof(char **), size + 1);
-	if (!(*line_array))
-		return ;
-	while ( newline < (int)ft_strlen(line) && j < size)
-	{
-		newline = find_next_char_position(line, newline, '\n') + 1;
-		(*line_array)[j] = ft_substr(line, i, newline - i);
-		i = newline;
-		j++;
-	}
-}
-
 void	add_history_file(char *line, char *file_name)
 {
 	int		fd;

@@ -61,7 +61,14 @@ int		check_var(t_tools *tools, char *str);
 void	unset_var_from_env(t_tools *tools, char *str, int i);
 int		unset(t_tools *tools, t_parser *command);
 
-/*src/builtins/history.c*/
+/*src/builtins/mini_history.c*/
+int		invalid_history_options(t_tools *tools, t_parser *command);
+void	get_buffer_lines_print(char **buffer, int size, int i);
+char	**get_history(char **buffer, char *file_path);
 int		mini_history(t_tools *tools, t_parser *command);
+
+/*src/builtins/mini_history_utils.c*/
+void	copy_buffer(char **buffer, int fd, int nlines);
+void	print_buffer(char **str);
 
 #endif

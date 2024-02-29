@@ -1,21 +1,28 @@
 #include "../../includes/minishell.h"
 
-int	count_chr(char *line, char c)
-{
-	int	i;
-	int	count;
-	
-	i = 0;
-	count = 0;
-	while (line[i])
-	{
-		if (line[i] == c)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
+/**
+ * @brief Checks if a line contains only whitespace characters.
+ * 
+ * This function checks if a given string contains only whitespace characters.
+ * 
+ * @param line Pointer to the string to check.
+ * 
+ * @return Returns 1 if the line contains non-whitespace characters, otherwise 0.
+ * 
+ * @note This function assumes that `line` points to a valid null-terminated string.
+ * 
+ * @warning None.
+ * 
+ * @see ft_isspace().
+ * 
+ * @example
+ * 
+ * ```
+ * // Example usage:
+ * char *str = "   ";
+ * int result = check_empty_line(str);
+ * ```
+ */
 int	check_empty_line(char *line)
 {
 	int	i;
@@ -30,6 +37,31 @@ int	check_empty_line(char *line)
 	return (0);
 }
 
+/**
+ * @brief Calculates the length of a string until newline character.
+ * 
+ * This function calculates the length of a string until it encounters
+ * either a null terminator or a newline character.
+ * 
+ * @param s Pointer to the string.
+ * 
+ * @return Returns the length of the string until the newline character 
+ * or null terminator.
+ * 
+ * @note This function assumes that `s` points to a valid null-terminated string.
+ * 
+ * @warning None.
+ * 
+ * @see None.
+ * 
+ * @example
+ * 
+ * ```
+ * // Example usage:
+ * char *str = "Hello\nWorld";
+ * size_t length = ft_strlen_nl(str);
+ * ```
+ */
 size_t	ft_strlen_nl(const char *s)
 {
 	int	i;
@@ -41,6 +73,7 @@ size_t	ft_strlen_nl(const char *s)
 	}
 	return (i);
 }
+
 /**
  * @brief Counts the number of lines in a file.
  * 
