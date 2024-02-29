@@ -25,6 +25,9 @@ int		config_tools(t_tools *tools, char **envp);
 char	**get_env(char **envp);
 char	**get_path(char **env);
 char	*get_var_from_env(char **env, char *var);
+
+/*tools_utils.c*/
+int		compare_var_to_env(char *env, char *var);
 void	free_tools(t_tools *tools);
 
 /*error.c*/

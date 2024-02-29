@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:18:19 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/02/28 12:20:38 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/02/29 18:31:24 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int				ft_atoi(const char *nptr);
 long			ft_atol(const char *nptr);
 long long		ft_atoll(const char *nptr);
 void			*ft_calloc(size_t nmemb, size_t size);
+void			*ft_realloc(void *ptr, size_t size, size_t old_size);
 long long int	ft_strtoull(const char *nptr, char **endptr, int base);
 
 /* others */

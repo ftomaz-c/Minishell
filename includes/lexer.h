@@ -47,4 +47,10 @@ int		find_char_position_new(char *str, char c);
 int		get_end_position(char *str, int position);
 char	*add_prefix_and_suffix(char *str, char **env, int position, int end);
 
+/*lexer/expander_split.c*/
+int		count_char_in_str(char *str, char c);
+void	init_expander(t_expander *expander);
+int		realloc_split(t_expander *expander, char *str, int i);
+char	**split_expander(char *str);
+
 #endif

@@ -46,4 +46,12 @@ typedef struct	s_parser
 	struct s_parser	*prev;	
 }	t_parser;
 
+typedef struct	s_expander
+{
+	char			**split;
+	int				size;
+	int				index;
+	int				start;
+}	t_expander;
+
 # endif
