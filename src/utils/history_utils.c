@@ -77,11 +77,11 @@ int	count_lines_in_file(const char *file_path)
 		count++;
 		free(line);
 		line = get_next_line(fd);
-		while (line && !history_section(line))
-		{
-			free(line);
-			line = get_next_line(fd);
-		}
+		// while (line && !history_section(line))
+		// {
+		// 	free(line);
+		// 	line = get_next_line(fd);
+		// }
 	}
 	free(line);
 	close (fd);
