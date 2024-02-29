@@ -44,10 +44,10 @@ void	handle_characters(char *s, int *i, int *start)
 		(*i)++;
 	if (s[*i] == '\"' || s[*i] == '\'')
 	{	
-		if (s[*i - 1] && s[*i - 1] != ' ')
+		if (s[*i] && s[*i - 1] && s[*i - 1] != ' ')
 		{
 			tmp = (*i);
-			while (s[*i] != ' ')
+			while (*i >= 0 && s[*i] && s[*i] != ' ')
 				(*i)--;
 			*start = ++(*i);
 			(*i) = tmp;

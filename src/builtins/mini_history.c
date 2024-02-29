@@ -16,7 +16,7 @@ int	invalid_history_options(t_tools *tools, t_parser *command)
 	}
 	if (command->str[2] != NULL)
 	{
-		printf("exit\nbash: exit: too many arguments\n");
+		printf("bash: history: too many arguments\n");
 		g_status = EXIT_FAILURE;
 		return (g_status);
 	}

@@ -21,7 +21,7 @@ int		pwd(t_tools *tools, t_parser *command);
 
 /*src/builtins/echo.c*/
 void	echo_n_print(t_parser *command, int pos);
-void	echo_print(t_parser *command, int pos);
+void	echo_print(t_parser *command, int pos, int flag);
 int		echo(t_tools *tools, t_parser *command);
 
 /*src/builtins/mini_exit.c*/
