@@ -38,7 +38,7 @@ void	handle_white_spaces_and_quotes(char *s, int *i, int *start);
 int		paired_quote(char *str, int i, char ch);
 
 /*lexer/expander.c*/
-void	expander(char **env, char **list);
+char	*expander(char **env, char **list);
 
 /*lexer/expander_utils.c*/
 int		find_single_quote(char *str);

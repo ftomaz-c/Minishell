@@ -29,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 				global_status = 1;
 				break ;
 			}
-			
+
 			//print_lexer(&tools);
 
 			parser(&tools);
