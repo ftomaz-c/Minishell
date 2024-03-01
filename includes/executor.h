@@ -20,8 +20,8 @@ void	redirection(t_parser *parser);
 void	here_doc(char *limiter, int original_stdout);
 void	get_here_doc(char *limiter, int fd, int original_stdout);
 
-/*src/executor/cmd_exec.c*/
-void	exec_path(t_parser *parser, char **path_list, char **cmds, char **envp);
+/*cmd_exec.c*/
+void	exec_path(char **path_list, char **cmd_args, char **envp);
 int		exec_builtins(t_parser *parser);
 void	minishell_pipex(t_tools *tools, t_parser *parser);
 

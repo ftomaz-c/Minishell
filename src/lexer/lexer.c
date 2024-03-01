@@ -274,6 +274,7 @@ int	lex_line(char *line, t_tools *tools)
 	char	**line_split_quotes;
 
 	tools->lexer = NULL;
+	tools->pipes = 0;
 	line_split_quotes = lexer_split(line, ' ');
 	expander(tools->env, line_split_quotes);
 	add_line_to_lexer_struct(line_split_quotes, &tools->lexer);

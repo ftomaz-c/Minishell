@@ -108,16 +108,25 @@ void	copy_var_value_quotes(char *var_path, char *str, int start)
  * ```
  */
 
-void	copy_var_name(char *var_path, char *str, int equal_pos)
+int	copy_var_name(char *var_path, char *str, int equal_pos)
 {
 	int	i;
+	int	j;
+	int	plus_flag;
 
 	i = 0;
+	j = 0;
+	plus_flag = 0;
 	while (str[i] && i <= equal_pos)
 	{
-		var_path[i] = str[i];
-		i++;
+		if (str[i] == '+')
+		{
+			plus_flag = 1;
+			i++;
+		}
+		var_path[j++] = str[i++];
 	}
+	return (plus_flag);
 }
 
 /**

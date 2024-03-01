@@ -78,14 +78,15 @@ void	wait_status(int pid, int *status)
 
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
-	if (parser->builtin == echo || parser->builtin == env)
+	if (exec_builtins(parser) || parser->builtin == echo 
+		|| parser->builtin == env)
 	{
 		parser->builtin(tools, parser);
 		if (parser->next)
 			exit (g_status);
 	}
 	else
-		exec_path(parser, tools->path, parser->str, tools->env);
+		exec_path(tools->path, parser->str, tools->env);
 	return ;
 }
 
@@ -142,7 +143,7 @@ int	executor(t_tools *tools)
 
 	parser = tools->parser;
 	parser->original_stdout = dup(STDOUT_FILENO);
-	if (exec_builtins(tools->parser))
+	if (exec_builtins(tools->parser) && !tools->pipes)
 		return (parser->builtin(tools, parser));
 	pid = fork();
 	if (pid < 0)

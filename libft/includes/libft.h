@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:18:19 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/02/18 16:22:21 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/02/28 12:20:38 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <unistd.h>
+# include <limits.h>
+# include <errno.h>
 # include "ft_printf.h"
 # include "get_next_line.h"
 
@@ -48,9 +50,11 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strdup(const char *s);
 
 /* stdlib.h */
-int		ft_atoi(const char *nptr);
-long	ft_atol(const char *nptr);
-void	*ft_calloc(size_t nmemb, size_t size);
+int				ft_atoi(const char *nptr);
+long			ft_atol(const char *nptr);
+long long		ft_atoll(const char *nptr);
+void			*ft_calloc(size_t nmemb, size_t size);
+long long int	ft_strtoull(const char *nptr, char **endptr, int base);
 
 /* others */
 char	*ft_substr(char const *s, unsigned int start, size_t len);

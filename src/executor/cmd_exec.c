@@ -1,5 +1,20 @@
 #include "../../includes/executor.h"
 
+void	exec_err(int err, char *str)
+{
+	if (err == 1)
+	{
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else if (err == 2)
+	{
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
+	global_status = 127;
+}
+
 /**
  * @brief Checks if the provided parser contains a 
  * builtin command.
@@ -56,29 +71,31 @@ int	exec_builtins(t_parser *parser)
  * list are properly initialized.
  */
 
-void	exec_path(t_parser *parser, char **path_list, char **cmds, char **envp)
+void	exec_path(char **path_list, char **cmd_args, char **envp)
 {
 	char	*cmd_path;
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	while (path_list[i])
+	if (!get_var_from_env(envp, "PATH"))
+		exec_err(1, cmd_args[0]);
+	else
 	{
-		tmp = ft_strjoin(path_list[i], "/");
-		cmd_path = ft_strjoin(tmp, cmds[0]);
-		free(tmp);
-		execve(cmd_path, cmds, envp);
-		free(cmd_path);
-		i++;
+		while (path_list[i])
+		{
+			tmp = ft_strjoin(path_list[i], "/");
+			cmd_path = ft_strjoin(tmp, cmd_args[0]);
+			free(tmp);
+			execve(cmd_path, cmd_args, envp);
+			free(cmd_path);
+			i++;
+		}
+		if (cmd_args)
+			execve(cmd_args[0], cmd_args, envp);
+		exec_err(2, cmd_args[0]);
 	}
-	if (cmds)
-		execve(cmds[0], cmds, envp);
-	dup2(parser->original_stdout, STDOUT_FILENO);
-	close(parser->original_stdout);
-	printf("%s: command not found\n", cmds[0]);
-	g_status = 127;
-	exit(g_status);
+	exit(global_status);
 }
 
 /**

@@ -57,6 +57,17 @@ void	sort_print_env(t_tools *tools)
  * 
  */
 
+void	export_err(int err, char *str)
+{
+	if (err == 1)
+	{
+		ft_putstr_fd("bash: export: `", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+	}
+	global_status = err;
+}
+
 int	check_valid_export(char *parser)
 {
 	int	i;
@@ -66,18 +77,16 @@ int	check_valid_export(char *parser)
 	if (ft_strcmp(parser, "=") == 0 || parser[i] == '='
 		|| !ft_isalpha_plus_underscore(parser[i]))
 	{	
-		printf("bash: export: `%s': not a valid identifier\n", parser);
-		g_status = 1;
+		export_err(1, parser);
 		return (0);
 	}
 	i = 1;
 	equal_pos = find_char_position(parser, '=');
 	while (parser[i] && i < equal_pos)
 	{
-		if (parser[i] != '_' && !ft_isalnum(parser[i]))
+		if (parser[i] != '_'  && !ft_isalnum(parser[i]) && parser[i] != '+')
 		{
-			printf("bash: export: `%s': not a valid identifier\n", parser);
-			g_status = 1;
+			export_err(1, parser);
 			return (0);
 		}
 		i++;
@@ -160,6 +169,7 @@ int	check_if_var_exists(t_tools *tools, char *str)
 {
 	char	*var_path;
 	int		equal_pos;
+	int		plus_flag;
 	int		i;
 
 	i = 0;
@@ -169,10 +179,13 @@ int	check_if_var_exists(t_tools *tools, char *str)
 	var_path = ft_calloc(sizeof(char *), i + 1);
 	if (!var_path)
 		return (1);
-	copy_var_name(var_path, str, i);
+	plus_flag = copy_var_name(var_path, str, i);
 	if (check_var_path(tools->env, var_path))
 	{
-		substitute_env_var_value(tools, var_path, str);
+		if (plus_flag)
+			add_value_to_var(tools, var_path, str);
+		else
+			substitute_env_var_value(tools, var_path, str);
 		return (1);
 	}
 	free(var_path);
@@ -233,7 +246,7 @@ int	export(t_tools *tools, t_parser *command)
 				if (check_if_var_exists(tools, command->str[i]))
 					i++;
 				else
-				{	
+				{
 					export_variable_to_env(tools, command->str[i]);
 					i++;
 				}

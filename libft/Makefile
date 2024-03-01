@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:23:08 by pmessett          #+#    #+#              #
-#    Updated: 2024/02/18 16:23:07 by crebelo-         ###   ########.fr        #
+#    Updated: 2024/02/28 11:17:21 by ftomazc          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRC =	src/ft_isalpha.c		src/ft_isdigit.c	src/ft_isalnum.c	src/ft_isascii.c	src/f
 		src/ft_strnstr.c		src/ft_atoi.c		src/ft_calloc.c		src/ft_strdup.c		src/ft_substr.c			\
 		src/ft_strjoin.c		src/ft_strtrim.c	src/ft_split.c		src/ft_itoa.c		src/ft_strmapi.c		\
 		src/ft_striteri.c		src/ft_putchar_fd.c	src/ft_putstr_fd.c	src/ft_putendl_fd.c	src/ft_putnbr_fd.c		\
-		src/ft_putnbr_base_fd.c	src/ft_isspace.c	src/ft_atol.c		src/ft_extension_check.c	src/ft_strcmp.c 	src/ft_strcpy.c\
+		src/ft_putnbr_base_fd.c	src/ft_isspace.c	src/ft_atol.c		src/ft_extension_check.c	src/ft_strcmp.c	\
+		src/ft_strcpy.c			src/ft_atoll.c		src/ft_strtoull.c\
 
 #ft_printf
 SRC +=	src/ft_printf/ft_printf.c	src/ft_printf/format_len.c	src/ft_printf/hex_format.c	src/ft_printf/nbr_format.c	\

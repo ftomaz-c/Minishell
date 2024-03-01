@@ -17,7 +17,8 @@ int	main(int argc, char **argv, char **envp)
 	}
 	while (1)
 	{
-		line = prompt_line(&tools);
+		//line = prompt_line(&tools);
+		line = readline(".minishell: ");
 		add_history_file(line, ".minishell_history");
 		if (check_unclosed_quotes(line))
 		{
@@ -25,7 +26,8 @@ int	main(int argc, char **argv, char **envp)
 			{
 				free(line);
 				free_tools(&tools);
-				return (1);
+				global_status = 1;
+				break ;
 			}
 			// print_lexer(&tools);
 			parser(&tools);
@@ -45,5 +47,5 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	}
 	free_tools(&tools);
-	return (0);
+	exit (global_status);
 }
