@@ -4,7 +4,8 @@ SRC :=	src/main.c \
 		src/utils/tools.c \
 		src/utils/error.c \
 		src/utils/history.c \
-		src/utils/history_utils.c \
+		src/utils/history_utils_1.c \
+		src/utils/history_utils_2.c \
 		src/utils/prompt.c \
 		src/utils/print.c \
 		src/lexer/expander.c \
@@ -26,6 +27,7 @@ SRC :=	src/main.c \
 		src/builtins/export_utils3.c \
 		src/builtins/unset.c\
 		src/builtins/mini_history.c \
+		src/builtins/mini_history_utils.c \
 		src/parser/parser.c \
 		src/parser/parser_redir.c \
 		src/parser/parser_utils.c \

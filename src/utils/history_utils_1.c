@@ -1,6 +1,80 @@
 #include "../../includes/minishell.h"
 
 /**
+ * @brief Checks if a line contains only whitespace characters.
+ * 
+ * This function checks if a given string contains only whitespace characters.
+ * 
+ * @param line Pointer to the string to check.
+ * 
+ * @return Returns 1 if the line contains non-whitespace characters, otherwise 0.
+ * 
+ * @note This function assumes that `line` points to a valid null-terminated string.
+ * 
+ * @warning None.
+ * 
+ * @see ft_isspace().
+ * 
+ * @example
+ * 
+ * ```
+ * // Example usage:
+ * char *str = "   ";
+ * int result = check_empty_line(str);
+ * ```
+ */
+int	check_empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while(line[i])
+	{
+		if (!ft_isspace(line[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+/**
+ * @brief Calculates the length of a string until newline character.
+ * 
+ * This function calculates the length of a string until it encounters
+ * either a null terminator or a newline character.
+ * 
+ * @param s Pointer to the string.
+ * 
+ * @return Returns the length of the string until the newline character 
+ * or null terminator.
+ * 
+ * @note This function assumes that `s` points to a valid null-terminated string.
+ * 
+ * @warning None.
+ * 
+ * @see None.
+ * 
+ * @example
+ * 
+ * ```
+ * // Example usage:
+ * char *str = "Hello\nWorld";
+ * size_t length = ft_strlen_nl(str);
+ * ```
+ */
+size_t	ft_strlen_nl(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0' && s[i] != '\n')
+	{
+		i++;
+	}
+	return (i);
+}
+
+/**
  * @brief Counts the number of lines in a file.
  * 
  * This function opens the specified file in read-only 
@@ -36,11 +110,11 @@ int	count_lines_in_file(const char *file_path)
 		count++;
 		free(line);
 		line = get_next_line(fd);
-		while (line && !history_section(line))
-		{
-			free(line);
-			line = get_next_line(fd);
-		}
+		// while (line && !history_section(line))
+		// {
+		// 	free(line);
+		// 	line = get_next_line(fd);
+		// }
 	}
 	free(line);
 	close (fd);
@@ -76,13 +150,15 @@ int	history_section(char *line)
 	i = 0;
 	if (line == NULL || *line == '\0')
 		return (0);
+	while (line[i] == ' ')
+		i++;
 	while (ft_isdigit(line[i]))
 	{
 		if (line[i] == '\0')
 			return (0);
 		i++;
 	}
-	if (line[i] == '.')
+	if (line[i] == ' ')
 		return (i + 2);
 	return (0);
 }

@@ -192,7 +192,7 @@ int	count_words_and_quotes(char *s, char c)
 
 	i = 0;
 	word = 0;
-	while (i++ < ft_strlen(s))
+	while (i < ft_strlen(s))
 	{
 		while (s[i] && s[i] == c)
 			i++;

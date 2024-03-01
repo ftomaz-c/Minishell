@@ -27,9 +27,9 @@ int	main(int argc, char **argv, char **envp)
 				free_tools(&tools);
 				return (1);
 			}
-			print_lexer(&tools);
+			// print_lexer(&tools);
 			parser(&tools);
-			print_parser(&tools);
+			// print_parser(&tools);
 			if (tools.lexer)
 				free_lexer(&tools.lexer);
 			if (tools.parser)
