@@ -7,7 +7,7 @@ int	echo_n_flag(char **str, int	*pos)
 	i = 0;
 	if (ft_strncmp(str[*pos], "-n", 2) != 0)
 		return (i);
-	while(ft_strncmp(str[*pos], "-n", 2) == 0)
+	while (ft_strncmp(str[*pos], "-n", 2) == 0)
 	{
 		while (str[*pos][i] != ' ' && str[*pos][i])
 			i++;
@@ -48,6 +48,6 @@ int	echo(t_tools *tools, t_parser *command)
 		flag = echo_n_flag(command->str, &i);
 		echo_print(command, i, flag);
 	}
-	global_status = EXIT_SUCCESS;
-	return (global_status);
+	g_status = EXIT_SUCCESS;
+	return (g_status);
 }

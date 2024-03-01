@@ -93,7 +93,7 @@ void	free_lexer(t_lexer **lexer)
 {
 	t_lexer	*current;
 	t_lexer	*next;
-	
+
 	current = *lexer;
 	if (!lexer || *lexer == NULL)
 		return ;
@@ -144,13 +144,15 @@ void	free_list(char	**list)
 /**
  * @brief Finds the next occurrence of a character in a string.
  * 
- * This function searches for the next occurrence of a specified character in the given string starting from the specified index.
+ * This function searches for the next occurrence of a specified 
+ * character in the given string starting from the specified index.
  * 
  * @param str The input string to search.
  * @param i Starting index to begin searching.
  * @param c The character to search for.
  * 
- * @return The index of the next occurrence of the character 'c' in the string 'str' starting from index 'i'.
+ * @return The index of the next occurrence of the character 'c' 
+ * in the string 'str' starting from index 'i'.
  * If 'c' is not found, returns the index 'i'.
  * 
  * @note This function assumes that the input string is null-terminated.
@@ -165,7 +167,7 @@ void	free_list(char	**list)
  * // The result should be 5, as 'm' is found at index 5 in "example string".
  * ```
  */
- 
+
 int	find_next_char_position(char *str, int i, char c)
 {
 	while (str[i])

@@ -15,11 +15,45 @@ void	exec_err(int err, char *str)
 	global_status = 127;
 }
 
+/**
+ * @brief Checks if the provided parser contains a 
+ * builtin command.
+ * 
+ * This function checks if the provided parser struct 
+ * contains a builtin command.
+ * It compares the parser's builtin function pointer with
+ * known builtin commands.
+ * 
+ * @param parser Pointer to the parser struct containing the 
+ * command information.
+ * 
+ * @return 1 if the parser contains a builtin command, 0 otherwise.
+ * 
+ * @note This function assumes the validity of the parser struct.
+ *       It assumes the parser's builtin function pointer
+ * accurately represents the command.
+ * 
+ * @warning Behavior is undefined if parser is NULL.
+ * 
+ * @see cd, pwd, export, unset, mini_exit, mini_history
+ * 
+ * @example
+ * ```
+ * // Example usage of exec_builtins function
+ * t_parser *parser = initialize_parser(); // Initialize
+ *  parser struct
+ * int is_builtin = exec_builtins(parser); // Check if parser
+ *  contains a builtin command
+ * // is_builtin will be 1 if parser contains a builtin 
+ * command, otherwise 0.
+ * ```
+ */
+
 int	exec_builtins(t_parser *parser)
 {
-	if (parser && (parser->builtin == cd || parser->builtin == pwd 
-		|| parser->builtin == export || parser->builtin == unset 
-		|| parser->builtin == mini_exit || parser->builtin == mini_history))
+	if (parser && (parser->builtin == cd || parser->builtin == pwd
+			|| parser->builtin == export || parser->builtin == unset
+			|| parser->builtin == mini_exit || parser->builtin == mini_history))
 		return (1);
 	return (0);
 }
@@ -33,7 +67,8 @@ int	exec_builtins(t_parser *parser)
  * @param cmd_args The command arguments.
  * @param envp The environment variables.
  * 
- * @note This function assumes that the command and path list are properly initialized.
+ * @note This function assumes that the command and path 
+ * list are properly initialized.
  */
 
 void	exec_path(char **path_list, char **cmd_args, char **envp)

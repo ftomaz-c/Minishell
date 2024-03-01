@@ -3,11 +3,13 @@
 /**
  * @brief Check if a character is alphabetic or an underscore.
  * 
- * This function checks if the input character is alphabetic (A-Z, a-z) or an underscore (_).
+ * This function checks if the input character
+ *  is alphabetic (A-Z, a-z) or an underscore (_).
  * 
  * @param c Character to check.
  * 
- * @return Returns 1 if the character is alphabetic or an underscore, otherwise returns 0.
+ * @return Returns 1 if the character is alphabetic or
+ * an underscore, otherwise returns 0.
  */
 int	ft_isalpha_plus_underscore(int c)
 {
@@ -19,12 +21,14 @@ int	ft_isalpha_plus_underscore(int c)
 /**
  * @brief Find the position of a character in a string.
  * 
- * This function finds the position of the specified character in the input string.
+ * This function finds the position of the specified
+ *  character in the input string.
  * 
  * @param str Input string to search.
  * @param c Character to find.
  * 
- * @return Returns the position of the character in the string, or the length of the string if the character is not found.
+ * @return Returns the position of the character in
+ *  the string, or the length of the string if the character is not found.
  */
 int	find_char_position(char *str, char c)
 {
@@ -43,12 +47,15 @@ int	find_char_position(char *str, char c)
 /**
  * @brief Copy characters from a string to another string.
  * 
- * This function copies characters from the input string to the destination string.
+ * This function copies characters from the input string 
+ * to the destination string.
  * 
- * @param var_path Pointer to the destination string where the characters will be copied.
+ * @param var_path Pointer to the destination string 
+ * where the characters will be copied.
  * @param str Input string containing the characters to copy.
  * 
- * @note This function assumes that the destination string is large enough to hold the copied characters.
+ * @note This function assumes that the destination 
+ * string is large enough to hold the copied characters.
  */
 void	copy_var(char *var_path, char *str)
 {
@@ -97,29 +104,31 @@ void	get_new_var(char **var, char *str)
  * 
  * @return Returns 1 if successful, otherwise returns 0.
  * 
- * @note This function assumes that the new array is large enough to hold the copied variable.
+ * @note This function assumes that the new 
+ * array is large enough to hold the copied variable.
  *       It also frees the memory allocated for the old value.
  */
-int	copy_var_to_env(t_tools *tools, char **new_array, char *var_value, int i)
+
+int	copy_var_to_env(t_tools *tools, char **array, char *var_value, int i)
 {
 	int	j;
 
 	j = 0;
 	while (j < i)
 	{
-		new_array[j] = ft_strdup(tools->env[j]);
-		if (new_array[j] == NULL)
+		array[j] = ft_strdup(tools->env[j]);
+		if (array[j] == NULL)
 		{
-			free_list(new_array);
+			free_list(array);
 			free(var_value);
 			return (0);
 		}
 		j++;
 	}
-	new_array[j] = ft_strdup(var_value);
-	if (new_array[j] == NULL)
+	array[j] = ft_strdup(var_value);
+	if (array[j] == NULL)
 	{
-		free_list(new_array);
+		free_list(array);
 		free(var_value);
 		return (0);
 	}

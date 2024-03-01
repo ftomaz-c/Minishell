@@ -1,8 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int	global_status;
-
 # include "../libft/includes/libft.h"
 # include "structs.h"
 # include "lexer.h"
@@ -17,36 +15,47 @@ extern int	global_status;
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-# include <stdbool.h> // For boolean type
 # include <limits.h>
+# include <stdbool.h>
 
-/*tools.c*/
+// extern int	global_status;
+extern int	g_status;
+
+/*src/utils/tools.c*/
 int		config_tools(t_tools *tools, char **envp);
 char	**get_env(char **envp);
 char	**get_path(char **env);
 char	*get_var_from_env(char **env, char *var);
 void	free_tools(t_tools *tools);
 
-/*error.c*/
+/*src/utils/error.c*/
 void	error_check(int argc, char **argv);
 
-/*prompt.c*/
+/*src/utils/prompt.c*/
 char	**handle_home_abreviation(t_tools *tools, char **str);
 char	**generate_prompt(t_tools *tools);
 char	*prompt_line(t_tools *tools);
 
-/*history.c*/
-void	write_in_history_file(char *line, int fd, char *file_path);
-void    add_history_file(char *line, char *file_name);
-void	update_history(char *file_name);
+/*src/utils/history.c*/
+void	write_in_history_file(char **line, int fd, char *file_path);
+void	add_history_file(char *line, char *file_name);
 void	append_to_history(char *line);
+void	update_history(char *file_name);
 
-/*history_utils.c*/
-int 	count_lines_in_file(const char *filename);
+/*src/utils/history_utils_1.c*/
+int		check_empty_line(char *line);
+size_t	ft_strlen_nl(const char *s);
+int		count_lines_in_file(const char *filename);
 int		history_section(char *line);
 char	*get_file_path_from_home(char *file_name);
 
-/*utils/print.c*/
+/*src/utils/history_utils_2.c*/
+int		count_chr(char *line, char c);
+void	treat_line(char ***line_array, char *line);
+void	add_line(char *line, char ***line_array, int fd, char *file_path);
+int		check_line_count(int line_count, int fd);
+
+/*src/utils/print.c*/
 void	print_lexer(t_tools *tools);
 void	print_parser(t_tools *tools);
 
