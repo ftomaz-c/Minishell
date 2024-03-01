@@ -150,10 +150,14 @@ int	get_end_position(char *str, int position)
 {
 	int	end;
 
-	end = position + 1;
-	while (str && str[end] && ft_isalphanum_or_underscore(str[end])
-		&& str[end] != '=')
-		end++;
+	if (str[position + 1] == '?')
+		end = position + 2;
+	else
+	{
+		end = position + 1;
+		while(str && str[end] && ft_isalphanum_or_underscore(str[end]) && str[end] != '=')
+			end++;
+	}
 	return (end);
 }
 

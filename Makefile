@@ -2,6 +2,7 @@ NAME := minishell
 
 SRC :=	src/main.c \
 		src/utils/tools.c \
+		src/utils/tools_utils.c \
 		src/utils/error.c \
 		src/utils/history.c \
 		src/utils/history_utils_1.c \
@@ -10,6 +11,7 @@ SRC :=	src/main.c \
 		src/utils/print.c \
 		src/lexer/expander.c \
 		src/lexer/expander_utils.c \
+		src/lexer/expander_split.c \
 		src/lexer/lexer.c \
 		src/lexer/lexer_utils_1.c \
 		src/lexer/lexer_utils_2.c \

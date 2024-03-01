@@ -1,38 +1,6 @@
 #include "../../includes/minishell.h"
 
 /**
- * @brief Frees the memory allocated for the tools structure.
- * 
- * This function frees the memory allocated for the tools
- * structure, including its
- * environment variables, path list, current working directory,
- * and previous working directory.
- * 
- * @param tools A pointer to the tools structure.
- * 
- * @return None.
- * 
- * @note Assumes the tools structure is properly initialized.
- * 
- * @see config_tools
- * 
- * @warning Make sure to call this function to avoid memory leaks
- * after using the tools structure.
- * 
- */
-
-void	free_tools(t_tools *tools)
-{
-	free_list(tools->env);
-	free_list(tools->path);
-	free(tools->pwd);
-	free(tools->oldpwd);
-	free(tools->home);
-	free(tools->user);
-	free(tools->name);
-}
-
-/**
  * @brief Retrieves the value of a variable from the environment.
  * 
  * This function searches the environment variables
@@ -72,7 +40,7 @@ char	*get_var_from_env(char **env, char *var)
 		return (NULL);
 	while (env[index])
 	{
-		if (!ft_strncmp(env[index], var, ft_strlen(var)))
+		if (compare_var_to_env(env[index], var))
 			break ;
 		index++;
 	}
