@@ -120,21 +120,21 @@ int	mini_exit(t_tools *tools, t_parser *parser)
 		{
 			if (!check_exit_args(parser))
 			{
-				global_status = 2;
+				g_status = 2;
 				tools->exit = 255;
 				exit_err(2, parser->str[1]);
-				return(global_status);
+				return(g_status);
 			}
 			else
-				global_status = ft_atoi(parser->str[1]);
+				g_status = ft_atoi(parser->str[1]);
 		}
 		if (parser->str[2] != NULL)
 		{
-			global_status = EXIT_FAILURE;
+			g_status = EXIT_FAILURE;
 			exit_err(1, parser->str[0]);
-			return (global_status);
+			return (g_status);
 		}
 	}
 	tools->exit = 1;
-	return (global_status);
+	return (g_status);
 }

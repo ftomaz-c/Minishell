@@ -65,7 +65,7 @@ void	export_err(int err, char *str)
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 	}
-	global_status = err;
+	g_status = err;
 }
 
 int	check_valid_export(char *parser)

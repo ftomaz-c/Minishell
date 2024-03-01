@@ -144,7 +144,7 @@ void	cd_err(int err, char *str)
 		ft_putstr_fd(": File name too long\n", STDERR_FILENO);
 	else if (err == 5)
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-	global_status = EXIT_FAILURE;
+	g_status = EXIT_FAILURE;
 }
 
 int	cd_handle_specific_path(t_tools *tools, t_parser *command)
@@ -169,7 +169,7 @@ int	cd_handle_specific_path(t_tools *tools, t_parser *command)
 		if (errno == 13)
 			cd_err(5, command->str[1]);
 	}
-	return (global_status);
+	return (g_status);
 }
 
 /**
@@ -268,5 +268,5 @@ int	cd(t_tools *tools, t_parser *command)
 	else
 		cd_err(1, NULL);
 	update_env_vars(tools);
-	return (global_status);
+	return (g_status);
 }

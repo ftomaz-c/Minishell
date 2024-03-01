@@ -20,7 +20,6 @@ int		env(t_tools *tools, t_parser *command);
 int		pwd(t_tools *tools, t_parser *command);
 
 /*src/builtins/echo.c*/
-void	echo_n_print(t_parser *command, int pos);
 void	echo_print(t_parser *command, int pos, int flag);
 int		echo(t_tools *tools, t_parser *command);
 
@@ -38,7 +37,7 @@ int		export(t_tools *tools, t_parser *command);
 /*src/builtins/export_utils1.c*/
 void	sort_array(char **env_copy);
 void	copy_var_value_quotes(char *var_path, char *str, int start);
-void	copy_var_name(char *var_path, char *str, int equal_pos);
+int	copy_var_name(char *var_path, char *str, int equal_pos);
 char	*prepare_var(char *str);
 char	**get_env_export(char **envp, int i);
 
@@ -47,6 +46,7 @@ int		check_var_path(char **env, char *var);
 void	copy_var_value(char *var_path, char *str, int start);
 void	get_new_var_value(char **var_value, char *str);
 void	substitute_env_var_value(t_tools *tools, char *var_path, char *str);
+void	add_value_to_var(t_tools *tools, char *var_path, char *str);
 
 /*src/builtins/export_utils3.c*/
 int		ft_isalpha_plus_underscore(int c);

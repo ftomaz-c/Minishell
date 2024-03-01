@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				free(line);
 				free_tools(&tools);
-				global_status = 1;
+				g_status = 1;
 				break ;
 			}
 
@@ -51,5 +51,5 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	}
 	free_tools(&tools);
-	exit (global_status);
+	exit (g_status);
 }

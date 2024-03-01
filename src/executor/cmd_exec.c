@@ -12,7 +12,7 @@ void	exec_err(int err, char *str)
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": command not found\n", 2);
 	}
-	global_status = 127;
+	g_status = 127;
 }
 
 /**
@@ -95,7 +95,7 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 			execve(cmd_args[0], cmd_args, envp);
 		exec_err(2, cmd_args[0]);
 	}
-	exit(global_status);
+	exit(g_status);
 }
 
 /**
