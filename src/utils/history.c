@@ -41,14 +41,11 @@ void	write_in_history_file(char **line, int fd, char *file_path)
 
 	line_count = count_lines_in_file(file_path);
 	i = 0;
-	if (line_count == -1)
+	if (!check_line_count(line_count, fd))
 	{
-		perror("Error opening history file");
 		close(fd);
 		return ;
 	}
-	if (line_count != 0)
-		ft_putchar_fd('\n', fd);
 	while (line[i])
 	{
 		if (!check_empty_line(line[i]))
@@ -105,8 +102,9 @@ void	add_history_file(char *line, char *file_name)
 {
 	int		fd;
 	char	*file_path;
-	char	**line_array = NULL;
+	char	**line_array;
 
+	line_array = NULL;
 	if (line == NULL)
 	{
 		printf("exit\n");
@@ -123,10 +121,7 @@ void	add_history_file(char *line, char *file_name)
 			perror("Error: opening history file. History won't be stored\n");
 			return ;
 		}
-		add_history(line);
-		treat_line(&line_array, line);
-		write_in_history_file(line_array, fd, file_path);
-		free_list(line_array);
+		add_line(line, &line_array, fd, file_path);
 		close(fd);
 	}
 	free(file_path);

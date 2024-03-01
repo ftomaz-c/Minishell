@@ -1,4 +1,5 @@
 #include "../../includes/builtins.h"
+
 int	echo_n_flag(char **str, int	*pos)
 {
 	size_t	i;
@@ -6,7 +7,7 @@ int	echo_n_flag(char **str, int	*pos)
 	i = 0;
 	if (ft_strncmp(str[*pos], "-n", 2) != 0)
 		return (i);
-	while(ft_strncmp(str[*pos], "-n", 2) == 0)
+	while (ft_strncmp(str[*pos], "-n", 2) == 0)
 	{
 		while (str[*pos][i] != ' ' && str[*pos][i])
 			i++;

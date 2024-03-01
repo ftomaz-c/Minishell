@@ -51,6 +51,8 @@ char	*get_file_path_from_home(char *file_name);
 /*src/utils/history_utils_2.c*/
 int		count_chr(char *line, char c);
 void	treat_line(char ***line_array, char *line);
+void	add_line(char *line, char ***line_array, int fd, char *file_path);
+int		check_line_count(int line_count, int fd);
 
 /*src/utils/print.c*/
 void	print_lexer(t_tools *tools);
