@@ -3,8 +3,10 @@
 /**
  * @brief Expands environment variables within a list of strings.
  * 
- * This function searches for environment variable references (starting with '$') within each string
- * in the list and replaces them with their corresponding values from the environment.
+ * This function searches for environment variable references
+ *  (starting with '$') within each string
+ * in the list and replaces them with their corresponding 
+ * values from the environment.
  * 
  * @param env The environment containing variable-value pairs.
  * @param list The list of strings to be processed.
@@ -18,9 +20,11 @@
  * @example
  * ```
  * char *environment[] = {"USER=John", "HOME=/home/john", NULL};
- * char *list[] = {"Welcome, $USER!", "Your home directory is $HOME.", NULL};
+ * char *list[] = {"Welcome, $USER!", 
+ * "Your home directory is $HOME.", NULL};
  * expander(environment, list);
- * // list will be {"Welcome, John!", "Your home directory is /home/john.", NULL}
+ * // list will be {"Welcome, John!", "Your home 
+ * directory is /home/john.", NULL}
  * ```
  */
 

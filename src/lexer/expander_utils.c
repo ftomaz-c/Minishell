@@ -3,14 +3,16 @@
 /**
  * @brief Finds the presence of single quotes in a string.
  * 
- * This function iterates through the given string `str` to find the presence of single quotes.
+ * This function iterates through the given string 
+ * `str` to find the presence of single quotes.
  * It returns 1 if at least one single quote is found, otherwise returns 0.
  * 
  * @param str The input string to search for single quotes.
  * 
  * @return Returns 1 if at least one single quote is found, otherwise returns 0.
  * 
- * @note This function only checks for the presence of single quotes ('), not double quotes (").
+ * @note This function only checks for the presence of 
+ * single quotes ('), not double quotes (").
  * 
  * @warning This function assumes that the input string is null-terminated.
  * 
@@ -49,14 +51,18 @@ int	find_single_quote(char *str)
 }
 
 /**
- * @brief Checks if a character is an alphanumeric character or an underscore.
+ * @brief Checks if a character is an alphanumeric 
+ * character or an underscore.
  * 
- * This function determines whether a given character is alphanumeric (either uppercase or lowercase)
- * or an underscore. It is used as a helper function to identify valid characters in environment variable names.
+ * This function determines whether a given character is 
+ * alphanumeric (either uppercase or lowercase)
+ * or an underscore. It is used as a helper function to identify 
+ * valid characters in environment variable names.
  * 
  * @param c The character to be checked.
  * 
- * @return Returns 1 if the character is alphanumeric or an underscore, otherwise returns 0.
+ * @return Returns 1 if the character is alphanumeric or an
+ * underscore, otherwise returns 0.
  * 
  * @note Assumes ASCII character encoding for alphanumeric characters.
  * 
@@ -71,7 +77,7 @@ int	find_single_quote(char *str)
 
 int	ft_isalphanum_or_underscore(int c)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') 
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
 		|| (c >= 0 && c <= 9) || c == '_')
 		return (1);
 	return (0);
@@ -80,12 +86,14 @@ int	ft_isalphanum_or_underscore(int c)
 /**
  * @brief Finds the position of a character within a string.
  * 
- * This function searches for the first occurrence of a specified character within a given string.
+ * This function searches for the first occurrence of a specified 
+ * character within a given string.
  * 
  * @param str The string to be searched.
  * @param c The character to search for.
  * 
- * @return Returns the position of the character within the string if found, otherwise returns the length of the string.
+ * @return Returns the position of the character within the string if 
+ * found, otherwise returns the length of the string.
  * 
  * @note Assumes the input string is null-terminated.
  * 
@@ -103,7 +111,7 @@ int	find_char_position_new(char *str, char c)
 	int	i;
 
 	i = 0;
- 	while (str[i])
+	while (str[i])
 	{
 		if (str[i] == c)
 			return (i);
@@ -115,8 +123,10 @@ int	find_char_position_new(char *str, char c)
 /**
  * @brief Finds the end position of a variable name within a string.
  * 
- * This function determines the end position of a variable name within a given string.
- * The end position is defined as the position right after the variable name ends, which can include
+ * This function determines the end position of a variable 
+ * name within a given string.
+ * The end position is defined as the position right after
+ * the variable name ends, which can include
  * alphanumeric characters and underscores, but not the '=' character.
  * 
  * @param str The string to be analyzed.
@@ -124,7 +134,8 @@ int	find_char_position_new(char *str, char c)
  * 
  * @return Returns the end position of the variable name.
  * 
- * @note Assumes the input string is null-terminated and follows the variable name syntax.
+ * @note Assumes the input string is null-terminated and follows 
+ * the variable name syntax.
  * 
  * @see ft_isalphanum_or_underscore
  * 
@@ -153,7 +164,8 @@ int	get_end_position(char *str, int position)
 /**
  * @brief Adds a prefix and suffix to a string based on a variable name.
  * 
- * This function constructs a new string by adding a prefix, the value corresponding to the variable name from
+ * This function constructs a new string by adding a prefix,
+ * the value corresponding to the variable name from
  * the environment, and a suffix to the original string.
  * 
  * @param str The original string.
@@ -163,13 +175,15 @@ int	get_end_position(char *str, int position)
  * 
  * @return Returns the modified string with the added prefix and suffix.
  * 
- * @note The function dynamically allocates memory for the new string and must be freed after use.
+ * @note The function dynamically allocates memory for the
+ *  new string and must be freed after use.
  * 
  * @see ft_substr, ft_strjoin, get_var_from_env
  * 
  * @example
  * ```
- * char *result = add_prefix_and_suffix("prefix$var_suffix", environment, 6, 9);
+ * char *result = add_prefix_and_suffix("prefix$var_suffix",
+ * environment, 6, 9);
  * // result will be "prefixvalue_suffix"
  * ```
  */
@@ -184,16 +198,16 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 
 	prefix = ft_substr(str, 0, position);
 	var = ft_substr(str, position + 1, end - position - 1);
- 	if (ft_strncmp(var, "?", 1) == 0)
-		value = ft_itoa(global_status);
+	if (ft_strncmp(var, "?", 1) == 0)
+		value = ft_itoa(g_status);
 	else
- 		value = get_var_from_env(env, var);
+		value = get_var_from_env(env, var);
 	free(var);
 	suffix = ft_substr(str, end, ft_strlen(str) - end);
 	if (value == NULL)
 		tmp = ft_strjoin(prefix, "");
 	else
- 		tmp = ft_strjoin(prefix, value);
+		tmp = ft_strjoin(prefix, value);
 	str = ft_strjoin(tmp, suffix);
 	free(value);
 	free(tmp);

@@ -3,20 +3,28 @@
 /**
  * @brief Adds a redirection token to the parser node.
  * 
- * This function creates a new redirection token based on the current token
- * and adds it to the list of redirections in the parser node. It also updates
+ * This function creates a new redirection token based on 
+ * the current token
+ * and adds it to the list of redirections in the parser
+ * node. It also updates
  * the current token pointer to the next token if it exists.
  * 
  * @param current The current token being processed.
- * @param node The parser node to which the redirection token will be added.
+ * @param node The parser node to which the redirection 
+ * token will be added.
  * 
- * @return The next token after the redirection token, or NULL if memory allocation fails.
+ * @return The next token after the redirection token, or NULL
+ * if memory allocation fails.
  * 
- * @note The function assumes that the current token is a redirection token ('>' or '<').
- * If current->words is not NULL, it assumes that the current token has associated words.
+ * @note The function assumes that the current token is a
+ * redirection token ('>' or '<').
+ * If current->words is not NULL, it assumes that the current
+ * token has associated words.
  * 
- * @warning The function modifies the parser node's redirections list and updates the current token pointer.
- * Ensure that the input parameters are valid and that memory allocation is successful.
+ * @warning The function modifies the parser node's redirections
+ * list and updates the current token pointer.
+ * Ensure that the input parameters are valid and that memory
+ * allocation is successful.
  * 
  * @see parse_tokens
  * 
@@ -26,7 +34,8 @@
  * int start = 0;
  * t_parser *parser_node = initialize_parser();
  * while (current_token != NULL) {
- *     current_token = parse_tokens(parser_node, current_token, &start);
+ *     current_token = parse_tokens(parser_node, 
+ * current_token, &start);
  *     // Handle error if current_token is NULL
  * }
  * ```

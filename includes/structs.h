@@ -18,7 +18,7 @@ typedef struct s_tools
 	int				pipes;
 	int				exit;
 	struct s_lexer	*lexer;
-	struct s_parser *parser;
+	struct s_parser	*parser;
 }	t_tools;
 
 typedef struct s_lexer
@@ -30,7 +30,7 @@ typedef struct s_lexer
 	struct s_lexer	*pre;
 }	t_lexer;
 
-typedef struct	s_parser
+typedef struct s_parser
 {
 	char			**str;
 	int				(*builtin)(struct s_tools *, struct s_parser *);
@@ -54,4 +54,4 @@ typedef struct	s_expander
 	int				start;
 }	t_expander;
 
-# endif
+#endif
