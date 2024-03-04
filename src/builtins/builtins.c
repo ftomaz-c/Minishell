@@ -36,10 +36,7 @@
 int	(*is_builtin(char *str))(t_tools *tools, t_parser *parser)
 {
 	size_t		i;
-	static struct {
-		char	*name;
-		int		(*builtin)(t_tools *, t_parser *);
-	} builtin_array[] = {
+	t_builtin	builtin_array[] = {
 		{"echo", echo},
 		{"cd", cd},
 		{"pwd", pwd},

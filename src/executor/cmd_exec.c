@@ -51,6 +51,11 @@ void	exec_err(int err, char *str)
 
 int	exec_builtins(t_parser *parser)
 {
+	if (parser->str[0][0] == '/' && !parser->str[1])
+	{
+		parser->builtin = cd;
+		return (1);
+	}
 	if (parser && (parser->builtin == cd || parser->builtin == pwd
 			|| parser->builtin == export || parser->builtin == unset
 			|| parser->builtin == mini_exit || parser->builtin == mini_history))
