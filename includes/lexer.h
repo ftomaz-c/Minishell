@@ -4,7 +4,7 @@
 # include "minishell.h"
 
 /*src/lexer/lexer.c*/
-void	add_word_to_node(char *word, int start, int end, t_lexer **lexer);
+void	add_word_to_node(char *word, t_lexer **lexer);
 void	add_token_to_node(char token, t_lexer **lexer);
 char	*remove_quotes(char	*str, int i);
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer);
@@ -24,6 +24,11 @@ int		check_if_token_valid(char *str, char c, int position);
 void	add_temp_to_word(char *str, char **word, int start, int i);
 void	remove_quotes_add_word(char *line, int start, int j, t_lexer **lexer);
 
+/*src/lexer/lexer_utils_3.c*/
+void	check_special_chars(char **list);
+char	*get_new_special_str(char *str);
+char	get_special_char(char *str, int i);
+
 /*src/lexer/lexer_split.c*/
 void	handle_characters(char *s, int *i, int *start);
 char	**create_split(char *s, char **split, int nwords, char c);
@@ -38,7 +43,7 @@ int		count_words_and_quotes(char *s, char c);
 char	*word_alloc(char *s, int start, int end);
 
 /*lexer/expander.c*/
-char	*expander(char **env, char **list);
+char	*expander(char **env, char **list, t_tools *tools);
 
 /*src/lexer/expander_utils.c*/
 int		find_single_quote(char *str);

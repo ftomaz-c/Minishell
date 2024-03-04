@@ -25,7 +25,7 @@ void	echo_print(t_parser *command, int pos, int flag)
 {
 	while (command->str[pos])
 	{
-		printf("%s", command->str[pos]);
+		printf(command->str[pos], 1);
 		if (command->str[pos + 1])
 			printf(" ");
 		pos++;

@@ -129,22 +129,31 @@ int	cd_no_path(t_tools *tools, t_parser *command)
  * ```
  */
 
-void	cd_err(int err, char *str)
+void	cd_err(int err, char *str, char root)
 {
-	ft_putstr_fd("cd: ", STDERR_FILENO);
+	if (!(root == '/'))
+		ft_putstr_fd("cd: ", STDERR_FILENO);
 	if (str)
 		ft_putstr_fd(str, STDERR_FILENO);
-	if (err == 1)
-		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
-	else if (err == 2)
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-	else if (err == 3)
-		ft_putstr_fd(": Not a directory\n", STDERR_FILENO);
-	else if (err == 4)
-		ft_putstr_fd(": File name too long\n", STDERR_FILENO);
-	else if (err == 5)
-		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-	g_status = EXIT_FAILURE;
+	if (err == 25)
+	{
+		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+		g_status = 126;
+	}
+	else
+	{
+		if (err == 1)
+			ft_putstr_fd("too many arguments\n", STDERR_FILENO);
+		else if (err == 2)
+			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		else if (err == 3)
+			ft_putstr_fd(": Not a directory\n", STDERR_FILENO);
+		else if (err == 4)
+			ft_putstr_fd(": File name too long\n", STDERR_FILENO);
+		else if (err == 5)
+			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+		g_status = EXIT_FAILURE;
+	}
 }
 
 int	cd_handle_specific_path(t_tools *tools, t_parser *command)
@@ -161,13 +170,13 @@ int	cd_handle_specific_path(t_tools *tools, t_parser *command)
 	else if ((chdir(command->str[1]) < 0) && command->str[1][0])
 	{
 		if (errno == 2)
-			cd_err(2, command->str[1]);
+			cd_err(2, command->str[1], 0);
 		if (errno == 20)
-			cd_err(3, command->str[1]);
+			cd_err(3, command->str[1], 0);
 		if (errno == 36)
-			cd_err(4, command->str[1]);
+			cd_err(4, command->str[1], 0);
 		if (errno == 13)
-			cd_err(5, command->str[1]);
+			cd_err(5, command->str[1], 0);
 	}
 	return (g_status);
 }
@@ -221,7 +230,7 @@ int	cd_path(t_tools *tools, t_parser *command)
 			tools->pwd = ft_strdup(getcwd(new_pwd, sizeof(new_pwd)));
 		}
 		else
-			cd_err(2, command->str[1]);
+			cd_err(2, command->str[1], 0);
 	}
 	else if (ft_strcmp(command->str[1], ".") == 0)
 		return (EXIT_SUCCESS);
@@ -261,12 +270,17 @@ int	cd_path(t_tools *tools, t_parser *command)
 
 int	cd(t_tools *tools, t_parser *command)
 {
-	if ((command && !command->str[1]) || ft_strcmp(command->str[1], "~") == 0)
+	if (command && command->str[0][0] == '/')
+	{
+		chdir(command->str[0]);
+		cd_err(errno, command->str[0], '/');
+	}
+	else if ((command && !command->str[1]) || ft_strcmp(command->str[1], "~") == 0)
 		cd_no_path(tools, command);
 	else if (command && command->str[1] && !command->str[2])
 		cd_path(tools, command);
 	else
-		cd_err(1, NULL);
+		cd_err(1, NULL, 0);
 	update_env_vars(tools);
 	return (g_status);
 }

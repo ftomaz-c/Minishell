@@ -33,9 +33,9 @@ int	main(int argc, char **argv, char **envp)
 			//print_lexer(&tools);
 
 			parser(&tools);
-      
-			// print_parser(&tools);
-      
+
+			//print_parser(&tools);
+
 			if (tools.lexer)
 				free_lexer(&tools.lexer);
 			if (tools.parser)
