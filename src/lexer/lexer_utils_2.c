@@ -165,6 +165,6 @@ void	remove_quotes_add_word(char *line, int start, int j, t_lexer **lexer)
 	new = ft_substr(line, start, j - start);
 	word_no_quotes = remove_quotes(new, i);
 	free(new);
-	add_word_to_node(word_no_quotes, 0, ft_strlen(word_no_quotes), lexer);
+	add_word_to_node(word_no_quotes, lexer);
 	free(word_no_quotes);
 }

@@ -33,7 +33,7 @@
  * ```
  */
 
-void	add_word_to_node(char *word, int start, int end, t_lexer **lexer)
+void	add_word_to_node(char *word, t_lexer **lexer)
 {
 	t_lexer	*node;
 	t_lexer	*last;
@@ -41,7 +41,7 @@ void	add_word_to_node(char *word, int start, int end, t_lexer **lexer)
 	node = malloc(sizeof(t_lexer));
 	if (!node)
 		return ;
-	node->words = ft_substr(word, start, end - start);
+	node->words = ft_strdup(word);
 	if (!node->words)
 	{
 		free(node);
@@ -279,13 +279,13 @@ int	lex_line(char *line, t_tools *tools)
 
 	//printf("line: %s\n", line);
 
-	line_split_quotes = lexer_split(line, ' ');
+	line_split_quotes = ft_split(line, " ");
 
 	/*for (int i = 0; line_split_quotes[i]; i++)
 		printf("%i: %s$\n", i, line_split_quotes[i]);
 	printf("\n");*/
 
-	new_line = expander(tools->env, line_split_quotes);
+	new_line = expander(tools->env, line_split_quotes, tools);
 
 	//printf("newline: %s\n", new_line);
 
@@ -293,6 +293,8 @@ int	lex_line(char *line, t_tools *tools)
 	line_split_quotes = lexer_split(new_line, ' ');
 	free(new_line);
 
+	check_special_chars(line_split_quotes);
+	
 	/*for (int i = 0; line_split_quotes[i]; i++)
 		printf("%i: %s$\n", i, line_split_quotes[i]);
 	printf("\n");*/

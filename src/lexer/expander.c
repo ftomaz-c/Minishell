@@ -1,32 +1,19 @@
 #include "../../includes/minishell.h"
 
-/**
- * @brief Expands environment variables within a list of strings.
- * 
- * This function searches for environment variable references
- *  (starting with '$') within each string
- * in the list and replaces them with their corresponding 
- * values from the environment.
- * 
- * @param env The environment containing variable-value pairs.
- * @param list The list of strings to be processed.
- * 
- * @return None.
- * 
- * @note The function modifies the strings in the list in place.
- * 
- * @see find_char_position_new, get_end_position, add_prefix_and_suffix
- * 
- * @example
- * ```
- * char *environment[] = {"USER=John", "HOME=/home/john", NULL};
- * char *list[] = {"Welcome, $USER!", 
- * "Your home directory is $HOME.", NULL};
- * expander(environment, list);
- * // list will be {"Welcome, John!", "Your home 
- * directory is /home/john.", NULL}
- * ```
- */
+int	check_conditions_expander(char *str, int position)
+{
+	if (!(position < (int)ft_strlen(str)))
+		return (0);
+	if (find_single_quote(str))
+		return (0);
+	if (!(str[position + 1]))
+		return (0);
+	if (str[position + 1] == '?')
+		return (1);
+	if (!(ft_isalphanum_or_underscore(str[position + 1])))
+		return (0);
+	return (1);
+}
 
 void	expand_split(char **env, char **split)
 {
@@ -42,7 +29,7 @@ void	expand_split(char **env, char **split)
 		{
 			end = 0;
 			position = find_char_position_new(split[index], '$');
-			if (position < (int)ft_strlen(split[index]) && !find_single_quote(split[index]) && split[index][position + 1])
+			if (check_conditions_expander(split[index], position))
 			{
 				end = get_end_position(split[index], position);
 				str = add_prefix_and_suffix(split[index], env, position, end);
@@ -84,13 +71,58 @@ char *merge_list_of_strings(char **list, char *separator)
 	return (str);
 }
 
-char	*expander(char **env, char **list)
+char	*expand_tilde(char *str, char *home_var)
+{
+	char *tmp;
+	char *new_str;
+
+	new_str = "\0";
+	if (str[0] == '~' && (str[1] == '\0' || str[1] == '/'))
+	{
+		tmp = ft_substr(str, 1, ft_strlen(str) - 1);
+		new_str = ft_strjoin(home_var, tmp);
+		free(tmp);
+		free(str);
+		return (new_str);
+	}
+	return (str);
+}
+
+/**
+ * @brief Expands environment variables within a list of strings.
+ * 
+ * This function searches for environment variable references
+ *  (starting with '$') within each string
+ * in the list and replaces them with their corresponding 
+ * values from the environment.
+ * 
+ * @param env The environment containing variable-value pairs.
+ * @param list The list of strings to be processed.
+ * 
+ * @return None.
+ * 
+ * @note The function modifies the strings in the list in place.
+ * 
+ * @see find_char_position_new, get_end_position, add_prefix_and_suffix
+ * 
+ * @example
+ * ```
+ * char *environment[] = {"USER=John", "HOME=/home/john", NULL};
+ * char *list[] = {"Welcome, $USER!", 
+ * "Your home directory is $HOME.", NULL};
+ * expander(environment, list);
+ * // list will be {"Welcome, John!", "Your home 
+ * directory is /home/john.", NULL}
+ * ```
+ */
+
+char	*expander(char **env, char **list, t_tools *tools)
 {
 	int		index;
 	char	**split;
-	char	*tmp;
 	char	*line;
 
+	(void)tools;
 	index = 0;
 	while (list[index])
 	{
@@ -99,10 +131,11 @@ char	*expander(char **env, char **list)
 		{
 			expand_split(env, split);
 			free(list[index]);
-			tmp = merge_list_of_strings(split, NULL);
-			list[index] = tmp;
+			list[index] = merge_list_of_strings(split, NULL);
 			free_list(split);
 		}
+		else
+			list[index] = expand_tilde(list[index], tools->home);
 		index++;
 	}
 	line = merge_list_of_strings(list, " ");
