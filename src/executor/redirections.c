@@ -48,13 +48,6 @@ t_lexer	*set_stdout_flag(t_parser *parser, t_lexer *redirections)
 	{
 		if (current->token == '<' && current->next->token == '>')
 			current = current->next;
-		else if (current->token == '>' && current->next->token == '<')
-		{
-			printf("bash: syntax error near unexpected token `<\n");
-			g_status = 2;
-			free_parser(&parser);
-			exit (g_status);
-		}
 		if (current->next && current->next->token == '>')
 			parser->stdout_flag = GREAT_GREAT;
 		else

@@ -80,7 +80,7 @@ t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 		}
 		if (!current->next && (current->token == '<' || current->token == '>'))
 		{
-			printf("bash: syntax error near unexpected token `newline'\n");
+			syntax_err(current->token);
 			return (NULL);
 		}
 	}

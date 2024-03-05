@@ -88,7 +88,7 @@ void	add_word_to_node(char *word, t_lexer **lexer)
  * ```
  */
 
-void	add_token_to_node(char token, t_lexer **lexer)
+void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
 {
 	t_lexer	*node;
 	t_lexer	*last;
@@ -109,6 +109,7 @@ void	add_token_to_node(char token, t_lexer **lexer)
 		node->index = 0;
 	node->next = NULL;
 	node->pre = NULL;
+	tools->tflag = 1;
 	ft_lstaddback(lexer, node);
 }
 /**
@@ -203,7 +204,7 @@ char	*remove_quotes(char	*str, int i)
  * ```
  */
 
-void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
+void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer, t_tools *tools)
 {
 	int		i;
 	int		j;
@@ -220,7 +221,7 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
 			{
 				if (start < j)
 					remove_quotes_add_word(line_split[i], start, j, lexer);
-				add_token_to_node(line_split[i][j], lexer);
+				add_token_to_node(line_split[i][j], lexer, tools);
 				start = ++j;
 			}
 			else
@@ -276,30 +277,32 @@ int	lex_line(char *line, t_tools *tools)
 
 	tools->lexer = NULL;
 	tools->pipes = 0;
-
+	tools->tflag = 0;
 	//printf("line: %s\n", line);
 
 	line_split_quotes = ft_split(line, " ");
 
-	/*for (int i = 0; line_split_quotes[i]; i++)
-		printf("%i: %s$\n", i, line_split_quotes[i]);
-	printf("\n");*/
+	// for (int i = 0; line_split_quotes[i]; i++)
+	// 	printf("%i: %s$\n", i, line_split_quotes[i]);
+	// printf("\n");
+	check_special_chars(line_split_quotes);
 
 	new_line = expander(tools->env, line_split_quotes, tools);
 
-	//printf("newline: %s\n", new_line);
+	// printf("newline: %s\n", new_line);
 
 	free_list(line_split_quotes);
 	line_split_quotes = lexer_split(new_line, ' ');
 	free(new_line);
 
-	check_special_chars(line_split_quotes);
 	
-	/*for (int i = 0; line_split_quotes[i]; i++)
-		printf("%i: %s$\n", i, line_split_quotes[i]);
-	printf("\n");*/
+	// for (int i = 0; line_split_quotes[i]; i++)
+	// 	printf("%i: %s$\n", i, line_split_quotes[i]);
+	// printf("\n");
 
-	add_line_to_lexer_struct(line_split_quotes, &tools->lexer);
+	add_line_to_lexer_struct(line_split_quotes, &tools->lexer, tools);
 	free_list(line_split_quotes);
+	if (!valid_syntax(tools->lexer, tools))
+		return (0);
 	return (1);
 }

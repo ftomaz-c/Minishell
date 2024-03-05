@@ -25,16 +25,16 @@ int	main(int argc, char **argv, char **envp)
 			if (!lex_line(line, &tools))
 			{
 				free(line);
-				free_tools(&tools);
-				g_status = 1;
-				break ;
+				// free_tools(&tools);
+				free_lexer(&tools.lexer);
+				// g_status = 2;
+				continue ;
 			}
-
-			//print_lexer(&tools);
+			// print_lexer(&tools);
 
 			parser(&tools);
 
-			//print_parser(&tools);
+			// print_parser(&tools);
 
 			if (tools.lexer)
 				free_lexer(&tools.lexer);

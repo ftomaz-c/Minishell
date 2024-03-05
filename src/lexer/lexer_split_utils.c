@@ -194,26 +194,32 @@ int	count_words_and_quotes(char *s, char c)
 	word = 0;
 	while (i < ft_strlen(s) + 1)
 	{
-		while (s[i] && s[i] == c)
+		while (i < ft_strlen(s) + 1 && s[i] && s[i] == c)
 			i++;
+		// printf("splitting i val is: %ld char is: %c\n", i, s[i]);
 		if (s[i] == '\"' || s[i] == '\'')
 		{
 			word++;
+			// printf("splitting found quote i val is: %ld char is: %c\n", i, s[i]);
 			i = paired_quote(s, i + 1, s[i]) + 1;
+			// printf("splitting found quote i pair val is: %ld char is: %c\n", i, s[i]);
 		}
 		else
 		{
 			word++;
 			i++;
-			if ((s[i] == '\"' || s[i] == '\'') && s[i])
+			// printf(" else i val is: %ld char is: %c\n", i, s[i]);
+			if (i < ft_strlen(s) + 1 && s[i] && (s[i] == '\"' || s[i] == '\''))
 				i = paired_quote(s, i + 1, s[i]) + 1;
-			while (s[i] && s[i] != c)
-				i++;
+			// printf(" else i pais val is: %ld char is: %c\n", i, s[i]);
+			// while (i < ft_strlen(s) + 1 && s[i] && s[i] != c)
+			// 	i++;
+			// printf(" else i final val is: %ld char is: %c\n", i, s[i]);
 		}
 	}
 	return (word);
 }
-
+// echo . hi, this is the hardest" Ana "test @echo . hi, this is the hardest" Ana "test  with spaces in var value
 /**
  * @brief Allocates memory for a word within a string and copies it.
  * 

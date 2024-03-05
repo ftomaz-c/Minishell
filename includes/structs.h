@@ -17,6 +17,7 @@ typedef struct s_tools
 	char			*name;
 	int				pipes;
 	int				exit;
+	int				tflag;
 	struct s_lexer	*lexer;
 	struct s_parser	*parser;
 }	t_tools;
