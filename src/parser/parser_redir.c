@@ -41,7 +41,7 @@
  * ```
  */
 
-t_lexer	*add_redirection(t_lexer *current, t_parser *node)
+t_lexer	*add_redirection(t_lexer *current, t_parser *node, int *start)
 {
 	t_lexer		*redirections_node;
 
@@ -62,5 +62,7 @@ t_lexer	*add_redirection(t_lexer *current, t_parser *node)
 	ft_lstaddback(&node->redirections, redirections_node);
 	if (current->next)
 		current = current->next;
+	if (start)
+		(*start)++;
 	return (current);
 }

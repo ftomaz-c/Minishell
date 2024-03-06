@@ -25,17 +25,21 @@
  * should be freed if the function fails.
  */
 
-int	parse_words(t_parser *node, t_lexer *current, int *i)
+int	parse_words(t_parser *node, t_lexer *current)
 {
+	int	i;
+
+	i = 0;
 	if (!node->builtin)
 		node->builtin = is_builtin(current->words);
-	node->str[*i] = ft_strdup(current->words);
-	if (!node->str[*i])
+	while (node->str[i])
+		i++;
+	node->str[i] = ft_strdup(current->words);
+	if (!node->str[i])
 	{
 		free_parser(&node);
 		return (0);
 	}
-	(*i)++;
 	return (1);
 }
 
@@ -64,25 +68,17 @@ int	parse_words(t_parser *node, t_lexer *current, int *i)
 
 t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 {
-	if (current->token == '>' || current->token == '<' || ft_isdigit(current->token))
+	if (current->token == '>' || current->token == '<' 
+	|| ft_isdigit(current->token) || current->token == '&')
 	{
-		if (ft_isdigit(current->token))
-		{
-			current = add_redirection(current, node);
-			(*start)++;
-		}
+		if (ft_isdigit(current->token) || current->token == '&')
+			current = add_redirection(current, node, start);
 		node->nb_redirections++;
-		current = add_redirection(current, node);
+		current = add_redirection(current, node, NULL);
 		if (current && (current->token == '<' || current->token == '>'))
-		{
-			current = add_redirection(current, node);
-			(*start)++;
-		}
+			current = add_redirection(current, node, start);
 		if (current && current->words)
-		{
-			current = add_redirection(current, node);
-			(*start)++;
-		}
+			current = add_redirection(current, node, start);
 		if (!current->next && (current->token == '<' || current->token == '>'))
 		{
 			syntax_err(current->token);
@@ -113,15 +109,13 @@ t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 int	get_command(t_parser *node, t_lexer *lexer, int *start, int end)
 {
 	t_lexer		*current;
-	int			i;
 
 	current = start_token(lexer, *start);
-	i = 0;
 	while (*start < end)
 	{
 		if (current->words)
 		{
-			if (!parse_words(node, current, &i))
+			if (!parse_words(node, current))
 				return (0);
 			current = current->next;
 		}
