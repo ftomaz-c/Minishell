@@ -31,7 +31,7 @@ void	check_special_chars(char **list);
 char	*get_new_special_str(char *str);
 char	get_special_char(char *str, int i);
 void	syntax_err(char token);
-int 	valid_syntax(t_lexer *lexer, t_tools *tools);
+int		valid_syntax(t_lexer *lexer, t_tools *tools);
 
 /*src/lexer/lexer_split.c*/
 void	handle_characters(char *s, int *i, int *start);

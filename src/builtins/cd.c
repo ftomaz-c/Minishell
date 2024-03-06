@@ -219,6 +219,7 @@ int	cd_handle_specific_path(t_tools *tools, t_parser *command)
 int	cd_path(t_tools *tools, t_parser *command)
 {
 	char	new_pwd[1024];
+	char	*tmp;
 
 	if (ft_strcmp(command->str[1], "..") == 0)
 	{
@@ -232,8 +233,29 @@ int	cd_path(t_tools *tools, t_parser *command)
 		else
 			cd_err(2, command->str[1], 0);
 	}
-	else if (ft_strcmp(command->str[1], ".") == 0)
-		return (EXIT_SUCCESS);
+	else if (ft_strcmp(command->str[1], "-") == 0)
+	{
+		if (chdir(tools->oldpwd) == 0)
+		{
+			printf("%s\n", tools->oldpwd);
+			tmp = ft_strdup(tools->pwd);
+			free(tools->pwd);
+			tools->pwd = ft_strdup(tools->oldpwd);
+			free(tools->oldpwd);
+			tools->oldpwd = ft_strdup(tmp);
+			free(tmp);
+		}
+		else
+			cd_err(2, tools->oldpwd, 0);
+	}
+	// else if (ft_strcmp(command->str[1], ".") == 0)
+	// {
+	// 	if (chdir(tools->pwd) == 0)
+	// 		return (EXIT_SUCCESS);
+	// 	else
+	// 		cd_err(0, ".", 0);
+	// }
+
 	else
 		return(cd_handle_specific_path(tools, command));
 	return (EXIT_SUCCESS);
