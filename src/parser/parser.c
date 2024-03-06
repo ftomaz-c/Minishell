@@ -111,6 +111,9 @@ int	get_command(t_parser *node, t_lexer *lexer, int *start, int end)
 	t_lexer		*current;
 
 	current = start_token(lexer, *start);
+	if (current->words && !node->builtin)
+		node->builtin = is_builtin(current->words);
+	i = 0;
 	while (*start < end)
 	{
 		if (current->words)
