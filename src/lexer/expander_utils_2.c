@@ -82,6 +82,7 @@ char *add_quotes_to_value(char *str, int flagquote, int j, int i)
 	char *value;
 	char quote;
 
+	quote = '\0';
 	if (str == NULL)
 		return (NULL);
 	while (str[i])

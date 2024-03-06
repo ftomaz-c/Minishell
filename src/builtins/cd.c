@@ -201,6 +201,8 @@ int	cd_handle_specific_path(t_tools *tools, t_parser *command)
  * ```
  */
 
+
+
 int	cd_path(t_tools *tools, t_parser *command)
 {
 	char	new_pwd[1024];
@@ -211,9 +213,13 @@ int	cd_path(t_tools *tools, t_parser *command)
 		if (chdir("..") == 0)
 		{
 			free(tools->oldpwd);
-			tools->oldpwd = ft_strdup(tools->pwd);
+			tools->oldpwd = get_var_from_env(tools->env, "PWD");
 			free(tools->pwd);
 			tools->pwd = ft_strdup(getcwd(new_pwd, sizeof(new_pwd)));
+			// free(tools->oldpwd);
+			// tools->oldpwd = ft_strdup(tools->pwd);
+			// free(tools->pwd);
+			// tools->pwd = ft_strdup(getcwd(new_pwd, sizeof(new_pwd)));
 		}
 		else
 			cd_err(errno, command->str[1], 0);
@@ -223,24 +229,35 @@ int	cd_path(t_tools *tools, t_parser *command)
 		if (chdir(tools->oldpwd) == 0)
 		{
 			printf("%s\n", tools->oldpwd);
-			tmp = ft_strdup(tools->pwd);
 			free(tools->pwd);
 			tools->pwd = ft_strdup(tools->oldpwd);
 			free(tools->oldpwd);
-			tools->oldpwd = ft_strdup(tmp);
-			free(tmp);
+			tools->oldpwd = get_var_from_env(tools->env, "PWD");
+			
+			// printf("%s\n", tools->oldpwd);
+			// tmp = ft_strdup(tools->pwd);
+			// free(tools->pwd);
+			// tools->pwd = ft_strdup(tools->oldpwd);
+			// free(tools->oldpwd);
+			// tools->oldpwd = ft_strdup(tmp);
+			// free(tmp);
 		}
 		else
 			cd_err(2, tools->oldpwd, 0);
 	}
-	// else if (ft_strcmp(command->str[1], ".") == 0)
-	// {
-	// 	if (chdir(tools->pwd) == 0)
-	// 		return (EXIT_SUCCESS);
-	// 	else
-	// 		cd_err(0, ".", 0);
-	// }
-
+	else if (ft_strcmp(command->str[1], ".") == 0)
+	{
+		if (chdir(tools->pwd) == 0)
+			return (EXIT_SUCCESS);
+		else
+		{	
+			cd_err(0, "error retrieving current directory: getcwd: cannot access parent directories: No such file or directory", 0);
+			tmp = ft_strdup(tools->pwd);
+			free(tools->pwd);
+			tools->pwd = ft_strjoin(tmp, "/.");
+			free(tmp);
+		}
+	}
 	else
 		return(cd_handle_specific_path(tools, command));
 	return (EXIT_SUCCESS);
