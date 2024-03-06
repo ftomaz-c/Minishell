@@ -82,6 +82,7 @@ char *add_quotes_to_value(char *str, int flagquote, int j, int i)
 	char *value;
 	char quote;
 
+	quote = '\0';
 	if (str == NULL)
 		return (NULL);
 	while (str[i])
@@ -142,5 +143,6 @@ char *build_str(char *value, char *prefix, char *suffix)
 	free(value);
 	free(tmp);
 	free(suffix);
+	free(prefix);
 	return (str);
 }

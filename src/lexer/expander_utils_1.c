@@ -216,7 +216,5 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 	else
 		value = add_quotes_to_value(value, 1, 1, 0);
 	str = build_str(value, prefix, suffix);
-
-	free(prefix);
 	return (str);
 }

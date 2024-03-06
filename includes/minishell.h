@@ -21,15 +21,18 @@
 // extern int	global_status;
 extern int	g_status;
 
+void minishell(t_tools *tools);
+
 /*src/utils/tools.c*/
 int		config_tools(t_tools *tools, char **envp);
-char	**get_env(char **envp);
-char	**get_path(char **env);
-char	*get_var_from_env(char **env, char *var);
+void	update_env(t_tools *tools);
 
 /*tools_utils.c*/
 int		compare_var_to_env(char *env, char *var);
 void	free_tools(t_tools *tools);
+char	**get_env(char **envp);
+char	**get_path(char **env);
+char	*get_var_from_env(char **env, char *var);
 
 /*src/utils/error.c*/
 void	error_check(int argc, char **argv);
