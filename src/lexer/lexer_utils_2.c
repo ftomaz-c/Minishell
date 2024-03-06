@@ -92,6 +92,26 @@ int	check_unclosed_quotes(char *line)
  *  is null-terminated.
  */
 
+int	is_fd_token(char *str, char c, int position)
+{
+	int	i;
+
+	i = 1;
+	if (ft_isdigit(c))
+	{
+		while (position - i >= 0 && ft_isdigit(str[position - i]))
+			i++;
+		if (position - i >= 0 && !ft_isdigit(str[position - i]))
+			return (0);
+		i = 0;
+		while (str[position + i] && ft_isdigit(str[position + i]))
+			i++;
+		if (check_if_token(str[position + i]))
+			return (1);
+	}
+	return (0);
+}
+
 int	check_if_token_valid(char *str, char c, int position)
 {
 	int	i;
@@ -99,6 +119,8 @@ int	check_if_token_valid(char *str, char c, int position)
 
 	i = 0;
 	flag = 0;
+	if (is_fd_token(str, c, position))
+		return (1);
 	if (!check_if_token(c))
 		return (0);
 	if (!check_token_flag(str, i, flag, position))
