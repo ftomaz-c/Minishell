@@ -20,6 +20,8 @@ void	set_stdin_flag(t_parser *parser, t_lexer *redirections)
 	if (current->token == '<')
 	{
 		parser->stdout_flag = 0;
+		if (current->token == '<' && current->next->token == '>')
+			return ;
 		if (current->next && current->next->token == '<')
 			parser->stdin_flag = LESS_LESS;
 		else if (current->next->words)
@@ -47,8 +49,7 @@ void	set_stdout_flag(t_parser *parser, t_lexer *redirections)
 	current = redirections;
 	if (current->token == '>')
 	{
-		if (current->token == '<' && current->next->token == '>')
-			current = current->next;
+		parser->stdin_flag = 0;
 		if (current->next && current->next->token == '>')
 			parser->stdout_flag = GREAT_GREAT;
 		else
@@ -170,7 +171,7 @@ void	redirection(t_parser *parser)
 			set_stdin_flag(parser, current);
 			current = set_input(parser, current, fd);
 		}
-		else if (current->token == '>')
+		if (current->token == '>')
 		{
 			set_stdout_flag(parser, current);
 			current = set_output(parser, current, fd);
