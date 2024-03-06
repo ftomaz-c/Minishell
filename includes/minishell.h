@@ -7,8 +7,9 @@
 # include "parser.h"
 # include "builtins.h"
 # include "executor.h"
-# include <stdlib.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>

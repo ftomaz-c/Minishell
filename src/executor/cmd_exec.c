@@ -4,15 +4,23 @@ void	exec_err(int err, char *str, char *value)
 {
 	if (err == 1)
 	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 	}
 	else if (err == 2)
 	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": command not found\n", 2);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		if (value)
 			free(value);
+	}
+	else if (err == 8)
+		g_status = 0;
+	else if (err == 13)
+	{
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+		g_status = 130;
 	}
 	g_status = 127;
 }
@@ -96,7 +104,7 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 		exec_err(1, cmd_args[0], value);
 	else
 	{
-		while (path_list[i])
+		while (path_list[i] && cmd_args[0][0] != '.')
 		{
 			tmp = ft_strjoin(path_list[i], "/");
 			cmd_path = ft_strjoin(tmp, cmd_args[0]);
@@ -107,7 +115,7 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 		}
 		if (cmd_args)
 			execve(cmd_args[0], cmd_args, envp);
-		exec_err(2, cmd_args[0], value);
+		exec_err(errno, cmd_args[0], value);
 	}
 	exit(g_status);
 }

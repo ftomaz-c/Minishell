@@ -30,8 +30,6 @@ int	parse_words(t_parser *node, t_lexer *current)
 	int	i;
 
 	i = 0;
-	if (!node->builtin)
-		node->builtin = is_builtin(current->words);
 	while (node->str[i])
 		i++;
 	node->str[i] = ft_strdup(current->words);
@@ -113,7 +111,6 @@ int	get_command(t_parser *node, t_lexer *lexer, int *start, int end)
 	current = start_token(lexer, *start);
 	if (current->words && !node->builtin)
 		node->builtin = is_builtin(current->words);
-	i = 0;
 	while (*start < end)
 	{
 		if (current->words)
