@@ -205,7 +205,7 @@ int	count_words_and_quotes(char *s, char c, size_t size)
 		{
 			word++;
 			i++;
-			if (s[i] == '\"' || s[i] == '\''))
+			if (s[i] == '\"' || s[i] == '\'')
 				i = paired_quote(s, i + 1, s[i]) + 1;
 			while (i < size && s[i] != c)
 				i++;
