@@ -143,5 +143,6 @@ char *build_str(char *value, char *prefix, char *suffix)
 	free(value);
 	free(tmp);
 	free(suffix);
+	free(prefix);
 	return (str);
 }

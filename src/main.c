@@ -52,53 +52,21 @@ void	update_env(t_tools *tools)
 		export_variable_to_env(tools, "SHLVL=1");
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
 	t_tools	tools;
 
 	update_history(".minishell_history");
 	error_check(argc, argv);
 	if (!config_tools(&tools, envp))
 	{
-		printf ("Error: Failed to allocate memory for tools\n");
+		ft_putstr_fd("Error: Failed to allocate memory for tools\n", STDERR_FILENO);
 		free_tools(&tools);
 		exit (EXIT_FAILURE);
 	}
-	update_env(&tools);
 	while (1)
 	{
-		//line = prompt_line(&tools);
-		line = readline(".minishell: ");
-		add_history_file(line, ".minishell_history");
-		if (check_unclosed_quotes(line))
-		{
-			if (!lex_line(line, &tools))
-			{
-				free(line);
-				// free_tools(&tools);
-				free_lexer(&tools.lexer);
-				// g_status = 2;
-				continue ;
-			}
-			// print_lexer(&tools);
-
-			parser(&tools);
-
-			// print_parser(&tools);
-
-			if (tools.lexer)
-				free_lexer(&tools.lexer);
-			if (tools.parser)
-			{
-				executor(&tools);
-				free_parser(&tools.parser);
-			}
-		}
-		else
-			printf("Error: input with unclosed quotes\n");
-		free(line);
+		minishell(&tools);
 		if (tools.exit)
 			break ;
 	}

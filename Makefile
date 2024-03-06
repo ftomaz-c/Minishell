@@ -1,6 +1,7 @@
 NAME := minishell
 
 SRC :=	src/main.c \
+		src/minishell.c \
 		src/utils/tools.c \
 		src/utils/tools_utils.c \
 		src/utils/error.c \

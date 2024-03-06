@@ -133,12 +133,18 @@ int	get_digits_token(t_lexer *current)
 	return (token);
 }
 
-int	set_fd(t_lexer *current)
+int	set_fd(t_lexer *current, t_parser *parser)
 {
 	int		fd;
 
+	parser->fd_err = 0;
 	if (ft_isdigit(current->token))
 		fd = get_digits_token(current);
+	else if (current->token == '&' && current->next->token == '>')
+	{
+		parser->fd_err = STDERR_FILENO;
+		fd = STDOUT_FILENO;
+	}
 	else if (current->token == '<')
 		fd = STDIN_FILENO;
 	else if (current->token == '>')
@@ -154,7 +160,9 @@ void	redirection(t_parser *parser)
 	current = parser->redirections;
 	while (current)
 	{
-		fd = set_fd(current);
+		fd = set_fd(current, parser);
+		if (current->token == '&')
+			current = current->next;
 		while (ft_isdigit(current->token))
 			current = current->next;
 		if (current->token == '<')
@@ -258,5 +266,7 @@ void	set_stdout(t_parser *parser, int fd)
 			std_err(errno, parser->stdout_file_name);
 		dup2(fd_outfile, fd);
 	}
+	if (parser->fd_err)
+		dup2(fd_outfile, parser->fd_err);
 	return ;
 }
