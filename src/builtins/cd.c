@@ -137,7 +137,7 @@ void	cd_err(int err, char *str, char root)
 		ft_putstr_fd(str, STDERR_FILENO);
 	if (err == 1)
 		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
-	else if (err == 2)
+	else if (err == 2 || err == 3)
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 	else if (err == 13)
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
@@ -201,12 +201,43 @@ int	cd_handle_specific_path(t_tools *tools, t_parser *command)
  * ```
  */
 
+int	cd_handle_slash_path(t_tools *tools)
+{
+	if (chdir(tools->oldpwd) == 0)
+	{
+		printf("%s\n", tools->oldpwd);
+		free(tools->pwd);
+		tools->pwd = ft_strdup(tools->oldpwd);
+		free(tools->oldpwd);
+		tools->oldpwd = get_var_from_env(tools->env, "PWD");
+		return (EXIT_SUCCESS);
+	}
+	else
+		cd_err(2, tools->oldpwd, 0);
+	return (EXIT_SUCCESS);
+}
+
+int	cd_handle_dot_path(t_tools *tools)
+{
+	char	*tmp;
+	
+	if (chdir(tools->pwd) == 0)
+		return (EXIT_SUCCESS);
+	else
+	{	
+		cd_err(3, "error retrieving current directory: getcwd: cannot access parent directories", 0);
+		tmp = ft_strdup(tools->pwd);
+		free(tools->pwd);
+		tools->pwd = ft_strjoin(tmp, "/.");
+		free(tmp);
+		return (EXIT_SUCCESS);
+	}
+}
 
 
 int	cd_path(t_tools *tools, t_parser *command)
 {
 	char	new_pwd[1024];
-	char	*tmp;
 
 	if (ft_strcmp(command->str[1], "..") == 0)
 	{
@@ -216,48 +247,14 @@ int	cd_path(t_tools *tools, t_parser *command)
 			tools->oldpwd = get_var_from_env(tools->env, "PWD");
 			free(tools->pwd);
 			tools->pwd = ft_strdup(getcwd(new_pwd, sizeof(new_pwd)));
-			// free(tools->oldpwd);
-			// tools->oldpwd = ft_strdup(tools->pwd);
-			// free(tools->pwd);
-			// tools->pwd = ft_strdup(getcwd(new_pwd, sizeof(new_pwd)));
 		}
 		else
 			cd_err(errno, command->str[1], 0);
 	}
 	else if (ft_strcmp(command->str[1], "-") == 0)
-	{
-		if (chdir(tools->oldpwd) == 0)
-		{
-			printf("%s\n", tools->oldpwd);
-			free(tools->pwd);
-			tools->pwd = ft_strdup(tools->oldpwd);
-			free(tools->oldpwd);
-			tools->oldpwd = get_var_from_env(tools->env, "PWD");
-			
-			// printf("%s\n", tools->oldpwd);
-			// tmp = ft_strdup(tools->pwd);
-			// free(tools->pwd);
-			// tools->pwd = ft_strdup(tools->oldpwd);
-			// free(tools->oldpwd);
-			// tools->oldpwd = ft_strdup(tmp);
-			// free(tmp);
-		}
-		else
-			cd_err(2, tools->oldpwd, 0);
-	}
+		cd_handle_slash_path(tools);
 	else if (ft_strcmp(command->str[1], ".") == 0)
-	{
-		if (chdir(tools->pwd) == 0)
-			return (EXIT_SUCCESS);
-		else
-		{	
-			cd_err(0, "error retrieving current directory: getcwd: cannot access parent directories: No such file or directory", 0);
-			tmp = ft_strdup(tools->pwd);
-			free(tools->pwd);
-			tools->pwd = ft_strjoin(tmp, "/.");
-			free(tmp);
-		}
-	}
+		cd_handle_dot_path(tools);
 	else
 		return(cd_handle_specific_path(tools, command));
 	return (EXIT_SUCCESS);
