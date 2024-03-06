@@ -6,6 +6,7 @@ void	exec_err(int err, char *str, char *value)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		g_status = 127;
 	}
 	else if (err == 2)
 	{
@@ -13,6 +14,7 @@ void	exec_err(int err, char *str, char *value)
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		if (value)
 			free(value);
+		g_status = 127;
 	}
 	else if (err == 8)
 		g_status = 0;
@@ -22,7 +24,6 @@ void	exec_err(int err, char *str, char *value)
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 		g_status = 130;
 	}
-	g_status = 127;
 }
 
 /**
