@@ -47,7 +47,8 @@ void	set_stdout_flag(t_parser *parser, t_lexer *redirections)
 	current = redirections;
 	if (current->token == '>')
 	{
-		parser->stdin_flag = 0;
+		if (current->token == '<' && current->next->token == '>')
+			current = current->next;
 		if (current->next && current->next->token == '>')
 			parser->stdout_flag = GREAT_GREAT;
 		else

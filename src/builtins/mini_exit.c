@@ -53,8 +53,8 @@ int	check_exit_args(t_parser *parser)
 		return (0);
 	if (parser->str[1][j] == '+' || parser->str[1][j] == '-')
 		j++;
-	if (!parser->str[1][j])
-		return (0);
+	if (parser->str[1][j] == '-' && !parser->str[1][j + 1])
+		return (2);
 	while (ft_isdigit(parser->str[1][j]))
 		j++;
 	if (parser->str[1][j - 1] == '0')
@@ -118,7 +118,7 @@ int	mini_exit(t_tools *tools, t_parser *parser)
 	{
 		if (parser->str[1])
 		{
-			if (!check_exit_args(parser))
+			if (check_exit_args(parser) == 0)
 			{
 				g_status = 2;
 				tools->exit = 255;
