@@ -64,8 +64,13 @@ int	parse_words(t_parser *node, t_lexer *current, int *i)
 
 t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 {
-	if (current->token == '>' || current->token == '<')
+	if (current->token == '>' || current->token == '<' || ft_isdigit(current->token))
 	{
+		if (ft_isdigit(current->token))
+		{
+			current = add_redirection(current, node);
+			(*start)++;
+		}
 		node->nb_redirections++;
 		current = add_redirection(current, node);
 		if (current && (current->token == '<' || current->token == '>'))

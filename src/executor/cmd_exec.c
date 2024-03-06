@@ -1,6 +1,6 @@
 #include "../../includes/executor.h"
 
-void	exec_err(int err, char *str)
+void	exec_err(int err, char *str, char *value)
 {
 	if (err == 1)
 	{
@@ -11,6 +11,8 @@ void	exec_err(int err, char *str)
 	{
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": command not found\n", 2);
+		if (value)
+			free(value);
 	}
 	g_status = 127;
 }
@@ -49,17 +51,22 @@ void	exec_err(int err, char *str)
  * ```
  */
 
-int	exec_builtins(t_parser *parser)
+int	exec_builtins(t_tools *tools)
 {
-	if (parser->str[0][0] == '/' && !parser->str[1])
+	t_parser	*parser;
+
+	parser = tools->parser;
+	if (parser->str[0] && parser->str[0][0] == '/' && !parser->str[1])
 	{
 		parser->builtin = cd;
 		return (1);
 	}
-	if (parser && (parser->builtin == cd || parser->builtin == pwd
+	if (parser->builtin && (parser->builtin == cd || parser->builtin == pwd
 			|| parser->builtin == export || parser->builtin == unset
 			|| parser->builtin == mini_exit || parser->builtin == mini_history))
+	{
 		return (1);
+	}
 	return (0);
 }
 
@@ -79,12 +86,14 @@ int	exec_builtins(t_parser *parser)
 void	exec_path(char **path_list, char **cmd_args, char **envp)
 {
 	char	*cmd_path;
+	char	*value;
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	if (!get_var_from_env(envp, "PATH"))
-		exec_err(1, cmd_args[0]);
+	value = get_var_from_env(envp, "PATH");
+	if (!value)
+		exec_err(1, cmd_args[0], value);
 	else
 	{
 		while (path_list[i])
@@ -98,7 +107,7 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 		}
 		if (cmd_args)
 			execve(cmd_args[0], cmd_args, envp);
-		exec_err(2, cmd_args[0]);
+		exec_err(2, cmd_args[0], value);
 	}
 	exit(g_status);
 }

@@ -78,8 +78,8 @@ void	wait_status(int pid, int *status)
 
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
-	if (exec_builtins(parser) || parser->builtin == echo 
-		|| parser->builtin == env)
+	if (parser->builtin && (exec_builtins(tools) || parser->builtin == echo 
+		|| parser->builtin == env))
 	{
 		parser->builtin(tools, parser);
 		if (parser->next)
@@ -109,8 +109,6 @@ void	set_and_exec(t_tools *tools, t_parser *parser)
 {
 	if (parser->redirections != NULL)
 		redirection(parser);
-	set_stdin(parser);
-	set_stdout(parser);
 	if (parser->next)
 		minishell_pipex(tools, parser);
 	else
@@ -143,7 +141,7 @@ int	executor(t_tools *tools)
 
 	parser = tools->parser;
 	parser->original_stdout = dup(STDOUT_FILENO);
-	if (exec_builtins(tools->parser) && !tools->pipes)
+	if (exec_builtins(tools) && !tools->pipes && parser->str[0])
 		return (parser->builtin(tools, parser));
 	pid = fork();
 	if (pid < 0)

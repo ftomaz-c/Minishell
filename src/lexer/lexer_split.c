@@ -167,9 +167,10 @@ char	**lexer_split(char *s, char c)
 {
 	char	**split;
 	int		nwords;
+	int		size;
 
-	nwords = count_words_and_quotes(s, c);
-	// printf("nwords: %d\n", nwords);
+	size = ft_strlen(s);
+	nwords = count_words_and_quotes(s, c, size);
 	split = ft_calloc((nwords + 1), (sizeof(char *)));
 	if (split)
 	{

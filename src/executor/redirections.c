@@ -12,19 +12,20 @@
  * stdin redirection is detected, otherwise NULL.
  */
 
-t_lexer	*set_stdin_flag(t_parser *parser, t_lexer *redirections)
+void	set_stdin_flag(t_parser *parser, t_lexer *redirections)
 {
 	t_lexer	*current;
 
 	current = redirections;
 	if (current->token == '<')
 	{
+		parser->stdout_flag = 0;
 		if (current->next && current->next->token == '<')
 			parser->stdin_flag = LESS_LESS;
 		else if (current->next->words)
 			parser->stdin_flag = LESS;
 	}
-	return (current);
+	return ;
 }
 
 /**
@@ -39,12 +40,12 @@ t_lexer	*set_stdin_flag(t_parser *parser, t_lexer *redirections)
  * redirection is detected, otherwise NULL.
  */
 
-t_lexer	*set_stdout_flag(t_parser *parser, t_lexer *redirections)
+void	set_stdout_flag(t_parser *parser, t_lexer *redirections)
 {
 	t_lexer	*current;
 
 	current = redirections;
-	if (current->token == '>' || (current->next && current->next->token == '>'))
+	if (current->token == '>')
 	{
 		if (current->token == '<' && current->next->token == '>')
 			current = current->next;
@@ -53,7 +54,7 @@ t_lexer	*set_stdout_flag(t_parser *parser, t_lexer *redirections)
 		else
 			parser->stdout_flag = GREAT;
 	}
-	return (current);
+	return ;
 }
 
 /**
@@ -69,30 +70,103 @@ t_lexer	*set_stdout_flag(t_parser *parser, t_lexer *redirections)
  * @see set_stdin_flag, set_stdout_flag
  */
 
+t_lexer	*set_input(t_parser *parser, t_lexer *redirection, int fd)
+{
+	t_lexer	*current;
+
+	current = redirection;
+	current = current->next;
+	if (parser->stdin_flag == LESS_LESS)
+	{
+		current = current->next;
+		parser->heredoc_limiter = current->words;
+	}
+	else if (parser->stdin_flag == LESS)
+		parser->stdin_file_name = current->words;
+	set_stdin(parser, fd);
+	return (current);
+}
+
+t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd)
+{
+	t_lexer *current;
+
+	current = redirection;
+	current = current->next;
+	if (parser->stdout_flag == GREAT_GREAT)
+	{
+		current = current->next;
+		parser->stdout_file_name = current->words;
+	}
+	else if (parser->stdout_flag == GREAT)
+		parser->stdout_file_name = current->words;
+	set_stdout(parser, fd);
+	return (current);
+}
+
+int	get_digits_token(t_lexer *current)
+{
+	char	*nbr;
+	int		size;
+	int		i;
+	int		token;
+
+	i = 0;
+	size = 2;
+	nbr = ft_calloc(size, sizeof(char));
+	if (!nbr)
+		return (0);
+	nbr[i] = current->token;
+	while (ft_isdigit(current->next->token))
+	{
+		i++;
+		current = current->next;
+		nbr[i] = current->token;
+		size++;
+		nbr = ft_realloc(nbr, size * sizeof(char), (size - 1) * sizeof(char));
+		if (!nbr)
+			return (0);
+		nbr[size - 1] = '\0';
+	}
+	token = ft_atoi(nbr);
+	free(nbr);
+	return (token);
+}
+
+int	set_fd(t_lexer *current)
+{
+	int		fd;
+
+	if (ft_isdigit(current->token))
+		fd = get_digits_token(current);
+	else if (current->token == '<')
+		fd = STDIN_FILENO;
+	else if (current->token == '>')
+		fd = STDOUT_FILENO;
+	return (fd);
+}
+
 void	redirection(t_parser *parser)
 {
 	t_lexer	*current;
+	int		fd;
 
 	current = parser->redirections;
 	while (current)
 	{
-		current = set_stdin_flag(parser, current);
-		current = set_stdout_flag(parser, current);
-		current = current->next;
-		if (parser->stdin_flag != 0 && parser->stdin_flag == LESS_LESS)
-		{
+		fd = set_fd(current);
+		while (ft_isdigit(current->token))
 			current = current->next;
-			parser->heredoc_limiter = current->words;
-		}
-		else if (parser->stdin_flag != 0 && parser->stdin_flag == LESS)
-			parser->stdin_file_name = current->words;
-		if (parser->stdout_flag != 0 && parser->stdout_flag == GREAT_GREAT)
+		if (current->token == '<')
 		{
-			current = current->next;
-			parser->stdout_file_name = current->words;
+			set_stdin_flag(parser, current);
+			current = set_input(parser, current, fd);
 		}
-		else if (parser->stdout_flag != 0 && parser->stdout_flag == GREAT)
-			parser->stdout_file_name = current->words;
+		else if (current->token == '>')
+		{
+			set_stdout_flag(parser, current);
+			current = set_output(parser, current, fd);
+		}
 		current = current->next;
 	}
 }
@@ -108,7 +182,24 @@ void	redirection(t_parser *parser)
  * @note This function assumes that the parser is properly initialized.
  */
 
-void	set_stdin(t_parser *parser)
+void	std_err(int	err, char *str)
+{
+	if (str)
+		ft_putstr_fd(str, STDERR_FILENO);
+	if (err == 2)
+	{
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return ;
+	}
+	else if (err == 13)
+		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+	else if (err == 21)
+		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+	g_status = EXIT_FAILURE;
+	exit (g_status);
+}
+
+void	set_stdin(t_parser *parser, int fd)
 {
 	int	fd_infile;
 
@@ -117,18 +208,23 @@ void	set_stdin(t_parser *parser)
 		fd_infile = open (parser->stdin_file_name, O_RDONLY);
 		if (fd_infile < 0)
 		{
-			printf("bash: %s: No such file or directory\n",
-				parser->stdin_file_name);
-			g_status = EXIT_FAILURE;
-			return ;
+			std_err(errno, parser->stdin_file_name);
+			if (errno == 2 && parser->next)
+			{
+				g_status = 127;
+				return ;
+			}
+			else
+			{
+				g_status = EXIT_FAILURE;
+				exit (g_status);
+			}
 		}
-		dup2(fd_infile, STDIN_FILENO);
-		close(fd_infile);
+		dup2(fd_infile, fd);
 	}
 	else if (parser->stdin_flag == LESS_LESS)
 		here_doc(parser->heredoc_limiter, parser->original_stdout);
-	else
-		return ;
+	return ;
 }
 
 /**
@@ -142,7 +238,7 @@ void	set_stdin(t_parser *parser)
  * @note This function assumes that the parser is properly initialized.
  */
 
-void	set_stdout(t_parser *parser)
+void	set_stdout(t_parser *parser, int fd)
 {
 	int	fd_outfile;
 
@@ -151,19 +247,16 @@ void	set_stdout(t_parser *parser)
 		fd_outfile = open(parser->stdout_file_name, O_CREAT | O_RDWR
 				|O_TRUNC, 0644);
 		if (fd_outfile < 0)
-			exit (EXIT_FAILURE);
-		dup2(fd_outfile, STDOUT_FILENO);
-		close(fd_outfile);
+			std_err(errno, parser->stdout_file_name);
+		dup2(fd_outfile, fd);
 	}
 	else if (parser->stdout_flag == GREAT_GREAT)
 	{
 		fd_outfile = open(parser->stdout_file_name, O_CREAT | O_RDWR
-				| O_APPEND, 0644);
+				| O_APPEND, 0644);		
 		if (fd_outfile < 0)
-			exit (EXIT_FAILURE);
-		dup2(fd_outfile, STDOUT_FILENO);
-		close(fd_outfile);
+			std_err(errno, parser->stdout_file_name);
+		dup2(fd_outfile, fd);
 	}
-	else
-		return ;
+	return ;
 }

@@ -185,36 +185,30 @@ void	update_start_indexes(int *i, int *start, int *nstart)
  * ```
  */
 
-int	count_words_and_quotes(char *s, char c)
+int	count_words_and_quotes(char *s, char c, size_t size)
 {
 	size_t	i;
 	int		word;
 
 	i = 0;
 	word = 0;
-	while (i < ft_strlen(s) + 1)
-	{
-		while (i < ft_strlen(s) + 1 && s[i] && s[i] == c)
+	while (i < size + 1)
+  {
+		while (i < size && s[i] == c)
 			i++;
-		// printf("splitting i val is: %ld char is: %c\n", i, s[i]);
 		if (s[i] == '\"' || s[i] == '\'')
 		{
 			word++;
-			// printf("splitting found quote i val is: %ld char is: %c\n", i, s[i]);
 			i = paired_quote(s, i + 1, s[i]) + 1;
-			// printf("splitting found quote i pair val is: %ld char is: %c\n", i, s[i]);
 		}
 		else
 		{
 			word++;
 			i++;
-			// printf(" else i val is: %ld char is: %c\n", i, s[i]);
-			if (i < ft_strlen(s) + 1 && s[i] && (s[i] == '\"' || s[i] == '\''))
+			if (s[i] == '\"' || s[i] == '\''))
 				i = paired_quote(s, i + 1, s[i]) + 1;
-			// printf(" else i pais val is: %ld char is: %c\n", i, s[i]);
-			// while (i < ft_strlen(s) + 1 && s[i] && s[i] != c)
-			// 	i++;
-			// printf(" else i final val is: %ld char is: %c\n", i, s[i]);
+			while (i < size && s[i] != c)
+				i++;
 		}
 	}
 	return (word);
