@@ -182,17 +182,39 @@ void syntax_err(char token)
  * // Returns 1 if syntax is valid, otherwise 0.
  * ```
  */
+
+int	valid_token_starter(t_lexer *lexer)
+{
+	t_lexer *current;
+
+	current = lexer;
+	if (lexer->token == '<' || lexer->token == '>')
+	{
+		while (!current->next->words)
+			current = current->next;
+		if (current->token == '|')
+		{
+			syntax_err(current->token);
+			return (0);
+		}
+	}
+	else if (lexer->token == '|')
+	{
+		syntax_err(current->token);
+		return (0);
+	}
+	return (1);
+}
+
 int valid_syntax(t_lexer *lexer, t_tools *tools)
 {
-	t_lexer *current = lexer;
+	t_lexer *current;
 
 	if (tools->tflag)
 	{
-		if (!lexer->words && lexer->token)
-		{
-			syntax_err(lexer->token);
+		if (!valid_token_starter(lexer))
 			return (0);
-		}
+		current = lexer;
 		while (current && !current->token)
 			current = current->next;
 		if (current->token == '|' && current->next && current->next->token == '|')
