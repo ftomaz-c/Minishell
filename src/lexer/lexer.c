@@ -278,28 +278,18 @@ int	lex_line(char *line, t_tools *tools)
 	tools->lexer = NULL;
 	tools->pipes = 0;
 	tools->tflag = 0;
-	//printf("line: %s\n", line);
-
 	line_split_quotes = ft_split(line, " ");
-
-	// for (int i = 0; line_split_quotes[i]; i++)
-	// 	printf("%i: %s$\n", i, line_split_quotes[i]);
-	// printf("\n");
+	if (!line_split_quotes)
+		return (0);
 	check_special_chars(line_split_quotes);
-
 	new_line = expander(tools->env, line_split_quotes, tools);
-
-	// printf("newline: %s\n", new_line);
-
 	free_list(line_split_quotes);
+	if (!new_line)
+		return (0);
 	line_split_quotes = lexer_split(new_line, ' ');
 	free(new_line);
-
-	
-	// for (int i = 0; line_split_quotes[i]; i++)
-	// 	printf("%i: %s$\n", i, line_split_quotes[i]);
-	// printf("\n");
-
+	if (!line_split_quotes)
+		return (0);
 	add_line_to_lexer_struct(line_split_quotes, &tools->lexer, tools);
 	free_list(line_split_quotes);
 	if (!valid_syntax(tools->lexer, tools))
