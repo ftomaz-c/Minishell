@@ -198,7 +198,6 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 	char	*var;
 	char	*value;
 	char	*suffix;
-	char	*tmp;
 
 	prefix = ft_substr(str, 0, position);
 	var = ft_substr(str, position + 1, end - position - 1);
@@ -208,14 +207,16 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 		value = get_var_from_env(env, var);
 	free(var);
 	suffix = ft_substr(str, end, ft_strlen(str) - end);
-	if (value == NULL)
-		tmp = ft_strjoin(prefix, "");
+	if (prefix[0] == '\"' && str[1] == '$')
+	{	
+		free(prefix);
+		prefix = ft_strdup("");
+		value = add_quotes_to_value(value, 0, 1, 0);
+	}
 	else
-		tmp = ft_strjoin(prefix, value);
-	str = ft_strjoin(tmp, suffix);
-	free(value);
-	free(tmp);
-	free(suffix);
+		value = add_quotes_to_value(value, 1, 1, 0);
+	str = build_str(value, prefix, suffix);
+
 	free(prefix);
 	return (str);
 }

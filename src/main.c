@@ -2,6 +2,51 @@
 
 int	g_status = 0;
 
+void	update_env(t_tools *tools)
+{
+	int		i;
+	size_t		lvl;
+	char	*new_lvl;
+	char	*pre_lvl;
+	int		flag;
+
+	i = 0;
+	flag = 0;
+	while (tools->env[i])
+	{
+		if (strncmp("SHLVL", tools->env[i], 5) == 0)
+		{
+			flag = 1;
+			get_new_var_value(&pre_lvl, tools->env[i]);
+			if (!pre_lvl)
+				lvl = 1;
+			else
+				lvl = ft_atoll(pre_lvl);
+			if ((int)lvl < 0)
+				new_lvl = ft_itoa(0);
+			else
+				new_lvl = ft_itoa(lvl + 1);
+			if (ft_atoll(new_lvl) > 1000)
+			{	
+				new_lvl = ft_itoa(1);
+				ft_putstr_fd("bash: warning: shell level (", STDERR_FILENO);
+				ft_putstr_fd(ft_itoa(lvl + 1), STDERR_FILENO);
+				ft_putstr_fd(") too high, resetting to ", STDERR_FILENO);
+				ft_putstr_fd(new_lvl, STDERR_FILENO);
+				ft_putstr_fd("\n", STDERR_FILENO);
+			}
+			free(tools->env[i]);
+			tools->env[i] = ft_strjoin("SHLVL=", new_lvl);
+			free(pre_lvl);
+			free(new_lvl);
+		}
+		i++;
+	}
+	if (!flag)
+		export_variable_to_env(tools, "SHLVL=1");
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -15,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		free_tools(&tools);
 		exit (EXIT_FAILURE);
 	}
+	update_env(&tools);
 	while (1)
 	{
 		//line = prompt_line(&tools);
@@ -25,16 +71,16 @@ int	main(int argc, char **argv, char **envp)
 			if (!lex_line(line, &tools))
 			{
 				free(line);
-				free_tools(&tools);
-				g_status = 1;
-				break ;
+				// free_tools(&tools);
+				free_lexer(&tools.lexer);
+				// g_status = 2;
+				continue ;
 			}
-
-			//print_lexer(&tools);
+			// print_lexer(&tools);
 
 			parser(&tools);
 
-			//print_parser(&tools);
+			// print_parser(&tools);
 
 			if (tools.lexer)
 				free_lexer(&tools.lexer);

@@ -31,7 +31,14 @@ int	pwd(t_tools *tools, t_parser *command)
 
 	(void)tools;
 	(void)command;
-	printf("%s\n", getcwd(buf, sizeof(buf)));
+	
+	if (getcwd(buf, sizeof(buf)) == NULL)
+	{
+		tools->pwd = get_var_from_env(tools->env, "PWD");
+		tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
+		ft_strcpy(buf, tools->pwd);
+	}
+	printf("%s\n", buf);
 	g_status = EXIT_SUCCESS;
 	return (g_status);
 }

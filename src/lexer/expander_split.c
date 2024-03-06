@@ -34,6 +34,8 @@ int	realloc_split(t_expander *expander, char *str, int i)
 		free_list(expander->split);
 		return (0);
 	}
+	if (str[expander->start] == '$' && (str[expander->start + 1] == '\"' || str[expander->start + 1] == '\''))
+		expander->start++;
 	expander->split[expander->index] = ft_substr(str, expander->start, \
 	i - expander->start + 1);
 	if (!expander->split[expander->index])

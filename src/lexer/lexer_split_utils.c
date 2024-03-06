@@ -185,16 +185,16 @@ void	update_start_indexes(int *i, int *start, int *nstart)
  * ```
  */
 
-int	count_words_and_quotes(char *s, char c)
+int	count_words_and_quotes(char *s, char c, size_t size)
 {
 	size_t	i;
 	int		word;
 
 	i = 0;
 	word = 0;
-	while (i < ft_strlen(s) + 1)
-	{
-		while (s[i] && s[i] == c)
+	while (i < size + 1)
+  {
+		while (i < size && s[i] == c)
 			i++;
 		if (s[i] == '\"' || s[i] == '\'')
 		{
@@ -205,15 +205,15 @@ int	count_words_and_quotes(char *s, char c)
 		{
 			word++;
 			i++;
-			if ((s[i] == '\"' || s[i] == '\'') && s[i])
+			if (s[i] == '\"' || s[i] == '\'')
 				i = paired_quote(s, i + 1, s[i]) + 1;
-			while (s[i] && s[i] != c)
+			while (i < size && s[i] != c)
 				i++;
 		}
 	}
 	return (word);
 }
-
+// echo . hi, this is the hardest" Ana "test @echo . hi, this is the hardest" Ana "test  with spaces in var value
 /**
  * @brief Allocates memory for a word within a string and copies it.
  * 
