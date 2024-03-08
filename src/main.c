@@ -14,6 +14,7 @@ int	main(int argc, char **argv, char **envp)
 		free_tools(&tools);
 		exit (EXIT_FAILURE);
 	}
+	handle_sigaction();
 	while (1)
 	{
 		minishell(&tools);

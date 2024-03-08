@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define _POSIX_C_SOURCE 199309L
+
 # include "../libft/includes/libft.h"
 # include "structs.h"
 # include "lexer.h"
@@ -23,6 +25,10 @@
 extern int	g_status;
 
 void minishell(t_tools *tools);
+
+/*src/utils/signal.c*/
+void	handle_sigaction();
+void	sig_handler(int	sig);
 
 /*src/utils/tools.c*/
 int		config_tools(t_tools *tools, char **envp);
