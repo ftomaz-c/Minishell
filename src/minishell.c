@@ -17,13 +17,18 @@ void	minishell(t_tools *tools)
 		}
 		//print_lexer(tools);
 		if (!parser(tools))
+		{
+			free_lexer(&tools->lexer);
+			free_parser(&tools->parser);
+			free(line);
 			return ;
+		}
 		//print_parser(tools);
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
 		if (tools->parser)
 		{
-			executor(tools);
+		// 	// executor(tools);
 			free_parser(&tools->parser);
 		}
 	}

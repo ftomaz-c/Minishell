@@ -69,6 +69,11 @@ t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 	if (current->token == '>' || current->token == '<' 
 	|| ft_isdigit(current->token) || current->token == '&')
 	{
+		if (!current->next)
+		{
+			syntax_err(current->token);
+			return (NULL);
+		}
 		if (ft_isdigit(current->token) || current->token == '&')
 			current = add_redirection(current, node, start);
 		node->nb_redirections++;
@@ -77,11 +82,6 @@ t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 			current = add_redirection(current, node, start);
 		if (current && current->words)
 			current = add_redirection(current, node, start);
-		if (!current->next && (current->token == '<' || current->token == '>'))
-		{
-			syntax_err(current->token);
-			return (NULL);
-		}
 	}
 	return (current);
 }

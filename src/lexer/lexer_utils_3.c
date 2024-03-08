@@ -190,7 +190,7 @@ int	valid_token_starter(t_lexer *lexer)
 	current = lexer;
 	if (lexer->token == '<' || lexer->token == '>')
 	{
-		while (!current->next->words)
+		while (current->next && !current->next->words)
 			current = current->next;
 		if (current->token == '|')
 		{

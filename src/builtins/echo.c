@@ -36,17 +36,19 @@ void	echo_print(t_parser *command, int pos, int flag)
 
 int	echo(t_tools *tools, t_parser *command)
 {
-	int	i;
-	int	flag;
+	int			i;
+	int			flag;
+	t_parser	*cmd;
 
 	i = 1;
 	(void)tools;
-	if (!command->str[i])
+	cmd = command;
+	if (!cmd->str[i])
 		printf("\n");
 	else
 	{
-		flag = echo_n_flag(command->str, &i);
-		echo_print(command, i, flag);
+		flag = echo_n_flag(cmd->str, &i);
+		echo_print(cmd, i, flag);
 	}
 	g_status = EXIT_SUCCESS;
 	return (g_status);
