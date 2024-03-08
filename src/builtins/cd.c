@@ -131,6 +131,7 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 
 void	cd_err(int err, char *str, char root)
 {
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (!(root == '/'))
 		ft_putstr_fd("cd: ", STDERR_FILENO);
 	if (str)
@@ -143,7 +144,7 @@ void	cd_err(int err, char *str, char root)
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 	else if (err == 20)
 		ft_putstr_fd(": Not a directory\n", STDERR_FILENO);
-	else if (err == 25)
+	else if (err == 0 || err == 25)
 		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
 	else if (err == 36)
 		ft_putstr_fd(": File name too long\n", STDERR_FILENO);
@@ -299,6 +300,8 @@ int	cd(t_tools *tools, t_parser *command)
 			g_status = 127;
 		else if (errno == 25)
 			g_status = 126;
+		if (errno == 0)
+			chdir(tools->pwd);
 	}
 	else if ((command && !command->str[1]) || ft_strcmp(command->str[1], "~") == 0)
 		cd_no_path(tools, command);
