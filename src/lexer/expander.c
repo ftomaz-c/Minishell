@@ -124,6 +124,11 @@ char	*expander(char **env, char **list, t_tools *tools)
 
 	(void)tools;
 	index = 0;
+	int	i = 0;
+	while (list[i])
+	{
+		i++;
+	}
 	while (list[index])
 	{
 		split = split_expander(list[index]);

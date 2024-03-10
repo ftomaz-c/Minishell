@@ -81,6 +81,8 @@ char *add_quotes(int j, char *str, char quote, char *value)
 char	get_quote_flag(char *str, int i)
 {
 	char	quote;
+
+	quote = '\0';
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')

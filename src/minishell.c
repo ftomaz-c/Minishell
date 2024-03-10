@@ -15,7 +15,7 @@ void	minishell(t_tools *tools)
 			free_lexer(&tools->lexer);
 			return ;
 		}
-		//print_lexer(tools);
+		// print_lexer(tools);
 		if (!parser(tools))
 		{
 			free_lexer(&tools->lexer);
@@ -23,16 +23,16 @@ void	minishell(t_tools *tools)
 			free(line);
 			return ;
 		}
-		//print_parser(tools);
+		// print_parser(tools);
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
 		if (tools->parser)
 		{
-		// 	// executor(tools);
+			executor(tools);
 			free_parser(&tools->parser);
 		}
 	}
 	else
-		ft_putstr_fd("Error: input with unclosed quotes\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: input with unclosed quotes\n", STDERR_FILENO);
 	free(line);
 }

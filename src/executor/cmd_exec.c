@@ -105,7 +105,7 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 		exec_err(1, cmd_args[0], value);
 	else
 	{
-		while (path_list[i] && cmd_args[0][0] != '.')
+		while (path_list[i] && cmd_args[0] && cmd_args[0][0] != '.')
 		{
 			tmp = ft_strjoin(path_list[i], "/");
 			cmd_path = ft_strjoin(tmp, cmd_args[0]);
@@ -114,7 +114,7 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 			free(cmd_path);
 			i++;
 		}
-		if (cmd_args)
+		if (cmd_args[0])
 			execve(cmd_args[0], cmd_args, envp);
 		exec_err(errno, cmd_args[0], value);
 	}

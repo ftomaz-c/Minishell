@@ -4,7 +4,7 @@
 /*   hex_format.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                             echo hi |echo hi                   +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:47:44 by ftomaz-c          #+#    #+#             */
 /*   Updated: 2024/03/08 14:10:39 by crebelo-         ###   ########.fr       */
 /*                                                                            */

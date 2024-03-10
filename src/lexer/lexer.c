@@ -278,7 +278,7 @@ int	lex_line(char *line, t_tools *tools)
 	tools->lexer = NULL;
 	tools->pipes = 0;
 	tools->tflag = 0;
-	line_split_quotes = ft_split(line, " ");
+	line_split_quotes = lexer_split(line, ' ');
 	if (!line_split_quotes)
 		return (0);
 	check_special_chars(line_split_quotes);

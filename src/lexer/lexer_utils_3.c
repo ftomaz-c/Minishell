@@ -153,7 +153,7 @@ void check_special_chars(char **list)
 void syntax_err(char token)
 {
 	g_status = 2;
-	ft_putstr_fd("bash: syntax error near unexpected token '", STDERR_FILENO);
+	ft_putstr_fd("minishell: syntax error near unexpected token '", STDERR_FILENO);
 	ft_putchar_fd(token, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
 }
