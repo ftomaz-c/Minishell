@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdbool.h>
+# include <dirent.h>
 
 // extern int	global_status;
 extern int	g_status;

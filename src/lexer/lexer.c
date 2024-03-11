@@ -270,20 +270,19 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer, t_tools *tools
  * ```
  */
 
-int	lex_line(char *line, t_tools *tools)
+int	lex_line(char	**line_split_quotes, t_tools *tools)
 {
-	char	**line_split_quotes;
 	char	*new_line;
 
-	tools->lexer = NULL;
-	tools->pipes = 0;
-	tools->tflag = 0;
-	line_split_quotes = ft_split(line, " ");
 	if (!line_split_quotes)
+		return (0);
+	for (int i = 0; line_split_quotes[i]; i++)
+		printf("%i: %s\n", i, line_split_quotes[i]);
+	printf("\n");
+	if (!expand_wildcards(line_split_quotes))
 		return (0);
 	check_special_chars(line_split_quotes);
 	new_line = expander(tools->env, line_split_quotes, tools);
-	free_list(line_split_quotes);
 	if (!new_line)
 		return (0);
 	line_split_quotes = lexer_split(new_line, ' ');
@@ -291,6 +290,24 @@ int	lex_line(char *line, t_tools *tools)
 	if (!line_split_quotes)
 		return (0);
 	add_line_to_lexer_struct(line_split_quotes, &tools->lexer, tools);
+	free_list(line_split_quotes);
+	return (1);
+}
+
+int	lexer(char *line, t_tools *tools)
+{
+	char	**line_split_quotes;
+
+	tools->lexer = NULL;
+	tools->pipes = 0;
+	tools->tflag = 0;
+	line_split_quotes = lexer_split(line, ' ');
+	if (!lex_line(line_split_quotes, tools))
+	{
+		free(line);
+		free_list(line_split_quotes);
+		return (0);
+	}
 	free_list(line_split_quotes);
 	if (!valid_syntax(tools->lexer, tools))
 		return (0);
