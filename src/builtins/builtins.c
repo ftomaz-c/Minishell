@@ -36,17 +36,16 @@
 int	(*is_builtin(char *str))(t_tools *tools, t_parser *parser)
 {
 	size_t		i;
-	t_builtin	builtin_array[] = {
-		{"echo", echo},
-		{"cd", cd},
-		{"pwd", pwd},
-		{"export", export},
-		{"unset", unset},
-		{"env", env},
-		{"exit", mini_exit},
-		{"history", mini_history}
-	};
+	t_builtin	builtin_array[8];
 
+	builtin_array[0] = (t_builtin){"echo", echo};
+	builtin_array[1] = (t_builtin){"cd", cd};
+	builtin_array[2] = (t_builtin){"pwd", pwd};
+	builtin_array[3] = (t_builtin){"export", export};
+	builtin_array[4] = (t_builtin){"unset", unset};
+	builtin_array[5] = (t_builtin){"env", env};
+	builtin_array[6] = (t_builtin){"exit", mini_exit};
+	builtin_array[7] = (t_builtin){"history", mini_history};
 	i = 0;
 	while (i < (sizeof(builtin_array) / sizeof(builtin_array[0])))
 	{

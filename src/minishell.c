@@ -1,28 +1,18 @@
 #include "../includes/minishell.h"
 
-void	minishell(t_tools *tools)
+void	minishell(t_tools *tools, char *line)
 {
-	char	*line;
-
-	//line = prompt_line(&tools);
-	line = readline(".minishell: ");
 	add_history_file(line, ".minishell_history");
 	if (check_unclosed_quotes(line))
 	{
 		if (!lex_line(line, tools))
 		{
-			free(line);
 			free_lexer(&tools->lexer);
 			return ;
 		}
 		// print_lexer(tools);
 		if (!parser(tools))
-		{
-			free_lexer(&tools->lexer);
-			free_parser(&tools->parser);
-			free(line);
 			return ;
-		}
 		// print_parser(tools);
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
@@ -34,5 +24,4 @@ void	minishell(t_tools *tools)
 	}
 	else
 		ft_putstr_fd("minishell: input with unclosed quotes\n", STDERR_FILENO);
-	free(line);
 }

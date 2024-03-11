@@ -22,7 +22,7 @@
 // extern int	global_status;
 extern int	g_status;
 
-void minishell(t_tools *tools);
+void minishell(t_tools *tools, char *line);
 
 /*src/utils/tools.c*/
 int		config_tools(t_tools *tools, char **envp);
