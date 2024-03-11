@@ -38,7 +38,7 @@ void	add_word_to_node(char *word, t_lexer **lexer)
 	t_lexer	*node;
 	t_lexer	*last;
 
-	node = malloc(sizeof(t_lexer));
+	node = ft_calloc(1, sizeof(t_lexer));
 	if (!node)
 		return ;
 	node->words = ft_strdup(word);
@@ -93,7 +93,7 @@ void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
 	t_lexer	*node;
 	t_lexer	*last;
 
-	node = malloc(sizeof(t_lexer));
+	node = ft_calloc(1, sizeof(t_lexer));
 	if (!node)
 		return ;
 	node->words = NULL;
@@ -151,7 +151,7 @@ char	*remove_quotes(char	*str, int i)
 
 	start = 0;
 	word = NULL;
-	while (str[i])
+	while (i < (int)ft_strlen(str) && str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{

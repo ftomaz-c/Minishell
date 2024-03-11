@@ -25,7 +25,7 @@
 // extern int	global_status;
 extern int	g_status;
 
-void minishell(t_tools *tools);
+void minishell(t_tools *tools, char *line);
 
 /*src/utils/signal.c*/
 void	handle_sigaction();

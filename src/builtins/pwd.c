@@ -34,6 +34,8 @@ int	pwd(t_tools *tools, t_parser *command)
 	
 	if (getcwd(buf, sizeof(buf)) == NULL)
 	{
+		free(tools->pwd);
+		free(tools->oldpwd);
 		tools->pwd = get_var_from_env(tools->env, "PWD");
 		tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
 		ft_strcpy(buf, tools->pwd);

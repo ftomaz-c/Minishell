@@ -28,20 +28,22 @@
 
 int	env(t_tools *tools, t_parser *command)
 {
-	int	i;
+	int		i;
+	t_tools	*tmp;
 
 	i = 0;
 	(void)tools;
 	(void)command;
-	while (tools->env[i])
+	tmp = tools;
+	while (tmp->env[i])
 	{
-		if (!ft_strchr(tools->env[i], '='))
+		if (!ft_strchr(tmp->env[i], '='))
 			i++;
 		else
 		{
-			if (!tools->env[i])
+			if (!tmp->env[i])
 				break ;
-			printf("%s\n", tools->env[i]);
+			printf("%s\n", tmp->env[i]);
 			i++;
 		}
 	}

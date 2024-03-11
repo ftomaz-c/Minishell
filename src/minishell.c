@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	minishell(t_tools *tools)
+void	minishell(t_tools *tools, char *line)
 {
 	char	*line;
 
@@ -14,10 +14,10 @@ void	minishell(t_tools *tools)
 			free_lexer(&tools->lexer);
 			return ;
 		}
-		//print_lexer(tools);
+		// print_lexer(tools);
 		if (!parser(tools))
 			return ;
-		print_parser(tools);
+		// print_parser(tools);
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
 		if (tools->parser)
@@ -27,6 +27,5 @@ void	minishell(t_tools *tools)
 		}
 	}
 	else
-		ft_putstr_fd("Error: input with unclosed quotes\n", STDERR_FILENO);
-	free(line);
+		ft_putstr_fd("minishell: input with unclosed quotes\n", STDERR_FILENO);
 }

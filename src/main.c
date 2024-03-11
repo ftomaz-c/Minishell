@@ -5,6 +5,7 @@ int	g_status = 0;
 int	main(int argc, char **argv, char **envp)
 {
 	t_tools	tools;
+	char	*line;
 
 	update_history(".minishell_history");
 	error_check(argc, argv);
@@ -17,7 +18,10 @@ int	main(int argc, char **argv, char **envp)
 	handle_sigaction();
 	while (1)
 	{
-		minishell(&tools);
+		//line = prompt_line(&tools);
+		line = readline(".minishell: ");
+		minishell(&tools, line);
+		free(line);
 		if (tools.exit)
 			break ;
 	}
