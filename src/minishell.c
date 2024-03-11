@@ -2,10 +2,6 @@
 
 void	minishell(t_tools *tools, char *line)
 {
-	char	*line;
-
-	//line = prompt_line(tools);
-	line = readline(".minishell: ");
 	add_history_file(line, ".minishell_history");
 	if (check_unclosed_quotes(line))
 	{

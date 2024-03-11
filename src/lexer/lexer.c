@@ -276,9 +276,6 @@ int	lex_line(char	**line_split_quotes, t_tools *tools)
 
 	if (!line_split_quotes)
 		return (0);
-	for (int i = 0; line_split_quotes[i]; i++)
-		printf("%i: %s\n", i, line_split_quotes[i]);
-	printf("\n");
 	if (!expand_wildcards(line_split_quotes))
 		return (0);
 	check_special_chars(line_split_quotes);
