@@ -3,12 +3,15 @@
 
 # include "minishell.h"
 
+int		expand_wildcards(char **str);
+int		wildcard_match(char *name, char *wildcard, int position);
+
 /*src/lexer/lexer.c*/
 void	add_word_to_node(char *word, t_lexer **lexer);
 void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools);
 char	*remove_quotes(char	*str, int i);
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer, t_tools *tools);
-int		lex_line(char *line, t_tools *tools);
+int		lexer(char *line, t_tools *tools);
 
 void	syntax_err(char token);
 

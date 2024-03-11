@@ -9,7 +9,7 @@ void	minishell(t_tools *tools, char *line)
 	add_history_file(line, ".minishell_history");
 	if (check_unclosed_quotes(line))
 	{
-		if (!lex_line(line, tools))
+		if (!lexer(line, tools))
 		{
 			free_lexer(&tools->lexer);
 			return ;
