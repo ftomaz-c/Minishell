@@ -104,7 +104,10 @@ char *add_quotes_to_value(char *str, int flagquote, int j, int i)
 	quote = '\0';
 	if (str == NULL)
 		return (NULL);
-	quote = get_quote_flag(str, i);
+	if (flagquote == 2)
+		quote = '\'';
+	else
+		quote = get_quote_flag(str, i);
 	if (quote == '\0')
 		return (str);
 	value = ft_calloc(sizeof(char *), ft_strlen(str) + 2);
