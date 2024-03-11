@@ -77,14 +77,12 @@ char *add_quotes(int j, char *str, char quote, char *value)
  * free(result);
  * ```
  */
-char *add_quotes_to_value(char *str, int flagquote, int j, int i)
+
+char	get_quote_flag(char *str, int i)
 {
-	char *value;
-	char quote;
+	char	quote;
 
 	quote = '\0';
-	if (str == NULL)
-		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -94,13 +92,33 @@ char *add_quotes_to_value(char *str, int flagquote, int j, int i)
 		}
 		i++;
 	}
+	return (quote);
+}
+
+char *add_quotes_to_value(char *str, int flagquote, int j, int i)
+{
+	char	*value;
+	char	*tmp;
+	char	quote;
+
+	quote = '\0';
+	if (str == NULL)
+		return (NULL);
+	if (flagquote == 2)
+		quote = '\'';
+	else
+		quote = get_quote_flag(str, i);
 	if (quote == '\0')
 		return (str);
 	value = ft_calloc(sizeof(char *), ft_strlen(str) + 2);
 	if (!value)
 		return (NULL);
 	if (flagquote)
-		str = ft_strtrim(str, " ");
+	{	
+		tmp = ft_strtrim(str, " ");
+		free(str);
+		str = tmp;
+	}
 	value = add_quotes(j, str, quote, value);
 	return (value);
 }

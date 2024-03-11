@@ -57,15 +57,15 @@ char **split_expander(char *str)
 		return (NULL);
 	init_expander(&expander);
 	i = 0;
-	while(str[i])
+	while (i < (int)ft_strlen(str) && str[i])
 	{
 		if (str[i] == '\'')
 		{
 			expander.start = i++;
-			while (str[i] != '\'')
+			while (str[i] && str[i] != '\'')
 				i++;
 		}
-		if (str[i + 1] == '\'' || str[i + 1] == '\0' || str[i] == '\'')
+		if (str[i] && (str[i + 1] == '\'' || str[i + 1] == '\0' || str[i] == '\''))
 		{
 			if (!realloc_split(&expander, str, i))
 				return (NULL);

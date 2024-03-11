@@ -57,7 +57,7 @@ int	check_exit_args(t_parser *parser)
 		return (2);
 	while (ft_isdigit(parser->str[1][j]))
 		j++;
-	if (parser->str[1][j - 1] == '0')
+	if (j != 0 && parser->str[1][j - 1] == '0')
 		is_zero = 1;
 	while (ft_isspace(parser->str[1][j]))
 		j++;
@@ -101,14 +101,22 @@ void	exit_err(int err, char *str)
 	if (err == 1)
 	{
 		ft_putstr_fd("exit\nbash: exit: ", STDERR_FILENO);
-		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd(": too many arguments\n", STDERR_FILENO);
+		if (ft_strcmp(str, "exit") != 0)
+		{	
+			ft_putstr_fd(str, STDERR_FILENO);
+			ft_putstr_fd(": ", STDERR_FILENO);
+		}
+		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
 	}
 	else if (err == 2)
 	{
 		ft_putstr_fd("exit\nbash: exit: ", STDERR_FILENO);
-		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		if (ft_strcmp(str, "exit") != 0)
+		{	
+			ft_putstr_fd(str, STDERR_FILENO);
+			ft_putstr_fd(": ", STDERR_FILENO);
+		}
+		ft_putstr_fd("numeric argument required\n", STDERR_FILENO);
 	}
 }
 

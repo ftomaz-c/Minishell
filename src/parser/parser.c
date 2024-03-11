@@ -164,6 +164,7 @@ int	parse_lexer(t_parser **parser, t_lexer *lexer, int *start, int end)
 	if (!get_command(node, lexer, start, end))
 	{
 		free_lexer(&node->redirections);
+		free_lexer(&lexer);
 		free_parser(&node);
 		free_parser(parser);
 		return (0);
