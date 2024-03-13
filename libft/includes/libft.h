@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:18:19 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/02/29 18:31:24 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:58:42 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strdup(const char *s);
 
 /* stdlib.h */
-int				ft_atoi(const char *nptr);
-long			ft_atol(const char *nptr);
+int		ft_atoi(const char *nptr);
+long	ft_atol(const char *nptr);
 long long		ft_atoll(const char *nptr);
-void			*ft_calloc(size_t nmemb, size_t size);
-void			*ft_realloc(void *ptr, size_t size, size_t old_size);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_realloc(void *ptr, size_t size, size_t old_size);
 long long int	ft_strtoull(const char *nptr, char **endptr, int base);
 
 /* others */

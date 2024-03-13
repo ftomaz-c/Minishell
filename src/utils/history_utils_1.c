@@ -3,13 +3,16 @@
 /**
  * @brief Checks if a line contains only whitespace characters.
  * 
- * This function checks if a given string contains only whitespace characters.
+ * This function checks if a given string contains 
+ * only whitespace characters.
  * 
  * @param line Pointer to the string to check.
  * 
- * @return Returns 1 if the line contains non-whitespace characters, otherwise 0.
+ * @return Returns 1 if the line contains non-whitespace 
+ * characters, otherwise 0.
  * 
- * @note This function assumes that `line` points to a valid null-terminated string.
+ * @note This function assumes that `line` points to a valid
+ *  null-terminated string.
  * 
  * @warning None.
  * 
@@ -28,7 +31,7 @@ int	check_empty_line(char *line)
 	int	i;
 
 	i = 0;
-	while(line[i])
+	while (line[i])
 	{
 		if (!ft_isspace(line[i]))
 			return (1);
@@ -110,11 +113,6 @@ int	count_lines_in_file(const char *file_path)
 		count++;
 		free(line);
 		line = get_next_line(fd);
-		// while (line && !history_section(line))
-		// {
-		// 	free(line);
-		// 	line = get_next_line(fd);
-		// }
 	}
 	free(line);
 	close (fd);

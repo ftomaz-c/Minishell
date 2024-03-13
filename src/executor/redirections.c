@@ -90,7 +90,7 @@ t_lexer	*set_input(t_parser *parser, t_lexer *redirection, int fd)
 
 t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd)
 {
-	t_lexer *current;
+	t_lexer	*current;
 
 	current = redirection;
 	current = current->next;
@@ -191,7 +191,7 @@ void	redirection(t_parser *parser)
  * @note This function assumes that the parser is properly initialized.
  */
 
-void	std_err(int	err, char *str)
+void	std_err(int err, char *str)
 {
 	if (str)
 		ft_putstr_fd(str, STDERR_FILENO);
@@ -262,7 +262,7 @@ void	set_stdout(t_parser *parser, int fd)
 	else if (parser->stdout_flag == GREAT_GREAT)
 	{
 		fd_outfile = open(parser->stdout_file_name, O_CREAT | O_RDWR
-				| O_APPEND, 0644);		
+				| O_APPEND, 0644);
 		if (fd_outfile < 0)
 			std_err(errno, parser->stdout_file_name);
 		dup2(fd_outfile, fd);

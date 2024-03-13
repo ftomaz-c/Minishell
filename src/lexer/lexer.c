@@ -204,7 +204,8 @@ char	*remove_quotes(char	*str, int i)
  * ```
  */
 
-void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer, t_tools *tools)
+void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer,
+		t_tools *tools)
 {
 	int		i;
 	int		j;

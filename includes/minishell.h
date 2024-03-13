@@ -25,11 +25,11 @@
 // extern int	global_status;
 extern int	g_status;
 
-void minishell(t_tools *tools, char *line);
+void	minishell(t_tools *tools, char *line);
 
 /*src/utils/signal.c*/
-void	handle_sigaction();
-void	sig_handler(int	sig);
+void	handle_sigaction(void);
+void	sig_handler(int sig);
 
 /*src/utils/tools.c*/
 int		config_tools(t_tools *tools, char **envp);

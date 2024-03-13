@@ -37,7 +37,7 @@ int		export(t_tools *tools, t_parser *command);
 /*src/builtins/export_utils1.c*/
 void	sort_array(char **env_copy);
 void	copy_var_value_quotes(char *var_path, char *str, int start);
-int	    copy_var_name(char *var_path, char *str, int equal_pos);
+int		copy_var_name(char *var_path, char *str, int equal_pos);
 char	*prepare_var(char *str);
 char	**get_env_export(char **envp, int i);
 
