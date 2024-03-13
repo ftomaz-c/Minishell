@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:16:16 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/03/13 14:07:39 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:28:48 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	determine_base(const char *nptr, int *base, int *i)
 }
 
 unsigned long long int	convert_to_ull(const char *nptr, int base,
-										int *i, int result)
+										int *i, unsigned long long result)
 {
 	while ((nptr[*i] >= '0' && nptr[*i] <= '9') || (base == 16 && ((nptr[*i] \
 	>= 'a' && nptr[*i] <= 'f') || (nptr[*i] >= 'A' && nptr[*i] <= 'F'))))
