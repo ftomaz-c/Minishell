@@ -13,7 +13,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_putstr_fd("Error: Failed to allocate memory for tools\n",
 			STDERR_FILENO);
-		free_tools(&tools);
+		// free_tools(&tools);
 		exit (EXIT_FAILURE);
 	}
 	handle_sigaction();

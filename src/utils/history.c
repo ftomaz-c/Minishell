@@ -215,6 +215,8 @@ void	update_history(char *file_name)
 	int		fd;
 
 	file_path = get_file_path_from_home(file_name);
+	if (!file_path)
+		return ;
 	if (access(file_path, F_OK))
 	{
 		free(file_path);

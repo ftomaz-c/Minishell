@@ -40,13 +40,20 @@ int	compare_var_to_env(char *env, char *var)
 
 void	free_tools(t_tools *tools)
 {
-	free_list(tools->env);
-	free_list(tools->path);
-	free(tools->pwd);
-	free(tools->oldpwd);
-	free(tools->home);
-	free(tools->user);
-	free(tools->name);
+	if (tools && tools->env)
+		free_list(tools->env);
+	if (tools && tools->path)
+		free_list(tools->path);
+	if (tools && tools->pwd)
+		free(tools->pwd);
+	if (tools && tools->oldpwd)
+		free(tools->oldpwd);
+	if (tools && tools->home)
+		free(tools->home);
+	if (tools && tools->user)
+		free(tools->user);
+	if (tools && tools->name)
+		free(tools->name);
 }
 
 /**
