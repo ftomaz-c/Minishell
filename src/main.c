@@ -11,7 +11,8 @@ int	main(int argc, char **argv, char **envp)
 	error_check(argc, argv);
 	if (!config_tools(&tools, envp))
 	{
-		ft_putstr_fd("Error: Failed to allocate memory for tools\n", STDERR_FILENO);
+		ft_putstr_fd("Error: Failed to allocate memory for tools\n",
+			STDERR_FILENO);
 		free_tools(&tools);
 		exit (EXIT_FAILURE);
 	}

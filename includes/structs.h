@@ -48,7 +48,7 @@ typedef struct s_parser
 	struct s_parser	*prev;	
 }	t_parser;
 
-typedef struct	s_expander
+typedef struct s_expander
 {
 	char			**split;
 	int				size;
@@ -56,7 +56,7 @@ typedef struct	s_expander
 	int				start;
 }	t_expander;
 
-typedef struct	s_builtin
+typedef struct s_builtin
 {
 	char	*name;
 	int		(*builtin)(t_tools *, t_parser *);

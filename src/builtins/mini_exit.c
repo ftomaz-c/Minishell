@@ -131,7 +131,7 @@ int	mini_exit(t_tools *tools, t_parser *parser)
 				g_status = 2;
 				tools->exit = 255;
 				exit_err(2, parser->str[1]);
-				return(g_status);
+				return (g_status);
 			}
 			else
 				g_status = ft_atoi(parser->str[1]);

@@ -25,6 +25,6 @@ void	exec_path(char **path_list, char **cmd_args, char **envp);
 int		exec_builtins(t_tools *tools);
 void	minishell_pipex(t_tools *tools, t_parser *parser);
 
-void	std_err(int	err, char *str);
+void	std_err(int err, char *str);
 
 #endif

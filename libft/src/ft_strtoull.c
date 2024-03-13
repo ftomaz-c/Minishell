@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtoull.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:16:16 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/02/28 12:09:13 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/03/13 14:07:39 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,43 +39,45 @@ void	determine_base(const char *nptr, int *base, int *i)
 	}
 }
 
-unsigned long long int	convert_to_ull(const char *nptr, int base, int *i)
+unsigned long long int	convert_to_ull(const char *nptr, int base,
+										int *i, int result)
 {
-	unsigned long long	result;
-
-	result = 0;
 	while ((nptr[*i] >= '0' && nptr[*i] <= '9') || (base == 16 && ((nptr[*i] \
 	>= 'a' && nptr[*i] <= 'f') || (nptr[*i] >= 'A' && nptr[*i] <= 'F'))))
 	{
 		if (nptr[*i] >= '0' && nptr[*i] <= '9')
 		{
-			if (result > ULLONG_MAX / base || (result == ULLONG_MAX / base &&
-			(unsigned long long)(nptr[*i] - '0') > ULLONG_MAX % base))
+			if (result > ULLONG_MAX / base || (result == ULLONG_MAX / base
+					&& (unsigned long long)(nptr[*i] - '0')
+				> ULLONG_MAX % base))
 				return (ULLONG_MAX);
 			result = result * base + (nptr[*i] - '0');
 		}
 		else if (base == 16)
 		{
-			if (result > ULLONG_MAX / base || (result == ULLONG_MAX / base &&
-			(unsigned long long)((nptr[*i] & ~0x20) - 'A' + 10) > ULLONG_MAX \
+			if (result > ULLONG_MAX / base || (result == ULLONG_MAX / base
+					&& (unsigned long long)((nptr[*i] & ~0x20) - 'A' + 10)
+				> ULLONG_MAX \
 			% base))
 				return (ULLONG_MAX);
 			result = result * base + ((nptr[*i] & ~0x20) - 'A' + 10);
 		}
-		(*i)++;		
+		(*i)++;
 	}
 	return (result);
 }
 
 long long int	ft_strtoull(const char *nptr, char **endptr, int base)
 {
-	int	i;
-	int	sign;
-	long long	result;
+	int					i;
+	int					sign;
+	long long			result;
+	unsigned long long	nresult;
 
 	sign = 1;
 	i = 0;
 	result = 0;
+	nresult = 0;
 	while ((nptr[i] >= '\t' && nptr[i] <= '\r') || nptr[i] == ' ')
 		i++;
 	if (nptr[i] == '-' || nptr[i] == '+')
@@ -85,7 +87,7 @@ long long int	ft_strtoull(const char *nptr, char **endptr, int base)
 		i++;
 	}
 	determine_base(nptr, &base, &i);
-	result = convert_to_ull(nptr, base, &i);
+	result = convert_to_ull(nptr, base, &i, nresult);
 	if (endptr != NULL)
 		*endptr = (char *)&nptr[i];
 	return (result * sign);

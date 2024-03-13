@@ -2,7 +2,8 @@
 /**
  * @brief Gets special character representation based on the input string.
  * 
- * This function retrieves the special character ('\t', '\n', or '\r') based on the input string.
+ * This function retrieves the special character ('\t', '\n', or '\r') 
+ * based on the input string.
  * 
  * @param str The input string.
  * @param i Index to start checking for the special character.
@@ -21,7 +22,7 @@
  * // special_char now contains '\t'
  * ```
  */
-char get_special_char(char *str, int i)
+char	get_special_char(char *str, int i)
 {
 	if (str[i + 3] == 't')
 		return ('\t');
@@ -35,13 +36,15 @@ char get_special_char(char *str, int i)
 /**
  * @brief Gets a new string with special characters replaced.
  * 
- * This function creates a new string with special characters replaced based on the input string.
+ * This function creates a new string with special characters
+ *  replaced based on the input string.
  * 
  * @param str The input string.
  * 
  * @return The new string with replaced special characters.
  * 
- * @note Memory is allocated within the function and needs to be freed by the caller to avoid memory leaks.
+ * @note Memory is allocated within the function and needs to be freed 
+ * by the caller to avoid memory leaks.
  * 
  * @warning None.
  * 
@@ -54,12 +57,14 @@ char get_special_char(char *str, int i)
  * free(new_str);
  * ```
  */
-char *get_new_special_str(char *str)
+char	*get_new_special_str(char *str)
 {
-	char *new_str;
-	int i = 0;
-	int j = 0;
+	char	*new_str;
+	int		i;
+	int		j;
 
+	j = 0;
+	i = 0;
 	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (!new_str)
 		return (NULL);
@@ -84,7 +89,8 @@ char *get_new_special_str(char *str)
 /**
  * @brief Checks and replaces special characters in a list of strings.
  * 
- * This function iterates through a list of strings and replaces special characters ('$' followed by '\'') with their representations.
+ * This function iterates through a list of strings and replaces 
+ * special characters ('$' followed by '\'') with their representations.
  * 
  * @param list The list of strings.
  * 
@@ -92,7 +98,8 @@ char *get_new_special_str(char *str)
  * 
  * @note None.
  * 
- * @warning Memory for the modified strings is allocated within the function and needs to be freed by the caller to avoid memory leaks.
+ * @warning Memory for the modified strings is allocated within 
+ * the function and needs to be freed by the caller to avoid memory leaks.
  * 
  * @see get_new_special_str
  * 
@@ -103,24 +110,27 @@ char *get_new_special_str(char *str)
  * // list[0] now contains "Example special string"
  * ```
  */
-void check_special_chars(char **list)
+void	check_special_chars(char **list)
 {
-	size_t position;
-	int index = 0;
-	char *str;
-	size_t size;
+	size_t	position;
+	int		index;
+	char	*str;
+	size_t	size;
 
+	index = 0;
 	while (list[index])
 	{
 		size = ft_strlen(list[index]);
 		if (size > 4)
 		{
 			position = find_char_position_new(list[index], '$');
-			if (position < size && list[index][position + 1] == '\'' && list[index][position + 2] == '\\' && list[index][position + 4] == '\'')
+			if (position < size && list[index][position + 1] == '\''
+				&& list[index][position + 2] == '\\'
+				&& list[index][position + 4] == '\'')
 			{
 				str = get_new_special_str(list[index]);
 				if (!str)
-					break;
+					break ;
 				free(list[index]);
 				list[index] = str;
 			}
@@ -150,10 +160,11 @@ void check_special_chars(char **list)
  * // Displays "bash: syntax error near unexpected token '$'"
  * ```
  */
-void syntax_err(char token)
+void	syntax_err(char token)
 {
 	g_status = 2;
-	ft_putstr_fd("minishell: syntax error near unexpected token '", STDERR_FILENO);
+	ft_putstr_fd("minishell: syntax error near unexpected token '",
+		STDERR_FILENO);
 	ft_putchar_fd(token, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
 }
@@ -185,7 +196,7 @@ void syntax_err(char token)
 
 int	valid_token_starter(t_lexer *lexer)
 {
-	t_lexer *current;
+	t_lexer	*current;
 
 	current = lexer;
 	if (lexer->token == '<' || lexer->token == '>')
@@ -206,9 +217,9 @@ int	valid_token_starter(t_lexer *lexer)
 	return (1);
 }
 
-int valid_syntax(t_lexer *lexer, t_tools *tools)
+int	valid_syntax(t_lexer *lexer, t_tools *tools)
 {
-	t_lexer *current;
+	t_lexer	*current;
 
 	if (tools->tflag)
 	{
@@ -217,12 +228,14 @@ int valid_syntax(t_lexer *lexer, t_tools *tools)
 		current = lexer;
 		while (current && !current->token)
 			current = current->next;
-		if (current->token == '|' && current->next && current->next->token == '|')
+		if (current->token == '|' && current->next
+			&& current->next->token == '|')
 		{
 			syntax_err(current->token);
 			return (0);
 		}
-		if (current->token == '>' && current->next && current->next->token == '<')
+		if (current->token == '>' && current->next
+			&& current->next->token == '<')
 		{
 			syntax_err(current->token);
 			return (0);

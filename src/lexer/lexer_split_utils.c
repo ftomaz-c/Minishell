@@ -193,7 +193,7 @@ int	count_words_and_quotes(char *s, char c, size_t size)
 	i = 0;
 	word = 0;
 	while (i < size + 1)
-  {
+	{
 		while (i < size && s[i] == c)
 			i++;
 		if (i < size && s[i] && (s[i] == '\"' || s[i] == '\''))
@@ -213,7 +213,7 @@ int	count_words_and_quotes(char *s, char c, size_t size)
 	}
 	return (word);
 }
-// echo . hi, this is the hardest" Ana "test @echo . hi, this is the hardest" Ana "test  with spaces in var value
+
 /**
  * @brief Allocates memory for a word within a string and copies it.
  * 
@@ -244,7 +244,6 @@ int	count_words_and_quotes(char *s, char c, size_t size)
  * // word will contain "Hello" (allocated dynamically)
  * ```
  */
-
 char	*word_alloc(char *s, int start, int end)
 {
 	char	*word;
