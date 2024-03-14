@@ -148,6 +148,8 @@ char	**get_env(char **envp)
 	int		index;
 
 	count = 0;
+	if (!envp)
+		return(NULL);
 	while (envp[count])
 		count++;
 	env = ft_calloc(sizeof(char *), count + 1);
@@ -201,6 +203,12 @@ char	**get_path(char **env)
 	char	**path_list;
 
 	path_from_envp = get_var_from_env(env, "PATH");
+	if (!path_from_envp)
+	{
+		ft_putstr_fd("minishell: No such file or directory\n", STDERR_FILENO);
+		g_status = 127;
+		exit (g_status);
+	}
 	path_list = ft_split(path_from_envp, ":");
 	free(path_from_envp);
 	if (!path_list)

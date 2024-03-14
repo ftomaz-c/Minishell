@@ -15,6 +15,7 @@ typedef struct s_tools
 	char			*pwd;
 	char			*oldpwd;
 	char			*name;
+	int				*shlvl;		//added this
 	int				pipes;
 	int				exit;
 	int				tflag;

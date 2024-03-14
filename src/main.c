@@ -7,15 +7,9 @@ int	main(int argc, char **argv, char **envp)
 	t_tools	tools;
 	char	*line;
 
+	config_tools(&tools, envp);
 	update_history(".minishell_history");
 	error_check(argc, argv);
-	if (!config_tools(&tools, envp))
-	{
-		ft_putstr_fd("Error: Failed to allocate memory for tools\n",
-			STDERR_FILENO);
-		// free_tools(&tools);
-		exit (EXIT_FAILURE);
-	}
 	handle_sigaction();
 	while (1)
 	{

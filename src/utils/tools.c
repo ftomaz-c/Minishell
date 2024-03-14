@@ -48,6 +48,7 @@ void	update_env(t_tools *tools)
 	}
 	if (!flag)
 		export_variable_to_env(tools, "SHLVL=1");
+		//tools->shlvl = 1;
 }
 
 /**
@@ -126,34 +127,30 @@ char	*get_source_home_var(char *str)
 	return (home);
 }
 
-int	config_tools(t_tools *tools, char **envp)
+void	config_tools(t_tools *tools, char **envp)
 {
 	tools->env = get_env(envp);
 	tools->path = get_path(tools->env);
-	if (tools->path == NULL)
-		return (0);
 	tools->pwd = get_var_from_env(tools->env, "PWD");
-	if (tools->pwd == NULL)
-		return (0);
 	tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
-	if (tools->oldpwd == NULL)
-		return (0);
+	tools->user = get_var_from_env(tools->env, "USER");
 	tools->home = get_var_from_env(tools->env, "HOME");
 	if (tools->home == NULL)
 	{	
-		// tools->home = get_source_home_var("/etc/passwd");
+		tools->home = get_source_home_var("/etc/passwd");
 		if (!tools->home)
-			return (0);
+			return ;
 	}
-	tools->user = get_var_from_env(tools->env, "USER");
-	if (tools->user == NULL)
-		return (0);
 	tools->name = get_var_from_env(tools->env, "NAME");
-	if (tools->name == NULL)
-		return (0);
+	if (!tools->path && !tools->pwd && !tools->oldpwd 
+	&& !tools->home && !tools->user && !tools->name)
+	{
+		ft_putstr_fd("Error: Failed to allocate memory for tools\n", STDERR_FILENO);
+		return ;
+	}
 	tools->pipes = 0;
 	tools->parser = NULL;
 	tools->exit = 0;
 	update_env(tools);
-	return (1);
 }
+
