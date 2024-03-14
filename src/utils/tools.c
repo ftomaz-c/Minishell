@@ -82,6 +82,50 @@ void	update_env(t_tools *tools)
  * ```
  */
 
+char	*get_source_home_var(char *str)
+{
+	int	fd;
+	char	**passwd;
+	int	nlines;
+	int	index;
+	char	*line;
+
+	index = 0;
+	nlines = count_lines_in_file("/etc/passwd");
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+		printf("couldn't open\n");
+	passwd = ft_calloc(sizeof(char **), nlines + 1);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		passwd[index] = ft_strdup(line);
+		free(line);
+		index++;
+	}
+	int	end = 0;
+	int	len = ft_strlen(passwd[index - 2]) - 1;
+	while (len > 0 && passwd[index - 2][len])
+	{
+		if (passwd[index - 2][len] == ':')
+		{
+			end = len;
+			len--;
+			while (len > 0 && passwd[index - 2][len] != ':')
+				len--;
+			if (passwd[index - 2][len] == ':')
+				break ;
+		}
+		len--;
+	}
+	char *home = ft_substr(passwd[index - 2], len + 1, end - len -1);
+	free_list(passwd);
+	close(fd);
+	return (home);
+}
+
 int	config_tools(t_tools *tools, char **envp)
 {
 	tools->env = get_env(envp);
@@ -96,7 +140,11 @@ int	config_tools(t_tools *tools, char **envp)
 		return (0);
 	tools->home = get_var_from_env(tools->env, "HOME");
 	if (tools->home == NULL)
-		return (0);
+	{	
+		// tools->home = get_source_home_var("/etc/passwd");
+		if (!tools->home)
+			return (0);
+	}
 	tools->user = get_var_from_env(tools->env, "USER");
 	if (tools->user == NULL)
 		return (0);

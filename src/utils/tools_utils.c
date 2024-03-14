@@ -40,6 +40,8 @@ int	compare_var_to_env(char *env, char *var)
 
 void	free_tools(t_tools *tools)
 {
+	if (!tools)
+		return ;
 	if (tools && tools->env)
 		free_list(tools->env);
 	if (tools && tools->path)
