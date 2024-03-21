@@ -48,6 +48,7 @@ void	update_env(t_tools *tools)
 	}
 	if (!flag)
 		export_variable_to_env(tools, "SHLVL=1");
+		//tools->shlvl = 1;
 }
 
 /**
@@ -82,30 +83,74 @@ void	update_env(t_tools *tools)
  * ```
  */
 
-int	config_tools(t_tools *tools, char **envp)
+char	*get_source_home_var(char *str)
+{
+	int	fd;
+	char	**passwd;
+	int	nlines;
+	int	index;
+	char	*line;
+
+	index = 0;
+	nlines = count_lines_in_file("/etc/passwd");
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+		printf("couldn't open\n");
+	passwd = ft_calloc(sizeof(char **), nlines + 1);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		passwd[index] = ft_strdup(line);
+		free(line);
+		index++;
+	}
+	int	end = 0;
+	int	len = ft_strlen(passwd[index - 2]) - 1;
+	while (len > 0 && passwd[index - 2][len])
+	{
+		if (passwd[index - 2][len] == ':')
+		{
+			end = len;
+			len--;
+			while (len > 0 && passwd[index - 2][len] != ':')
+				len--;
+			if (passwd[index - 2][len] == ':')
+				break ;
+		}
+		len--;
+	}
+	char *home = ft_substr(passwd[index - 2], len + 1, end - len -1);
+	free_list(passwd);
+	close(fd);
+	return (home);
+}
+
+void	config_tools(t_tools *tools, char **envp)
 {
 	tools->env = get_env(envp);
 	tools->path = get_path(tools->env);
-	if (tools->path == NULL)
-		return (0);
 	tools->pwd = get_var_from_env(tools->env, "PWD");
-	if (tools->pwd == NULL)
-		return (0);
 	tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
-	if (tools->oldpwd == NULL)
-		return (0);
+	tools->user = get_var_from_env(tools->env, "USER");
 	tools->home = get_var_from_env(tools->env, "HOME");
 	if (tools->home == NULL)
-		return (0);
-	tools->user = get_var_from_env(tools->env, "USER");
-	if (tools->user == NULL)
-		return (0);
+	{	
+		tools->home = get_source_home_var("/etc/passwd");
+		if (!tools->home)
+			return ;
+	}
 	tools->name = get_var_from_env(tools->env, "NAME");
-	if (tools->name == NULL)
-		return (0);
+	if (!tools->path && !tools->pwd && !tools->oldpwd 
+	&& !tools->home && !tools->user && !tools->name)
+	{
+		ft_putstr_fd("Error: Failed to allocate memory for tools\n", STDERR_FILENO);
+		return ;
+	}
 	tools->pipes = 0;
 	tools->parser = NULL;
 	tools->exit = 0;
 	update_env(tools);
-	return (1);
 }
+

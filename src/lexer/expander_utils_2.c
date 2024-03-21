@@ -122,7 +122,8 @@ char	*add_quotes_to_value(char *str, int flagquote, int j, int i)
 	if (flagquote)
 	{	
 		tmp = ft_strtrim(str, " ");
-		free(str);
+		if (flagquote != 2)
+			free(str);
 		str = tmp;
 	}
 	value = add_quotes(j, str, quote, value);
