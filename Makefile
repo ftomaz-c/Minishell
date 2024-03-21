@@ -16,7 +16,6 @@ SRC :=	src/main.c \
 		src/lexer/expander_utils_2.c \
 		src/lexer/expander_split.c \
 		src/lexer/lexer.c \
-		src/lexer/wildcards.c \
 		src/lexer/lexer_utils_1.c \
 		src/lexer/lexer_utils_2.c \
 		src/lexer/lexer_utils_3.c \

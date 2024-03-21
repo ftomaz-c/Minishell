@@ -277,8 +277,6 @@ int	lex_line(char	**line_split_quotes, t_tools *tools)
 
 	if (!line_split_quotes)
 		return (0);
-	if (!expand_wildcards(line_split_quotes))
-		return (0);
 	check_special_chars(line_split_quotes);
 	new_line = expander(tools->env, line_split_quotes, tools);
 	if (!new_line)
