@@ -210,20 +210,12 @@ int	history_section(char *line)
  */
 char	*get_source_home_var(char *str);
 
-char	*get_file_path_from_home(char *file_name)
+char	*get_file_path_from_home(t_tools *tools, char *file_name)
 {
 	char	*home_var;
 	char	*tmp;
-	char	*home;
 
-	if (getenv("HOME") == NULL)
-	{	
-		home = get_source_home_var("/etc/passwd");
-		home_var = ft_strjoin(home, "/");
-		free(home);
-	}
-	else
-		home_var = ft_strjoin(getenv("HOME"), "/");
+	home_var = ft_strjoin(tools->home, "/");
 	if (!home_var)
 		return (NULL);
 	tmp = ft_strjoin(home_var, file_name);

@@ -146,7 +146,7 @@ void	get_buffer_lines_print(char **buffer, int size, int i)
  * buffer = get_history(buffer, file_path);
  * ```
  */
-char	**get_history(char **buffer, char *file_path)
+char	**get_history(t_tools *tools, char **buffer, char *file_path)
 {
 	int		fd;
 	int		nlines;
@@ -155,7 +155,7 @@ char	**get_history(char **buffer, char *file_path)
 	buffer = ft_calloc(sizeof(char **), nlines + 1);
 	if (!buffer)
 		return (NULL);
-	file_path = get_file_path_from_home(".minishell_history");
+	file_path = get_file_path_from_home(tools, ".minishell_history");
 	if (!file_path)
 	{
 		perror("Error: Failed to retrieve history\n");
@@ -215,7 +215,7 @@ int	mini_history(t_tools *tools, t_parser *command)
 		return (1);
 	if (command->str[1])
 		size = ft_atoi(command->str[1]);
-	buffer = get_history(buffer, ".minishell_history");
+	buffer = get_history(tools, buffer, ".minishell_history");
 	if (command->str[1])
 		get_buffer_lines_print(buffer, size, i);
 	else

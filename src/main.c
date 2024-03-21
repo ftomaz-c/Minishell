@@ -8,7 +8,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 
 	config_tools(&tools, envp);
-	update_history(".minishell_history");
+	update_history(&tools, ".minishell_history");
 	error_check(argc, argv);
 	handle_sigaction();
 	while (1)
