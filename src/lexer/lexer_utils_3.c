@@ -228,8 +228,8 @@ int	valid_syntax(t_lexer *lexer, t_tools *tools)
 		current = lexer;
 		while (current && !current->token)
 			current = current->next;
-		if (current->token == '|' && current->next
-			&& current->next->token == '|')
+		if (current->token == '|' && current->next && current->next->token == '|' 
+		&& (current->next->next->token == '>' || current->next->next->token == '<'))
 		{
 			syntax_err(current->token);
 			return (0);

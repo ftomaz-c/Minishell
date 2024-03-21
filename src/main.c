@@ -10,6 +10,7 @@ int	main(int argc, char **argv, char **envp)
 	config_tools(&tools, envp);
 	update_history(".minishell_history");
 	error_check(argc, argv);
+	config_tools(&tools, envp);
 	handle_sigaction();
 	while (1)
 	{

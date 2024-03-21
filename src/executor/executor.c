@@ -156,5 +156,7 @@ int	executor(t_tools *tools)
 	}
 	else
 		wait_status(pid, &status);
+	if (parser->special_operator)
+		exit(g_status);
 	return (status);
 }

@@ -27,13 +27,13 @@
 
 int	parse_words(t_parser *node, t_lexer *current)
 {
-	int	i;
+	int	index;
 
-	i = 0;
-	while (node->str[i])
-		i++;
-	node->str[i] = ft_strdup(current->words);
-	if (!node->str[i])
+	index = 0;
+	while (node->str[index])
+		index++;
+	node->str[index] = ft_strdup(current->words);
+	if (!node->str[index])
 	{
 		free_parser(&node);
 		return (0);
@@ -66,8 +66,8 @@ int	parse_words(t_parser *node, t_lexer *current)
 
 t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 {
-	if (current->token == '>' || current->token == '<'
-		|| ft_isdigit(current->token) || current->token == '&')
+	if (current->token == '>' || current->token == '<' 
+	|| ft_isdigit(current->token) || (current->token == '&' && current->next->token != '&'))
 	{
 		if (ft_isdigit(current->token) || current->token == '&')
 			current = add_redirection(current, node, start);
@@ -204,7 +204,8 @@ int	parser(t_tools *tools)
 	start = current->index;
 	while (current)
 	{
-		if (current->token == '|' || current->next == NULL)
+		if (current->token == '|' || current->next == NULL 
+		|| (current->token == '&' && current->next && current->next->token == '&'))
 		{
 			end = current->index;
 			if (current->next == NULL)
@@ -215,7 +216,81 @@ int	parser(t_tools *tools)
 				return (0);
 			start++;
 		}
-		current = current->next;
+		if (current && current->token == '&' && current->next && current->next->token == '&')
+		{
+			int pid = fork();
+			if (pid < 0)
+				return (0);
+			else if (pid == 0)
+			{
+				tools->parser->special_operator = 1;
+				return (1);
+			}
+			else
+			{
+				int	status;
+				wait_status(pid, &status);
+				if (g_status)
+				{
+					current = current->next;
+					start++;
+					while (current && ((current->token != '&' && current->next && current->next->token != '&')
+					|| (current->token != '|' && current->next && current->next->token != '|')))
+					{
+						current = current->next;
+						start++;
+					}
+					if (current->next == NULL)
+					{
+						free_lexer(&tools->lexer);
+						free_parser(&tools->parser);
+						return (0);
+					}
+					continue ;
+				}
+				current = current->next;
+				start++;
+			}
+		}
+		else if (current && current->token == '|' && current->next && current->next->token == '|')
+		{
+			int pid = fork();
+			if (pid < 0)
+				return (0);
+			else if (pid == 0)
+			{
+				tools->parser->special_operator = 1;
+				return (1);
+			}
+			else
+			{
+				int	status;
+				wait_status(pid, &status);
+				free_parser(&tools->parser);
+				tools->parser = NULL;
+				if (!g_status)
+				{
+					current = current->next;
+					start++;
+					while (current && current->token != '&' && current->next && current->next->token != '&')
+					{
+						current = current->next;
+						start++;
+					}
+					if (current->next == NULL)
+					{
+						free_lexer(&tools->lexer);
+						free_parser(&tools->parser);
+						return (0);
+					}
+					continue ;
+				}
+				current = current->next;
+				start++;
+			}
+		}
+		if (current)
+			current = current->next;
 	}
 	return (1);
 }
