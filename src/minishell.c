@@ -2,7 +2,7 @@
 
 void	minishell(t_tools *tools, char *line)
 {
-	add_history_file(line, ".minishell_history");
+	add_history_file(tools, line, ".minishell_history");
 	if (check_unclosed_quotes(line))
 	{
 		if (!lexer(line, tools))

@@ -52,16 +52,16 @@ char	*prompt_line(t_tools *tools);
 
 /*src/utils/history.c*/
 void	write_in_history_file(char **line, int fd, char *file_path);
-void	add_history_file(char *line, char *file_name);
+void	add_history_file(t_tools *tools, char *line, char *file_name);
 void	append_to_history(char *line);
-void	update_history(char *file_name);
+void	update_history(t_tools *tools, char *file_name);
 
 /*src/utils/history_utils_1.c*/
 int		check_empty_line(char *line);
 size_t	ft_strlen_nl(const char *s);
 int		count_lines_in_file(const char *filename);
 int		history_section(char *line);
-char	*get_file_path_from_home(char *file_name);
+char	*get_file_path_from_home(t_tools *tools, char *file_name);
 
 /*src/utils/history_utils_2.c*/
 int		count_chr(char *line, char c);

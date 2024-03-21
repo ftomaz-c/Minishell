@@ -82,46 +82,93 @@ void	update_env(t_tools *tools)
  * ```
  */
 
-char	*get_source_home_var(char *str)
+void	remove_whoami(char **env)
 {
-	int	fd;
-	char	**passwd;
-	int	nlines;
-	int	index;
-	char	*line;
+	pid_t	pid;
+	int		status;
+	char	*argv[] = {"rm", "whoami.txt", NULL};
 
-	index = 0;
-	nlines = count_lines_in_file("/etc/passwd");
+	pid = fork();
+	if (pid < 0)
+		exit(EXIT_FAILURE);
+	else if (pid == 0)
+		execve("/usr/bin/rm", argv, env);
+	else
+		waitpid(pid, &status, 0);
+}
+
+void	get_whoami(char **env)
+{
+	int		fd;
+	pid_t	pid;
+	int		status;
+	char	*argv[] = {"whoami", NULL};
+
+	pid = fork();
+	if (pid < 0)
+		exit(EXIT_FAILURE);
+	else if (pid == 0)
+	{
+		fd = open("whoami.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
+		dup2(fd, STDOUT_FILENO);
+		execve("/usr/bin/whoami", argv, env);
+	}
+	else
+		waitpid(pid, &status, 0);
+}
+
+char	*get_home_from_etc_passwd(char *line)
+{
+	char	*home;
+	int		i;
+	int		j;
+	int		colon;
+
+	i = 0;
+	j = 0;
+	colon = 0;
+	home = calloc(1024 , sizeof(char));
+	if (!home)
+		return (NULL);
+	while (line[i])
+	{
+		if (line[i] == ':')
+		{
+			i++;
+			colon++;
+		}
+		if (colon == 5)
+			home[j++] = line[i];
+		else if (colon > 5)
+			break;
+		i++;
+	}
+	return (home);
+}
+
+char	*get_source_home_var(t_tools *tools, char *str)
+{
+	char	*line;
+	char	*home;
+	char	*user;
+	int		fd;
+
+	get_whoami(tools->env);
+	fd = open("whoami.txt", O_RDONLY);
+	user = get_next_line(fd);
+	close(fd);
+	user[ft_strlen(user) - 1] = '\0';
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
-		printf("couldn't open\n");
-	passwd = ft_calloc(sizeof(char **), nlines + 1);
+		ft_putstr_fd("Error: Failed to open file\n", STDERR_FILENO);
 	while (1)
 	{
 		line = get_next_line(fd);
-		if (!line)
+		if (ft_strncmp(user, line, ft_strlen(user)) == 0)
 			break ;
-		passwd[index] = ft_strdup(line);
-		free(line);
-		index++;
 	}
-	int	end = 0;
-	int	len = ft_strlen(passwd[index - 2]) - 1;
-	while (len > 0 && passwd[index - 2][len])
-	{
-		if (passwd[index - 2][len] == ':')
-		{
-			end = len;
-			len--;
-			while (len > 0 && passwd[index - 2][len] != ':')
-				len--;
-			if (passwd[index - 2][len] == ':')
-				break ;
-		}
-		len--;
-	}
-	char *home = ft_substr(passwd[index - 2], len + 1, end - len -1);
-	free_list(passwd);
+	home = get_home_from_etc_passwd(line);
+	remove_whoami(tools->env);
 	close(fd);
 	return (home);
 }
@@ -133,14 +180,10 @@ void	config_tools(t_tools *tools, char **envp)
 	tools->pwd = get_var_from_env(tools->env, "PWD");
 	tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
 	tools->user = get_var_from_env(tools->env, "USER");
+	tools->name = get_var_from_env(tools->env, "NAME");
 	tools->home = get_var_from_env(tools->env, "HOME");
 	if (tools->home == NULL)
-	{	
-		tools->home = get_source_home_var("/etc/passwd");
-		if (!tools->home)
-			return ;
-	}
-	tools->name = get_var_from_env(tools->env, "NAME");
+		tools->home = get_source_home_var(tools, "/etc/passwd");
 	if (!tools->path && !tools->pwd && !tools->oldpwd 
 	&& !tools->home && !tools->user && !tools->name)
 	{
