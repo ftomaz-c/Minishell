@@ -84,7 +84,7 @@ int	check_valid_export(char *parser)
 	equal_pos = find_char_position(parser, '=');
 	while (parser[i] && i < equal_pos)
 	{
-		if (parser[i] != '_'  && !ft_isalnum(parser[i]) && parser[i] != '+')
+		if (parser[i] != '_' && !ft_isalnum(parser[i]) && parser[i] != '+')
 		{
 			export_err(1, parser);
 			return (0);

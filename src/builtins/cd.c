@@ -81,9 +81,9 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 	char	*home_var;
 
 	(void)command;
-	home_var = tools->home;
-	if (ft_strcmp(tools->pwd, home_var) != 0)
-	{	
+	home_var = getenv("HOME");
+	// if (ft_strcmp(tools->pwd, home_var) != 0)
+	// {
 		if (chdir(home_var) == 0)
 		{
 			free(tools->oldpwd);
@@ -91,9 +91,12 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 			free(tools->pwd);
 			tools->pwd = ft_strdup(getcwd(new_pwd, sizeof(new_pwd)));
 		}
-		//else
-		//	return(printf("cd: no such file or directory: .."));
-	}
+		else
+		{	
+			ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
+			return(1);
+		}
+	// }
 	return (0);
 }
 /**
@@ -221,7 +224,7 @@ int	cd_handle_slash_path(t_tools *tools)
 int	cd_handle_dot_path(t_tools *tools)
 {
 	char	*tmp;
-	
+
 	if (chdir(tools->pwd) == 0)
 		return (EXIT_SUCCESS);
 	else
@@ -234,7 +237,6 @@ int	cd_handle_dot_path(t_tools *tools)
 		return (EXIT_SUCCESS);
 	}
 }
-
 
 int	cd_path(t_tools *tools, t_parser *command)
 {
@@ -257,7 +259,7 @@ int	cd_path(t_tools *tools, t_parser *command)
 	else if (ft_strcmp(command->str[1], ".") == 0)
 		cd_handle_dot_path(tools);
 	else
-		return(cd_handle_specific_path(tools, command));
+		return (cd_handle_specific_path(tools, command));
 	return (EXIT_SUCCESS);
 }
 /**
@@ -269,8 +271,10 @@ int	cd_path(t_tools *tools, t_parser *command)
  * It supports changing to the home directory, parent 
  * directory (".."), and specific directory paths.
  * 
- * @param tools   Pointer to the tools struct containing necessary information.
- * @param command Pointer to the parser struct containing command information.
+ * @param tools   Pointer to the tools struct containing 
+ * necessary information.
+ * @param command Pointer to the parser struct containing 
+ * command information.
  * 
  * @return The global status after executing the cd command.
  * 
@@ -303,7 +307,8 @@ int	cd(t_tools *tools, t_parser *command)
 		if (errno == 0)
 			chdir(tools->pwd);
 	}
-	else if ((command && !command->str[1]) || ft_strcmp(command->str[1], "~") == 0)
+	else if ((command && !command->str[1])
+		|| ft_strcmp(command->str[1], "~") == 0)
 		cd_no_path(tools, command);
 	else if (command && command->str[1] && !command->str[2])
 		cd_path(tools, command);

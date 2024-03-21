@@ -34,7 +34,8 @@ int	realloc_split(t_expander *expander, char *str, int i)
 		free_list(expander->split);
 		return (0);
 	}
-	if (str[expander->start] == '$' && (str[expander->start + 1] == '\"' || str[expander->start + 1] == '\''))
+	if (str[expander->start] == '$' && (str[expander->start + 1] == '\"'
+			|| str[expander->start + 1] == '\''))
 		expander->start++;
 	expander->split[expander->index] = ft_substr(str, expander->start, \
 	i - expander->start + 1);
@@ -48,7 +49,7 @@ int	realloc_split(t_expander *expander, char *str, int i)
 	return (1);
 }
 
-char **split_expander(char *str)
+char	**split_expander(char *str)
 {
 	t_expander	expander;
 	int			i;
@@ -65,7 +66,8 @@ char **split_expander(char *str)
 			while (str[i] && str[i] != '\'')
 				i++;
 		}
-		if (str[i] && (str[i + 1] == '\'' || str[i + 1] == '\0' || str[i] == '\''))
+		if (str[i] && (str[i + 1] == '\'' || str[i + 1] == '\0'
+				|| str[i] == '\''))
 		{
 			if (!realloc_split(&expander, str, i))
 				return (NULL);

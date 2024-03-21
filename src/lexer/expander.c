@@ -38,13 +38,13 @@ void	expand_split(char **env, char **split)
 				free(str);
 			}
 			if (end == 0)
-				break;
+				break ;
 		}
 		index++;
 	}
 }
 
-char *merge_list_of_strings(char **list, char *separator)
+char	*merge_list_of_strings(char **list, char *separator)
 {
 	char	*str;
 	char	*tmp;
@@ -73,8 +73,8 @@ char *merge_list_of_strings(char **list, char *separator)
 
 char	*expand_tilde(char *str, char *home_var)
 {
-	char *tmp;
-	char *new_str;
+	char	*tmp;
+	char	*new_str;
 
 	new_str = "\0";
 	if (str[0] == '~' && (str[1] == '\0' || str[1] == '/'))
@@ -124,11 +124,6 @@ char	*expander(char **env, char **list, t_tools *tools)
 
 	(void)tools;
 	index = 0;
-	int	i = 0;
-	while (list[i])
-	{
-		i++;
-	}
 	while (list[index])
 	{
 		split = split_expander(list[index]);

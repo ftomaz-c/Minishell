@@ -31,7 +31,6 @@ int	pwd(t_tools *tools, t_parser *command)
 
 	(void)tools;
 	(void)command;
-	
 	if (getcwd(buf, sizeof(buf)) == NULL)
 	{
 		free(tools->pwd);

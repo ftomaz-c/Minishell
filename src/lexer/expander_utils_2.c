@@ -3,7 +3,8 @@
 /**
  * @brief Adds quotes around a string.
  * 
- * This function adds quotes around a given string, with the option to choose single or double quotes.
+ * This function adds quotes around a given string, with
+ *  the option to choose single or double quotes.
  * If the string is already enclosed in quotes, it leaves it unchanged.
  * 
  * @param j Starting index for the value array.
@@ -15,7 +16,8 @@
  * 
  * @note The input string (str) is assumed to be valid and null-terminated.
  * 
- * @warning The value array must have enough memory allocated to accommodate the modified string.
+ * @warning The value array must have enough memory allocated
+ *  to accommodate the modified string.
  * 
  * @see None.
  * 
@@ -26,10 +28,11 @@
  * free(result);
  * ```
  */
-char *add_quotes(int j, char *str, char quote, char *value)
+char	*add_quotes(int j, char *str, char quote, char *value)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (str[i])
 	{
 		if (!value[0])
@@ -44,7 +47,7 @@ char *add_quotes(int j, char *str, char quote, char *value)
 		i++;
 		j++;
 		if (str[i] == '\0')
-			break;
+			break ;
 	}
 	value[j] = quote;
 	free(str);
@@ -54,8 +57,10 @@ char *add_quotes(int j, char *str, char quote, char *value)
 /**
  * @brief Adds quotes to a string value if it's not already quoted.
  * 
- * This function adds quotes around a string value if it's not already enclosed in quotes.
- * It checks the first occurrence of single or double quotes in the string to determine the quote character to use.
+ * This function adds quotes around a string value if it's 
+ * not already enclosed in quotes.
+ * It checks the first occurrence of single or double quotes in 
+ * the string to determine the quote character to use.
  * 
  * @param str The input string.
  * @param flagquote Flag indicating whether to trim spaces from the input string.
@@ -66,7 +71,8 @@ char *add_quotes(int j, char *str, char quote, char *value)
  * 
  * @note The input string (str) is assumed to be valid and null-terminated.
  * 
- * @warning Memory is allocated within the function and needs to be freed by the caller to avoid memory leaks.
+ * @warning Memory is allocated within the function and needs 
+ * to be freed by the caller to avoid memory leaks.
  * 
  * @see ft_strtrim
  * 
@@ -88,14 +94,14 @@ char	get_quote_flag(char *str, int i)
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			quote = str[i];
-			break;
+			break ;
 		}
 		i++;
 	}
 	return (quote);
 }
 
-char *add_quotes_to_value(char *str, int flagquote, int j, int i)
+char	*add_quotes_to_value(char *str, int flagquote, int j, int i)
 {
 	char	*value;
 	char	*tmp;
@@ -116,7 +122,8 @@ char *add_quotes_to_value(char *str, int flagquote, int j, int i)
 	if (flagquote)
 	{	
 		tmp = ft_strtrim(str, " ");
-		free(str);
+		if (flagquote != 2)
+			free(str);
 		str = tmp;
 	}
 	value = add_quotes(j, str, quote, value);
@@ -126,7 +133,8 @@ char *add_quotes_to_value(char *str, int flagquote, int j, int i)
 /**
  * @brief Builds a string by concatenating prefix, value, and suffix.
  * 
- * This function builds a string by concatenating a prefix, a value, and a suffix.
+ * This function builds a string by concatenating 
+ * a prefix, a value, and a suffix.
  * If the value is NULL, it's replaced with an empty string.
  * 
  * @param value The value to be concatenated.
@@ -135,9 +143,11 @@ char *add_quotes_to_value(char *str, int flagquote, int j, int i)
  * 
  * @return The concatenated string.
  * 
- * @note Memory is allocated within the function and needs to be freed by the caller to avoid memory leaks.
+ * @note Memory is allocated within the function and needs 
+ * to be freed by the caller to avoid memory leaks.
  * 
- * @warning The input strings (value, prefix, suffix) are assumed to be valid and null-terminated.
+ * @warning The input strings (value, prefix, suffix) are 
+ * assumed to be valid and null-terminated.
  * 
  * @see ft_strjoin
  * 
@@ -148,10 +158,10 @@ char *add_quotes_to_value(char *str, int flagquote, int j, int i)
  * free(result);
  * ```
  */
-char *build_str(char *value, char *prefix, char *suffix)
+char	*build_str(char *value, char *prefix, char *suffix)
 {
-	char *str;
-	char *tmp;
+	char	*str;
+	char	*tmp;
 
 	if (value == NULL)
 		tmp = ft_strjoin(prefix, "");

@@ -7,6 +7,7 @@ int	main(int argc, char **argv, char **envp)
 	t_tools	tools;
 	char	*line;
 
+	config_tools(&tools, envp);
 	update_history(".minishell_history");
 	error_check(argc, argv);
 	config_tools(&tools, envp);

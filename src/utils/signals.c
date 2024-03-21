@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	sig_handler(int	sig)
+void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -11,7 +11,7 @@ void	sig_handler(int	sig)
 	}
 }
 
-void	handle_sigaction()
+void	handle_sigaction(void)
 {
 	struct sigaction	sa;
 
@@ -19,6 +19,6 @@ void	handle_sigaction()
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler =	SIG_IGN;
+	sa.sa_handler = SIG_IGN;
 	sigaction (SIGQUIT, &sa, NULL);
 }
