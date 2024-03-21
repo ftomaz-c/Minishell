@@ -146,28 +146,47 @@ void	get_buffer_lines_print(char **buffer, int size, int i)
  * buffer = get_history(buffer, file_path);
  * ```
  */
-char	**get_history(char **buffer, char *file_path)
+void	handle_history_sizes(int *arg, int *nlines, int *size)
+{
+	if (*arg == -1)
+	{
+		if (*nlines > 1000)
+		{	
+			*arg = *nlines - 1000;
+			*size = *nlines - *arg;
+		}
+		else
+			*arg = *nlines;
+	}
+	else if (*arg < *nlines)
+	{	
+		*size = *arg;
+		*arg = *nlines - *arg;
+	}
+	else
+	{	
+		*arg = 0;
+		*size = *nlines;
+	}
+}
+char	**get_history(char **buffer, char *file_path, int arg)
 {
 	int		fd;
 	int		nlines;
+	int		size;
 
-	nlines = count_lines_in_file(".minishell_history");
-	buffer = ft_calloc(sizeof(char **), nlines + 1);
+	nlines = count_lines_in_file(file_path);
+	handle_history_sizes(&arg, &nlines, &size);
+	buffer = ft_calloc(sizeof(char **), size + 1);
 	if (!buffer)
 		return (NULL);
-	file_path = get_file_path_from_home(".minishell_history");
-	if (!file_path)
-	{
-		perror("Error: Failed to retrieve history\n");
-		return (NULL);
-	}
 	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error: opening history file. History won't be stored\n");
 		return (NULL);
 	}
-	copy_buffer(buffer, fd, nlines);
+	copy_buffer(buffer, fd, nlines, arg);
 	free(file_path);
 	close(fd);
 	return (buffer);
@@ -205,21 +224,16 @@ char	**get_history(char **buffer, char *file_path)
 int	mini_history(t_tools *tools, t_parser *command)
 {
 	char	**buffer;
-	int		size;
-	int		i;
 
 	(void)tools;
-	i = 0;
 	buffer = NULL;
 	if (command->str[1] && invalid_history_options(tools, command))
 		return (1);
 	if (command->str[1])
-		size = ft_atoi(command->str[1]);
-	buffer = get_history(buffer, ".minishell_history");
-	if (command->str[1])
-		get_buffer_lines_print(buffer, size, i);
+		buffer = get_history(buffer, get_file_path_from_home(".minishell_history"), ft_atoi(command->str[1]));
 	else
-		print_buffer(buffer);
+		buffer = get_history(buffer, get_file_path_from_home(".minishell_history"), -1);
+	print_buffer(buffer);
 	free_list(buffer);
 	return (0);
 }

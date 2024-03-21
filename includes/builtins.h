@@ -64,11 +64,11 @@ int		unset(t_tools *tools, t_parser *command);
 /*src/builtins/mini_history.c*/
 int		invalid_history_options(t_tools *tools, t_parser *command);
 void	get_buffer_lines_print(char **buffer, int size, int i);
-char	**get_history(char **buffer, char *file_path);
+char	**get_history(char **buffer, char *file_path, int arg);
 int		mini_history(t_tools *tools, t_parser *command);
 
 /*src/builtins/mini_history_utils.c*/
-void	copy_buffer(char **buffer, int fd, int nlines);
+void	copy_buffer(char **buffer, int fd, int nlines, int arg);
 void	print_buffer(char **str);
 
 #endif
