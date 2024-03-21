@@ -75,6 +75,7 @@ void	wait_status(int pid, int *status)
  * specified in the parser
  * ```
  */
+
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
 	if (parser->builtin && (exec_builtins(tools) || parser->builtin == echo
@@ -156,7 +157,5 @@ int	executor(t_tools *tools)
 	}
 	else
 		wait_status(pid, &status);
-	if (parser->special_operator)
-		exit(g_status);
 	return (status);
 }

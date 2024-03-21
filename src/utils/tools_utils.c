@@ -40,22 +40,13 @@ int	compare_var_to_env(char *env, char *var)
 
 void	free_tools(t_tools *tools)
 {
-	if (!tools)
-		return ;
-	if (tools && tools->env)
-		free_list(tools->env);
-	if (tools && tools->path)
-		free_list(tools->path);
-	if (tools && tools->pwd)
-		free(tools->pwd);
-	if (tools && tools->oldpwd)
-		free(tools->oldpwd);
-	if (tools && tools->home)
-		free(tools->home);
-	if (tools && tools->user)
-		free(tools->user);
-	if (tools && tools->name)
-		free(tools->name);
+	free_list(tools->env);
+	free_list(tools->path);
+	free(tools->pwd);
+	free(tools->oldpwd);
+	free(tools->home);
+	free(tools->user);
+	free(tools->name);
 }
 
 /**
@@ -148,8 +139,6 @@ char	**get_env(char **envp)
 	int		index;
 
 	count = 0;
-	if (!envp)
-		return(NULL);
 	while (envp[count])
 		count++;
 	env = ft_calloc(sizeof(char *), count + 1);
@@ -203,12 +192,6 @@ char	**get_path(char **env)
 	char	**path_list;
 
 	path_from_envp = get_var_from_env(env, "PATH");
-	if (!path_from_envp)
-	{
-		ft_putstr_fd("minishell: No such file or directory\n", STDERR_FILENO);
-		g_status = 127;
-		exit (g_status);
-	}
 	path_list = ft_split(path_from_envp, ":");
 	free(path_from_envp);
 	if (!path_list)

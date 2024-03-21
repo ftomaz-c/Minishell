@@ -12,6 +12,8 @@ void	exec_err(int err, char *str, char *value)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		if (value)
+			free(value);
 		g_status = 127;
 	}
 	else if (err == 8)
@@ -21,9 +23,7 @@ void	exec_err(int err, char *str, char *value)
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 		g_status = 130;
-	}	
-	if (value)
-		free(value);
+	}
 }
 
 /**
@@ -63,14 +63,7 @@ void	exec_err(int err, char *str, char *value)
 int	exec_builtins(t_tools *tools)
 {
 	t_parser	*parser;
-	char		*value;
 
-	value = get_var_from_env(tools->env, "PATH");
-	if (!value)
-	{	
-		exec_err(1, tools->parser->str[0], value);
-		return (0);
-	}
 	parser = tools->parser;
 	if (parser->str[0] && parser->str[0][0] == '/' && !parser->str[1])
 	{

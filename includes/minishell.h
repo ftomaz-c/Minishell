@@ -32,7 +32,7 @@ void	handle_sigaction(void);
 void	sig_handler(int sig);
 
 /*src/utils/tools.c*/
-void		config_tools(t_tools *tools, char **envp);
+int		config_tools(t_tools *tools, char **envp);
 void	update_env(t_tools *tools);
 
 /*tools_utils.c*/

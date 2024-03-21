@@ -15,7 +15,6 @@ typedef struct s_tools
 	char			*pwd;
 	char			*oldpwd;
 	char			*name;
-	int				*shlvl;		//added this
 	int				pipes;
 	int				exit;
 	int				tflag;
@@ -44,7 +43,6 @@ typedef struct s_parser
 	int				stdout_flag;
 	int				original_stdout;
 	int				fd_err;
-	int				special_operator;
 	t_lexer			*redirections;
 	struct s_parser	*next;
 	struct s_parser	*prev;	

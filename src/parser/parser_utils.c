@@ -127,7 +127,6 @@ t_parser	*init_parser(int start, int end)
 		free(node);
 		return (NULL);
 	}
-	node->special_operator = 0;
 	return (node);
 }
 

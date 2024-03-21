@@ -81,9 +81,9 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 	char	*home_var;
 
 	(void)command;
-	home_var = getenv("HOME");
-	// if (ft_strcmp(tools->pwd, home_var) != 0)
-	// {
+	home_var = tools->home;
+	if (ft_strcmp(tools->pwd, home_var) != 0)
+	{	
 		if (chdir(home_var) == 0)
 		{
 			free(tools->oldpwd);
@@ -91,12 +91,9 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 			free(tools->pwd);
 			tools->pwd = ft_strdup(getcwd(new_pwd, sizeof(new_pwd)));
 		}
-		else
-		{	
-			ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
-			return(1);
-		}
-	// }
+		//else
+		//	return(printf("cd: no such file or directory: .."));
+	}
 	return (0);
 }
 /**
