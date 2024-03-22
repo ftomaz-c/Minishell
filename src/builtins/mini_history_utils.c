@@ -33,22 +33,32 @@
  * copy_buffer(buffer, fd, nlines);
  * ```
  */
-void	copy_buffer(char **buffer, int fd, int nlines)
+void	copy_buffer(char **buffer, int fd, int nlines, int arg)
 {
 	int		i;
+	int		j;
 	char	*line;
 
 	i = 0;
-	line = get_next_line(fd);
-	while (line && i < nlines)
+	j = 0;
+	while (i != arg && i < nlines)
 	{
-		buffer[i] = ft_strdup(line);
-		free(line);
 		line = get_next_line(fd);
+		if (!line)
+			break ;
 		i++;
+		free(line);
+	}
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		buffer[j] = ft_strdup(line);
+		j++;
+		free(line);
 	}
 }
-
 /**
  * @brief Prints lines from buffer.
  * 
