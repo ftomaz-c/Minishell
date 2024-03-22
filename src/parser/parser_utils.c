@@ -1,32 +1,6 @@
 #include "../../includes/parser.h"
 
 /**
- * @brief Frees the memory allocated for a string list.
- * 
- * This function frees the memory allocated for a list of 
- * strings. It iterates through
- * the list and frees each string, then frees the list itself.
- * 
- * @param str A pointer to the list of strings.
- * 
- * @note This function assumes that 'str' is a valid pointer to a 
- * list of strings, terminated by NULL.
- */
-
-void	free_strlist(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
-/**
  * @brief Adds a parser node to the end of a parser linked list.
  * 
  * This function adds a parser node to the end of a parser linked 
@@ -84,7 +58,7 @@ void	free_parser(t_parser **parser)
 	{
 		next = current->next;
 		if (current->str != NULL)
-			free_strlist(current->str);
+			free_list(current->str);
 		if (current->redirections)
 			free_lexer(&current->redirections);
 		free(current);

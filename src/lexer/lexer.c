@@ -112,65 +112,6 @@ void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
 	tools->tflag = 1;
 	ft_lstaddback(lexer, node);
 }
-/**
- * @brief Removes quotes from a string.
- * 
- * This function removes single and double quotes from a given
- *  string and returns a new string without them.
- * 
- * @param str The input string from which quotes are to be removed.
- * @param i Starting index to begin processing the string.
- * 
- * @return A new string without quotes. If no quotes are found, returns NULL.
- * 
- * @note This function allocates memory for the new string. The 
- * caller is responsible for freeing this memory.
- * 
- * @warning This function assumes that the input string is 
- * null-terminated and does not modify the original string.
- * 
- * @see add_temp_to_word() function for adding temporary 
- * substrings to the result.
- * 
- * @example
- * ```
- * // Example usage of remove_quotes() function
- * char *input = "This 'is' a 'test' string";
- * int index = 0;
- * char *result = remove_quotes(input, index);
- * // The result should be "This is a test string" after removing the quotes.
- * // Remember to free the memory allocated for 'result' when done.
- * ```
- */
-
-char	*remove_quotes(char	*str, int i)
-{
-	int		start;
-	char	quote;
-	char	*word;
-
-	start = 0;
-	word = NULL;
-	while (i < (int)ft_strlen(str) && str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			quote = str[i];
-			if (str[i] && (i - 1) >= 0)
-				add_temp_to_word(str, &word, start, i);
-			start = ++i;
-			while (str[i] && str[i] != quote)
-				i++;
-			add_temp_to_word(str, &word, start, i);
-			start = ++i;
-		}
-		else
-			i++;
-	}
-	if (start < i)
-		add_temp_to_word(str, &word, start, i);
-	return (word);
-}
 
 /**
  * @brief Adds a line split into a lexer structure.

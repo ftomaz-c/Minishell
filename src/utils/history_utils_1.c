@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/utils.h"
 
 /**
  * @brief Checks if a line contains only whitespace characters.
@@ -75,48 +75,6 @@ size_t	ft_strlen_nl(const char *s)
 		i++;
 	}
 	return (i);
-}
-
-/**
- * @brief Counts the number of lines in a file.
- * 
- * This function opens the specified file in read-only 
- * mode and counts the number of lines
- * by repeatedly reading lines until the end of the file is reached.
- * 
- * @param filename The name of the file to count lines from.
- * 
- * @return The number of lines in the file if successful,
- *  or -1 if an error occurs.
- * 
- * @note This function assumes that the file exists
- * and is accessible.
- *       It uses the get_next_line function to read
- * lines from the file.
- *       The memory for each line is allocated dynamically 
- * and freed after use.
- */
-
-int	count_lines_in_file(const char *file_path)
-{
-	int		fd;
-	int		count;
-	char	*line;
-
-	fd = open(file_path, O_RDONLY);
-	if (fd == -1)
-		return (-1);
-	count = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		count++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-	close (fd);
-	return (count);
 }
 
 /**

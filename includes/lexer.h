@@ -3,39 +3,33 @@
 
 # include "minishell.h"
 
-int		expand_wildcards(char **str);
-int		wildcard_match(char *name, char *wildcard, int position);
-
 /*src/lexer/lexer.c*/
 void	add_word_to_node(char *word, t_lexer **lexer);
 void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools);
-char	*remove_quotes(char	*str, int i);
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer,
-			t_tools *tools);
+		t_tools *tools);
+int		lex_line(char	**line_split_quotes, t_tools *tools);
 int		lexer(char *line, t_tools *tools);
 
-void	syntax_err(char token);
-
 /*src/lexer/lexer_utils_1.c*/
+int		valid_syntax(t_lexer *lexer, t_tools *tools);
+int		is_fd_token(char *str, char c, int position);
+int		check_if_token_valid(char *str, char c, int position);
 int		check_if_token(char c);
-void	ft_lstaddback(t_lexer **lst, t_lexer *new);
 void	free_lexer(t_lexer **lexer);
-void	free_list(char	**list);
-int		find_next_char_position(char *str, int i, char c);
 
 /*src/lexer/lexer_utils_2.c*/
+char	*remove_quotes(char	*str, int i);
+void	remove_quotes_add_word(char *line, int start, int j, t_lexer **lexer);
 void	handle_quote(char *line, int *flag, int *i, char quote);
 int		check_unclosed_quotes(char *line);
-int		check_if_token_valid(char *str, char c, int position);
 void	add_temp_to_word(char *str, char **word, int start, int i);
-void	remove_quotes_add_word(char *line, int start, int j, t_lexer **lexer);
 
 /*src/lexer/lexer_utils_3.c*/
-void	check_special_chars(char **list);
-char	*get_new_special_str(char *str);
 char	get_special_char(char *str, int i);
-void	syntax_err(char token);
-int		valid_syntax(t_lexer *lexer, t_tools *tools);
+char	*get_new_special_str(char *str);
+void	check_special_chars(char **list);
+int		valid_token_starter(t_lexer *lexer);
 
 /*src/lexer/lexer_split.c*/
 void	handle_characters(char *s, int *i, int *start);
@@ -49,6 +43,9 @@ void	handle_white_spaces_and_quotes(char *s, int *i, int *start);
 void	update_start_indexes(int *i, int *start, int *nstart);
 int		count_words_and_quotes(char *s, char c, size_t size);
 char	*word_alloc(char *s, int start, int end);
+
+/*src/lexer/lexer_errors.c*/
+void	syntax_err(char token);
 
 /*src/lexer/expander.c*/
 char	*expander(char **env, char **list, t_tools *tools);

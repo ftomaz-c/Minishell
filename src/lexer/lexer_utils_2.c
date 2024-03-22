@@ -1,4 +1,93 @@
-#include "../../includes/minishell.h"
+#include "../../includes/lexer.h"
+
+/**
+ * @brief Removes quotes from a string.
+ * 
+ * This function removes single and double quotes from a given
+ *  string and returns a new string without them.
+ * 
+ * @param str The input string from which quotes are to be removed.
+ * @param i Starting index to begin processing the string.
+ * 
+ * @return A new string without quotes. If no quotes are found, returns NULL.
+ * 
+ * @note This function allocates memory for the new string. The 
+ * caller is responsible for freeing this memory.
+ * 
+ * @warning This function assumes that the input string is 
+ * null-terminated and does not modify the original string.
+ * 
+ * @see add_temp_to_word() function for adding temporary 
+ * substrings to the result.
+ * 
+ * @example
+ * ```
+ * // Example usage of remove_quotes() function
+ * char *input = "This 'is' a 'test' string";
+ * int index = 0;
+ * char *result = remove_quotes(input, index);
+ * // The result should be "This is a test string" after removing the quotes.
+ * // Remember to free the memory allocated for 'result' when done.
+ * ```
+ */
+
+char	*remove_quotes(char	*str, int i)
+{
+	int		start;
+	char	quote;
+	char	*word;
+
+	start = 0;
+	word = NULL;
+	while (i < (int)ft_strlen(str) && str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i];
+			if (str[i] && (i - 1) >= 0)
+				add_temp_to_word(str, &word, start, i);
+			start = ++i;
+			while (str[i] && str[i] != quote)
+				i++;
+			add_temp_to_word(str, &word, start, i);
+			start = ++i;
+		}
+		else
+			i++;
+	}
+	if (start < i)
+		add_temp_to_word(str, &word, start, i);
+	return (word);
+}
+
+/**
+ * @brief Removes quotes from a substring and adds it to a word.
+ * 
+ * This function removes quotes from a substring of the input string,
+ * adds the modified substring to a word, and frees the
+ *  memory of the modified substring.
+ * 
+ * @param line_split The input string containing the substring.
+ * @param start The starting index of the substring.
+ * @param j The ending index of the substring.
+ * @param lexer Pointer to the lexer structure.
+ * 
+ * @note This function assumes that the input string is null-terminated.
+ */
+
+void	remove_quotes_add_word(char *line, int start, int j, t_lexer **lexer)
+{
+	char	*new;
+	char	*word_no_quotes;
+	int		i;
+
+	i = 0;
+	new = ft_substr(line, start, j - start);
+	word_no_quotes = remove_quotes(new, i);
+	free(new);
+	add_word_to_node(word_no_quotes, lexer);
+	free(word_no_quotes);
+}
 
 /**
  * @brief Handles quotes within a string.
@@ -74,61 +163,6 @@ int	check_unclosed_quotes(char *line)
 }
 
 /**
- * @brief Checks if a token character is valid at a specified 
- * position within a string.
- * 
- * This function checks if the token character at the 
- * specified position is valid,
- * considering the presence of single or double quotes.
- * 
- * @param str The input string.
- * @param c The token character to check.
- * @param position The position of the token character.
- * 
- * @return Returns 0 if the token is not valid at the specified 
- * position, otherwise returns 1.
- * 
- * @warning This function assumes that the input string
- *  is null-terminated.
- */
-
-int	is_fd_token(char *str, char c, int position)
-{
-	int	i;
-
-	i = 1;
-	if (ft_isdigit(c))
-	{
-		while (position - i >= 0 && ft_isdigit(str[position - i]))
-			i++;
-		if (position - i >= 0 && !ft_isdigit(str[position - i]))
-			return (0);
-		i = 0;
-		while (str[position + i] && ft_isdigit(str[position + i]))
-			i++;
-		if (check_if_token(str[position + i]))
-			return (1);
-	}
-	return (0);
-}
-
-int	check_if_token_valid(char *str, char c, int position)
-{
-	int	i;
-	int	flag;
-
-	i = 0;
-	flag = 0;
-	if (is_fd_token(str, c, position))
-		return (1);
-	if (!check_if_token(c))
-		return (0);
-	if (!check_token_flag(str, i, flag, position))
-		return (0);
-	return (1);
-}
-
-/**
  * @brief Adds a temporary substring to a word.
  * 
  * This function adds a temporary substring of the input string to a word.
@@ -160,33 +194,4 @@ void	add_temp_to_word(char *str, char **word, int start, int i)
 		*word = new_word;
 	}
 	free(temp);
-}
-
-/**
- * @brief Removes quotes from a substring and adds it to a word.
- * 
- * This function removes quotes from a substring of the input string,
- * adds the modified substring to a word, and frees the
- *  memory of the modified substring.
- * 
- * @param line_split The input string containing the substring.
- * @param start The starting index of the substring.
- * @param j The ending index of the substring.
- * @param lexer Pointer to the lexer structure.
- * 
- * @note This function assumes that the input string is null-terminated.
- */
-
-void	remove_quotes_add_word(char *line, int start, int j, t_lexer **lexer)
-{
-	char	*new;
-	char	*word_no_quotes;
-	int		i;
-
-	i = 0;
-	new = ft_substr(line, start, j - start);
-	word_no_quotes = remove_quotes(new, i);
-	free(new);
-	add_word_to_node(word_no_quotes, lexer);
-	free(word_no_quotes);
 }

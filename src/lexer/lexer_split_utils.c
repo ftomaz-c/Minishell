@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/lexer.h"
 /**
  * @brief Finds the position of the paired quote 
  * character within a string.

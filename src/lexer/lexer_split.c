@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/lexer.h"
 
 /**
  * @brief Handles characters within a string, 

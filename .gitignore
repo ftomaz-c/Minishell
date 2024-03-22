@@ -14,3 +14,7 @@
 #tester
 mpanic
 test
+
+#exec file
+/minishell
+!/minishell/

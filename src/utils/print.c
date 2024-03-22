@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/utils.h"
 
 /**
  * @brief Prints the content of the lexer linked list.

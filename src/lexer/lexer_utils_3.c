@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/lexer.h"
 /**
  * @brief Gets special character representation based on the input string.
  * 
@@ -140,36 +140,6 @@ void	check_special_chars(char **list)
 }
 
 /**
- * @brief Displays a syntax error message.
- * 
- * This function displays a syntax error message indicating the unexpected token.
- * 
- * @param token The unexpected token.
- * 
- * @return None.
- * 
- * @note None.
- * 
- * @warning None.
- * 
- * @see None.
- * 
- * @example
- * ```
- * syntax_err('$');
- * // Displays "bash: syntax error near unexpected token '$'"
- * ```
- */
-void	syntax_err(char token)
-{
-	g_status = 2;
-	ft_putstr_fd("minishell: syntax error near unexpected token '",
-		STDERR_FILENO);
-	ft_putchar_fd(token, STDERR_FILENO);
-	ft_putstr_fd("'\n", STDERR_FILENO);
-}
-
-/**
  * @brief Validates syntax of a command.
  * 
  * This function validates the syntax of a command based on certain rules.
@@ -213,33 +183,6 @@ int	valid_token_starter(t_lexer *lexer)
 	{
 		syntax_err(current->token);
 		return (0);
-	}
-	return (1);
-}
-
-int	valid_syntax(t_lexer *lexer, t_tools *tools)
-{
-	t_lexer	*current;
-
-	if (tools->tflag)
-	{
-		if (!valid_token_starter(lexer))
-			return (0);
-		current = lexer;
-		while (current && !current->token)
-			current = current->next;
-		if (current->token == '|' && current->next
-			&& current->next->token == '|')
-		{
-			syntax_err(current->token);
-			return (0);
-		}
-		if (current->token == '>' && current->next
-			&& current->next->token == '<')
-		{
-			syntax_err(current->token);
-			return (0);
-		}
 	}
 	return (1);
 }

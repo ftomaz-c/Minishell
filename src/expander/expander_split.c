@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/expander.h"
 
 int	count_char_in_str(char *str, char c)
 {

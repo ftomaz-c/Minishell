@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/expander.h"
 
 int	check_conditions_expander(char *str, int position)
 {

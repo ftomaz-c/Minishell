@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/utils.h"
 
 /**
  * @brief Handles abbreviation of the HOME directory 
