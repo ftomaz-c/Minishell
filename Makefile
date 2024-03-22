@@ -1,9 +1,6 @@
 NAME := minishell
 
 SRC :=	src/main.c \
-		src/minishell.c \
-		src/utils/signals.c \
-		src/utils/tools.c \
 		src/utils/tools_utils_1.c \
 		src/utils/tools_utils_2.c \
 		src/utils/error.c \
@@ -12,6 +9,10 @@ SRC :=	src/main.c \
 		src/utils/history_utils_2.c \
 		src/utils/prompt.c \
 		src/utils/print.c \
+		src/utils/utils.c \
+		src/minishell/minishell.c \
+		src/minishell/tools.c \
+		src/minishell/signals.c \
 		src/lexer/lexer.c \
 		src/lexer/lexer_utils_1.c \
 		src/lexer/lexer_utils_2.c \

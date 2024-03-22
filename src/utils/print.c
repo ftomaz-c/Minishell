@@ -28,8 +28,9 @@
 
 void	print_lexer(t_tools *tools)
 {
-	t_lexer *lexer = tools->lexer;
+	t_lexer *lexer;
 
+	lexer = tools->lexer;
 	printf("---------------------LEXER--------------------\n");
 	printf("----------------------------------------------\n");
 	while (lexer)
@@ -69,11 +70,28 @@ void	print_lexer(t_tools *tools)
  * ```
  */
 
+void	print_parser_redirections(t_parser *parser)
+{
+	t_lexer *redirections;
+	
+	redirections = parser->redirections;
+	printf("redirections: ");
+	while (redirections)
+	{
+		if (redirections->token)
+			printf("%c ", redirections->token);
+		else if (redirections->words)
+			printf("%s ", redirections->words);
+		redirections = redirections->next;
+	}
+}
+
 void	print_parser(t_tools *tools)
 {
-	t_parser	*parser = tools->parser;
+	t_parser	*parser;
 	int			i;
 
+	parser = tools->parser;
 	printf("--------------------PARSER--------------------\n");
 	printf("----------------------------------------------\n");
 	while (parser)
@@ -86,19 +104,8 @@ void	print_parser(t_tools *tools)
 		printf("builtin: %p\n", parser->builtin);
 		printf("nb_redirections: %i\n", parser->nb_redirections);
 		printf("heredoc_limiter: %s\n", parser->heredoc_limiter);
-		
-		t_lexer *redirections = parser->redirections;
-		printf("redirections: ");
-		while (redirections)
-		{
-			if (redirections->token)
-				printf("%c ", redirections->token);
-			else if (redirections->words)
-				printf("%s ", redirections->words);
-			redirections = redirections->next;
-		}
+		print_parser_redirections(parser);
 		printf("\n");
-		
 		printf("----------------------------------------------\n");
 		parser = parser->next;
 	}
