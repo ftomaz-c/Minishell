@@ -1,60 +1,31 @@
 #include "../../includes/executor.h"
 
-/**
- * @brief Sets the stdin flag based on redirection token.
- * 
- * This function sets the stdin flag in the parser struct
- *  based on the redirection token.
- * 
- * @param parser The parser containing redirection information.
- * 
- * @return Returns the redirection symbol ("<" or "<<") if 
- * stdin redirection is detected, otherwise NULL.
- */
 
-void	set_stdin_flag(t_parser *parser, t_lexer *redirections)
+void	set_stdin(t_parser *parser, int fd)
 {
-	t_lexer	*current;
+	int	fd_infile;
 
-	current = redirections;
-	if (current->token == '<')
+	if (parser->stdin_flag == LESS)
 	{
-		parser->stdout_flag = 0;
-		if (current->token == '<' && current->next->token == '>')
-			return ;
-		if (current->next && current->next->token == '<')
-			parser->stdin_flag = LESS_LESS;
-		else if (current->next->words)
-			parser->stdin_flag = LESS;
+		fd_infile = open (parser->stdin_file_name, O_RDONLY);
+		if (fd_infile < 0)
+		{
+			std_err(errno, parser->stdin_file_name);
+			if (errno == 2 && parser->next)
+			{
+				g_status = 127;
+				return ;
+			}
+			else
+			{
+				g_status = EXIT_FAILURE;
+				exit (g_status);
+			}
+		}
+		dup2(fd_infile, fd);
 	}
-	return ;
-}
-
-/**
- * @brief Sets the stdout flag based on redirection token.
- * 
- * This function sets the stdout flag in the parser struct
- *  based on the redirection token.
- * 
- * @param parser The parser containing redirection information.
- * 
- * @return Returns the redirection symbol (">" or ">>") if stdout 
- * redirection is detected, otherwise NULL.
- */
-
-void	set_stdout_flag(t_parser *parser, t_lexer *redirections)
-{
-	t_lexer	*current;
-
-	current = redirections;
-	if (current->token == '>')
-	{
-		parser->stdin_flag = 0;
-		if (current->next && current->next->token == '>')
-			parser->stdout_flag = GREAT_GREAT;
-		else
-			parser->stdout_flag = GREAT;
-	}
+	else if (parser->stdin_flag == LESS_LESS)
+		here_doc(parser->heredoc_limiter, parser->original_stdout);
 	return ;
 }
 
@@ -86,154 +57,6 @@ t_lexer	*set_input(t_parser *parser, t_lexer *redirection, int fd)
 		parser->stdin_file_name = current->words;
 	set_stdin(parser, fd);
 	return (current);
-}
-
-t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd)
-{
-	t_lexer	*current;
-
-	current = redirection;
-	current = current->next;
-	if (parser->stdout_flag == GREAT_GREAT)
-	{
-		current = current->next;
-		parser->stdout_file_name = current->words;
-	}
-	else if (parser->stdout_flag == GREAT)
-		parser->stdout_file_name = current->words;
-	set_stdout(parser, fd);
-	return (current);
-}
-
-int	get_digits_token(t_lexer *current)
-{
-	char	*nbr;
-	int		size;
-	int		i;
-	int		token;
-
-	i = 0;
-	size = 2;
-	nbr = ft_calloc(size, sizeof(char));
-	if (!nbr)
-		return (0);
-	nbr[i] = current->token;
-	while (ft_isdigit(current->next->token))
-	{
-		i++;
-		current = current->next;
-		nbr[i] = current->token;
-		size++;
-		nbr = ft_realloc(nbr, size * sizeof(char), (size - 1) * sizeof(char));
-		if (!nbr)
-			return (0);
-		nbr[size - 1] = '\0';
-	}
-	token = ft_atoi(nbr);
-	free(nbr);
-	return (token);
-}
-
-int	set_fd(t_lexer *current, t_parser *parser)
-{
-	int		fd;
-
-	parser->fd_err = 0;
-	if (ft_isdigit(current->token))
-		fd = get_digits_token(current);
-	else if (current->token == '&' && current->next->token == '>')
-	{
-		parser->fd_err = STDERR_FILENO;
-		fd = STDOUT_FILENO;
-	}
-	else if (current->token == '<')
-		fd = STDIN_FILENO;
-	else if (current->token == '>')
-		fd = STDOUT_FILENO;
-	return (fd);
-}
-
-void	redirection(t_parser *parser)
-{
-	t_lexer	*current;
-	int		fd;
-
-	current = parser->redirections;
-	while (current)
-	{
-		fd = set_fd(current, parser);
-		if (current->token == '&')
-			current = current->next;
-		while (ft_isdigit(current->token))
-			current = current->next;
-		if (current->token == '<')
-		{
-			set_stdin_flag(parser, current);
-			current = set_input(parser, current, fd);
-		}
-		if (current->token == '>')
-		{
-			set_stdout_flag(parser, current);
-			current = set_output(parser, current, fd);
-		}
-		current = current->next;
-	}
-}
-
-/**
- * @brief Sets up standard input based on parser data.
- * 
- * This function redirects standard input for a command 
- * if stdin redirection is detected.
- * 
- * @param parser The parser containing redirection information.
- * 
- * @note This function assumes that the parser is properly initialized.
- */
-
-void	std_err(int err, char *str)
-{
-	if (str)
-		ft_putstr_fd(str, STDERR_FILENO);
-	if (err == 2)
-	{
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-		return ;
-	}
-	else if (err == 13)
-		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-	else if (err == 21)
-		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
-	g_status = EXIT_FAILURE;
-	exit (g_status);
-}
-
-void	set_stdin(t_parser *parser, int fd)
-{
-	int	fd_infile;
-
-	if (parser->stdin_flag == LESS)
-	{
-		fd_infile = open (parser->stdin_file_name, O_RDONLY);
-		if (fd_infile < 0)
-		{
-			std_err(errno, parser->stdin_file_name);
-			if (errno == 2 && parser->next)
-			{
-				g_status = 127;
-				return ;
-			}
-			else
-			{
-				g_status = EXIT_FAILURE;
-				exit (g_status);
-			}
-		}
-		dup2(fd_infile, fd);
-	}
-	else if (parser->stdin_flag == LESS_LESS)
-		here_doc(parser->heredoc_limiter, parser->original_stdout);
-	return ;
 }
 
 /**
@@ -270,4 +93,48 @@ void	set_stdout(t_parser *parser, int fd)
 	if (parser->fd_err)
 		dup2(fd_outfile, parser->fd_err);
 	return ;
+}
+
+t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd)
+{
+	t_lexer	*current;
+
+	current = redirection;
+	current = current->next;
+	if (parser->stdout_flag == GREAT_GREAT)
+	{
+		current = current->next;
+		parser->stdout_file_name = current->words;
+	}
+	else if (parser->stdout_flag == GREAT)
+		parser->stdout_file_name = current->words;
+	set_stdout(parser, fd);
+	return (current);
+}
+
+void	redirection(t_parser *parser)
+{
+	t_lexer	*current;
+	int		fd;
+
+	current = parser->redirections;
+	while (current)
+	{
+		fd = set_fd(current, parser);
+		if (current->token == '&')
+			current = current->next;
+		while (ft_isdigit(current->token))
+			current = current->next;
+		if (current->token == '<')
+		{
+			set_stdin_flag(parser, current);
+			current = set_input(parser, current, fd);
+		}
+		if (current->token == '>')
+		{
+			set_stdout_flag(parser, current);
+			current = set_output(parser, current, fd);
+		}
+		current = current->next;
+	}
 }

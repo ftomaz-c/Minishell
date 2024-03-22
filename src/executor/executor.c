@@ -1,49 +1,100 @@
 #include "../../includes/executor.h"
 
 /**
- * @brief Waits for a child process to change state and 
- * updates the global status.
+ * @brief Executes a command with the provided path.
  * 
- * This function waits for the child process with the specified 
- * PID to change state.
- * It updates the global_status variable with the exit status
- *  of the child process if it exited normally.
+ * This function attempts to execute a command using the specified path list.
  * 
- * @param pid    Process ID of the child process to wait for.
- * @param status Pointer to an integer to store the exit 
- * status of the child process.
+ * @param path_list The list of paths to search for the command.
+ * @param cmd_args The command arguments.
+ * @param envp The environment variables.
  * 
- * @note This function assumes the process with the given PID 
- * is a child process.
- *       It assumes the status pointer is valid and points to 
- * a writable memory location.
+ * @note This function assumes that the command and path 
+ * list are properly initialized.
+ */
+
+void	exec_path(char **path_list, char **cmd_args, char **envp)
+{
+	char	*cmd_path;
+	char	*value;
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	value = get_var_from_env(envp, "PATH");
+	if (!value)
+		exec_err(1, cmd_args[0], value);
+	else
+	{
+		while (path_list[i] && cmd_args[0] && cmd_args[0][0] != '.')
+		{
+			tmp = ft_strjoin(path_list[i], "/");
+			cmd_path = ft_strjoin(tmp, cmd_args[0]);
+			free(tmp);
+			execve(cmd_path, cmd_args, envp);
+			free(cmd_path);
+			i++;
+		}
+		if (cmd_args[0])
+			execve(cmd_args[0], cmd_args, envp);
+		exec_err(errno, cmd_args[0], value);
+	}
+	exit(g_status);
+}
+
+/**
+ * @brief Checks if the provided parser contains a 
+ * builtin command.
  * 
- * @warning Behavior is undefined if status is NULL.
+ * This function checks if the provided parser struct 
+ * contains a builtin command.
+ * It compares the parser's builtin function pointer with
+ * known builtin commands.
  * 
- * @see waitpid, WIFEXITED, WEXITSTATUS
+ * @param parser Pointer to the parser struct containing the 
+ * command information.
+ * 
+ * @return 1 if the parser contains a builtin command, 0 otherwise.
+ * 
+ * @note This function assumes the validity of the parser struct.
+ *       It assumes the parser's builtin function pointer
+ * accurately represents the command.
+ * 
+ * @warning Behavior is undefined if parser is NULL.
+ * 
+ * @see cd, pwd, export, unset, mini_exit, mini_history
  * 
  * @example
  * ```
- * // Example usage of wait_status function
- * int pid = fork(); // Fork a child process
- * if (pid == 0) {
- *     // Child process code
- * } else {
- *     int status;
- *     wait_status(pid, &status); // Wait for the child 
- * process to change state
- *     // Use the status variable to handle the exit status
- *  of the child process
- * }
+ * // Example usage of exec_builtins function
+ * t_parser *parser = initialize_parser(); // Initialize
+ *  parser struct
+ * int is_builtin = exec_builtins(parser); // Check if parser
+ *  contains a builtin command
+ * // is_builtin will be 1 if parser contains a builtin 
+ * command, otherwise 0.
  * ```
  */
 
-void	wait_status(int pid, int *status)
+int	exec_builtins(t_tools *tools)
 {
-	waitpid(pid, status, 0);
-	if (WIFEXITED(*status))
-		g_status = WEXITSTATUS(*status);
+	t_parser	*parser;
+
+	parser = tools->parser;
+	if (parser->str[0] && parser->str[0][0] == '/' && !parser->str[1])
+	{
+		parser->builtin = cmd_cd;
+		return (1);
+	}
+	if (parser->builtin && (parser->builtin == cmd_cd || parser->builtin == cmd_pwd
+			|| parser->builtin == cmd_export || parser->builtin == cmd_unset
+			|| parser->builtin == cmd_exit || parser->builtin == cmd_history))
+	{
+		return (1);
+	}
+	return (0);
 }
+
 /**
  * @brief Executes a command based on its type (builtin or external).
  * 

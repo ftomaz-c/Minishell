@@ -12,36 +12,38 @@ SRC :=	src/main.c \
 		src/utils/history_utils_2.c \
 		src/utils/prompt.c \
 		src/utils/print.c \
-		src/lexer/expander.c \
-		src/lexer/expander_utils_1.c \
-		src/lexer/expander_utils_2.c \
-		src/lexer/expander_split.c \
 		src/lexer/lexer.c \
 		src/lexer/lexer_utils_1.c \
 		src/lexer/lexer_utils_2.c \
 		src/lexer/lexer_utils_3.c \
 		src/lexer/lexer_split.c \
 		src/lexer/lexer_split_utils.c \
+		src/expander/expander.c \
+		src/expander/expander_utils_1.c \
+		src/expander/expander_utils_2.c \
+		src/expander/expander_split.c \
 		src/builtins/builtins.c \
 		src/builtins/cmd_pwd.c \
 		src/builtins/cmd_env.c \
 		src/builtins/cmd_cd.c \
 		src/builtins/cmd_echo.c \
 		src/builtins/cmd_exit.c \
-		src/builtins/cmd_export.c \
-		src/builtins/cmd_export_utils1.c \
-		src/builtins/cmd_export_utils2.c \
-		src/builtins/cmd_export_utils3.c \
+		src/builtins/cmd_export/cmd_export.c \
+		src/builtins/cmd_export/cmd_export_utils1.c \
+		src/builtins/cmd_export/cmd_export_utils2.c \
+		src/builtins/cmd_export/cmd_export_utils3.c \
 		src/builtins/cmd_unset.c\
-		src/builtins/cmd_history.c \
-		src/builtins/cmd_history_utils.c \
+		src/builtins/cmd_history/cmd_history.c \
+		src/builtins/cmd_history/cmd_history_utils.c \
 		src/parser/parser.c \
 		src/parser/parser_redir.c \
 		src/parser/parser_utils.c \
 		src/executor/executor.c \
+		src/executor/executor_utils.c \
 		src/executor/redirections.c \
+		src/executor/redirections_utils.c \
 		src/executor/here_doc.c \
-		src/executor/cmd_exec.c \
+		src/executor/pipex.c \
 
 OBJ := $(SRC:.c=.o)
 
