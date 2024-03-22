@@ -182,7 +182,7 @@ void	unset_var_from_env(t_tools *tools, char *str, int i)
  * ```
  */
 
-int	unset(t_tools *tools, t_parser *command)
+int	cmd_unset(t_tools *tools, t_parser *command)
 {
 	int	i;
 	int	pos;

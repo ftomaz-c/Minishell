@@ -25,7 +25,7 @@
  * ```
  */
 
-int	pwd(t_tools *tools, t_parser *command)
+int	cmd_pwd(t_tools *tools, t_parser *command)
 {
 	char	buf[1024];
 

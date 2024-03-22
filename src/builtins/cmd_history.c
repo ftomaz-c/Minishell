@@ -221,7 +221,7 @@ char	**get_history(char **buffer, char *file_path, int arg)
  * int exit_status = mini_history(&tools, &command);
  * ```
  */
-int	mini_history(t_tools *tools, t_parser *command)
+int	cmd_history(t_tools *tools, t_parser *command)
 {
 	char	**buffer;
 
@@ -230,9 +230,9 @@ int	mini_history(t_tools *tools, t_parser *command)
 	if (command->str[1] && invalid_history_options(tools, command))
 		return (1);
 	if (command->str[1])
-		buffer = get_history(buffer, get_file_path_from_home(".minishell_history"), ft_atoi(command->str[1]));
+		buffer = get_history(buffer, get_file_path_from_home(tools, ".minishell_history"), ft_atoi(command->str[1]));
 	else
-		buffer = get_history(buffer, get_file_path_from_home(".minishell_history"), -1);
+		buffer = get_history(buffer, get_file_path_from_home(tools, ".minishell_history"), -1);
 	print_buffer(buffer);
 	free_list(buffer);
 	return (0);

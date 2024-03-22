@@ -291,7 +291,7 @@ int	cd_path(t_tools *tools, t_parser *command)
  * ```
  */
 
-int	cd(t_tools *tools, t_parser *command)
+int	cmd_cd(t_tools *tools, t_parser *command)
 {
 	if (command && command->str[0][0] == '/')
 	{

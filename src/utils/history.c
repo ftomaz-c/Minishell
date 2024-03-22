@@ -53,7 +53,7 @@ void	write_in_history_file(char **line, int fd, char *file_path)
 		else
 		{
 			line_count++;
-			ft_putstr_fd("  ", fd);
+			ft_putstr_fd(" ", fd);
 			ft_putnbr_fd(line_count, fd);
 			ft_putstr_fd("  ", fd);
 			ft_putstr_fd(line[i], fd);

@@ -120,7 +120,7 @@ void	exit_err(int err, char *str)
 	}
 }
 
-int	mini_exit(t_tools *tools, t_parser *parser)
+int	cmd_exit(t_tools *tools, t_parser *parser)
 {
 	if (parser->str[1])
 	{

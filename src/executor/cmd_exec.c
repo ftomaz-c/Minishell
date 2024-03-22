@@ -67,12 +67,12 @@ int	exec_builtins(t_tools *tools)
 	parser = tools->parser;
 	if (parser->str[0] && parser->str[0][0] == '/' && !parser->str[1])
 	{
-		parser->builtin = cd;
+		parser->builtin = cmd_cd;
 		return (1);
 	}
-	if (parser->builtin && (parser->builtin == cd || parser->builtin == pwd
-			|| parser->builtin == export || parser->builtin == unset
-			|| parser->builtin == mini_exit || parser->builtin == mini_history))
+	if (parser->builtin && (parser->builtin == cmd_cd || parser->builtin == cmd_pwd
+			|| parser->builtin == cmd_export || parser->builtin == cmd_unset
+			|| parser->builtin == cmd_exit || parser->builtin == cmd_history))
 	{
 		return (1);
 	}

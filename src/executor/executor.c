@@ -78,8 +78,8 @@ void	wait_status(int pid, int *status)
 
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
-	if (parser->builtin && (exec_builtins(tools) || parser->builtin == echo
-			|| parser->builtin == env))
+	if (parser->builtin && (exec_builtins(tools) || parser->builtin == cmd_echo
+			|| parser->builtin == cmd_env))
 	{
 		parser->builtin(tools, parser);
 		if (parser->next)

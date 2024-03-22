@@ -34,7 +34,7 @@ void	echo_print(t_parser *command, int pos, int flag)
 		printf("\n");
 }
 
-int	echo(t_tools *tools, t_parser *command)
+int	cmd_echo(t_tools *tools, t_parser *command)
 {
 	int			i;
 	int			flag;

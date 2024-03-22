@@ -22,18 +22,18 @@ SRC :=	src/main.c \
 		src/lexer/lexer_split.c \
 		src/lexer/lexer_split_utils.c \
 		src/builtins/builtins.c \
-		src/builtins/pwd.c \
-		src/builtins/env.c \
-		src/builtins/cd.c \
-		src/builtins/echo.c \
-		src/builtins/mini_exit.c \
-		src/builtins/export.c \
-		src/builtins/export_utils1.c \
-		src/builtins/export_utils2.c \
-		src/builtins/export_utils3.c \
-		src/builtins/unset.c\
-		src/builtins/mini_history.c \
-		src/builtins/mini_history_utils.c \
+		src/builtins/cmd_pwd.c \
+		src/builtins/cmd_env.c \
+		src/builtins/cmd_cd.c \
+		src/builtins/cmd_echo.c \
+		src/builtins/cmd_exit.c \
+		src/builtins/cmd_export.c \
+		src/builtins/cmd_export_utils1.c \
+		src/builtins/cmd_export_utils2.c \
+		src/builtins/cmd_export_utils3.c \
+		src/builtins/cmd_unset.c\
+		src/builtins/cmd_history.c \
+		src/builtins/cmd_history_utils.c \
 		src/parser/parser.c \
 		src/parser/parser_redir.c \
 		src/parser/parser_utils.c \

@@ -229,7 +229,7 @@ int	check_if_var_exists(t_tools *tools, char *str)
  * ```
  */
 
-int	export(t_tools *tools, t_parser *command)
+int	cmd_export(t_tools *tools, t_parser *command)
 {
 	int	i;
 

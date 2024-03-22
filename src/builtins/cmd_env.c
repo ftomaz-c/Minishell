@@ -26,7 +26,7 @@
  * ```
  */
 
-int	env(t_tools *tools, t_parser *command)
+int	cmd_env(t_tools *tools, t_parser *command)
 {
 	int		i;
 	t_tools	*tmp;
