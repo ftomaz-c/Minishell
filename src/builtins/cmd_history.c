@@ -148,6 +148,7 @@ void	get_buffer_lines_print(char **buffer, int size, int i)
  */
 void	handle_history_sizes(int *arg, int *nlines, int *size)
 {
+	
 	if (*arg == -1)
 	{
 		if (*nlines > 1000)
@@ -156,7 +157,10 @@ void	handle_history_sizes(int *arg, int *nlines, int *size)
 			*size = *nlines - *arg;
 		}
 		else
-			*arg = *nlines;
+		{	
+			*arg = 0;
+			*size = *nlines;
+		}
 	}
 	else if (*arg < *nlines)
 	{	
@@ -176,6 +180,7 @@ char	**get_history(char **buffer, char *file_path, int arg)
 	int		size;
 
 	nlines = count_lines_in_file(file_path);
+	size = 1;
 	handle_history_sizes(&arg, &nlines, &size);
 	buffer = ft_calloc(sizeof(char **), size + 1);
 	if (!buffer)
