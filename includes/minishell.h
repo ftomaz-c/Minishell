@@ -6,6 +6,7 @@
 # include "../libft/includes/libft.h"
 # include "structs.h"
 # include "utils.h"
+# include "expander.h"
 # include "lexer.h"
 # include "parser.h"
 # include "builtins.h"

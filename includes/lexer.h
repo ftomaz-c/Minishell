@@ -47,26 +47,4 @@ char	*word_alloc(char *s, int start, int end);
 /*src/lexer/lexer_errors.c*/
 void	syntax_err(char token);
 
-/*src/lexer/expander.c*/
-char	*expander(char **env, char **list, t_tools *tools);
-char	*merge_list_of_strings(char **list, char *separator);
-
-/*src/lexer/expander_utils_1.c*/
-int		find_single_quote(char *str);
-int		ft_isalphanum_or_underscore(int c);
-int		find_char_position_new(char *str, char c);
-int		get_end_position(char *str, int position);
-char	*add_prefix_and_suffix(char *str, char **env, int position, int end);
-
-/*src/lexer/expander_utils_2.c*/
-char	*add_quotes(int j, char *str, char quote, char *value);
-char	*add_quotes_to_value(char *str, int flagquote, int j, int i);
-char	*build_str(char *value, char *prefix, char *suffix);
-
-/*src/lexer/expander_split.c*/
-int		count_char_in_str(char *str, char c);
-void	init_expander(t_expander *expander);
-int		realloc_split(t_expander *expander, char *str, int i);
-char	**split_expander(char *str);
-
 #endif
