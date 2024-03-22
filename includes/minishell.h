@@ -35,12 +35,18 @@ void	sig_handler(int sig);
 void	config_tools(t_tools *tools, char **envp);
 void	update_env(t_tools *tools);
 
-/*tools_utils.c*/
+/*tools_utils_1.c*/
 int		compare_var_to_env(char *env, char *var);
 void	free_tools(t_tools *tools);
 char	**get_env(char **envp);
 char	**get_path(char **env);
 char	*get_var_from_env(char **env, char *var);
+
+/*tools_utils_2.c*/
+char	*get_source_home_var(t_tools *tools, char *str);
+char	*get_home_from_etc_passwd(char *line);
+void	get_whoami(char **env);
+void	remove_whoami(char **env);
 
 /*src/utils/error.c*/
 void	error_check(int argc, char **argv);

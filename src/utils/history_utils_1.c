@@ -208,8 +208,6 @@ int	history_section(char *line)
  * }
  * ```
  */
-char	*get_source_home_var(char *str);
-
 char	*get_file_path_from_home(t_tools *tools, char *file_name)
 {
 	char	*home_var;

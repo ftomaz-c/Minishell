@@ -4,7 +4,8 @@ SRC :=	src/main.c \
 		src/minishell.c \
 		src/utils/signals.c \
 		src/utils/tools.c \
-		src/utils/tools_utils.c \
+		src/utils/tools_utils_1.c \
+		src/utils/tools_utils_2.c \
 		src/utils/error.c \
 		src/utils/history.c \
 		src/utils/history_utils_1.c \
