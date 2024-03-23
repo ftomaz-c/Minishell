@@ -186,3 +186,31 @@ int	valid_token_starter(t_lexer *lexer)
 	}
 	return (1);
 }
+
+int	valid_syntax(t_lexer *lexer, t_tools *tools)
+{
+	t_lexer	*current;
+
+	if (tools->tflag)
+	{
+		if (!valid_token_starter(lexer))
+			return (0);
+		current = lexer;
+		while (current && !current->token)
+			current = current->next;
+		if (current->token == '|' && current->next
+			&& current->next->token == '|')
+		{
+			syntax_err(current->token);
+			return (0);
+		}
+		if (current->token == '>' && current->next
+			&& current->next->token == '<')
+		{
+			syntax_err(current->token);
+			return (0);
+		}
+	}
+	return (1);
+}
+

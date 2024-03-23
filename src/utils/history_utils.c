@@ -1,6 +1,47 @@
 #include "../../includes/utils.h"
 
 /**
+ * @brief Determines the index of the history section in a line.
+ * 
+ * This function determines the index of the history section in a line.
+ * It iterates through the characters in the line, checking if they are digits
+ * until it encounters a non-digit character or the end of the line.
+ * If the line starts with digits followed by a dot, it returns the index of the
+ * character after the dot plus two, indicating the start of the history section.
+ * 
+ * @param line The line to analyze for the history section.
+ * 
+ * @return int The index of the history section in the line, or 0 if no history
+ *             section is found.
+ * 
+ * @note This function assumes that the `ft_isdigit()` function is available to
+ *       check if a character is a digit.
+ * 
+ * @warning The returned index is based on a zero-based index. If the history
+ *          section is not found, or if the line is NULL or empty, the function
+ *          returns 0.
+ */
+
+int	history_section(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line == NULL || *line == '\0')
+		return (0);
+	while (line[i] == ' ')
+		i++;
+	while (ft_isdigit(line[i]))
+	{
+		if (line[i] == '\0')
+			return (0);
+		i++;
+	}
+	if (line[i] == ' ')
+		return (i + 2);
+	return (0);
+}
+/**
  * @brief Treats a string and splits it into an array of lines.
  * 
  * This function takes a string and splits it into an array of substrings, 

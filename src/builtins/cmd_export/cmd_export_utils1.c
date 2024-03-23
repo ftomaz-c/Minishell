@@ -1,40 +1,6 @@
 #include "../../../includes/builtins.h"
 
 /**
- * @brief Sort an array of strings alphabetically.
- * 
- * This function sorts the array of strings alphabetically 
- * using a simple bubble sort algorithm.
- * 
- * @param env_copy Array of strings to be sorted.
- * 
- * @note This function assumes that the array is null-terminated.
- * 
- * @see strcmp()
- * 
- * @example
- */
-
-void	sort_array(char **env_copy)
-{
-	int		i;	
-	char	*tmp;
-
-	i = 0;
-	while (env_copy[i] && env_copy[i + 1])
-	{
-		tmp = env_copy[i];
-		if (strcmp(env_copy[i], env_copy[i + 1]) > 0)
-		{	
-			env_copy[i] = env_copy[i + 1];
-			env_copy[i + 1] = tmp;
-			i = 0;
-		}
-		else
-			i++;
-	}
-}
-/**
  * @brief Copy variable value surrounded by quotes.
  * 
  * This function copies the variable value from the 

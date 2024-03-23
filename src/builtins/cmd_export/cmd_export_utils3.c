@@ -1,72 +1,14 @@
 #include "../../../includes/builtins.h"
 
-/**
- * @brief Check if a character is alphabetic or an underscore.
- * 
- * This function checks if the input character
- *  is alphabetic (A-Z, a-z) or an underscore (_).
- * 
- * @param c Character to check.
- * 
- * @return Returns 1 if the character is alphabetic or
- * an underscore, otherwise returns 0.
- */
-int	ft_isalpha_plus_underscore(int c)
+void	export_err(int err, char *str)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_')
-		return (1);
-	return (0);
-}
-
-/**
- * @brief Find the position of a character in a string.
- * 
- * This function finds the position of the specified
- *  character in the input string.
- * 
- * @param str Input string to search.
- * @param c Character to find.
- * 
- * @return Returns the position of the character in
- *  the string, or the length of the string if the character is not found.
- */
-int	find_char_position(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
+	if (err == 1)
 	{
-		if (str[i] == c)
-			return (i);
-		i++;
+		ft_putstr_fd("bash: export: `", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 	}
-	return (i);
-}
-
-/**
- * @brief Copy characters from a string to another string.
- * 
- * This function copies characters from the input string 
- * to the destination string.
- * 
- * @param var_path Pointer to the destination string 
- * where the characters will be copied.
- * @param str Input string containing the characters to copy.
- * 
- * @note This function assumes that the destination 
- * string is large enough to hold the copied characters.
- */
-void	copy_var(char *var_path, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (i < (int)ft_strlen(str))
-	{
-		var_path[i] = str[i];
-		i++;
-	}
+	g_status = err;
 }
 
 /**
@@ -89,7 +31,7 @@ void	get_new_var(char **var, char *str)
 	*var = ft_calloc(sizeof(char *), i + 1);
 	if (!var)
 		return ;
-	copy_var(*var, str);
+	(*var) = ft_strcpy(*var, str);
 }
 
 /**

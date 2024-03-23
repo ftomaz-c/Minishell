@@ -10,7 +10,7 @@ int	check_conditions_expander(char *str, int position)
 		return (0);
 	if (str[position + 1] == '?')
 		return (1);
-	if (!(ft_isalphanum_or_underscore(str[position + 1])))
+	if (!ft_isalnum(str[position + 1]) && str[position + 1] != '_')
 		return (0);
 	return (1);
 }

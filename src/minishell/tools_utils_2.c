@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	remove_whoami(char **env)
+void	remove_whoami(char **env, char *user)
 {
 	pid_t	pid;
 	int		status;
@@ -13,6 +13,7 @@ void	remove_whoami(char **env)
 		execve("/usr/bin/rm", argv, env);
 	else
 		waitpid(pid, &status, 0);
+	free(user);
 }
 
 void	get_whoami(char **env)
@@ -84,9 +85,11 @@ char	*get_source_home_var(t_tools *tools, char *str)
 		line = get_next_line(fd);
 		if (ft_strncmp(user, line, ft_strlen(user)) == 0)
 			break ;
+		free(line);
 	}
 	home = get_home_from_etc_passwd(line);
-	remove_whoami(tools->env);
+	remove_whoami(tools->env, user);
 	close(fd);
+	free(line);
 	return (home);
 }

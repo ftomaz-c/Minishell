@@ -13,6 +13,10 @@ int		cd_handle_specific_path(t_tools *tools, t_parser *command);
 int		cd_path(t_tools *tools, t_parser *command);
 int		cmd_cd(t_tools *tools, t_parser *command);
 
+void	cd_err(int err, char *str, char root);
+int	cd_handle_slash_path(t_tools *tools);
+int	cd_handle_dot_path(t_tools *tools);
+
 /*src/builtins/env.c*/
 int		cmd_env(t_tools *tools, t_parser *command);
 
@@ -49,11 +53,11 @@ void	substitute_env_var_value(t_tools *tools, char *var_path, char *str);
 void	add_value_to_var(t_tools *tools, char *var_path, char *str);
 
 /*src/builtins/export_utils3.c*/
-int		ft_isalpha_plus_underscore(int c);
 int		find_char_position(char *str, char c);
 void	copy_var(char *var_path, char *str);
 void	get_new_var(char **var, char *str);
 int		copy_var_to_env(t_tools *tools, char **array, char *var_value, int i);
+void	export_err(int err, char *str);
 
 /*src/builtins/unset.c*/
 int		count_lines(char **list);

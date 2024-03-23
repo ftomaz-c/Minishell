@@ -59,7 +59,7 @@ t_lexer	*add_redirection(t_lexer *current, t_parser *node, int *start)
 			return (NULL);
 		}
 	}
-	ft_lstaddback(&node->redirections, redirections_node);
+	ft_lstaddback_lexer(&node->redirections, redirections_node);
 	if (current->next)
 		current = current->next;
 	if (start)

@@ -8,11 +8,12 @@ SRC :=	src/main.c \
 		src/minishell/tools_utils_2.c \
 		src/utils/error.c \
 		src/utils/history.c \
-		src/utils/history_utils_1.c \
-		src/utils/history_utils_2.c \
+		src/utils/history_utils.c \
 		src/utils/prompt.c \
 		src/utils/print.c \
-		src/utils/utils.c \
+		src/utils/utils_1.c \
+		src/utils/utils_2.c \
+		src/utils/utils_3.c \
 		src/lexer/lexer.c \
 		src/lexer/lexer_utils_1.c \
 		src/lexer/lexer_utils_2.c \
@@ -27,9 +28,10 @@ SRC :=	src/main.c \
 		src/builtins/builtins.c \
 		src/builtins/cmd_pwd.c \
 		src/builtins/cmd_env.c \
-		src/builtins/cmd_cd.c \
 		src/builtins/cmd_echo.c \
 		src/builtins/cmd_exit.c \
+		src/builtins/cmd_cd/cmd_cd.c \
+		src/builtins/cmd_cd/cmd_cd_utils.c \
 		src/builtins/cmd_export/cmd_export.c \
 		src/builtins/cmd_export/cmd_export_utils1.c \
 		src/builtins/cmd_export/cmd_export_utils2.c \

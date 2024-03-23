@@ -78,7 +78,6 @@ void	copy_var_value(char *var_path, char *str, int start)
  */
 void	get_new_var_value(char **var_value, char *str)
 {
-	int		start;
 	int		i;
 
 	i = find_char_position(str, '=') + 1;
@@ -87,13 +86,10 @@ void	get_new_var_value(char **var_value, char *str)
 		*var_value = NULL;
 		return ;
 	}
-	start = i;
-	while (str[i] && i < (int)ft_strlen(str))
-		i++;
-	*var_value = ft_calloc(sizeof(char *), (ft_strlen(str) - start) + 1);
+	*var_value = ft_calloc(sizeof(char *), (ft_strlen(str) - i) + 1);
 	if (!var_value)
 		return ;
-	copy_var_value(*var_value, str, start);
+	copy_var_value(*var_value, str, i);
 }
 
 /**

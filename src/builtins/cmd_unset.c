@@ -1,40 +1,4 @@
 #include "../../includes/builtins.h"
-/**
- * @brief Counts the number of non-null pointers in a string array.
- * 
- * This function counts the number of non-null 
- * pointers in a string array until encountering a NULL pointer.
- * 
- * @param list Pointer to the string array to count lines in.
- * 
- * @return The number of non-null pointers in the string array.
- * 
- * @note This function assumes the validity of the input string array.
- * 
- * @warning Behavior is undefined if list is NULL 
- * or if the string array is corrupted.
- * 
- * @see None
- * 
- * @example
- * ```
- * // Example usage of count_lines function
- * char **list = {"line1", "line2", "line3", NULL};
- * int line_count = count_lines(list);
- * // Count the number of lines in the string array
- * // line_count will be 3.
- * ```
- */
-
-int	count_lines(char **list)
-{
-	int	line_count;
-
-	line_count = 0;
-	while (list[line_count])
-		line_count++;
-	return (line_count);
-}
 
 /**
  * @brief Checks if a variable exists in the environment 

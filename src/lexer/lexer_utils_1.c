@@ -1,30 +1,45 @@
 #include "../../includes/lexer.h"
+/**
+ * @brief Adds a new node to the end of a lexer list.
+ * 
+ * This function adds the lexer node 'new' to the end of the
+ * lexer list pointed by 'lst'.
+ * 
+ * @param lst Pointer to the pointer to the head of the lexer list.
+ * @param new Pointer to the new lexer node to be added.
+ * 
+ * @note This function assumes that 'lst' is a valid pointer to a
+ * pointer to a lexer list,
+ *       and 'new' is a valid pointer to a lexer node.
+ * 
+ * @warning The function does not perform input validation on 'lst' or 'new'.
+ *          It may result in unexpected behavior if 'lst' or 'new' is NULL.
+ * 
+ * @example
+ * ```
+ * t_lexer *lst = NULL;
+ * t_lexer *new_node = malloc(sizeof(t_lexer));
+ * ft_lstaddback(&lst, new_node);
+ * // 'new_node' will be added to the end of the lexer list 'lst'
+ * ```
+ */
 
-int	valid_syntax(t_lexer *lexer, t_tools *tools)
+void	ft_lstaddback_lexer(t_lexer **lst, t_lexer *new)
 {
-	t_lexer	*current;
+	t_lexer	*last;
 
-	if (tools->tflag)
+	if (!new)
+		return ;
+	if (*lst == NULL)
 	{
-		if (!valid_token_starter(lexer))
-			return (0);
-		current = lexer;
-		while (current && !current->token)
-			current = current->next;
-		if (current->token == '|' && current->next
-			&& current->next->token == '|')
-		{
-			syntax_err(current->token);
-			return (0);
-		}
-		if (current->token == '>' && current->next
-			&& current->next->token == '<')
-		{
-			syntax_err(current->token);
-			return (0);
-		}
+		*lst = new;
+		return ;
 	}
-	return (1);
+	last = *lst;
+	while (last->next)
+		last = last->next;
+	last->next = new;
+	new->pre = last;
 }
 
 /**

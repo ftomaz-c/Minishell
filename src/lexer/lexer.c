@@ -59,7 +59,7 @@ void	add_word_to_node(char *word, t_lexer **lexer)
 		node->index = 0;
 	node->next = NULL;
 	node->pre = NULL;
-	ft_lstaddback(lexer, node);
+	ft_lstaddback_lexer(lexer, node);
 }
 /**
  * @brief Adds a token to a lexer node.
@@ -110,7 +110,7 @@ void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
 	node->next = NULL;
 	node->pre = NULL;
 	tools->tflag = 1;
-	ft_lstaddback(lexer, node);
+	ft_lstaddback_lexer(lexer, node);
 }
 
 /**

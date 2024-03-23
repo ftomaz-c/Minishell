@@ -47,7 +47,7 @@ char	**get_env(char **envp);
 char	**get_path(char **env);
 
 /*src/minishell/tools_utils_2.c*/
-void	remove_whoami(char **env);
+void	remove_whoami(char **env, char *user);
 void	get_whoami(char **env);
 char	*get_home_from_etc_passwd(char *line);
 char	*get_source_home_var(t_tools *tools, char *str);

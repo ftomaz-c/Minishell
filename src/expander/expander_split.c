@@ -1,21 +1,5 @@
 #include "../../includes/expander.h"
 
-int	count_char_in_str(char *str, char c)
-{
-	int	count;
-	int	i;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 void	init_expander(t_expander *expander)
 {
 	expander->size = 1;
@@ -54,7 +38,7 @@ char	**split_expander(char *str)
 	t_expander	expander;
 	int			i;
 
-	if (!count_char_in_str(str, '$'))
+	if (!count_chr(str, '$'))
 		return (NULL);
 	init_expander(&expander);
 	i = 0;

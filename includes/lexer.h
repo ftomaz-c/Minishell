@@ -12,7 +12,7 @@ int		lex_line(char	**line_split_quotes, t_tools *tools);
 int		lexer(char *line, t_tools *tools);
 
 /*src/lexer/lexer_utils_1.c*/
-int		valid_syntax(t_lexer *lexer, t_tools *tools);
+void	ft_lstaddback_lexer(t_lexer **lst, t_lexer *new);
 int		is_fd_token(char *str, char c, int position);
 int		check_if_token_valid(char *str, char c, int position);
 int		check_if_token(char c);
@@ -26,6 +26,7 @@ int		check_unclosed_quotes(char *line);
 void	add_temp_to_word(char *str, char **word, int start, int i);
 
 /*src/lexer/lexer_utils_3.c*/
+int		valid_syntax(t_lexer *lexer, t_tools *tools);
 char	get_special_char(char *str, int i);
 char	*get_new_special_str(char *str);
 void	check_special_chars(char **list);

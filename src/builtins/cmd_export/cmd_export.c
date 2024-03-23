@@ -56,26 +56,13 @@ void	sort_print_env(t_tools *tools)
  * @example
  * 
  */
-
-void	export_err(int err, char *str)
-{
-	if (err == 1)
-	{
-		ft_putstr_fd("bash: export: `", STDERR_FILENO);
-		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-	}
-	g_status = err;
-}
-
 int	check_valid_export(char *parser)
 {
 	int	i;
 	int	equal_pos;
-
 	i = 0;
 	if (ft_strcmp(parser, "=") == 0 || parser[i] == '='
-		|| !ft_isalpha_plus_underscore(parser[i]))
+		|| (!ft_isalpha(parser[i]) && parser[i] != '_'))
 	{	
 		export_err(1, parser);
 		return (0);

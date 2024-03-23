@@ -1,6 +1,5 @@
 #include "../../includes/executor.h"
 
-
 void	set_stdin(t_parser *parser, int fd)
 {
 	int	fd_infile;

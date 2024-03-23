@@ -110,7 +110,7 @@ void	add_history_file(t_tools *tools, char *line, char *file_name)
 		printf("exit\n");
 		exit(g_status);
 	}
-	file_path = get_file_path_from_home(tools, file_name);
+	file_path = get_file_path_from_home(tools->home, file_name);
 	if (!file_path)
 		perror("Error: Failed to retrieve file path. History won't be stored\n");
 	if (line && *line)
@@ -214,7 +214,7 @@ void	update_history(t_tools *tools, char *file_name)
 	char	*file_path;
 	int		fd;
 
-	file_path = get_file_path_from_home(tools, file_name);
+	file_path = get_file_path_from_home(tools->home, file_name);
 	if (!file_path)
 		return ;
 	if (access(file_path, F_OK))

@@ -1,5 +1,29 @@
 #include "../../includes/utils.h"
+/**
+ * @brief Find the position of a character in a string.
+ * 
+ * This function finds the position of the specified
+ *  character in the input string.
+ * 
+ * @param str Input string to search.
+ * @param c Character to find.
+ * 
+ * @return Returns the position of the character in
+ *  the string, or the length of the string if the character is not found.
+ */
+int	find_char_position(char *str, char c)
+{
+	int	i;
 
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (i);
+}
 /**
  * @brief Finds the next occurrence of a character in a string.
  * 
@@ -38,48 +62,6 @@ int	find_next_char_position(char *str, int i, char c)
 	return (i);
 }
 
-/**
- * @brief Adds a new node to the end of a lexer list.
- * 
- * This function adds the lexer node 'new' to the end of the
- * lexer list pointed by 'lst'.
- * 
- * @param lst Pointer to the pointer to the head of the lexer list.
- * @param new Pointer to the new lexer node to be added.
- * 
- * @note This function assumes that 'lst' is a valid pointer to a
- * pointer to a lexer list,
- *       and 'new' is a valid pointer to a lexer node.
- * 
- * @warning The function does not perform input validation on 'lst' or 'new'.
- *          It may result in unexpected behavior if 'lst' or 'new' is NULL.
- * 
- * @example
- * ```
- * t_lexer *lst = NULL;
- * t_lexer *new_node = malloc(sizeof(t_lexer));
- * ft_lstaddback(&lst, new_node);
- * // 'new_node' will be added to the end of the lexer list 'lst'
- * ```
- */
-
-void	ft_lstaddback(t_lexer **lst, t_lexer *new)
-{
-	t_lexer	*last;
-
-	if (!new)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	last = *lst;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-	new->pre = last;
-}
 
 /**
  * @brief Counts the occurrences of a character in a string.
@@ -167,38 +149,39 @@ int	count_lines_in_file(const char *file_path)
 	close (fd);
 	return (count);
 }
-
 /**
- * @brief Frees the memory allocated for a null-terminated array of strings.
+ * @brief Counts the number of non-null pointers in a string array.
  * 
- * This function frees the memory allocated for each string in the array 'list',
- * as well as the memory allocated for the array itself.
+ * This function counts the number of non-null 
+ * pointers in a string array until encountering a NULL pointer.
  * 
- * @param list Pointer to the array of strings to free.
+ * @param list Pointer to the string array to count lines in.
  * 
- * @note This function assumes that 'list' is a null-terminated array of strings.
+ * @return The number of non-null pointers in the string array.
  * 
- * @warning The function does not perform input validation on 'list'.
- *          It may result in unexpected behavior if 'list' is NULL
- * or if any of its elements are NULL.
+ * @note This function assumes the validity of the input string array.
+ * 
+ * @warning Behavior is undefined if list is NULL 
+ * or if the string array is corrupted.
+ * 
+ * @see None
  * 
  * @example
  * ```
- * char *list[] = {"Hello", "world", NULL};
- * free_list(list);
- * // All memory allocated for the array 'list' and its strings will be freed
+ * // Example usage of count_lines function
+ * char **list = {"line1", "line2", "line3", NULL};
+ * int line_count = count_lines(list);
+ * // Count the number of lines in the string array
+ * // line_count will be 3.
  * ```
  */
 
-void	free_list(char	**list)
+int	count_lines(char **list)
 {
-	int	i;
+	int	line_count;
 
-	i = 0;
-	while (list[i])
-	{
-		free(list[i]);
-		i++;
-	}
-	free(list);
+	line_count = 0;
+	while (list[line_count])
+		line_count++;
+	return (line_count);
 }

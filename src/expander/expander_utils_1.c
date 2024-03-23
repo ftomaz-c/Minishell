@@ -1,4 +1,4 @@
-#include "../../includes/expander.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Finds the presence of single quotes in a string.
@@ -49,40 +49,6 @@ int	find_single_quote(char *str)
 	}
 	return (0);
 }
-
-/**
- * @brief Checks if a character is an alphanumeric 
- * character or an underscore.
- * 
- * This function determines whether a given character is 
- * alphanumeric (either uppercase or lowercase)
- * or an underscore. It is used as a helper function to identify 
- * valid characters in environment variable names.
- * 
- * @param c The character to be checked.
- * 
- * @return Returns 1 if the character is alphanumeric or an
- * underscore, otherwise returns 0.
- * 
- * @note Assumes ASCII character encoding for alphanumeric characters.
- * 
- * @see None
- * 
- * @example
- * ```
- * int result = ft_isalphanum_or_underscore('A');
- * // result will be 1
- * ```
- */
-
-int	ft_isalphanum_or_underscore(int c)
-{
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
-		|| (c >= 0 && c <= 9) || c == '_')
-		return (1);
-	return (0);
-}
-
 /**
  * @brief Finds the position of a character within a string.
  * 
@@ -158,7 +124,7 @@ int	get_end_position(char *str, int position)
 	else
 	{
 		end = position + 1;
-		while (str && str[end] && ft_isalphanum_or_underscore(str[end])
+		while (str && str[end] && (ft_isalnum(str[end]) || str[end] == '_')
 			&& str[end] != '=')
 			end++;
 	}
