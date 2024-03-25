@@ -39,14 +39,12 @@ void	handle_shlvl(char *pre_lvl, char **new_lvl, size_t lvl);
 void	update_env(t_tools *tools);
 void	config_tools(t_tools *tools, char **envp);
 
-/*src/minishell/tools_utils_1.c*/
+/*src/minishell/tools_utils1.c*/
 int		compare_var_to_env(char *env, char *var);
 void	free_tools(t_tools *tools);
-char	*get_var_from_env(char **env, char *var);
-char	**get_env(char **envp);
 char	**get_path(char **env);
 
-/*src/minishell/tools_utils_2.c*/
+/*src/minishell/tools_utils2.c*/
 void	remove_whoami(char **env, char *user);
 void	get_whoami(char **env);
 char	*get_home_from_etc_passwd(char *line);

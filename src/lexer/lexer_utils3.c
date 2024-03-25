@@ -213,4 +213,3 @@ int	valid_syntax(t_lexer *lexer, t_tools *tools)
 	}
 	return (1);
 }
-

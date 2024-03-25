@@ -15,18 +15,18 @@ void	exec_err(int err, char *str, char *value);
 void	wait_status(int pid, int *status);
 
 /*src/executor/redirections.c*/
-void	redirection(t_parser *parser);
-t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd);
-void	set_stdout(t_parser *parser, int fd);
-t_lexer	*set_input(t_parser *parser, t_lexer *redirection, int fd);
 void	set_stdin(t_parser *parser, int fd);
+t_lexer	*set_input(t_parser *parser, t_lexer *redirection, int fd);
+void	set_stdout(t_parser *parser, int fd);
+t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd);
+void	redirection(t_parser *parser);
 
 /*src/executor/redirections_utils.c*/
-void	std_err(int err, char *str);
-int		set_fd(t_lexer *current, t_parser *parser);
-int		get_digits_token(t_lexer *current);
-void	set_stdout_flag(t_parser *parser, t_lexer *redirections);
 void	set_stdin_flag(t_parser *parser, t_lexer *redirections);
+void	set_stdout_flag(t_parser *parser, t_lexer *redirections);
+int		get_digits_token(t_lexer *current);
+int		set_fd(t_lexer *current, t_parser *parser);
+void	std_err(int err, char *str);
 
 /*src/executor/pipex.c*/
 void	minishell_pipex(t_tools *tools, t_parser *parser);

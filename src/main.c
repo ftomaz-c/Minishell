@@ -13,7 +13,6 @@ int	main(int argc, char **argv, char **envp)
 	handle_sigaction();
 	while (1)
 	{
-		//line = prompt_line(&tools);
 		line = readline(".minishell: ");
 		minishell(&tools, line);
 		free(line);

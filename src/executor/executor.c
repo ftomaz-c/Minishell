@@ -86,7 +86,8 @@ int	exec_builtins(t_tools *tools)
 		parser->builtin = cmd_cd;
 		return (1);
 	}
-	if (parser->builtin && (parser->builtin == cmd_cd || parser->builtin == cmd_pwd
+	if (parser->builtin && (parser->builtin == cmd_cd
+			|| parser->builtin == cmd_pwd
 			|| parser->builtin == cmd_export || parser->builtin == cmd_unset
 			|| parser->builtin == cmd_exit || parser->builtin == cmd_history))
 	{

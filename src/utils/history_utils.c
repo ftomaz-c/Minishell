@@ -41,6 +41,7 @@ int	history_section(char *line)
 		return (i + 2);
 	return (0);
 }
+
 /**
  * @brief Treats a string and splits it into an array of lines.
  * 

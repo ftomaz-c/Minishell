@@ -90,7 +90,11 @@ int	cd_handle_dot_path(t_tools *tools)
 		return (EXIT_SUCCESS);
 	else
 	{	
-		cd_err(3, "error retrieving current directory: getcwd: cannot access parent directories", 0);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd("error retrieving current directory: ", STDERR_FILENO);
+		ft_putstr_fd("getcwd: cannot access parent directories", STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		g_status = EXIT_FAILURE;
 		tmp = ft_strdup(tools->pwd);
 		free(tools->pwd);
 		tools->pwd = ft_strjoin(tmp, "/.");

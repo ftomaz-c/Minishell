@@ -93,10 +93,11 @@ void	config_tools(t_tools *tools, char **envp)
 	tools->home = get_var_from_env(tools->env, "HOME");
 	if (tools->home == NULL)
 		tools->home = get_source_home_var(tools, "/etc/passwd");
-	if (!tools->path && !tools->pwd && !tools->oldpwd 
-	&& !tools->home && !tools->user && !tools->name)
+	if (!tools->path && !tools->pwd && !tools->oldpwd
+		&& !tools->home && !tools->user && !tools->name)
 	{
-		ft_putstr_fd("Error: Failed to allocate memory for tools\n", STDERR_FILENO);
+		ft_putstr_fd("Error: Failed to allocate memory for tools\n",
+			STDERR_FILENO);
 		return ;
 	}
 	tools->pipes = 0;

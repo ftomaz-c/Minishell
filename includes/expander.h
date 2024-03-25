@@ -12,7 +12,6 @@ char	*expander(char **env, char **list, t_tools *tools);
 
 /*src/expander/expander_utils_1.c*/
 int		find_single_quote(char *str);
-int		ft_isalphanum_or_underscore(int c);
 int		find_char_position_new(char *str, char c);
 int		get_end_position(char *str, int position);
 char	*add_prefix_and_suffix(char *str, char **env, int position, int end);
@@ -24,7 +23,6 @@ char	*add_quotes_to_value(char *str, int flagquote, int j, int i);
 char	*build_str(char *value, char *prefix, char *suffix);
 
 /*src/expander/expander_split.c*/
-int		count_char_in_str(char *str, char c);
 void	init_expander(t_expander *expander);
 int		realloc_split(t_expander *expander, char *str, int i);
 char	**split_expander(char *str);

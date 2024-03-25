@@ -4,26 +4,25 @@ SRC :=	src/main.c \
 		src/minishell/minishell.c \
 		src/minishell/signals.c \
 		src/minishell/tools.c \
-		src/minishell/tools_utils_1.c \
-		src/minishell/tools_utils_2.c \
+		src/minishell/tools_utils1.c \
+		src/minishell/tools_utils2.c \
 		src/utils/error.c \
 		src/utils/history.c \
 		src/utils/history_utils.c \
 		src/utils/prompt.c \
 		src/utils/print.c \
-		src/utils/utils_1.c \
-		src/utils/utils_2.c \
-		src/utils/utils_3.c \
+		src/utils/utils1.c \
+		src/utils/utils2.c \
+		src/utils/utils3.c \
 		src/lexer/lexer.c \
-		src/lexer/lexer_utils_1.c \
-		src/lexer/lexer_utils_2.c \
-		src/lexer/lexer_utils_3.c \
+		src/lexer/lexer_utils1.c \
+		src/lexer/lexer_utils2.c \
+		src/lexer/lexer_utils3.c \
 		src/lexer/lexer_split.c \
 		src/lexer/lexer_split_utils.c \
-		src/lexer/lexer_errors.c \
 		src/expander/expander.c \
-		src/expander/expander_utils_1.c \
-		src/expander/expander_utils_2.c \
+		src/expander/expander_utils1.c \
+		src/expander/expander_utils2.c \
 		src/expander/expander_split.c \
 		src/builtins/builtins.c \
 		src/builtins/cmd_pwd.c \

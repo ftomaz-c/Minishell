@@ -46,11 +46,10 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 			free(tools->pwd);
 			tools->pwd = ft_strdup(getcwd(new_pwd, sizeof(new_pwd)));
 		}
-		//else
-		//	return(printf("cd: no such file or directory: .."));
 	}
 	return (0);
 }
+
 /**
  * @brief Handles changing the current working 
  * directory to a specific path.

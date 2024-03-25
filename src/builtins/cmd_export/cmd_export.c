@@ -34,6 +34,7 @@ void	sort_print_env(t_tools *tools)
 	}
 	free_list(env_copy);
 }
+
 /**
  * @brief Check if a string is a valid export identifier.
  * 
@@ -60,6 +61,7 @@ int	check_valid_export(char *parser)
 {
 	int	i;
 	int	equal_pos;
+
 	i = 0;
 	if (ft_strcmp(parser, "=") == 0 || parser[i] == '='
 		|| (!ft_isalpha(parser[i]) && parser[i] != '_'))

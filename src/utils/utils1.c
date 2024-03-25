@@ -62,7 +62,6 @@ int	find_next_char_position(char *str, int i, char c)
 	return (i);
 }
 
-
 /**
  * @brief Counts the occurrences of a character in a string.
  * 

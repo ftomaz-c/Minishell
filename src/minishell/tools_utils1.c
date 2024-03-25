@@ -58,8 +58,6 @@ void	free_tools(t_tools *tools)
 		free(tools->name);
 }
 
-
-
 /**
  * @brief Retrieves the value of the PATH variable from the
  * environment and splits it into individual paths.

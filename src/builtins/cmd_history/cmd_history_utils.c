@@ -1,5 +1,32 @@
 #include "../../../includes/builtins.h"
 
+void	handle_history_sizes(int *arg, int *nlines, int *size)
+{
+	if (*arg == -1)
+	{
+		if (*nlines > 1000)
+		{	
+			*arg = *nlines - 1000;
+			*size = *nlines - *arg;
+		}
+		else
+		{	
+			*arg = 0;
+			*size = *nlines;
+		}
+	}
+	else if (*arg < *nlines)
+	{	
+		*size = *arg;
+		*arg = *nlines - *arg;
+	}
+	else
+	{	
+		*arg = 0;
+		*size = *nlines;
+	}
+}
+
 /**
  * @brief Copies lines from file descriptor to buffer.
  * 
@@ -59,6 +86,7 @@ void	copy_buffer(char **buffer, int fd, int nlines, int arg)
 		free(line);
 	}
 }
+
 /**
  * @brief Prints lines from buffer.
  * 

@@ -4,8 +4,11 @@ void	remove_whoami(char **env, char *user)
 {
 	pid_t	pid;
 	int		status;
-	char	*argv[] = {"rm", "whoami.txt", NULL};
+	char	*argv[3];
 
+	argv[0] = "rm";
+	argv[1] = "whoami.txt";
+	argv[2] = NULL;
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
@@ -21,8 +24,10 @@ void	get_whoami(char **env)
 	int		fd;
 	pid_t	pid;
 	int		status;
-	char	*argv[] = {"whoami", NULL};
+	char	*argv[2];
 
+	argv[0] = "whoami";
+	argv[1] = NULL;
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
@@ -46,7 +51,7 @@ char	*get_home_from_etc_passwd(char *line)
 	i = 0;
 	j = 0;
 	colon = 0;
-	home = calloc(1024 , sizeof(char));
+	home = calloc(1024, sizeof(char));
 	if (!home)
 		return (NULL);
 	while (line[i])
@@ -59,7 +64,7 @@ char	*get_home_from_etc_passwd(char *line)
 		if (colon == 5)
 			home[j++] = line[i];
 		else if (colon > 5)
-			break;
+			break ;
 		i++;
 	}
 	return (home);

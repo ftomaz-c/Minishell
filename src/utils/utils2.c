@@ -190,7 +190,7 @@ char	**get_env(char **envp)
 
 	count = 0;
 	if (!envp)
-		return(NULL);
+		return (NULL);
 	while (envp[count])
 		count++;
 	env = ft_calloc(sizeof(char *), count + 1);

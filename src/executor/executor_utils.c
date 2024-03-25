@@ -70,4 +70,3 @@ void	wait_status(int pid, int *status)
 	if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
 }
-

@@ -10,10 +10,8 @@ void	minishell(t_tools *tools, char *line)
 			free_lexer(&tools->lexer);
 			return ;
 		}
-		// print_lexer(tools);
 		if (!parser(tools))
 			return ;
-		// print_parser(tools);
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
 		if (tools->parser)

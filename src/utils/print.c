@@ -28,7 +28,7 @@
 
 void	print_lexer(t_tools *tools)
 {
-	t_lexer *lexer;
+	t_lexer	*lexer;
 
 	lexer = tools->lexer;
 	printf("---------------------LEXER--------------------\n");
@@ -72,8 +72,8 @@ void	print_lexer(t_tools *tools)
 
 void	print_parser_redirections(t_parser *parser)
 {
-	t_lexer *redirections;
-	
+	t_lexer	*redirections;
+
 	redirections = parser->redirections;
 	printf("redirections: ");
 	while (redirections)
@@ -98,7 +98,7 @@ void	print_parser(t_tools *tools)
 	{
 		printf("str: ");
 		i = 0;
-		while(parser->str[i])
+		while (parser->str[i])
 			printf(":%s:", parser->str[i++]);
 		printf("\n");
 		printf("builtin: %p\n", parser->builtin);
