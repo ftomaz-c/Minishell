@@ -92,7 +92,7 @@ void	config_tools(t_tools *tools, char **envp)
 	tools->name = get_var_from_env(tools->env, "NAME");
 	tools->home = get_var_from_env(tools->env, "HOME");
 	if (tools->home == NULL)
-		tools->home = get_source_home_var(tools, "/etc/passwd");
+		tools->home = get_source_home_var(tools, "/home/");
 	if (!tools->path && !tools->pwd && !tools->oldpwd
 		&& !tools->home && !tools->user && !tools->name)
 	{
