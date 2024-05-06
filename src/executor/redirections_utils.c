@@ -91,6 +91,7 @@ int	set_fd(t_lexer *current, t_parser *parser)
 {
 	int		fd;
 
+	fd = 0;
 	parser->fd_err = 0;
 	if (ft_isdigit(current->token))
 		fd = get_digits_token(current);

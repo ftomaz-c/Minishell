@@ -135,10 +135,14 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 	{
 		parser->builtin(tools, parser);
 		if (parser->next)
+		{
 			exit (g_status);
+		}
 	}
 	else
+	{
 		exec_path(tools->path, parser->str, tools->env);
+	}
 	return ;
 }
 
@@ -192,7 +196,6 @@ int	executor(t_tools *tools)
 	int			status;
 
 	parser = tools->parser;
-	parser->original_stdout = dup(STDOUT_FILENO);
 	if (exec_builtins(tools) && !tools->pipes && parser->str[0])
 		return (parser->builtin(tools, parser));
 	pid = fork();

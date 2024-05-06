@@ -1,5 +1,11 @@
 #include "../../includes/executor.h"
 
+void	fd_exit(int exit_code, int original_stdout)
+{
+	close(original_stdout);
+	exit(exit_code);
+}
+
 /**
  * @brief Reads input until a delimiter is encountered 
  * and writes it to a file descriptor.
@@ -31,7 +37,7 @@ void	get_here_doc(char *limiter, int fd, int original_stdout)
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
 			free(line);
-			exit(EXIT_SUCCESS);
+			fd_exit(EXIT_SUCCESS, original_stdout);
 		}
 		write(fd, line, ft_strlen(line));
 		ft_putstr_fd("> ", original_stdout);
@@ -60,23 +66,25 @@ void	here_doc(char *limiter, int original_stdout)
 	if (pipe(fd) == -1)
 	{
 		perror("Error creating pipes");
-		exit(EXIT_FAILURE);
+		fd_exit(EXIT_FAILURE, original_stdout);
 	}
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("Error in child process");
-		exit (EXIT_FAILURE);
+		fd_exit(EXIT_FAILURE, original_stdout);
 	}
 	if (pid == 0)
 	{
 		close(fd[0]);
 		get_here_doc(limiter, fd[1], original_stdout);
+		close(original_stdout);
 	}
 	else
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
 		waitpid(pid, NULL, 0);
 	}
 }

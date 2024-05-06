@@ -24,7 +24,7 @@ void	set_stdin(t_parser *parser, int fd)
 		dup2(fd_infile, fd);
 	}
 	else if (parser->stdin_flag == LESS_LESS)
-		here_doc(parser->heredoc_limiter, parser->original_stdout);
+		here_doc(parser->heredoc_limiter, dup(STDOUT_FILENO));
 	return ;
 }
 
@@ -80,6 +80,7 @@ void	set_stdout(t_parser *parser, int fd)
 		if (fd_outfile < 0)
 			std_err(errno, parser->stdout_file_name);
 		dup2(fd_outfile, fd);
+		close(fd_outfile);
 	}
 	else if (parser->stdout_flag == GREAT_GREAT)
 	{
@@ -88,9 +89,13 @@ void	set_stdout(t_parser *parser, int fd)
 		if (fd_outfile < 0)
 			std_err(errno, parser->stdout_file_name);
 		dup2(fd_outfile, fd);
+		close(fd_outfile);
 	}
 	if (parser->fd_err)
+	{
 		dup2(fd_outfile, parser->fd_err);
+		close(fd_outfile);
+	}
 	return ;
 }
 
