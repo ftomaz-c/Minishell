@@ -55,6 +55,8 @@ void	cd_err(int err, char *str, char root)
 		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
 	else if (err == 2 || err == 3)
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+	else if (err == 4)
+		ft_putstr_fd("HOME not set\n", STDERR_FILENO);
 	else if (err == 13)
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 	else if (err == 20)

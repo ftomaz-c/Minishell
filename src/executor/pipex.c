@@ -40,7 +40,5 @@ void	minishell_pipex(t_tools *tools, t_parser *parser)
 		close(pipe_fd[1]);
 		dup2(pipe_fd[0], STDIN_FILENO);
 		close(pipe_fd[0]);
-		waitpid(pid, NULL, 0);
 	}
-	// close(pipe_fd[0]);
 }
