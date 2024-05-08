@@ -41,12 +41,12 @@ void	fd_exit(int exit_code, int original_stdout)
  * @see get_next_line
  */
 
-void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int original_stdout)
+void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 {
 	char	*line;
 
 	close(fd[0]);
-	ft_putstr_fd("> ", original_stdout);
+	ft_putstr_fd("> ", stdout);
 	line = NULL;
 	while (1)
 	{
@@ -58,10 +58,11 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int original_stdout)
 			free(line);
 			free_parser(&tools->parser);
 			free_tools(tools);
-			fd_exit(EXIT_SUCCESS, original_stdout);
+			close(fd[1]);
+			exit(EXIT_SUCCESS);
 		}
 		write(fd[1], line, ft_strlen(line));
-		ft_putstr_fd("> ", original_stdout);
+		ft_putstr_fd("> ", stdout);
 		free(line);
 	}
 }
@@ -79,7 +80,7 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int original_stdout)
  * @see get_here_doc
  */
 
-void	here_doc(t_tools *tools, char *limiter, int original_stdout)
+void	here_doc(t_tools *tools, char *limiter, int stdout)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -87,18 +88,18 @@ void	here_doc(t_tools *tools, char *limiter, int original_stdout)
 	if (pipe(fd) == -1)
 	{
 		perror("Error creating pipes");
-		fd_exit(EXIT_FAILURE, original_stdout);
+		exit (EXIT_FAILURE);
 	}
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("Error in child process");
-		fd_exit(EXIT_FAILURE, original_stdout);
+		exit (EXIT_FAILURE);
 	}
 	if (pid == 0)
 	{
-		get_here_doc(tools, limiter, fd, original_stdout);
-		pipex_dup_and_close(-1, fd[1], original_stdout);
+		get_here_doc(tools, limiter, fd, stdout);
+		pipex_dup_and_close(-1, fd[1], stdout);
 	}
 	else
 	{
