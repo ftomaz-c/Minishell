@@ -16,11 +16,11 @@ void	exec_err(int err, char *str, char *value);
 void	wait_status(int pid, int *status);
 
 /*src/executor/redirections.c*/
-void	set_stdin(t_parser *parser, int fd);
-t_lexer	*set_input(t_parser *parser, t_lexer *redirection, int fd);
+void	set_stdin(t_tools *tools, t_parser *parser, int fd);
+t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection, int fd);
 void	set_stdout(t_parser *parser, int fd);
 t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd);
-void	redirection(t_parser *parser);
+void	redirection(t_tools *tools, t_parser *parser);
 
 /*src/executor/redirections_utils.c*/
 void	set_stdin_flag(t_parser *parser, t_lexer *redirections);
@@ -35,7 +35,7 @@ void	minishell_pipex(t_tools *tools, t_parser *parser);
 
 /*src/executor/here_doc.c*/
 void	handle_pipex_sigaction(void);
-void	get_here_doc(char *limiter, int fd[2], int original_stdout);
-void	here_doc(char *limiter, int original_stdout);
+void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int original_stdout);
+void	here_doc(t_tools *tools, char *limiter, int original_stdout);
 
 #endif

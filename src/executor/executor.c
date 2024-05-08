@@ -39,6 +39,7 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 			execve(cmd_args[0], cmd_args, envp);
 		exec_err(errno, cmd_args[0], value);
 	}
+	free(value);
 }
 
 /**
@@ -162,7 +163,7 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 void	set_and_exec(t_tools *tools, t_parser *parser)
 {
 	if (parser->redirections != NULL)
-		redirection(parser);
+		redirection(tools, parser);
 	if (parser->next)
 		minishell_pipex(tools, parser);
 	else

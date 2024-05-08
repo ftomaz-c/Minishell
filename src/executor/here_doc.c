@@ -3,7 +3,9 @@
 void	sig_pipex_handler(int sig)
 {
 	(void)sig;
-	exit(g_status);
+	g_status = 414;
+	return ;
+	// exit(g_status);
 }
 
 void	handle_pipex_sigaction(void)
@@ -39,7 +41,7 @@ void	fd_exit(int exit_code, int original_stdout)
  * @see get_next_line
  */
 
-void	get_here_doc(char *limiter, int fd[2], int original_stdout)
+void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int original_stdout)
 {
 	char	*line;
 
@@ -54,6 +56,8 @@ void	get_here_doc(char *limiter, int fd[2], int original_stdout)
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
 			free(line);
+			free_parser(&tools->parser);
+			free_tools(tools);
 			fd_exit(EXIT_SUCCESS, original_stdout);
 		}
 		write(fd[1], line, ft_strlen(line));
@@ -75,7 +79,7 @@ void	get_here_doc(char *limiter, int fd[2], int original_stdout)
  * @see get_here_doc
  */
 
-void	here_doc(char *limiter, int original_stdout)
+void	here_doc(t_tools *tools, char *limiter, int original_stdout)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -93,12 +97,18 @@ void	here_doc(char *limiter, int original_stdout)
 	}
 	if (pid == 0)
 	{
-		get_here_doc(limiter, fd, original_stdout);
+		get_here_doc(tools, limiter, fd, original_stdout);
 		pipex_dup_and_close(-1, fd[1], original_stdout);
 	}
 	else
 	{
 		pipex_dup_and_close(fd[1], fd[0], STDIN_FILENO);
 		waitpid(pid, NULL, 0);
+	}
+	if (g_status == 414)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		free_and_exit(tools);
 	}
 }

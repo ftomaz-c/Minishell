@@ -1,6 +1,6 @@
 #include "../../includes/executor.h"
 
-void	set_stdin(t_parser *parser, int fd)
+void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 {
 	int	fd_infile;
 
@@ -25,7 +25,7 @@ void	set_stdin(t_parser *parser, int fd)
 		close(fd_infile);
 	}
 	else if (parser->stdin_flag == LESS_LESS)
-		here_doc(parser->heredoc_limiter, dup(STDOUT_FILENO));
+		here_doc(tools, parser->heredoc_limiter, STDOUT_FILENO);
 	return ;
 }
 
@@ -42,7 +42,7 @@ void	set_stdin(t_parser *parser, int fd)
  * @see set_stdin_flag, set_stdout_flag
  */
 
-t_lexer	*set_input(t_parser *parser, t_lexer *redirection, int fd)
+t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection, int fd)
 {
 	t_lexer	*current;
 
@@ -55,7 +55,7 @@ t_lexer	*set_input(t_parser *parser, t_lexer *redirection, int fd)
 	}
 	else if (parser->stdin_flag == LESS)
 		parser->stdin_file_name = current->words;
-	set_stdin(parser, fd);
+	set_stdin(tools, parser, fd);
 	return (current);
 }
 
@@ -115,7 +115,7 @@ t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd)
 	return (current);
 }
 
-void	redirection(t_parser *parser)
+void	redirection(t_tools *tools, t_parser *parser)
 {
 	t_lexer	*current;
 	int		fd;
@@ -131,7 +131,7 @@ void	redirection(t_parser *parser)
 		if (current->token == '<')
 		{
 			set_stdin_flag(parser, current);
-			current = set_input(parser, current, fd);
+			current = set_input(tools, parser, current, fd);
 		}
 		if (current->token == '>')
 		{
