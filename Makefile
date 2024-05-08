@@ -83,6 +83,9 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)	$(NAME) is ready!$(NC)"
 	@echo "$(GREEN)###############################$(NC)"
 
+v:
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp_rl --track-origins=yes --track-fds=all ./$(NAME)
+
 clean:
 	@echo "$(CYAN)\n# Cleaning libft...\n$(NC)"
 	$(MAKE) -C libft clean

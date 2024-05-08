@@ -1,5 +1,21 @@
 #include "../../includes/executor.h"
 
+void	sig_pipex_handler(int sig)
+{
+	(void)sig;
+	exit(g_status);
+}
+
+void	handle_pipex_sigaction(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = &sig_pipex_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction (SIGINT, &sa, NULL);
+}
+
 void	fd_exit(int exit_code, int original_stdout)
 {
 	close(original_stdout);

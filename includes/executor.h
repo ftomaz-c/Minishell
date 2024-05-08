@@ -11,6 +11,7 @@ void	set_and_exec(t_tools *tools, t_parser *parser);
 int		executor(t_tools *tools);
 
 /*src/executor/executor_utils.c*/
+void	free_and_exit(t_tools *tools);
 void	exec_err(int err, char *str, char *value);
 void	wait_status(int pid, int *status);
 
@@ -33,6 +34,7 @@ void	pipex_dup_and_close(int close_fd, int dup_fd, int fd2);
 void	minishell_pipex(t_tools *tools, t_parser *parser);
 
 /*src/executor/here_doc.c*/
+void	handle_pipex_sigaction(void);
 void	get_here_doc(char *limiter, int fd[2], int original_stdout);
 void	here_doc(char *limiter, int original_stdout);
 

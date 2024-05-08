@@ -3,6 +3,7 @@
 
 # define _POSIX_C_SOURCE 199309L
 
+# include <unistd.h>
 # include "../libft/includes/libft.h"
 # include "structs.h"
 # include "utils.h"
@@ -31,8 +32,11 @@ extern int	g_status;
 void	minishell(t_tools *tools, char *line);
 
 /*src/minishell/signals.c*/
+void	ignore_sig_handler(int sig);
+void	react_sig_handler(int sig);
+void	handle_sigaction(void (*handler)(int));
+
 void	sig_handler(int sig);
-void	handle_sigaction(void);
 
 /*src/minishell/tools.c*/
 void	handle_shlvl(char *pre_lvl, char **new_lvl, size_t lvl);

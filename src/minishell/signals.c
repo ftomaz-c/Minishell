@@ -1,6 +1,13 @@
 #include "../../includes/minishell.h"
 
-void	sig_handler(int sig)
+void	ignore_sig_handler(int sig)
+{
+	(void)sig;
+	if (sig == SIGINT)
+		printf("\n");
+}
+
+void	react_sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -11,14 +18,14 @@ void	sig_handler(int sig)
 	}
 }
 
-void	handle_sigaction(void)
+void	handle_sigaction(void (*handler)(int))
 {
 	struct sigaction	sa;
 
-	sa.sa_handler = &sig_handler;
+	sa.sa_handler = handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction (SIGQUIT, &sa, NULL);
+	//sa.sa_handler = SIG_IGN;
+	//sigaction (SIGQUIT, &sa, NULL);
 }

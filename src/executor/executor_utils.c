@@ -1,5 +1,12 @@
 #include "../../includes/executor.h"
 
+void	free_and_exit(t_tools *tools)
+{
+	free_parser(&tools->parser);
+	free_tools(tools);
+	exit(g_status);
+}
+
 void	exec_err(int err, char *str, char *value)
 {
 	if (err == 1)
@@ -66,6 +73,11 @@ void	exec_err(int err, char *str, char *value)
 
 void	wait_status(int pid, int *status)
 {
+	int	i;
+
+	i = 0;
+	while (i < 214748330)
+		i++;
 	waitpid(pid, status, 0);
 	if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);

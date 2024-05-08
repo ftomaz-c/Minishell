@@ -39,7 +39,6 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 			execve(cmd_args[0], cmd_args, envp);
 		exec_err(errno, cmd_args[0], value);
 	}
-	exit(g_status);
 }
 
 /**
@@ -135,13 +134,12 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 	{
 		parser->builtin(tools, parser);
 		if (parser->next)
-		{
-			exit (g_status);
-		}
+			free_and_exit(tools);
 	}
 	else
 	{
 		exec_path(tools->path, parser->str, tools->env);
+		free_and_exit(tools);
 	}
 	return ;
 }
@@ -196,20 +194,22 @@ int	executor(t_tools *tools)
 	int			status;
 
 	parser = tools->parser;
+	status = 0;
 	if (exec_builtins(tools) && !tools->pipes && parser->str[0])
 		return (parser->builtin(tools, parser));
+	handle_sigaction(ignore_sig_handler);
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
+		handle_pipex_sigaction();
 		while (parser)
 		{
 			set_and_exec(tools, parser);
 			parser = parser->next;
 		}
-		waitpid(-1, &status, 0);
-		exit(g_status);
+		free_and_exit(tools);
 	}
 	else
 		wait_status(pid, &status);
