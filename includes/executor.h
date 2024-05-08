@@ -29,10 +29,11 @@ int		set_fd(t_lexer *current, t_parser *parser);
 void	std_err(int err, char *str);
 
 /*src/executor/pipex.c*/
+void	pipex_dup_and_close(int close_fd, int dup_fd, int fd2);
 void	minishell_pipex(t_tools *tools, t_parser *parser);
 
 /*src/executor/here_doc.c*/
-void	get_here_doc(char *limiter, int fd, int original_stdout);
+void	get_here_doc(char *limiter, int fd[2], int original_stdout);
 void	here_doc(char *limiter, int original_stdout);
 
 #endif

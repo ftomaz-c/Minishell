@@ -208,6 +208,7 @@ int	executor(t_tools *tools)
 			set_and_exec(tools, parser);
 			parser = parser->next;
 		}
+		waitpid(-1, &status, 0);
 		exit(g_status);
 	}
 	else

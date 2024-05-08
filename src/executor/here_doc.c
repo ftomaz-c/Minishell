@@ -23,10 +23,11 @@ void	fd_exit(int exit_code, int original_stdout)
  * @see get_next_line
  */
 
-void	get_here_doc(char *limiter, int fd, int original_stdout)
+void	get_here_doc(char *limiter, int fd[2], int original_stdout)
 {
 	char	*line;
 
+	close(fd[0]);
 	ft_putstr_fd("> ", original_stdout);
 	line = NULL;
 	while (1)
@@ -39,7 +40,7 @@ void	get_here_doc(char *limiter, int fd, int original_stdout)
 			free(line);
 			fd_exit(EXIT_SUCCESS, original_stdout);
 		}
-		write(fd, line, ft_strlen(line));
+		write(fd[1], line, ft_strlen(line));
 		ft_putstr_fd("> ", original_stdout);
 		free(line);
 	}
@@ -76,15 +77,12 @@ void	here_doc(char *limiter, int original_stdout)
 	}
 	if (pid == 0)
 	{
-		close(fd[0]);
-		get_here_doc(limiter, fd[1], original_stdout);
-		close(original_stdout);
+		get_here_doc(limiter, fd, original_stdout);
+		pipex_dup_and_close(-1, fd[1], original_stdout);
 	}
 	else
 	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
+		pipex_dup_and_close(fd[1], fd[0], STDIN_FILENO);
 		waitpid(pid, NULL, 0);
 	}
 }

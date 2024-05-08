@@ -1,5 +1,13 @@
 #include "../../includes/executor.h"
 
+void	pipex_dup_and_close(int close_fd, int dup_fd, int fd2)
+{
+	if (close_fd != -1)
+		close (close_fd);
+	dup2(dup_fd, fd2);
+	close(dup_fd);
+}
+
 /**
  * @brief Executes a piped command.
  * 
@@ -13,10 +21,12 @@
  * @see exec_path
  */
 
+
 void	minishell_pipex(t_tools *tools, t_parser *parser)
 {
 	int	pipe_fd[2];
 	int	pid;
+	int	status;
 
 	if (pipe(pipe_fd) == -1)
 		exit (EXIT_FAILURE);
@@ -29,16 +39,13 @@ void	minishell_pipex(t_tools *tools, t_parser *parser)
 			execute_cmd(tools, parser);
 		else
 		{
-			close(pipe_fd[0]);
-			dup2(pipe_fd[1], STDOUT_FILENO);
-			close(pipe_fd[1]);
+			pipex_dup_and_close(pipe_fd[0], pipe_fd[1], STDOUT_FILENO);
 			execute_cmd(tools, parser);
 		}
 	}
 	else
 	{
-		close(pipe_fd[1]);
-		dup2(pipe_fd[0], STDIN_FILENO);
-		close(pipe_fd[0]);
+		pipex_dup_and_close(pipe_fd[1], pipe_fd[0], STDIN_FILENO);
+		waitpid(pid, &status, WNOHANG);
 	}
 }
