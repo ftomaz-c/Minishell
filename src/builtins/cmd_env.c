@@ -33,7 +33,12 @@ int	cmd_env(t_tools *tools, t_parser *command)
 
 	i = 0;
 	(void)tools;
-	(void)command;
+	if (command->str[1])
+	{
+		printf("env: '%s': no such file or directory\n", command->str[1]);
+		g_status = 127;
+		return (g_status);
+	}
 	tmp = tools;
 	while (tmp->env[i])
 	{

@@ -14,18 +14,10 @@ void	react_sig_handler(int sig)
 	
 	if (sig == SIGINT)
 	{
-		if (!isatty(STDIN_FILENO))
-		{
-			printf("\n");
-			ft_putstr_fd(".minishell: ", STDOUT_FILENO);
-		}
-		else
-		{
-			printf("\n");
-			rl_replace_line("", 1);
-			rl_on_new_line();
-			rl_redisplay();
-		}
+		printf("\n");
+		rl_replace_line("", 1);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 	// if (sig == SIGQUIT)
 	// 	return ;

@@ -4,7 +4,7 @@
 # include "minishell.h"
 
 /*src/executor/executor.c*/
-void	exec_path(char **path_list, char **cmd_args, char **envp);
+void	exec_path(char **path_list, char **cmd_args, char **envp, int gnl);
 int		exec_builtins(t_tools *tools);
 void	execute_cmd(t_tools *tools, t_parser *parser);
 void	set_and_exec(t_tools *tools, t_parser *parser);
