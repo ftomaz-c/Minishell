@@ -46,7 +46,7 @@ void	config_tools(t_tools *tools, char **envp);
 /*src/minishell/tools_utils1.c*/
 int		compare_var_to_env(char *env, char *var);
 void	free_tools(t_tools *tools);
-char	**get_path(char **env);
+char	**get_path(t_tools *tools, char **env);
 
 /*src/minishell/tools_utils2.c*/
 void	remove_whoami(char **env, char *user);

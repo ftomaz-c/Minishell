@@ -84,17 +84,26 @@ void	update_env(t_tools *tools)
 
 void	config_tools(t_tools *tools, char **envp)
 {
+	char	buffer[1024];
+	char	*tmp;
+
 	tools->env = get_env(envp);
-	tools->path = get_path(tools->env);
+	tools->path = get_path(tools, tools->env);
 	tools->pwd = get_var_from_env(tools->env, "PWD");
+	if (!tools->pwd)
+	{
+		tools->pwd = getcwd(buffer, sizeof(buffer));
+		tmp = ft_strjoin("PWD=", tools->pwd);
+		export_variable_to_env(tools, tmp);
+		free(tmp);
+	}
 	tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
 	tools->user = get_var_from_env(tools->env, "USER");
 	tools->name = get_var_from_env(tools->env, "NAME");
 	tools->home = get_var_from_env(tools->env, "HOME");
 	if (tools->home == NULL)
 		tools->home = get_source_home_var(tools, "/home/");
-	if (!tools->path && !tools->pwd && !tools->oldpwd
-		&& !tools->home && !tools->user && !tools->name)
+	if (!tools->path && !tools->pwd && !tools->home)
 	{
 		ft_putstr_fd("Error: Failed to allocate memory for tools\n",
 			STDERR_FILENO);

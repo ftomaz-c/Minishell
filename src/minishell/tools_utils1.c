@@ -89,7 +89,7 @@ void	free_tools(t_tools *tools)
  * ```
  */
 
-char	**get_path(char **env)
+char	**get_path(t_tools *tools, char **env)
 {
 	char	*path_from_envp;
 	char	**path_list;
@@ -97,9 +97,8 @@ char	**get_path(char **env)
 	path_from_envp = get_var_from_env(env, "PATH");
 	if (!path_from_envp)
 	{
-		ft_putstr_fd("minishell: No such file or directory\n", STDERR_FILENO);
-		g_status = 127;
-		exit (g_status);
+		path_from_envp = ft_strdup("PATH=/bin:/usr/bin");
+		export_variable_to_env(tools, path_from_envp);
 	}
 	path_list = ft_split(path_from_envp, ":");
 	free(path_from_envp);
