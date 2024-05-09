@@ -11,7 +11,7 @@ void	handle_shlvl(char *pre_lvl, char **new_lvl, size_t lvl)
 	else
 		*new_lvl = ft_itoa(lvl + 1);
 	if (ft_atoll(*new_lvl) > 1000)
-	{	
+	{
 		*new_lvl = ft_itoa(1);
 		ft_putstr_fd("bash: warning: shell level (", STDERR_FILENO);
 		ft_putstr_fd(ft_itoa(lvl + 1), STDERR_FILENO);
@@ -84,19 +84,9 @@ void	update_env(t_tools *tools)
 
 void	config_tools(t_tools *tools, char **envp)
 {
-	char	buffer[1024];
-	char	*tmp;
-
 	tools->env = get_env(envp);
 	tools->path = get_path(tools, tools->env);
-	tools->pwd = get_var_from_env(tools->env, "PWD");
-	if (!tools->pwd)
-	{
-		tools->pwd = getcwd(buffer, sizeof(buffer));
-		tmp = ft_strjoin("PWD=", tools->pwd);
-		export_variable_to_env(tools, tmp);
-		free(tmp);
-	}
+	tools->pwd = get_pwd(tools, tools->env);
 	tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
 	tools->user = get_var_from_env(tools->env, "USER");
 	tools->name = get_var_from_env(tools->env, "NAME");

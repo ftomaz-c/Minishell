@@ -1,5 +1,22 @@
 #include "../../includes/minishell.h"
 
+char	*get_pwd(t_tools *tools, char **env)
+{
+	char	buffer[1024];
+	char	*pwd;
+	char	*tmp;
+
+	pwd = get_var_from_env(env, "PWD");
+	if (!pwd)
+	{
+		pwd = ft_strdup(getcwd(buffer, sizeof(buffer)));
+		tmp = ft_strjoin("PWD=", pwd);
+		export_variable_to_env(tools, tmp);
+		free(tmp);
+	}
+	return (pwd);
+}
+
 int	compare_var_to_env(char *env, char *var)
 {
 	int	i;
