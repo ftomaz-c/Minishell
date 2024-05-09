@@ -39,7 +39,6 @@ void	exec_path(char **path_list, char **cmd_args, char **envp)
 			execve(cmd_args[0], cmd_args, envp);
 		exec_err(errno, cmd_args[0], value);
 	}
-	free(value);
 }
 
 /**
