@@ -5,6 +5,8 @@ void	ignore_sig_handler(int sig)
 	(void)sig;
 	if (sig == SIGINT)
 		printf("\n");
+	// if (sig == SIGQUIT)
+	// 	return ;
 }
 
 void	react_sig_handler(int sig)
@@ -25,6 +27,8 @@ void	react_sig_handler(int sig)
 			rl_redisplay();
 		}
 	}
+	// if (sig == SIGQUIT)
+	// 	return ;
 }
 
 void	handle_sigaction(void (*handler)(int))
@@ -35,6 +39,6 @@ void	handle_sigaction(void (*handler)(int))
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
-	//sa.sa_handler = SIG_IGN;
-	//sigaction (SIGQUIT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction (SIGQUIT, &sa, NULL);
 }

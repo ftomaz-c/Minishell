@@ -2,6 +2,7 @@
 
 void	minishell(t_tools *tools, char *line)
 {
+	tools->nprompts++;
 	add_history_file(tools, line, ".minishell_history");
 	if (check_unclosed_quotes(line))
 	{

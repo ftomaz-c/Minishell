@@ -4,8 +4,7 @@ void	sig_pipex_handler(int sig)
 {
 	(void)sig;
 	g_status = 414;
-	return ;
-	// exit(g_status);
+	return  ;
 }
 
 void	handle_pipex_sigaction(void)
@@ -16,6 +15,8 @@ void	handle_pipex_sigaction(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction (SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction (SIGQUIT, &sa, NULL);
 }
 
 void	fd_exit(int exit_code, int original_stdout)
@@ -41,6 +42,14 @@ void	fd_exit(int exit_code, int original_stdout)
  * @see get_next_line
  */
 
+void	close_heredoc_exit(t_tools *tools, int fd, int status)
+{
+	free_parser(&tools->parser);
+	free_tools(tools);
+	close(fd);
+	exit(status);
+}
+
 void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 {
 	char	*line;
@@ -51,15 +60,16 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 	while (1)
 	{
 		line = get_next_line(1);
-		if (!line)
-			break ;
+		if (!line && g_status != 414)
+		{			
+			ft_putstr_fd("\n", stdout);
+			printf("minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", tools->nprompts, limiter);
+			close_heredoc_exit(tools, fd[1], EXIT_FAILURE);
+		}
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
 			free(line);
-			free_parser(&tools->parser);
-			free_tools(tools);
-			close(fd[1]);
-			exit(EXIT_SUCCESS);
+			close_heredoc_exit(tools, fd[1], EXIT_SUCCESS);
 		}
 		write(fd[1], line, ft_strlen(line));
 		ft_putstr_fd("> ", stdout);

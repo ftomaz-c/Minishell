@@ -100,6 +100,7 @@ void	config_tools(t_tools *tools, char **envp)
 		return ;
 	}
 	tools->pipes = 0;
+	tools->nprompts = 0;
 	tools->parser = NULL;
 	tools->exit = 0;
 	update_env(tools);
