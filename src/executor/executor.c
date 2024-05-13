@@ -129,15 +129,15 @@ int	exec_builtins(t_tools *tools)
 
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
-	char *cmd_args[2];
+	// char *cmd_args[2];
 
-	if (parser->builtin && (parser->builtin == cmd_env && parser->str[1]))
-	{
-		cmd_args[0] = parser->str[2];
-		cmd_args[1] = NULL; 
-		exec_path(tools->path, cmd_args, NULL, tools->gnl);
-		free_and_exit(tools);
-	}	
+	// if (parser->builtin && (parser->builtin == cmd_env && parser->str[1]))
+	// {
+	// 	cmd_args[0] = parser->str[2];
+	// 	cmd_args[1] = NULL;
+	// 	exec_path(tools->path, cmd_args, tools->env, tools->gnl);
+	// 	free_and_exit(tools);
+	// }
 	if (parser->builtin && (exec_builtins(tools) || parser->builtin == cmd_echo
 			|| parser->builtin == cmd_env))
 	{
