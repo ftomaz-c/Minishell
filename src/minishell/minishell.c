@@ -50,6 +50,7 @@ void	non_interactive_mode(t_tools *tools, char *line)
 		i++;
 	}
 	free(lines);
+	tools->exit = 1;
 }
 
 void	interactive_mode(t_tools *tools, char *line)

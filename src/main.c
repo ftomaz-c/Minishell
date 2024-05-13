@@ -15,16 +15,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		handle_sigaction(react_sig_handler);
 		if (!isatty(STDIN_FILENO))
-		{
 			non_interactive_mode(&tools, line);
-			break ;
-		}
 		else
-		{
 			interactive_mode(&tools, line);
-			if (tools.exit)
-				break ;
-		}
+		if (tools.exit)
+			break ;
 	}
 	free_and_exit(&tools);
 	return (0);
