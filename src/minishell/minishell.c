@@ -33,7 +33,7 @@ void	non_interactive_mode(t_tools *tools, char *line)
 
 	n = 0;
 	lines = ft_calloc(sizeof(char **), 1024);
-	tools->gnl = 1;
+	tools->nint_mode = 1;
 	line = get_next_line(0);
 	while (line)
 	{

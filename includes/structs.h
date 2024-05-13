@@ -18,7 +18,7 @@ typedef struct s_tools
 	int				pipes;
 	int				exit;
 	int				nprompts;
-	int				gnl;
+	int				nint_mode;
 	int				tflag;
 	struct s_lexer	*lexer;
 	struct s_parser	*parser;
