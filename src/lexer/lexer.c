@@ -49,7 +49,7 @@ void	add_word_to_node(char *word, t_lexer **lexer)
 	}
 	node->token = '\0';
 	if (*lexer)
-	{	
+	{
 		last = *lexer;
 		while (last->next)
 			last = last->next;
@@ -99,7 +99,7 @@ void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
 	node->words = NULL;
 	node->token = token;
 	if (*lexer)
-	{	
+	{
 		last = *lexer;
 		while (last->next)
 			last = last->next;

@@ -102,7 +102,7 @@ void	exit_err(int err, char *str)
 	{
 		ft_putstr_fd("exit\nbash: exit: ", STDERR_FILENO);
 		if (ft_strcmp(str, "exit") != 0)
-		{	
+		{
 			ft_putstr_fd(str, STDERR_FILENO);
 			ft_putstr_fd(": ", STDERR_FILENO);
 		}
@@ -112,7 +112,7 @@ void	exit_err(int err, char *str)
 	{
 		ft_putstr_fd("exit\nbash: exit: ", STDERR_FILENO);
 		if (ft_strcmp(str, "exit") != 0)
-		{	
+		{
 			ft_putstr_fd(str, STDERR_FILENO);
 			ft_putstr_fd(": ", STDERR_FILENO);
 		}

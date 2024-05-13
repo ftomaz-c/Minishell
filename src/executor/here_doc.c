@@ -1,24 +1,5 @@
 #include "../../includes/executor.h"
 
-void	sig_pipex_handler(int sig)
-{
-	(void)sig;
-	g_status = 414;
-	return  ;
-}
-
-void	handle_pipex_sigaction(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = &sig_pipex_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction (SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction (SIGQUIT, &sa, NULL);
-}
-
 void	fd_exit(int exit_code, int original_stdout)
 {
 	close(original_stdout);
@@ -61,9 +42,10 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 	{
 		line = get_next_line(1);
 		if (!line && g_status != 414)
-		{			
+		{
 			ft_putstr_fd("\n", stdout);
-			printf("minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", tools->nprompts, limiter);
+			printf("minishell: warning: here-document at line %d delimited by\
+				end-of-file (wanted `%s')\n", tools->nprompts, limiter);
 			close_heredoc_exit(tools, fd[1], EXIT_FAILURE);
 		}
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
@@ -74,6 +56,16 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 		write(fd[1], line, ft_strlen(line));
 		ft_putstr_fd("> ", stdout);
 		free(line);
+	}
+}
+
+void	signal_exit(t_tools *tools, int fd[2])
+{
+	if (g_status == 414)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		free_and_exit(tools);
 	}
 }
 
@@ -116,10 +108,5 @@ void	here_doc(t_tools *tools, char *limiter, int stdout)
 		pipex_dup_and_close(fd[1], fd[0], STDIN_FILENO);
 		waitpid(pid, NULL, 0);
 	}
-	if (g_status == 414)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		free_and_exit(tools);
-	}
+	signal_exit(tools, fd);
 }

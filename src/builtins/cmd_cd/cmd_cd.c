@@ -40,7 +40,7 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 	if (!get_var_from_env(tools->env, "HOME"))
 		cd_err(4, command->str[1], 0);
 	else if (ft_strcmp(tools->pwd, home_var) != 0)
-	{	
+	{
 		if (chdir(home_var) == 0)
 		{
 			free(tools->oldpwd);

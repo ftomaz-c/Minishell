@@ -11,13 +11,15 @@ void	set_and_exec(t_tools *tools, t_parser *parser);
 int		executor(t_tools *tools);
 
 /*src/executor/executor_utils.c*/
+char	**basic_env(void);
 void	free_and_exit(t_tools *tools);
 void	exec_err(int err, char *str, char *value);
 void	wait_status(int pid, int *status);
 
 /*src/executor/redirections.c*/
 void	set_stdin(t_tools *tools, t_parser *parser, int fd);
-t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection, int fd);
+t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
+			int fd);
 void	set_stdout(t_parser *parser, int fd);
 t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd);
 void	redirection(t_tools *tools, t_parser *parser);
@@ -35,7 +37,12 @@ void	minishell_pipex(t_tools *tools, t_parser *parser);
 
 /*src/executor/here_doc.c*/
 void	handle_pipex_sigaction(void);
-void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int original_stdout);
+void	get_here_doc(t_tools *tools, char *limiter, int fd[2],
+			int original_stdout);
 void	here_doc(t_tools *tools, char *limiter, int original_stdout);
+
+/*src/executor/child_signals.c*/
+void	sig_pipex_handler(int sig);
+void	handle_pipex_sigaction(void);
 
 #endif

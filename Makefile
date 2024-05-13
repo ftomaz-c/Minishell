@@ -47,6 +47,7 @@ SRC :=	src/main.c \
 		src/executor/redirections_utils.c \
 		src/executor/here_doc.c \
 		src/executor/pipex.c \
+		src/executor/child_signals.c \
 
 OBJ := $(SRC:.c=.o)
 

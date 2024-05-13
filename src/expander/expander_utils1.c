@@ -174,7 +174,7 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 	free(var);
 	suffix = ft_substr(str, end, ft_strlen(str) - end);
 	if (prefix[0] == '\"' && str[1] == '$')
-	{	
+	{
 		free(prefix);
 		prefix = ft_strdup("");
 		value = add_quotes_to_value(value, 0, 1, 0);

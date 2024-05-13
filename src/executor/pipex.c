@@ -21,7 +21,6 @@ void	pipex_dup_and_close(int close_fd, int dup_fd, int fd2)
  * @see exec_path
  */
 
-
 void	minishell_pipex(t_tools *tools, t_parser *parser)
 {
 	int	pipe_fd[2];

@@ -25,7 +25,7 @@ void	sort_array(char **env_copy)
 	{
 		tmp = env_copy[i];
 		if (strcmp(env_copy[i], env_copy[i + 1]) > 0)
-		{	
+		{
 			env_copy[i] = env_copy[i + 1];
 			env_copy[i + 1] = tmp;
 			i = 0;

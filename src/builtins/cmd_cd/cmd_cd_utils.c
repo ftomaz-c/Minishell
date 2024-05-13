@@ -34,7 +34,7 @@ void	update_env_vars(t_tools *tools)
 		{
 			free(tools->env[i]);
 			tools->env[i] = ft_strjoin("PWD=", tools->pwd);
-		}	
+		}
 		else if (strncmp("OLDPWD", tools->env[i], 6) == 0)
 		{
 			free(tools->env[i]);
@@ -91,7 +91,7 @@ int	cd_handle_dot_path(t_tools *tools)
 	if (chdir(tools->pwd) == 0)
 		return (EXIT_SUCCESS);
 	else
-	{	
+	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd("error retrieving current directory: ", STDERR_FILENO);
 		ft_putstr_fd("getcwd: cannot access parent directories", STDERR_FILENO);

@@ -72,7 +72,7 @@ void	handle_characters(char *s, int *i, int *start)
 	while (s[*i] && (s[*i] != ' ' && s[*i] != '\"' && s[*i] != '\''))
 		(*i)++;
 	if (s[*i] == '\"' || s[*i] == '\'')
-	{	
+	{
 		if (s[*i] && s[*i - 1] && s[*i - 1] != ' ')
 		{
 			tmp = (*i);

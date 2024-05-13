@@ -1,5 +1,14 @@
 #include "../../includes/executor.h"
 
+char	**basic_env(void)
+{
+	char	**b_env;
+
+	b_env = calloc (sizeof(char *), 2);
+	b_env[0] = ft_strdup("PATH=/bin:/usr/bin");
+	return (b_env);
+}
+
 void	free_and_exit(t_tools *tools)
 {
 	free_parser(&tools->parser);
@@ -19,8 +28,6 @@ void	exec_err(int err, char *str, char *value)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		// if (value)
-		// 	free(value);
 		g_status = 127;
 	}
 	else if (err == 8)
@@ -78,7 +85,7 @@ void	wait_status(int pid, int *status)
 	int	i;
 
 	i = 0;
-	while (i < 214748330)
+	while (i < 100000000)
 		i++;
 	waitpid(pid, status, 0);
 	if (WIFEXITED(*status))

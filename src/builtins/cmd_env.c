@@ -1,5 +1,16 @@
 #include "../../includes/builtins.h"
 
+void	env_args(t_parser *command)
+{
+	if (ft_strcmp(command->str[1], "-i") == 0)
+	{
+		g_status = EXIT_SUCCESS;
+		return ;
+	}
+	printf("env: '%s': no such file or directory\n", command->str[1]);
+	g_status = 127;
+}
+
 /**
  * @brief Prints the environment variables.
  * 
@@ -32,16 +43,9 @@ int	cmd_env(t_tools *tools, t_parser *command)
 	t_tools	*tmp;
 
 	i = 0;
-	(void)tools;
 	if (command->str[1])
 	{
-		if (ft_strcmp(command->str[1], "-i") == 0)
-		{
-			g_status = EXIT_SUCCESS;
-			return (g_status);
-		}
-		printf("env: '%s': no such file or directory\n", command->str[1]);
-		g_status = 127;
+		env_args(command);
 		return (g_status);
 	}
 	tmp = tools;

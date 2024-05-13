@@ -43,7 +43,6 @@ void	get_whoami(char **env)
 
 char	*get_source_home_var(t_tools *tools, char *str)
 {
-	//char	*line;
 	char	*home;
 	char	*user;
 	int		fd;

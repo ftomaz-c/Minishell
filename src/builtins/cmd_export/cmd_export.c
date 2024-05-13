@@ -26,7 +26,7 @@ void	sort_print_env(t_tools *tools)
 	env_copy = get_env_export(tools->env, i);
 	sort_array(env_copy);
 	while (env_copy[i])
-	{	
+	{
 		if (ft_strncmp(env_copy[i], "declare -x _=", 13) == 0)
 			i++;
 		else
@@ -65,7 +65,7 @@ int	check_valid_export(char *parser)
 	i = 0;
 	if (ft_strcmp(parser, "=") == 0 || parser[i] == '='
 		|| (!ft_isalpha(parser[i]) && parser[i] != '_'))
-	{	
+	{
 		export_err(1, parser);
 		return (0);
 	}

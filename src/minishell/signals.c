@@ -5,13 +5,10 @@ void	ignore_sig_handler(int sig)
 	(void)sig;
 	if (sig == SIGINT)
 		printf("\n");
-	// if (sig == SIGQUIT)
-	// 	return ;
 }
 
 void	react_sig_handler(int sig)
 {
-	
 	if (sig == SIGINT)
 	{
 		printf("\n");
@@ -19,8 +16,6 @@ void	react_sig_handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	// if (sig == SIGQUIT)
-	// 	return ;
 }
 
 void	handle_sigaction(void (*handler)(int))

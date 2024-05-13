@@ -29,6 +29,8 @@
 extern int	g_status;
 
 /*src/minishell/minishell.c*/
+void	interactive_mode(t_tools *tools, char *line);
+void	non_interactive_mode(t_tools *tools, char *line);
 void	minishell(t_tools *tools, char *line);
 
 /*src/minishell/signals.c*/

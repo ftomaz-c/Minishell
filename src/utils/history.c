@@ -112,9 +112,9 @@ void	add_history_file(t_tools *tools, char *line, char *file_name)
 	}
 	file_path = get_file_path_from_home(tools->home, file_name);
 	if (!file_path)
-		perror("Error: Failed to retrieve file path. History won't be stored\n");
+		perror("Error: Failed to retrieve file path. History wont be stored\n");
 	if (line && *line)
-	{		
+	{
 		fd = open(file_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
 		{

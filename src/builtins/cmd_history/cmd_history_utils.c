@@ -5,23 +5,23 @@ void	handle_history_sizes(int *arg, int *nlines, int *size)
 	if (*arg == -1)
 	{
 		if (*nlines > 1000)
-		{	
+		{
 			*arg = *nlines - 1000;
 			*size = *nlines - *arg;
 		}
 		else
-		{	
+		{
 			*arg = 0;
 			*size = *nlines;
 		}
 	}
 	else if (*arg < *nlines)
-	{	
+	{
 		*size = *arg;
 		*arg = *nlines - *arg;
 	}
 	else
-	{	
+	{
 		*arg = 0;
 		*size = *nlines;
 	}
@@ -125,5 +125,5 @@ void	print_buffer(char **str)
 		i++;
 		if (!str[i])
 			printf("\n");
-	}	
+	}
 }

@@ -42,7 +42,8 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
  * @see set_stdin_flag, set_stdout_flag
  */
 
-t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection, int fd)
+t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
+	int fd)
 {
 	t_lexer	*current;
 

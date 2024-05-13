@@ -97,7 +97,7 @@ void	get_buffer_lines_print(char **buffer, int size, int i)
 	while (buffer[nlines])
 		nlines++;
 	if (size > nlines)
-	{	
+	{
 		size = nlines;
 		j = 0;
 	}
