@@ -34,10 +34,12 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 {
 	char	new_pwd[1024];
 	char	*home_var;
+	char	*env_var;
 
 	(void)command;
 	home_var = tools->home;
-	if (!get_var_from_env(tools->env, "HOME"))
+	env_var = get_var_from_env(tools->env, "HOME");
+	if (!env_var)
 		cd_err(4, command->str[1], 0);
 	else if (ft_strcmp(tools->pwd, home_var) != 0)
 	{
@@ -49,6 +51,7 @@ int	cd_no_path(t_tools *tools, t_parser *command)
 			tools->pwd = ft_strdup(getcwd(new_pwd, sizeof(new_pwd)));
 		}
 	}
+	free(env_var);
 	return (0);
 }
 

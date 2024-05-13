@@ -14,9 +14,9 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		handle_sigaction(react_sig_handler);
-		if (!isatty(STDIN_FILENO))
-			non_interactive_mode(&tools, line);
-		else
+		// if (!isatty(STDIN_FILENO))
+		// 	non_interactive_mode(&tools, line);
+		// else
 			interactive_mode(&tools, line);
 		if (tools.exit)
 			break ;
