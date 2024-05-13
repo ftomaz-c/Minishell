@@ -41,7 +41,7 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 	while (1)
 	{
 		line = get_next_line(1);
-		if (!line && g_status != 414)
+		if (!line && g_status != 901)
 		{
 			ft_putstr_fd("\n", stdout);
 			printf("minishell: warning: here-document at line %d delimited by\
@@ -61,7 +61,7 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 
 void	signal_exit(t_tools *tools, int fd[2])
 {
-	if (g_status == 414)
+	if (g_status == 901)
 	{
 		close(fd[0]);
 		close(fd[1]);

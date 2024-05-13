@@ -2,8 +2,8 @@
 
 void	sig_pipex_handler(int sig)
 {
-	(void)sig;
-	g_status = 414;
+	if (sig == SIGINT)
+		g_status = 901;
 	return ;
 }
 
