@@ -4,7 +4,7 @@
 # include "minishell.h"
 
 /*src/executor/executor.c*/
-void	exec_path(char **path_list, char **cmd_args, char **envp, int gnl);
+void	exec_path(t_tools *tools, char **cmd_args, char **envp);
 int		exec_builtins(t_tools *tools);
 void	execute_cmd(t_tools *tools, t_parser *parser);
 void	set_and_exec(t_tools *tools, t_parser *parser);
@@ -13,7 +13,7 @@ int		executor(t_tools *tools);
 /*src/executor/executor_utils.c*/
 char	**basic_env(void);
 void	free_and_exit(t_tools *tools);
-void	exec_err(int err, char *str, char *value);
+void	exec_err(t_tools *tools, int err, char *str, char *value);
 void	wait_status(int pid, int *status);
 
 /*src/executor/redirections.c*/

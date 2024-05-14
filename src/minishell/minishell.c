@@ -45,6 +45,7 @@ void	non_interactive_mode(t_tools *tools, char *line)
 	i = 0;
 	while (i < n)
 	{
+		tools->line_count++;
 		minishell(tools, lines[i]);
 		free(lines[i]);
 		i++;

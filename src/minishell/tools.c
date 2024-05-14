@@ -104,5 +104,6 @@ void	config_tools(t_tools *tools, char **envp)
 	tools->nprompts = 0;
 	tools->parser = NULL;
 	tools->exit = 0;
+	tools->line_count = 0;
 	update_env(tools);
 }

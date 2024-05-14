@@ -13,7 +13,7 @@
  * list are properly initialized.
  */
 
-void	exec_path(char **path_list, char **cmd_args, char **envp, int gnl)
+void	exec_path(t_tools *tools, char **cmd_args, char **envp)
 {
 	char	*cmd_path;
 	char	*value;
@@ -23,21 +23,21 @@ void	exec_path(char **path_list, char **cmd_args, char **envp, int gnl)
 	i = 0;
 	value = get_var_from_env(envp, "PATH");
 	if (!value)
-		exec_err(1, cmd_args[0], value);
+		exec_err(tools, 1, cmd_args[0], value);
 	else
 	{
-		while (path_list[i] && cmd_args[0] && cmd_args[0][0] != '.')
+		while (tools->path[i] && cmd_args[0] && cmd_args[0][0] != '.')
 		{
-			tmp = ft_strjoin(path_list[i], "/");
+			tmp = ft_strjoin(tools->path[i], "/");
 			cmd_path = ft_strjoin(tmp, cmd_args[0]);
 			free(tmp);
 			execve(cmd_path, cmd_args, envp);
 			free(cmd_path);
 			i++;
 		}
-		if (cmd_args[0] && !gnl)
+		if (cmd_args[0] && !tools->nint_mode)
 			execve(cmd_args[0], cmd_args, envp);
-		exec_err(errno, cmd_args[0], value);
+		exec_err(tools, errno, cmd_args[0], value);
 	}
 }
 
@@ -135,7 +135,7 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 	{
 		cmd_args[0] = parser->str[2];
 		cmd_args[1] = NULL;
-		exec_path(tools->path, cmd_args, basic_env(), tools->nint_mode);
+		exec_path(tools, cmd_args, basic_env());
 		free_and_exit(tools);
 	}
 	if (parser->builtin && (exec_builtins(tools) || parser->builtin == cmd_echo
@@ -147,7 +147,7 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 	}
 	else
 	{
-		exec_path(tools->path, parser->str, tools->env, tools->nint_mode);
+		exec_path(tools, parser->str, tools->env);
 		free_and_exit(tools);
 	}
 	return ;

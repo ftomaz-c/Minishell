@@ -19,6 +19,7 @@ typedef struct s_tools
 	int				exit;
 	int				nprompts;
 	int				nint_mode;
+	int				line_count;
 	int				tflag;
 	struct s_lexer	*lexer;
 	struct s_parser	*parser;
