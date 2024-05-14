@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools_utils2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
+/*   Updated: 2024/05/14 15:48:25 by ftomaz-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-void	remove_whoami(char **env, char *user)
+void	remove_whoami(char **env)
 {
 	pid_t	pid;
 	int		status;
@@ -16,7 +28,6 @@ void	remove_whoami(char **env, char *user)
 		execve("/usr/bin/rm", argv, env);
 	else
 		waitpid(pid, &status, 0);
-	free(user);
 }
 
 void	get_whoami(char **env)
@@ -44,6 +55,13 @@ void	get_whoami(char **env)
 char	*get_source_home_var(t_tools *tools, char *str)
 {
 	char	*home;
+
+	home = ft_strjoin(str, tools->user);
+	return (home);
+}
+
+char	*get_source_user_var(t_tools *tools)
+{
 	char	*user;
 	int		fd;
 
@@ -52,8 +70,6 @@ char	*get_source_home_var(t_tools *tools, char *str)
 	user = get_next_line(fd);
 	close(fd);
 	user[ft_strlen(user) - 1] = '\0';
-	home = ft_strjoin(str, user);
-	remove_whoami(tools->env, user);
-	close(fd);
-	return (home);
+	remove_whoami(tools->env);
+	return (user);
 }

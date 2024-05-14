@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
+/*   Updated: 2024/05/14 15:30:25 by ftomaz-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/executor.h"
 
 char	**basic_env(void)
@@ -71,7 +83,7 @@ void	wait_status(int pid, int *status)
 	int	i;
 
 	i = 0;
-	while (i < 100000000)
+	while (i < 1000000)
 		i++;
 	waitpid(pid, status, 0);
 	if (WIFEXITED(*status))

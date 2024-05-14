@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
+/*   Updated: 2024/05/14 15:43:01 by ftomaz-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	minishell(t_tools *tools, char *line)
@@ -56,7 +68,7 @@ void	non_interactive_mode(t_tools *tools, char *line)
 
 void	interactive_mode(t_tools *tools, char *line)
 {
-	line = readline(".minishell: ");
+	line = prompt_line(tools);
 	if (!line)
 	{
 		tools->exit = 1;

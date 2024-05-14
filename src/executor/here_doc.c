@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
+/*   Updated: 2024/05/14 15:30:40 by ftomaz-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/executor.h"
 
 void	fd_exit(int exit_code, int original_stdout)
@@ -44,8 +56,9 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 		if (!line && g_status != 901)
 		{
 			ft_putstr_fd("\n", stdout);
-			printf("minishell: warning: here-document at line %d delimited by\
-				end-of-file (wanted `%s')\n", tools->nprompts, limiter);
+			printf("minishell: warning: here-document at line %d delimited by",
+				tools->nprompts);
+			printf("end-of-file (wanted `%s')\n", limiter);
 			close_heredoc_exit(tools, fd[1], EXIT_FAILURE);
 		}
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
