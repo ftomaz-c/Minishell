@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:33 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:33:30 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,8 @@ int	executor(t_tools *tools)
 		while (parser)
 		{
 			set_and_exec(tools, parser);
+			if (parser->builtin)
+				wait(0);
 			parser = parser->next;
 		}
 		free_and_exit(tools);

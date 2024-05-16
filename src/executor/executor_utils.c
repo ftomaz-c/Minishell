@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:25 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:50:04 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,22 @@ void	exec_err(t_tools *tools, int err, char *str, char *value)
  * @param status Pointer to an integer to store the exit 
  * status of the child process.
  * */
+
+// void delay(int milliseconds) {
+//     // Get the current time in milliseconds
+//     long long start_time = (long long)time(NULL) * 1000;
+//     long long end_time = start_time + milliseconds;
+	
+//     // Loop until the specified time has elapsed
+//     while ((long long)time(NULL) * 1000 < end_time);
+// }
+
+
 void	wait_status(int pid, int *status)
 {
-	int	i;
+	(void)pid;
 
-	i = 0;
-	while (i < 1000000)
-		i++;
-	waitpid(pid, status, 0);
+	waitpid(-1, status, 0);
 	if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
 }
