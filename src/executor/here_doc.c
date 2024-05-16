@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:40 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/16 20:44:04 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,27 @@ void	close_heredoc_exit(t_tools *tools, int fd, int status)
 	exit(status);
 }
 
+void	signal_exit(t_tools *tools, int fd[2])
+{
+	if (g_status == 901)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		free_and_exit(tools);
+	}
+}
+
 void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 {
 	char	*line;
 
 	close(fd[0]);
-	ft_putstr_fd("> ", stdout);
 	line = NULL;
-	while (1)
+	while (g_status != 901)
 	{
-		line = get_next_line(1);
+		line = readline("> ");
 		if (!line && g_status != 901)
 		{
-			ft_putstr_fd("\n", stdout);
 			printf("minishell: warning: here-document at line %d delimited by",
 				tools->nprompts);
 			printf("end-of-file (wanted `%s')\n", limiter);
@@ -67,20 +75,10 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 			close_heredoc_exit(tools, fd[1], EXIT_SUCCESS);
 		}
 		write(fd[1], line, ft_strlen(line));
-		ft_putstr_fd("> ", stdout);
 		free(line);
 	}
 }
 
-void	signal_exit(t_tools *tools, int fd[2])
-{
-	if (g_status == 901)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		free_and_exit(tools);
-	}
-}
 
 /**
  * @brief Implements here documents functionality.
@@ -105,6 +103,7 @@ void	here_doc(t_tools *tools, char *limiter, int stdout)
 		perror("Error creating pipes");
 		exit (EXIT_FAILURE);
 	}
+	handle_sigaction(sig_pipex_handler);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -113,11 +112,14 @@ void	here_doc(t_tools *tools, char *limiter, int stdout)
 	}
 	if (pid == 0)
 	{
+		handle_sigaction(sig_pipex_handler);
 		get_here_doc(tools, limiter, fd, stdout);
+		signal_exit(tools, fd);
 		pipex_dup_and_close(-1, fd[1], stdout);
 	}
 	else
 	{
+		signal_exit(tools, fd);
 		pipex_dup_and_close(fd[1], fd[0], STDIN_FILENO);
 		waitpid(pid, NULL, 0);
 	}
