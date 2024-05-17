@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 		// if (!isatty(STDIN_FILENO))
 		// 	non_interactive_mode(&tools, line);
 		// else
-			interactive_mode(&tools, line);
+		interactive_mode(&tools, line);
 		if (tools.exit)
 			break ;
 	}

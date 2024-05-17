@@ -25,7 +25,7 @@ void	minishell_pipex(t_tools *tools, t_parser *parser)
 {
 	int	pipe_fd[2];
 	int	pid;
-	int	status;
+	//int	status;
 
 	if (pipe(pipe_fd) == -1)
 		exit (EXIT_FAILURE);
@@ -45,7 +45,6 @@ void	minishell_pipex(t_tools *tools, t_parser *parser)
 	else
 	{
 		pipex_dup_and_close(pipe_fd[1], pipe_fd[0], STDIN_FILENO);
-		// waitpid(pid, &status, WNOHANG);
-		wait_status(pid, &status);
+		waitpid(-1, NULL, WNOHANG);
 	}
 }

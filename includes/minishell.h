@@ -3,6 +3,10 @@
 
 # define _POSIX_C_SOURCE 199309L
 
+# ifndef SA_RESTART
+#  define SA_RESTART 0x10000000
+# endif
+
 # include <unistd.h>
 # include "../libft/includes/libft.h"
 # include "structs.h"
@@ -27,6 +31,7 @@
 
 // extern int	global_status;
 extern int	g_status;
+extern int	g_i;
 
 /*src/minishell/minishell.c*/
 void	interactive_mode(t_tools *tools, char *line);

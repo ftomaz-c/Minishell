@@ -3,12 +3,14 @@
 void	ignore_sig_handler(int sig)
 {
 	(void)sig;
-	if (sig == SIGINT)
-		printf("\n");
+	//printf("\nignore\n");
+	//if (sig == SIGINT)
+	//	printf("\n");
 }
 
 void	react_sig_handler(int sig)
 {
+	//printf("\nreact\n");
 	if (sig == SIGINT)
 	{
 		printf("\n");
@@ -16,6 +18,7 @@ void	react_sig_handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+	return ;
 }
 
 void	handle_sigaction(void (*handler)(int))
@@ -24,7 +27,7 @@ void	handle_sigaction(void (*handler)(int))
 
 	sa.sa_handler = handler;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
+	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigaction (SIGQUIT, &sa, NULL);

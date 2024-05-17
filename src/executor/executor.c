@@ -176,6 +176,8 @@ void	set_and_exec(t_tools *tools, t_parser *parser)
 		minishell_pipex(tools, parser);
 	else
 		execute_cmd(tools, parser);
+	if (parser->builtin)
+		waitpid(0, NULL, 0);
 }
 
 /**
@@ -206,13 +208,13 @@ int	executor(t_tools *tools)
 	status = 0;
 	if (exec_builtins(tools) && !tools->pipes && parser->str[0])
 		return (parser->builtin(tools, parser));
-	handle_sigaction(ignore_sig_handler);
+	handle_sigaction(SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		handle_pipex_sigaction();
+		//handle_pipex_sigaction(sig_pipex_handler);
 		while (parser)
 		{
 			set_and_exec(tools, parser);

@@ -31,41 +31,40 @@ void	close_heredoc_exit(t_tools *tools, int fd, int status)
 	exit(status);
 }
 
-void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
+void	get_here_doc(t_tools *tools)
 {
 	char	*line;
+	int		here_nprompt;
 
-	close(fd[0]);
-	ft_putstr_fd("> ", stdout);
+	here_nprompt = tools->nprompts;
+	free_parser(&tools->parser);
+	free_tools(tools);
+	close(here_doc_struct()->fd[0]);
 	line = NULL;
-	while (1)
+	while (g_status != 133)
 	{
-		line = get_next_line(1);
-		if (!line && g_status != 901)
+		line = readline("> ");
+		if (!line)
 		{
-			ft_putstr_fd("\n", stdout);
-			printf("minishell: warning: here-document at line %d delimited by\
-				end-of-file (wanted `%s')\n", tools->nprompts, limiter);
-			close_heredoc_exit(tools, fd[1], EXIT_FAILURE);
+			ft_putstr_fd("\nminishell: warning: here-document at line ", 2);
+			ft_putnbr_fd(here_nprompt, 2);
+			ft_putstr_fd("delimited by end-of-file (wanted `", 2);
+			ft_putstr_fd(here_doc_struct()->heredoc_limiter, 2);
+			ft_putstr_fd("')\n", 2);
+			free(here_doc_struct()->heredoc_limiter);
+			close(here_doc_struct()->fd[1]);
+			free(line);
+			exit (EXIT_FAILURE);
 		}
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		if (ft_strncmp(line, here_doc_struct()->heredoc_limiter,
+				ft_strlen(here_doc_struct()->heredoc_limiter)) == 0)
 		{
 			free(line);
-			close_heredoc_exit(tools, fd[1], EXIT_SUCCESS);
+			exit (EXIT_SUCCESS);
 		}
-		write(fd[1], line, ft_strlen(line));
-		ft_putstr_fd("> ", stdout);
+		write(here_doc_struct()->fd[1], line, ft_strlen(line));
+		write(here_doc_struct()->fd[1], "\n", 1);
 		free(line);
-	}
-}
-
-void	signal_exit(t_tools *tools, int fd[2])
-{
-	if (g_status == 901)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		free_and_exit(tools);
 	}
 }
 
@@ -82,12 +81,12 @@ void	signal_exit(t_tools *tools, int fd[2])
  * @see get_here_doc
  */
 
-void	here_doc(t_tools *tools, char *limiter, int stdout)
+void	here_doc(t_tools *tools)
 {
-	int		fd[2];
 	pid_t	pid;
+	int		status;
 
-	if (pipe(fd) == -1)
+	if (pipe(here_doc_struct()->fd) == -1)
 	{
 		perror("Error creating pipes");
 		exit (EXIT_FAILURE);
@@ -100,13 +99,14 @@ void	here_doc(t_tools *tools, char *limiter, int stdout)
 	}
 	if (pid == 0)
 	{
-		get_here_doc(tools, limiter, fd, stdout);
-		pipex_dup_and_close(-1, fd[1], stdout);
+		handle_pipex_heredoc(here_doc_sig);
+		get_here_doc(tools);
+		pipex_dup_and_close(-1, here_doc_struct()->fd[1], STDOUT_FILENO);
 	}
 	else
 	{
-		pipex_dup_and_close(fd[1], fd[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
+		pipex_dup_and_close(here_doc_struct()->fd[1], here_doc_struct()->fd[0],
+			STDIN_FILENO);
+		wait_status(pid, &status);
 	}
-	signal_exit(tools, fd);
 }

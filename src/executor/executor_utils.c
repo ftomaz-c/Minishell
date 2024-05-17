@@ -82,12 +82,9 @@ void	exec_err(int err, char *str, char *value)
 
 void	wait_status(int pid, int *status)
 {
-	int	i;
-
-	i = 0;
-	while (i < 100000000)
-		i++;
-	waitpid(pid, status, 0);
+	(void)pid;
+	waitpid(-1, status, 0);
 	if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
+	//printf("g_status: %i\n", g_status);
 }

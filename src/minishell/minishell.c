@@ -11,12 +11,12 @@ void	minishell(t_tools *tools, char *line)
 			free_lexer(&tools->lexer);
 			return ;
 		}
-		// print_lexer(tools);
+		//print_lexer(tools);
 		if (!parser(tools))
 			return ;
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
-		// print_parser(tools);
+		//print_parser(tools);
 		if (tools->parser)
 		{
 			executor(tools);
