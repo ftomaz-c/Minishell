@@ -86,5 +86,4 @@ void	wait_status(int pid, int *status)
 	waitpid(-1, status, 0);
 	if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
-	//printf("g_status: %i\n", g_status);
 }

@@ -172,6 +172,15 @@ void	set_and_exec(t_tools *tools, t_parser *parser)
 {
 	if (parser->redirections != NULL)
 		redirection(tools, parser);
+	if (g_status == 133)
+		return ;
+	if (parser->stdin_flag == LESS_LESS)
+	{
+		if (g_status == 1)
+			return ;
+		dup2(here_doc_struct()->fd[0], STDIN_FILENO);
+		close(here_doc_struct()->fd[0]);
+	}
 	if (parser->next)
 		minishell_pipex(tools, parser);
 	else
@@ -214,7 +223,7 @@ int	executor(t_tools *tools)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		//handle_pipex_sigaction(sig_pipex_handler);
+		handle_pipex_sigaction(sig_pipex_handler);
 		while (parser)
 		{
 			set_and_exec(tools, parser);

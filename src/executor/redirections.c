@@ -60,6 +60,7 @@ t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 	{
 		current = current->next;
 		here_doc_struct()->heredoc_limiter = ft_strdup(current->words);
+		tools->parser->original_stdin = dup (STDIN_FILENO);
 	}
 	else if (parser->stdin_flag == LESS)
 		parser->stdin_file_name = current->words;

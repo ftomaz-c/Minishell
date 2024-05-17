@@ -1,17 +1,22 @@
 #include "../../includes/executor.h"
 
+void	sig_pipex_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_status = 133;
+	}
+}
+
 void	here_doc_sig(int sig)
 {
-	//printf("\nhere_doc\n");
 	if (sig == SIGINT)
 	{
 		printf("\n");
 		rl_replace_line("", 1);
 		rl_on_new_line();
-		close(here_doc_struct()->fd[1]);
-		free(here_doc_struct()->heredoc_limiter);
 		g_status = 133;
-		exit (g_status);
+		close(STDIN_FILENO);
 	}
 }
 

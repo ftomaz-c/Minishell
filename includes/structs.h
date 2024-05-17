@@ -43,6 +43,7 @@ typedef struct s_parser
 	int				stdin_flag;
 	int				stdout_flag;
 	int				original_stdout;
+	int				original_stdin;
 	int				fd_err;
 	t_lexer			*redirections;
 	struct s_parser	*next;
