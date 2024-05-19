@@ -6,16 +6,69 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/16 20:44:04 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:15:47 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
+/**
+ * @brief Closes the original stdout file descriptor and exits the
+ * program with the specified exit code.
+ * 
+ * This function closes the original stdout file descriptor and then
+ * exits the program with the given exit code.
+ * 
+ * @param exit_code The exit code to be returned by the program.
+ * @param original_stdout The original file descriptor for stdout.
+ * @return None.
+ */
 void	fd_exit(int exit_code, int original_stdout)
 {
 	close(original_stdout);
 	exit(exit_code);
+}
+
+/**
+ * @brief Closes the file descriptor for a here document and
+ * exits with the specified status.
+ * 
+ * This function frees memory associated with the parser and tools,
+ * closes the file descriptor for the here document,
+ * and exits with the specified status.
+ * 
+ * @param tools A pointer to the tools structure.
+ * @param fd The file descriptor for the here document.
+ * @param status The exit status for the program.
+ * @return None.
+ */
+void	close_heredoc_exit(t_tools *tools, int fd, int status)
+{
+	free_parser(&tools->parser);
+	free_tools(tools);
+	close(fd);
+	exit(status);
+}
+
+/**
+ * @brief Exits the program if the status is 901.
+ * 
+ * This function closes the file descriptors associated with the
+ * pipe, frees memory, and exits the program
+ * if the global status is 901.
+ * 
+ * @param tools A pointer to the tools structure.
+ * @param fd An array of file descriptors associated with the pipe.
+ * @return None.
+ */
+void	signal_exit(t_tools *tools, int fd[2])
+{
+	if (g_status == 901)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		free_and_exit(tools);
+	}
 }
 
 /**
@@ -29,30 +82,7 @@ void	fd_exit(int exit_code, int original_stdout)
  * @param limiter The delimiter indicating the end of input.
  * @param fd The file descriptor to write the input to.
  * @param original_stdout The original file descriptor for stdout.
- * 
- * @note This function assumes that the input is properly terminated.
- * 
- * @see get_next_line
  */
-
-void	close_heredoc_exit(t_tools *tools, int fd, int status)
-{
-	free_parser(&tools->parser);
-	free_tools(tools);
-	close(fd);
-	exit(status);
-}
-
-void	signal_exit(t_tools *tools, int fd[2])
-{
-	if (g_status == 901)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		free_and_exit(tools);
-	}
-}
-
 void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 {
 	char	*line;
@@ -79,7 +109,6 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
 	}
 }
 
-
 /**
  * @brief Implements here documents functionality.
  * 
@@ -87,12 +116,7 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
  * 
  * @param limiter The delimiter indicating the end of input.
  * @param original_stdout The original file descriptor for stdout.
- * 
- * @warning This function assumes that pipe creation and forking succeed.
- * 
- * @see get_here_doc
  */
-
 void	here_doc(t_tools *tools, char *limiter, int stdout)
 {
 	int		fd[2];

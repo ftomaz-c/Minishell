@@ -3,15 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:55 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:15:00 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
+/**
+ * @brief Sets up stdin redirection based on the parser's
+ * stdin flag and file name.
+ * 
+ * This function handles stdin redirection for a parsed command.
+ * If the parser's stdin flag indicates '<' (LESS), it opens the
+ * specified file for reading,
+ * performs stdin redirection, and closes the file descriptor.
+ * If the stdin flag indicates '<<' (LESS_LESS), it initiates a here document.
+ * 
+ * @param tools Pointer to the tools structure containing environment
+ * and execution context.
+ * @param parser Pointer to the parser containing stdin redirection
+ * information.
+ * @param fd The file descriptor associated with stdin redirection.
+ */
 void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 {
 	int	fd_infile;
@@ -48,10 +64,6 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
  * up stdin and stdout accordingly.
  * 
  * @param parser The parser containing redirection information.
- * 
- * @note This function assumes that the parser is properly initialized.
- * 
- * @see set_stdin_flag, set_stdout_flag
  */
 
 t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
@@ -79,10 +91,7 @@ t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
  * if stdout redirection is detected.
  * 
  * @param parser The parser containing redirection information.
- * 
- * @note This function assumes that the parser is properly initialized.
  */
-
 void	set_stdout(t_parser *parser, int fd)
 {
 	int	fd_outfile;
@@ -111,6 +120,24 @@ void	set_stdout(t_parser *parser, int fd)
 	return ;
 }
 
+/**
+ * @brief Sets up stdout redirection based on the parser's stdout
+ * flag and the redirection tokens.
+ * 
+ * This function determines the type of stdout redirection based on
+ * the parser's stdout flag and the redirection tokens.
+ * If the flag indicates '>>' (GREAT_GREAT), it sets the stdout file name
+ * from the next token and performs stdout redirection.
+ * If the flag indicates '>' (GREAT), it also sets the stdout file name
+ * and performs stdout redirection.
+ * 
+ * @param parser Pointer to the parser containing redirection information.
+ * @param redirection Pointer to the current token in the
+ * redirection token stream.
+ * @param fd The file descriptor associated with the redirection.
+ * @return Pointer to the next token in the redirection token stream
+ * after processing stdout redirection.
+ */
 t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd)
 {
 	t_lexer	*current;
@@ -128,6 +155,19 @@ t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd)
 	return (current);
 }
 
+/**
+ * @brief Handles input and output redirection based on the parsed command.
+ * 
+ * This function processes input and output redirection for a parsed command.
+ * It iterates through the redirection tokens in the parser's redirection list,
+ * sets up the appropriate file descriptors, and performs
+ * stdin and stdout redirection
+ * based on the redirection tokens and parser flags.
+ * 
+ * @param tools Pointer to the tools structure containing
+ * environment and execution context.
+ * @param parser Pointer to the parser containing redirection information.
+ */
 void	redirection(t_tools *tools, t_parser *parser)
 {
 	t_lexer	*current;

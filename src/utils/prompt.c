@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:44:22 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:07:59 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,7 @@
  * @return Updated string array with HOME directory abbreviation.
  *         If HOME directory is not found or tools struct is 
  * not valid, returns the input string array.
- * 
- * @note This function assumes the existence of the HOME 
- * environment variable.
- *       It assumes the input string array has at least 7 
- * elements, and the HOME directory path is at index 6.
- *       Memory allocated for the updated string array 
- * should be freed by the caller.
- * 
- * @warning Behavior is undefined if tools or str is NULL.
- * 
- * @see get_var_from_env, ft_strlen, ft_strncmp, ft_substr, ft_strjoin
- * 
- * @example
- * ```
- * // Example usage of handle_home_abreviation function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * char **str = {"", "", "", "", "", "", "/home/user/example"};
- *  // Sample input string array
- * char **updated_str = handle_home_abreviation(tools, str); 
- * // Abbreviate HOME directory
- * // After function call, updated_str will contain
- *  {"", "", "", "", "", "", "~/example"}
- * // Remember to free the memory allocated for updated_str 
- * when it's no longer needed.
- * ```
  */
-
 char	**handle_home_abreviation(t_tools *tools, char **str)
 {
 	char	*home_var;
@@ -90,29 +64,7 @@ char	**handle_home_abreviation(t_tools *tools, char **str)
  * 
  * @return A string array containing the generated prompt components.
  *         If memory allocation fails, returns NULL.
- * 
- * @note This function assumes the validity of the tools struct.
- *       Memory allocated for the generated string array
- *  should be freed by the caller.
- * 
- * @warning Behavior is undefined if tools is NULL.
- * 
- * @see ft_strdup, handle_home_abreviation
- * 
- * @example
- * ```
- * // Example usage of generate_prompt function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * char **prompt = generate_prompt(tools); // Generate 
- * customized prompt
- * // After function call, prompt will contain {"\033[1;32m", 
- * "username", "@", "hostname", "\033[0m:", "\033[1;34m", 
- * "/current/directory", "\033[0m", "$ "}
- * // Remember to free the memory allocated for prompt when
- *  it's no longer needed.
- * ```
  */
-
 char	**generate_prompt(t_tools *tools)
 {
 	char	**str;
@@ -149,26 +101,7 @@ char	**generate_prompt(t_tools *tools)
  * 
  * @return A dynamically allocated string containing the user input line.
  *         If memory allocation fails or readline fails, returns NULL.
- * 
- * @note This function assumes the validity of the tools struct.
- *       The memory allocated for the input line should 
- * be freed by the caller.
- * 
- * @warning Behavior is undefined if tools is NULL.
- * 
- * @see readline, generate_prompt
- * 
- * @example
- * ```
- * // Example usage of prompt_line function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * char *input = prompt_line(tools); // Prompt user for input
- * // After function call, input will contain the user input line
- * // Remember to free the memory allocated for 
- * input when it's no longer needed.
- * ```
  */
-
 char	*prompt_line(t_tools *tools)
 {
 	char	*line;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_history.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:28:58 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:20:09 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,26 +139,7 @@ void	get_buffer_lines_print(char **buffer, int size, int i)
  * 
  * @return Returns the buffer containing history 
  * if successful, otherwise NULL.
- * 
- * @note This function assumes that `buffer` is a 
- * valid pointer to store history lines,
- * and `file_path` is a valid string representing
- *  the path to the history file.
- * 
- * @warning None.
- * 
- * @see ft_calloc(), get_file_path_from_home(), open(), copy_buffer(), free().
- * 
- * @example
- * 
- * ```
- * // Example usage:
- * char **buffer;
- * char *file_path = ".minishell_history";
- * buffer = get_history(buffer, file_path);
- * ```
  */
-
 char	**get_history(char **buffer, char *file_path, int arg)
 {
 	int		fd;
@@ -194,23 +175,6 @@ char	**get_history(char **buffer, char *file_path, int arg)
  * @param command Pointer to parser structure containing parsed command.
  * 
  * @return Returns 0 on success, otherwise returns 1.
- * 
- * @note This function assumes that `tools` and `command` are valid pointers.
- * 
- * @warning None.
- * 
- * @see ft_atoi(), invalid_history_options(), 
- * get_history(), get_buffer_lines_print(), 
- * print_buffer(), free_list().
- * 
- * @example
- * 
- * ```
- * // Example usage:
- * t_tools tools;
- * t_parser command;
- * int exit_status = mini_history(&tools, &command);
- * ```
  */
 int	cmd_history(t_tools *tools, t_parser *command)
 {

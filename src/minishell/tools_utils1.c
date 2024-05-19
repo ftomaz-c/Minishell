@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   tools_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:43:13 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:21:22 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Retrieves the current working directory (PWD).
+ * 
+ * This function retrieves the current working directory (PWD)
+ * either from the environment variables
+ * or using the getcwd function. If the PWD is not found in the environment
+ * variables, it is obtained
+ * using getcwd, and then the PWD environment variable is updated accordingly.
+ * 
+ * @param tools A pointer to the tools structure containing environment
+ * variables.
+ * @param env The array of environment variables.
+ * @return A pointer to a string containing the current
+ * working directory (PWD).
+ */
 char	*get_pwd(t_tools *tools, char **env)
 {
 	char	buffer[1024];
@@ -29,6 +44,18 @@ char	*get_pwd(t_tools *tools, char **env)
 	return (pwd);
 }
 
+/**
+ * @brief Compares a variable to an environment variable.
+ * 
+ * This function compares a variable to an environment variable.
+ * It checks if the variable matches
+ * the format "VAR=value" where "VAR" is the variable
+ * name and "value" is its value.
+ * 
+ * @param env The environment variable to compare.
+ * @param var The variable to compare.
+ * @return 1 if the variable matches the environment variable, 0 otherwise.
+ */
 int	compare_var_to_env(char *env, char *var)
 {
 	int	i;
@@ -56,17 +83,8 @@ int	compare_var_to_env(char *env, char *var)
  * 
  * @param tools A pointer to the tools structure.
  * 
- * @return None.
- * 
- * @note Assumes the tools structure is properly initialized.
- * 
- * @see config_tools
- * 
- * @warning Make sure to call this function to avoid memory leaks
- * after using the tools structure.
- * 
+ * @return None. 
  */
-
 void	free_tools(t_tools *tools)
 {
 	if (!tools)
@@ -98,26 +116,7 @@ void	free_tools(t_tools *tools)
  * @param env The array of environment variables.
  * 
  * @return A pointer to the array of path strings, or NULL on error.
- * 
- * @note Memory allocated for the returned array and its elements
- * must be freed by the caller.
- * 
- * @see config_tools
- * 
- * @warning The caller is responsible for freeing the memory allocated
- * for the returned array and its elements.
- * 
- * @example
- * 
- * ```
- * char **path_list = get_path(env);
- * if (path_list != NULL) {
- *     // Use path_list...
- *     free_path_list(path_list);
- * }
- * ```
  */
-
 char	**get_path(t_tools *tools, char **env)
 {
 	char	*path_from_envp;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_split_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:31:33 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:45:36 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,7 @@
  * @return The index of the paired quote character
  *  or the position of the
  * next space character after 'i'.
- * 
- * @note This function assumes that 'str' is a 
- * null-terminated string.
- *       It searches for the paired quote character 'ch' starting
- * from the index 'i'.
- * 
- * @warning The function does not perform input 
- * validation on 'str'.
- *          It may result in unexpected behavior if 
- * 'str' is not a valid string.
- * 
- * @example
- * ```
- * char *str = "This is 'a sample' string";
- * int index = paired_quote(str, 8, '\'');
- * // index will be the position of the paired
- *  quote character ('a')
- * ```
  */
-
 int	paired_quote(char *str, int i, char ch)
 {
 	int		pair;
@@ -90,29 +71,7 @@ int	paired_quote(char *str, int i, char ch)
  * @param start Pointer to the start index within the string 's'.
  *        It is updated to reflect the new start index
  * after handling white spaces.
- * 
- * @note This function assumes that 's' is a null-terminated string.
- * 
- * @warning The function assumes that 'i' and 'start' are valid pointers.
- *          It may result in unexpected behavior if 's' is not a valid 
- * string or if 'i' or 'start' points to invalid memory.
- * 
- * @see paired_quote()
- * 
- * @example
- * ```
- * char *s = "   'This is' a   string";
- * int i = 0;
- * int start = 0;
- * handle_white_spaces_and_quotes(s, &i, &start);
- * // After the call:
- * // i will point to the position of the paired quote
- * character ('i' in 'This is')
- * // start will point to the position of the start of the
- * substring ('T' in 'This')
- * ```
  */
-
 void	handle_white_spaces_and_quotes(char *s, int *i, int *start)
 {
 	if (s[*i] == ' ')
@@ -139,27 +98,7 @@ void	handle_white_spaces_and_quotes(char *s, int *i, int *start)
  *        It is updated based on the value of 'nstart'.
  * @param nstart Pointer to the start index for substrings within quotes.
  *        If non-zero, it indicates that the substring starts within quotes.
- * 
- * @note This function assumes that 'i', 'start', and
- * 'nstart' are valid pointers.
- * 
- * @warning The function does not perform input validation on
- * 'i', 'start', or 'nstart'.
- *          It may result in unexpected behavior if
- * they point to invalid memory.
- * 
- * @example
- * ```
- * int i = 5;
- * int start = 0;
- * int nstart = 7;
- * update_start_indexes(&i, &start, &nstart);
- * // After the call:
- * // i will be decremented by 1
- * // start will be updated to 7 (value of nstart)
- * ```
  */
-
 void	update_start_indexes(int *i, int *start, int *nstart)
 {
 	if (*nstart)
@@ -170,6 +109,7 @@ void	update_start_indexes(int *i, int *start, int *nstart)
 	else
 		*start = *i;
 }
+
 /**
  * @brief Counts the number of words and quotes in a string.
  * 
@@ -181,22 +121,7 @@ void	update_start_indexes(int *i, int *start, int *nstart)
  * @param c The delimiter character.
  * 
  * @return The number of words and quotes in the string.
- * 
- * @note This function assumes that 's' is a null-terminated string.
- * 
- * @warning The function does not perform input validation on 's'.
- *          It may result in unexpected behavior if 's' is not a valid string.
- * 
- * @see paired_quote()
- * 
- * @example
- * ```
- * char *s = "This is 'a sample' string";
- * int count = count_words_and_quotes(s, ' ');
- * // count will be 4 (This, is, 'a sample', string)
- * ```
  */
-
 int	count_words_and_quotes(char *s, char c, size_t size)
 {
 	size_t	i;
@@ -240,21 +165,6 @@ int	count_words_and_quotes(char *s, char c, size_t size)
  * 
  * @return A pointer to the dynamically allocated memory containing the word.
  *         Returns NULL if memory allocation fails.
- * 
- * @note This function assumes that 's' is a null-terminated string.
- * 
- * @warning The function does not perform input validation on
- * 's', 'start', or 'end'.
- *          It may result in unexpected behavior if 's' is not a valid
- * string or if 'start' and 'end' are out of bounds.
- *          It also does not handle memory allocation failures.
- * 
- * @example
- * ```
- * char *s = "Hello, world!";
- * char *word = word_alloc(s, 0, 5);
- * // word will contain "Hello" (allocated dynamically)
- * ```
  */
 char	*word_alloc(char *s, int start, int end)
 {

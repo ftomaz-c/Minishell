@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:29:28 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:26:43 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,7 @@
  * @param str   Pointer to the string containing the variable declaration.
  * 
  * @return 1 if the variable already exists, 0 otherwise.
- * 
- * @note This function assumes the validity of the 
- * tools struct and input string.
- *       It allocates memory for the variable name, 
- * which should be freed by the caller.
- * 
- * @warning Behavior is undefined if tools or str is NULL.
- * 
- * @see ft_calloc, copy_var_name, check_var_path
- * 
- * @example
- * ```
- * // Example usage of check_var function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * char *str = "PATH=/bin:/usr/bin"; // Sample variable declaration
- * int exists = check_var(tools, str); // Check if 
- * the variable exists in the environment
- * // exists will be 0 if the variable doesn't exist, otherwise 1.
- * ```
  */
-
 int	check_var(t_tools *tools, char *str)
 {
 	char	*var_path;
@@ -79,28 +59,7 @@ int	check_var(t_tools *tools, char *str)
  * @param tools Pointer to the tools struct containing environment information.
  * @param str   Pointer to the string containing the variable name.
  * @param i     Index of the variable to remove from the environment.
- * 
- * @note This function assumes the validity of 
- * the tools struct and input string.
- *       It reallocates memory for the environment
- *  array, which should be freed by the caller.
- * 
- * @warning Behavior is undefined if tools or str is NULL.
- * 
- * @see ft_calloc, count_lines, find_char_position, ft_strncmp, free_list
- * 
- * @example
- * ```
- * // Example usage of unset_var_from_env function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * char *str = "PATH"; // Variable name to unset
- * int i = find_var_index(tools->env, str); 
- * // Find index of the variable in the environment
- * unset_var_from_env(tools, str, i); 
- * // Remove the variable from the environment
- * ```
  */
-
 void	unset_var_from_env(t_tools *tools, char *str, int i)
 {
 	int		j;
@@ -140,24 +99,7 @@ void	unset_var_from_env(t_tools *tools, char *str, int i)
  * @param command Pointer to the parser struct containing command information.
  * 
  * @return EXIT_SUCCESS if variables are successfully unset.
- * 
- * @note This function assumes the validity of the tools and command structs.
- * 
- * @warning Behavior is undefined if tools or command is NULL.
- * 
- * @see check_var, unset_var_from_env, global_status, printf
- * 
- * @example
- * ```
- * // Example usage of unset function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * t_parser *command = initialize_parser(); // Initialize parser struct
- * int status = unset(tools, command); 
- * // Unset specified variables from the environment
- * // status will be EXIT_SUCCESS if variables are successfully unset.
- * ```
  */
-
 int	cmd_unset(t_tools *tools, t_parser *command)
 {
 	int	i;

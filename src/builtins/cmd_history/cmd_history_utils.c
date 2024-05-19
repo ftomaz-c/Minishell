@@ -3,15 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_history_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:28:52 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:11:43 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/builtins.h"
 
+/**
+ * @brief Adjusts history size and starting point based on arguments.
+ * 
+ * This function adjusts the history size and starting point based
+ * on the provided arguments.
+ * If the argument is -1, it sets the starting point and size to ensure that
+ * the total number 
+ * of lines in history does not exceed 1000.
+ * If the argument is less than the total number of lines in history,
+ * it sets the starting point and size accordingly.
+ * If the argument is greater than or equal to the total number of lines 
+ * in history, it sets the starting point to 0 and the 
+ * size to the total number of lines in history.
+ * 
+ * @param arg Pointer to the argument provided.
+ * @param nlines Pointer to the total number of lines in history.
+ * @param size Pointer to the size to be adjusted.
+ */
 void	handle_history_sizes(int *arg, int *nlines, int *size)
 {
 	if (*arg == -1)
@@ -52,25 +70,6 @@ void	handle_history_sizes(int *arg, int *nlines, int *size)
  * @param nlines Number of lines to copy into the buffer.
  * 
  * @return None.
- * 
- * @note This function assumes that `buffer` is a valid 
- * pointer to store lines,
- * `fd` is a valid file descriptor for reading, and 
- * `nlines` is a positive integer.
- * 
- * @warning None.
- * 
- * @see get_next_line(), ft_strdup(), free().
- * 
- * @example
- * 
- * ```
- * // Example usage:
- * char **buffer;
- * int fd = open("file.txt", O_RDONLY);
- * int nlines = 10;
- * copy_buffer(buffer, fd, nlines);
- * ```
  */
 void	copy_buffer(char **buffer, int fd, int nlines, int arg)
 {
@@ -109,22 +108,6 @@ void	copy_buffer(char **buffer, int fd, int nlines, int arg)
  * @param str Pointer to the buffer containing lines to print.
  * 
  * @return None.
- * 
- * @note This function assumes that `str` is a
- *  valid pointer to an array of strings
- * where each string represents a line to print.
- * 
- * @warning None.
- * 
- * @see None.
- * 
- * @example
- * 
- * ```
- * // Example usage:
- * char **buffer;
- * print_buffer(buffer);
- * ```
  */
 void	print_buffer(char **str)
 {

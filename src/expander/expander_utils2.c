@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:31:16 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:19:46 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@
  * @param value The array to store the modified string.
  * 
  * @return The modified string with added quotes.
- * 
- * @note The input string (str) is assumed to be valid and null-terminated.
- * 
- * @warning The value array must have enough memory allocated
- *  to accommodate the modified string.
- * 
- * @see None.
- * 
- * @example
- * ```
- * char *result = add_quotes(0, "example", '"', malloc(9));
- * // result now contains "example"
- * free(result);
- * ```
  */
 char	*add_quotes(int j, char *str, char quote, char *value)
 {
@@ -67,35 +53,18 @@ char	*add_quotes(int j, char *str, char quote, char *value)
 }
 
 /**
- * @brief Adds quotes to a string value if it's not already quoted.
+ * @brief Retrieves the type of quotation mark at the
+ * specified position in a string.
  * 
- * This function adds quotes around a string value if it's 
- * not already enclosed in quotes.
- * It checks the first occurrence of single or double quotes in 
- * the string to determine the quote character to use.
+ * This function examines the characters in a string starting
+ * from the specified position
+ * to find the type of quotation mark encountered, if any.
  * 
- * @param str The input string.
- * @param flagquote Flag indicating whether to trim spaces from the input string.
- * @param j Starting index for the value array.
- * @param i Starting index for iterating through the input string.
- * 
- * @return The modified string with added quotes (if necessary).
- * 
- * @note The input string (str) is assumed to be valid and null-terminated.
- * 
- * @warning Memory is allocated within the function and needs 
- * to be freed by the caller to avoid memory leaks.
- * 
- * @see ft_strtrim
- * 
- * @example
- * ```
- * char *result = add_quotes_to_value("example", 1, 0, 0);
- * // result now contains "example"
- * free(result);
- * ```
+ * @param str The input string to be examined.
+ * @param i The starting position in the string to begin the search.
+ * @return char The quotation mark found (' or "), or '\0'
+ * if none is found.
  */
-
 char	get_quote_flag(char *str, int i)
 {
 	char	quote;
@@ -113,6 +82,22 @@ char	get_quote_flag(char *str, int i)
 	return (quote);
 }
 
+/**
+ * @brief Adds quotes to a string value if it's not already quoted.
+ * 
+ * This function adds quotes around a string value if it's 
+ * not already enclosed in quotes.
+ * It checks the first occurrence of single or double quotes in 
+ * the string to determine the quote character to use.
+ * 
+ * @param str The input string.
+ * @param flagquote Flag indicating whether to trim spaces
+ * from the input string.
+ * @param j Starting index for the value array.
+ * @param i Starting index for iterating through the input string.
+ * 
+ * @return The modified string with added quotes (if necessary).
+ */
 char	*add_quotes_to_value(char *str, int flagquote, int j, int i)
 {
 	char	*value;
@@ -153,21 +138,6 @@ char	*add_quotes_to_value(char *str, int flagquote, int j, int i)
  * @param suffix The suffix string.
  * 
  * @return The concatenated string.
- * 
- * @note Memory is allocated within the function and needs 
- * to be freed by the caller to avoid memory leaks.
- * 
- * @warning The input strings (value, prefix, suffix) are 
- * assumed to be valid and null-terminated.
- * 
- * @see ft_strjoin
- * 
- * @example
- * ```
- * char *result = build_str("example", "Prefix ", " Suffix");
- * // result now contains "Prefix example Suffix"
- * free(result);
- * ```
  */
 char	*build_str(char *value, char *prefix, char *suffix)
 {

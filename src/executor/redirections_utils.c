@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:50 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:16:49 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
  * @return Returns the redirection symbol ("<" or "<<") if 
  * stdin redirection is detected, otherwise NULL.
  */
-
 void	set_stdin_flag(t_parser *parser, t_lexer *redirections)
 {
 	t_lexer	*current;
@@ -53,7 +52,6 @@ void	set_stdin_flag(t_parser *parser, t_lexer *redirections)
  * @return Returns the redirection symbol (">" or ">>") if stdout 
  * redirection is detected, otherwise NULL.
  */
-
 void	set_stdout_flag(t_parser *parser, t_lexer *redirections)
 {
 	t_lexer	*current;
@@ -70,6 +68,18 @@ void	set_stdout_flag(t_parser *parser, t_lexer *redirections)
 	return ;
 }
 
+/**
+ * @brief Extracts consecutive digits from the lexer's token
+ * stream and converts them into an integer.
+ * 
+ * This function reads digits from the lexer's token stream
+ * until a non-digit token is encountered,
+ * then converts the accumulated digits into an integer using ft_atoi.
+ * 
+ * @param current Pointer to the current token in
+ * the lexer's token stream.
+ * @return The integer value extracted from the digits.
+ */
 int	get_digits_token(t_lexer *current)
 {
 	char	*nbr;
@@ -99,6 +109,20 @@ int	get_digits_token(t_lexer *current)
 	return (token);
 }
 
+/**
+ * @brief Determines the file descriptor based on the given
+ * token and context provided by the parser.
+ * 
+ * This function determines the file descriptor associated with a
+ * given token in the lexer's token stream,
+ * based on the context provided by the parser. It handles cases such
+ * as digits representing file descriptors,
+ * redirection symbols like '<' and '>', and STDERR redirection '&>'.
+ * 
+ * @param current Pointer to the current token in the lexer's token stream.
+ * @param parser Pointer to the parser containing context information.
+ * @return The file descriptor determined based on the token and context.
+ */
 int	set_fd(t_lexer *current, t_parser *parser)
 {
 	int		fd;
@@ -119,6 +143,18 @@ int	set_fd(t_lexer *current, t_parser *parser)
 	return (fd);
 }
 
+/**
+ * @brief Prints error messages to STDERR based on the given
+ * error code and optional string.
+ * 
+ * This function prints error messages to STDERR based on the given
+ * error code and, optionally, a string.
+ * It handles specific error cases such as "No such file or
+ * directory," "Permission denied," and "Is a directory."
+ * 
+ * @param err The error code indicating the type of error.
+ * @param str Optional string to be included in the error message.
+ */
 void	std_err(int err, char *str)
 {
 	if (str)

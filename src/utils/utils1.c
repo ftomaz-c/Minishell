@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:44:28 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:09:04 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,7 @@ int	find_char_position(char *str, char c)
  * @return The index of the next occurrence of the character 'c' 
  * in the string 'str' starting from index 'i'.
  * If 'c' is not found, returns the index 'i'.
- * 
- * @note This function assumes that the input string is null-terminated.
- * 
- * @example
- * ```
- * // Example usage of find_next_char_position() function
- * char *input = "example string";
- * int index = 0;
- * char search_char = 'm';
- * int result = find_next_char_position(input, index, search_char);
- * // The result should be 5, as 'm' is found at index 5 in "example string".
- * ```
  */
-
 int	find_next_char_position(char *str, int i, char c)
 {
 	while (str[i])
@@ -86,22 +73,6 @@ int	find_next_char_position(char *str, int i, char c)
  * 
  * @return Returns the number of occurrences of the 
  * character in the string.
- * 
- * @note This function assumes that `line` points 
- * to a valid null-terminated string.
- * 
- * @warning None.
- * 
- * @see None.
- * 
- * @example
- * 
- * ```
- * // Example usage:
- * char *str = "hello world";
- * char c = 'o';
- * int count = count_chr(str, c);
- * ```
  */
 int	count_chr(char *line, char c)
 {
@@ -130,15 +101,7 @@ int	count_chr(char *line, char c)
  * 
  * @return The number of lines in the file if successful,
  *  or -1 if an error occurs.
- * 
- * @note This function assumes that the file exists
- * and is accessible.
- *       It uses the get_next_line function to read
- * lines from the file.
- *       The memory for each line is allocated dynamically 
- * and freed after use.
  */
-
 int	count_lines_in_file(const char *file_path)
 {
 	int		fd;
@@ -160,6 +123,7 @@ int	count_lines_in_file(const char *file_path)
 	close (fd);
 	return (count);
 }
+
 /**
  * @brief Counts the number of non-null pointers in a string array.
  * 
@@ -169,24 +133,7 @@ int	count_lines_in_file(const char *file_path)
  * @param list Pointer to the string array to count lines in.
  * 
  * @return The number of non-null pointers in the string array.
- * 
- * @note This function assumes the validity of the input string array.
- * 
- * @warning Behavior is undefined if list is NULL 
- * or if the string array is corrupted.
- * 
- * @see None
- * 
- * @example
- * ```
- * // Example usage of count_lines function
- * char **list = {"line1", "line2", "line3", NULL};
- * int line_count = count_lines(list);
- * // Count the number of lines in the string array
- * // line_count will be 3.
- * ```
  */
-
 int	count_lines(char **list)
 {
 	int	line_count;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:44:35 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:09:48 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,6 @@
  * 
  * @return Returns the length of the string until the newline character 
  * or null terminator.
- * 
- * @note This function assumes that `s` points to a valid null-terminated string.
- * 
- * @warning None.
- * 
- * @see None.
- * 
- * @example
- * 
- * ```
- * // Example usage:
- * char *str = "Hello\nWorld";
- * size_t length = ft_strlen_nl(str);
- * ```
  */
 size_t	ft_strlen_nl(const char *s)
 {
@@ -67,34 +53,6 @@ size_t	ft_strlen_nl(const char *s)
  * allocated for the string.
  *         Returns NULL if memory allocation fails or if the
  *  HOME environment variable is not set.
- * 
- * @note The caller must free the memory allocated for the 
- * returned string after use to avoid memory leaks.
- * @note This function relies on the ft_strjoin function to concatenate strings.
- * @note Assumes that the HOME environment variable is set
- *  to the user's home directory path.
- * 
- * @warning If memory allocation fails or if the HOME
- *  environment variable is not set,
- *          this function returns NULL without modifying errno.
- * 
- * @see ft_strjoin
- * 
- * @example
- * 
- * ```
- * // Example usage of the function
- * char *file_path = get_file_path_from_home("example.txt");
- * if (file_path) {
- *     // Use the file_path
- *     printf("File path: %s\n", file_path);
- *     // Free the memory allocated for the file path when no longer needed
- *     free(file_path);
- * } else {
- *     // Handle error: unable to retrieve file path
- *     fprintf(stderr, "Error: Failed to retrieve file path.\n");
- * }
- * ```
  */
 char	*get_file_path_from_home(char *home, char *file_name)
 {
@@ -123,24 +81,7 @@ char	*get_file_path_from_home(char *home, char *file_name)
  * 
  * @return A pointer to the value of the variable if found,
  * or NULL if not found or on error.
- * 
- * @note Assumes envp is a valid array of environment variables.
- * 
- * @see get_env
- * 
- * @warning Make sure to free the memory allocated for the returned string.
- * 
- * @example
- * 
- * ```
- * char *value = get_var_from_env(envp, "PATH=");
- * if (value != NULL) {
- *     printf("PATH: %s\n", value);
- *     free(value);
- * }
- * ```
  */
-
 char	*get_var_from_env(char **env, char *var)
 {
 	int		index;
@@ -174,26 +115,7 @@ char	*get_var_from_env(char **env, char *var)
  * 
  * @return A pointer to the new array of environment variables,
  * or NULL on error.
- * 
- * @note Memory allocated for the returned array and its elements
- * must be freed by the caller.
- * 
- * @see config_tools
- * 
- * @warning The caller is responsible for freeing the memory allocated
- * for the returned array and its elements.
- * 
- * @example
- * 
- * ```
- * char **env = get_env(envp);
- * if (env != NULL) {
- *     // Use env...
- *     free_env(env);
- * }
- * ```
  */
-
 char	**get_env(char **envp)
 {
 	char	**env;
@@ -218,6 +140,7 @@ char	**get_env(char **envp)
 	}
 	return (env);
 }
+
 /**
  * @brief Frees the memory allocated for a null-terminated array of strings.
  * 
@@ -225,21 +148,7 @@ char	**get_env(char **envp)
  * as well as the memory allocated for the array itself.
  * 
  * @param list Pointer to the array of strings to free.
- * 
- * @note This function assumes that 'list' is a null-terminated array of strings.
- * 
- * @warning The function does not perform input validation on 'list'.
- *          It may result in unexpected behavior if 'list' is NULL
- * or if any of its elements are NULL.
- * 
- * @example
- * ```
- * char *list[] = {"Hello", "world", NULL};
- * free_list(list);
- * // All memory allocated for the array 'list' and its strings will be freed
- * ```
  */
-
 void	free_list(char	**list)
 {
 	int	i;

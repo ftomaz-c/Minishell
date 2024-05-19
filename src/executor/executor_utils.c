@@ -6,12 +6,20 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/16 13:50:04 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:13:58 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
+/**
+ * @brief Creates a basic environment for the shell.
+ * 
+ * This function creates a basic environment for the shell containing
+ * only the PATH variable.
+ * 
+ * @return A pointer to the array of environment variables.
+ */
 char	**basic_env(void)
 {
 	char	**b_env;
@@ -21,6 +29,17 @@ char	**basic_env(void)
 	return (b_env);
 }
 
+/**
+ * @brief Frees the memory allocated for the tools
+ * structure and exits the program.
+ * 
+ * This function frees the memory allocated for the tools structure,
+ * including its parser,
+ * and exits the program with the global status.
+ * 
+ * @param tools A pointer to the tools structure.
+ * @return None.
+ */
 void	free_and_exit(t_tools *tools)
 {
 	free_parser(&tools->parser);
@@ -28,6 +47,17 @@ void	free_and_exit(t_tools *tools)
 	exit(g_status);
 }
 
+/**
+ * @brief Outputs non-interactive mode information to stderr.
+ * 
+ * This function outputs information related to non-interactive mode
+ * to the standard error stream if the shell is running
+ * in non-interactive mode
+ * and has not exited.
+ * 
+ * @param tools A pointer to the tools structure.
+ * @return None.
+ */
 void	nint_mode(t_tools *tools)
 {
 	if (tools->nint_mode && !tools->exit)
@@ -38,6 +68,20 @@ void	nint_mode(t_tools *tools)
 	}
 }
 
+/**
+ * @brief Handles execution errors by printing error messages
+ * and updating the global status.
+ * 
+ * This function handles execution errors by printing the
+ * corresponding error message,
+ * updating the global status, and freeing any allocated memory.
+ * 
+ * @param tools A pointer to the tools structure.
+ * @param err The error code.
+ * @param str The string representing the command or file causing the error.
+ * @param value A pointer to the value to be freed, if applicable.
+ * @return None.
+ */
 void	exec_err(t_tools *tools, int err, char *str, char *value)
 {
 	nint_mode(tools);
@@ -78,21 +122,9 @@ void	exec_err(t_tools *tools, int err, char *str, char *value)
  * @param status Pointer to an integer to store the exit 
  * status of the child process.
  * */
-
-// void delay(int milliseconds) {
-//     // Get the current time in milliseconds
-//     long long start_time = (long long)time(NULL) * 1000;
-//     long long end_time = start_time + milliseconds;
-	
-//     // Loop until the specified time has elapsed
-//     while ((long long)time(NULL) * 1000 < end_time);
-// }
-
-
 void	wait_status(int pid, int *status)
 {
 	(void)pid;
-
 	waitpid(-1, status, 0);
 	if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:43:42 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:02:28 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@
  * 
  * @param lst A double pointer to the parser linked list.
  * @param new A pointer to the parser node to be added.
- * 
- * @note This function assumes that 'lst' and 'new' are valid pointers.
  */
-
 void	ft_lstadd_parser_back(t_parser**lst, t_parser *new)
 {
 	t_parser	*last;
@@ -53,11 +50,7 @@ void	ft_lstadd_parser_back(t_parser**lst, t_parser *new)
  * the list and frees each parser node, along with any associated memory.
  * 
  * @param parser A double pointer to the parser linked list.
- * 
- * @note This function assumes that 'parser' is a valid pointer to 
- * a parser linked list.
  */
-
 void	free_parser(t_parser **parser)
 {
 	t_parser	*current;
@@ -93,13 +86,7 @@ void	free_parser(t_parser **parser)
  * 
  * @return Returns a pointer to the newly initialized parser node 
  * on success, or NULL on failure.
- * 
- * @note This function assumes that 'start' and 'end' are valid indices.
- * 
- * @warning Memory allocated for the parser node and its 'str' array
- * should be freed if the function fails.
  */
-
 t_parser	*init_parser(int start, int end)
 {
 	t_parser	*node;
@@ -128,11 +115,7 @@ t_parser	*init_parser(int start, int end)
  * @param start The index of the lexer node to find.
  * 
  * @return Returns a pointer to the lexer node with the specified index.
- * 
- * @note This function assumes that 'lexer' is a valid pointer to a
- * lexer linked list and that 'start' is a valid index.
  */
-
 t_lexer	*start_token(t_lexer *lexer, int start)
 {
 	t_lexer		*current;

@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/16 20:44:42 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:09:19 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	sig_pipex_handler_exit(int sig)
 	}
 	return ;
 }
-
 
 void	handle_pipex_sigaction(void)
 {
