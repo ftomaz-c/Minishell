@@ -81,12 +81,14 @@ void	exec_err(int err, char *str, char *value)
  * ```
  */
 
-void	wait_status(t_tools *tools, int pid, int *status)
+void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 {
 	(void)pid;
 	waitpid(-1, status, 0);
-	if (g_status == 133)
-		close_sig_exit(tools, here_doc_struct()->fd[1], EXIT_FAILURE);
 	if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
+	if (g_status == 130 && here_doc)
+		close_sig_exit(tools, here_doc_struct()->fd[1], g_status);
+	dup2(tools->original_stdin, STDIN_FILENO);
+	dup2(tools->original_stdout, STDOUT_FILENO);
 }

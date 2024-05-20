@@ -10,16 +10,27 @@ void	eof_sig_msg_exit(t_tools *tools, char *line)
 	free(here_doc_struct()->heredoc_limiter);
 	close(here_doc_struct()->fd[1]);
 	free(line);
-	exit (EXIT_FAILURE);
+	exit (g_status);
+}
+
+void	ignore_sig_pipex(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_replace_line("", 1);
+		rl_on_new_line();
+		g_status = 130;
+		close(STDIN_FILENO);
+	}
 }
 
 void	sig_pipex_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		printf("\n");
 	}
 }
 
@@ -29,7 +40,7 @@ void	here_doc_sig(int sig)
 	{
 		rl_replace_line("", 1);
 		rl_on_new_line();
-		g_status = 133;
+		g_status = 130;
 		close(STDIN_FILENO);
 	}
 }

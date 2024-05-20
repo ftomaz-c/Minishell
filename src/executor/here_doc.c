@@ -32,8 +32,8 @@ void	get_here_doc(t_tools *tools)
 	while (1)
 	{
 		line = readline("> ");
-		if (g_status == 133)
-			close_sig_exit(tools, here_doc_struct()->fd[1], EXIT_FAILURE);
+		if (g_status == 130)
+			close_sig_exit(tools, here_doc_struct()->fd[1], g_status);
 		if (!line)
 			eof_sig_msg_exit(tools, line);
 		if (ft_strncmp(line, here_doc_struct()->heredoc_limiter,
@@ -47,7 +47,7 @@ void	get_here_doc(t_tools *tools)
 		write(here_doc_struct()->fd[1], "\n", 1);
 		free(line);
 	}
-	handle_pipex_heredoc(sig_pipex_handler);
+	handle_pipex_sigaction(sig_pipex_handler);
 }
 
 /**
@@ -68,9 +68,7 @@ void	here_doc(t_tools *tools)
 	pid_t	pid;
 	int		status;
 
-	status = 0;
-	handle_pipex_sigaction(SIG_DFL);
-	dup2(tools->original_stdin, STDIN_FILENO);
+	handle_pipex_sigaction(ignore_sig_pipex);
 	if (pipe(here_doc_struct()->fd) == -1)
 	{
 		perror("Error creating pipes");
@@ -87,6 +85,6 @@ void	here_doc(t_tools *tools)
 	else
 	{
 		close(here_doc_struct()->fd[1]);
-		wait_status(tools, pid, &status);
+		wait_status(tools, pid, &status, 1);
 	}
 }

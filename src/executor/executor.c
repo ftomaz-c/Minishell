@@ -231,6 +231,6 @@ int	executor(t_tools *tools)
 		free_and_exit(tools);
 	}
 	else
-		wait_status(tools, pid, &status);
+		wait_status(tools, pid, &status, 0);
 	return (status);
 }
