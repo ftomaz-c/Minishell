@@ -170,16 +170,14 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 
 void	set_and_exec(t_tools *tools, t_parser *parser)
 {
+	tools->original_stdin = dup(STDIN_FILENO);
 	if (parser->redirections != NULL)
 		redirection(tools, parser);
-	if (parser->stdin_flag == LESS_LESS)
+	/*if (parser->stdin_flag == LESS_LESS)
 	{
-		if (g_status)
-			return ;
-		close(here_doc_struct()->fd[1]);
-		dup2(here_doc_struct()->fd[0], STDIN_FILENO);
-		close(here_doc_struct()->fd[0]);
-	}
+		dup2(tools->parser->fd[0], STDIN_FILENO);
+		close(tools->parser->fd[0]);
+	}*/
 	if (parser->next)
 		minishell_pipex(tools, parser);
 	else

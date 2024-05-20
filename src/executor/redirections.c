@@ -42,13 +42,6 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
  * @see set_stdin_flag, set_stdout_flag
  */
 
-t_here_doc	*here_doc_struct(void)
-{
-	static t_here_doc	here_doc;
-
-	return (&here_doc);
-}
-
 t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 	int fd)
 {
@@ -59,7 +52,7 @@ t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 	if (parser->stdin_flag == LESS_LESS)
 	{
 		current = current->next;
-		here_doc_struct()->heredoc_limiter = current->words;
+		parser->limiter = current->words;
 	}
 	else if (parser->stdin_flag == LESS)
 		parser->stdin_file_name = current->words;

@@ -36,18 +36,17 @@ void	pipex_dup_and_close(int close_fd, int dup_fd, int fd2);
 void	minishell_pipex(t_tools *tools, t_parser *parser);
 
 /*src/executor/here_doc.c*/
-void	get_here_doc(t_tools *tools);
+void	get_here_doc(t_tools *tools, int fd[2]);
 void	here_doc(t_tools *tools);
 
 /*src/executor/child_signals.c*/
 void	here_doc_sig(int sig);
 void	sig_pipex_handler(int sig);
 void	handle_pipex_sigaction(void (*handler)(int));
-t_here_doc	*here_doc_struct(void);
 
 void	handle_pipex_heredoc(void (*handler)(int));
 void	eof_sig_msg_exit(t_tools *tools, char *line);
-void	close_sig_exit(t_tools *tools, int fd, int status);
+void	close_sig_exit(t_tools *tools, int status);
 void	ignore_sig_pipex(int sig);
 
 #endif

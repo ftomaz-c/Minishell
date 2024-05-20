@@ -73,8 +73,6 @@ void	free_tools(t_tools *tools)
 		free(tools->user);
 	if (tools && tools->name)
 		free(tools->name);
-	close(tools->original_stdin);
-	close(tools->original_stdout);
 }
 
 /**

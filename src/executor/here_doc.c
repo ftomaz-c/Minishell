@@ -23,31 +23,31 @@ void	fd_exit(int exit_code, int original_stdout)
  * @see get_next_line
  */
 
-void	get_here_doc(t_tools *tools)
+void	get_here_doc(t_tools *tools, int fd[2])
 {
 	char	*line;
 
 	handle_pipex_heredoc(here_doc_sig);
-	close(here_doc_struct()->fd[0]);
 	while (1)
 	{
 		line = readline("> ");
 		if (g_status == 130)
-			close_sig_exit(tools, here_doc_struct()->fd[1], g_status);
-		if (!line)
-			eof_sig_msg_exit(tools, line);
-		if (ft_strncmp(line, here_doc_struct()->heredoc_limiter,
-				ft_strlen(here_doc_struct()->heredoc_limiter)) == 0)
 		{
 			free(line);
-			close(here_doc_struct()->fd[1]);
-			exit (EXIT_SUCCESS);
+			close_sig_exit(tools, g_status);
 		}
-		write(here_doc_struct()->fd[1], line, ft_strlen(line));
-		write(here_doc_struct()->fd[1], "\n", 1);
+		if (!line)
+			eof_sig_msg_exit(tools, line);
+		if (ft_strncmp(line, tools->parser->limiter,
+				ft_strlen(tools->parser->limiter)) == 0)
+		{
+			free(line);
+			close_sig_exit(tools, EXIT_SUCCESS);
+		}
+		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
 		free(line);
 	}
-	handle_pipex_sigaction(sig_pipex_handler);
 }
 
 /**
@@ -68,8 +68,10 @@ void	here_doc(t_tools *tools)
 	pid_t	pid;
 	int		status;
 
-	handle_pipex_sigaction(ignore_sig_pipex);
-	if (pipe(here_doc_struct()->fd) == -1)
+	status = 0;
+	handle_pipex_sigaction(SIG_IGN);
+	dup2(tools->original_stdin, STDIN_FILENO);
+	if (pipe(tools->parser->fd) == -1)
 	{
 		perror("Error creating pipes");
 		exit (EXIT_FAILURE);
@@ -81,10 +83,16 @@ void	here_doc(t_tools *tools)
 		exit (EXIT_FAILURE);
 	}
 	if (pid == 0)
-		get_here_doc(tools);
+	{
+		close(tools->parser->fd[0]);
+		get_here_doc(tools, tools->parser->fd);
+	}
 	else
 	{
-		close(here_doc_struct()->fd[1]);
+		close(tools->parser->fd[1]);
 		wait_status(tools, pid, &status, 1);
+		dup2(tools->parser->fd[0], STDIN_FILENO);
+		handle_pipex_heredoc(SIG_IGN);
+		handle_pipex_sigaction(sig_pipex_handler);
 	}
 }

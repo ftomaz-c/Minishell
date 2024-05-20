@@ -46,6 +46,7 @@ typedef struct s_parser
 	int				stdout_flag;
 	int				fd_err;
 	char			*limiter;
+	int				fd[2];
 	t_lexer			*redirections;
 	struct s_parser	*next;
 	struct s_parser	*prev;	
@@ -64,12 +65,5 @@ typedef struct s_builtin
 	char	*name;
 	int		(*builtin)(t_tools *, t_parser *);
 }	t_builtin;
-
-typedef struct s_here_doc
-{
-	char	*heredoc_limiter;
-	int		fd[2];
-
-}	t_here_doc;
 
 #endif

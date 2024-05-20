@@ -31,7 +31,6 @@
 
 // extern int	global_status;
 extern int	g_status;
-extern int	g_i;
 
 /*src/minishell/minishell.c*/
 void	interactive_mode(t_tools *tools, char *line);
