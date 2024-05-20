@@ -27,14 +27,15 @@ void	get_here_doc(t_tools *tools, int fd[2])
 {
 	char	*line;
 
-	handle_pipex_heredoc(here_doc_sig);
+	handle_sigaction(here_doc_sig);
+	g_status = 0;
 	while (1)
 	{
 		line = readline("> ");
 		if (g_status == 130)
 		{
 			free(line);
-			close_sig_exit(tools, g_status);
+			free_and_exit(tools, g_status);
 		}
 		if (!line)
 			eof_sig_msg_exit(tools, line);
@@ -42,7 +43,7 @@ void	get_here_doc(t_tools *tools, int fd[2])
 				ft_strlen(tools->parser->limiter)) == 0)
 		{
 			free(line);
-			close_sig_exit(tools, EXIT_SUCCESS);
+			free_and_exit(tools, EXIT_SUCCESS);
 		}
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
@@ -68,8 +69,7 @@ void	here_doc(t_tools *tools)
 	pid_t	pid;
 	int		status;
 
-	status = 0;
-	handle_pipex_sigaction(SIG_IGN);
+	handle_sigaction(ignore_sig_pipex);
 	dup2(tools->original_stdin, STDIN_FILENO);
 	if (pipe(tools->parser->fd) == -1)
 	{
@@ -90,9 +90,15 @@ void	here_doc(t_tools *tools)
 	else
 	{
 		close(tools->parser->fd[1]);
-		wait_status(tools, pid, &status, 1);
+		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status))
+			g_status = 130;
+		else if (WIFEXITED(status))
+			g_status = WEXITSTATUS(status);
+		if (g_status == 130)
+			free_and_exit(tools, g_status);
 		dup2(tools->parser->fd[0], STDIN_FILENO);
-		handle_pipex_heredoc(SIG_IGN);
-		handle_pipex_sigaction(sig_pipex_handler);
+		close(tools->parser->fd[0]);
+		handle_sigaction(sig_pipex_handler);
 	}
 }

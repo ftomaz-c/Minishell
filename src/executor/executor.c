@@ -136,19 +136,19 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 		cmd_args[0] = parser->str[2];
 		cmd_args[1] = NULL;
 		exec_path(tools->path, cmd_args, basic_env(), tools->nint_mode);
-		free_and_exit(tools);
+		free_and_exit(tools, g_status);
 	}
 	if (parser->builtin && (exec_builtins(tools) || parser->builtin == cmd_echo
 			|| parser->builtin == cmd_env))
 	{
 		parser->builtin(tools, parser);
 		if (parser->next)
-			free_and_exit(tools);
+			free_and_exit(tools, g_status);
 	}
 	else
 	{
 		exec_path(tools->path, parser->str, tools->env, tools->nint_mode);
-		free_and_exit(tools);
+		free_and_exit(tools, g_status);
 	}
 	return ;
 }
@@ -220,13 +220,13 @@ int	executor(t_tools *tools)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		handle_pipex_sigaction(sig_pipex_handler);
+		handle_sigaction(sig_pipex_handler);
 		while (parser)
 		{
 			set_and_exec(tools, parser);
 			parser = parser->next;
 		}
-		free_and_exit(tools);
+		free_and_exit(tools, g_status);
 	}
 	else
 		wait_status(tools, pid, &status, 0);

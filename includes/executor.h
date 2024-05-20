@@ -12,7 +12,7 @@ int		executor(t_tools *tools);
 
 /*src/executor/executor_utils.c*/
 char	**basic_env(void);
-void	free_and_exit(t_tools *tools);
+void	free_and_exit(t_tools *tools, int status);
 void	exec_err(int err, char *str, char *value);
 void	wait_status(t_tools *tools, int pid, int *status, int here_doc);
 

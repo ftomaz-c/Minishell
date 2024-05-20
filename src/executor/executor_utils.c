@@ -9,14 +9,6 @@ char	**basic_env(void)
 	return (b_env);
 }
 
-void	free_and_exit(t_tools *tools)
-{
-	handle_pipex_sigaction(SIG_DFL);
-	free_parser(&tools->parser);
-	free_tools(tools);
-	exit(g_status);
-}
-
 void	exec_err(int err, char *str, char *value)
 {
 	if (err == 1)
@@ -83,20 +75,17 @@ void	exec_err(int err, char *str, char *value)
 
 void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 {
-	//int	sig;
+	int	i;
 
 	(void)pid;
+	(void)tools;
+	(void)here_doc;
 	waitpid(-1, status, 0);
 	if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
-	else if (WIFSIGNALED(*status))
-	{
-		//sig = WTERMSIG(*status);
-		//if (sig == SIGINT)
-			g_status = 130;
-		//printf("sig: %i\n", sig);
-	}
-	printf("g_status: %i\n", g_status);
-	if (g_status == 130 && here_doc)
-		close_sig_exit(tools, g_status);
+	/*dup2(tools->original_stdin, STDIN_FILENO);
+	close(tools->original_stdin);*/
+	i = 3;
+	while (i < 1024)
+		close(i++);
 }
