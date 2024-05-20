@@ -14,7 +14,7 @@ int		executor(t_tools *tools);
 char	**basic_env(void);
 void	free_and_exit(t_tools *tools);
 void	exec_err(int err, char *str, char *value);
-void	wait_status(int pid, int *status);
+void	wait_status(t_tools *tools, int pid, int *status);
 
 /*src/executor/redirections.c*/
 void	set_stdin(t_tools *tools, t_parser *parser, int fd);
@@ -45,7 +45,8 @@ void	sig_pipex_handler(int sig);
 void	handle_pipex_sigaction(void (*handler)(int));
 t_here_doc	*here_doc_struct(void);
 
-void	signal_exit(t_tools *tools, int fd[2]);
 void	handle_pipex_heredoc(void (*handler)(int));
+void	eof_sig_msg_exit(t_tools *tools, char *line);
+void	close_sig_exit(t_tools *tools, int fd, int status);
 
 #endif

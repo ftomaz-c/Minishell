@@ -172,12 +172,11 @@ void	set_and_exec(t_tools *tools, t_parser *parser)
 {
 	if (parser->redirections != NULL)
 		redirection(tools, parser);
-	if (g_status == 133)
-		return ;
 	if (parser->stdin_flag == LESS_LESS)
 	{
-		if (g_status == 1)
+		if (g_status)
 			return ;
+		close(here_doc_struct()->fd[1]);
 		dup2(here_doc_struct()->fd[0], STDIN_FILENO);
 		close(here_doc_struct()->fd[0]);
 	}
@@ -217,7 +216,7 @@ int	executor(t_tools *tools)
 	status = 0;
 	if (exec_builtins(tools) && !tools->pipes && parser->str[0])
 		return (parser->builtin(tools, parser));
-	handle_sigaction(SIG_IGN);
+	handle_sigaction(ignore_sig_handler);
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
@@ -232,6 +231,6 @@ int	executor(t_tools *tools)
 		free_and_exit(tools);
 	}
 	else
-		wait_status(pid, &status);
+		wait_status(tools, pid, &status);
 	return (status);
 }

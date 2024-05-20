@@ -100,7 +100,7 @@ int	set_fd(t_lexer *current, t_parser *parser)
 		parser->fd_err = STDERR_FILENO;
 		fd = STDOUT_FILENO;
 	}
-	else if (current->token == '<')
+	else if (current->token == '<' && !current->next->token)
 		fd = STDIN_FILENO;
 	else if (current->token == '>')
 		fd = STDOUT_FILENO;

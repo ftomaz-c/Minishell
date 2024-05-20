@@ -25,7 +25,6 @@ void	minishell_pipex(t_tools *tools, t_parser *parser)
 {
 	int	pipe_fd[2];
 	int	pid;
-	//int	status;
 
 	if (pipe(pipe_fd) == -1)
 		exit (EXIT_FAILURE);

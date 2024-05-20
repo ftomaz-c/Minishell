@@ -1,16 +1,22 @@
 #include "../../includes/minishell.h"
 
+void	close_sig_exit(t_tools *tools, int fd, int status)
+{
+	free_parser(&tools->parser);
+	free_tools(tools);
+	close(fd);
+	exit(status);
+}
+
 void	ignore_sig_handler(int sig)
 {
 	(void)sig;
-	//printf("\nignore\n");
-	//if (sig == SIGINT)
-	//	printf("\n");
+	if (sig == SIGINT)
+		printf("\n");
 }
 
 void	react_sig_handler(int sig)
 {
-	//printf("\nreact\n");
 	if (sig == SIGINT)
 	{
 		printf("\n");

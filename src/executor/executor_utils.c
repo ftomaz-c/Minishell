@@ -11,6 +11,7 @@ char	**basic_env(void)
 
 void	free_and_exit(t_tools *tools)
 {
+	handle_pipex_sigaction(SIG_IGN);
 	free_parser(&tools->parser);
 	free_tools(tools);
 	exit(g_status);
@@ -80,10 +81,12 @@ void	exec_err(int err, char *str, char *value)
  * ```
  */
 
-void	wait_status(int pid, int *status)
+void	wait_status(t_tools *tools, int pid, int *status)
 {
 	(void)pid;
 	waitpid(-1, status, 0);
+	if (g_status == 133)
+		close_sig_exit(tools, here_doc_struct()->fd[1], EXIT_FAILURE);
 	if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
 }

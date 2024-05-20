@@ -1,10 +1,25 @@
 #include "../../includes/executor.h"
 
+void	eof_sig_msg_exit(t_tools *tools, char *line)
+{
+	ft_putstr_fd("minishell: warning: here-document at line ", 2);
+	ft_putnbr_fd(tools->nprompts, 2);
+	ft_putstr_fd("delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(here_doc_struct()->heredoc_limiter, 2);
+	ft_putstr_fd("')\n", 2);
+	free(here_doc_struct()->heredoc_limiter);
+	close(here_doc_struct()->fd[1]);
+	free(line);
+	exit (EXIT_FAILURE);
+}
+
 void	sig_pipex_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_status = 133;
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		printf("\n");
 	}
 }
 
@@ -12,7 +27,6 @@ void	here_doc_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\n");
 		rl_replace_line("", 1);
 		rl_on_new_line();
 		g_status = 133;

@@ -20,6 +20,8 @@ typedef struct s_tools
 	int				nprompts;
 	int				nint_mode;
 	int				tflag;
+	int				original_stdout;
+	int				original_stdin;
 	struct s_lexer	*lexer;
 	struct s_parser	*parser;
 }	t_tools;
@@ -42,9 +44,8 @@ typedef struct s_parser
 	char			*stdout_file_name;
 	int				stdin_flag;
 	int				stdout_flag;
-	int				original_stdout;
-	int				original_stdin;
 	int				fd_err;
+	char			*limiter;
 	t_lexer			*redirections;
 	struct s_parser	*next;
 	struct s_parser	*prev;	
