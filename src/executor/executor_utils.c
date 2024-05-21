@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:25 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:37:46 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ char	**basic_env(void)
 {
 	char	**b_env;
 
-	b_env = calloc (sizeof(char *), 2);
+	b_env = calloc (sizeof(char *), 3);
 	b_env[0] = ft_strdup("PATH=/bin:/usr/bin");
+	b_env[1] = ft_strdup("_=/bin/env");
 	return (b_env);
 }
 

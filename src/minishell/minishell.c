@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:43:01 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:35:27 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ void	minishell(t_tools *tools, char *line)
 			free_lexer(&tools->lexer);
 			return ;
 		}
-		//print_lexer(tools);
 		if (!parser(tools))
 			return ;
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
-		//print_parser(tools);
 		if (tools->parser)
 		{
 			executor(tools);
@@ -60,7 +58,10 @@ void	non_interactive_mode(t_tools *tools, char *line)
 	}
 	i = 0;
 	while (i < n)
+	{
+		tools->line_count++;
 		minishell(tools, tools->lines[i++]);
+	}
 	tools->exit = 1;
 }
 

@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:33 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:35:03 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 	{
 		cmd_args[0] = parser->str[2];
 		cmd_args[1] = NULL;
-		exec_path(tools->path, cmd_args, basic_env(), tools->nint_mode);
+		exec_path(tools, cmd_args, basic_env());
 		free_and_exit(tools, g_status);
 	}
 	if (parser->builtin && (exec_builtins(tools) || parser->builtin == cmd_echo
@@ -158,9 +158,7 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 			free_and_exit(tools, g_status);
 	}
 	else
-	{
-		exec_path(tools->path, parser->str, tools->env, tools->nint_mode);
-	}
+		exec_path(tools, parser->str, tools->env);
 	return ;
 }
 

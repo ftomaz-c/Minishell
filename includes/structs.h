@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:27:37 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:28:47 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ typedef struct s_tools
 	int				exit;
 	int				nprompts;
 	int				nint_mode;
+	int				line_count;
 	char			**lines;
 	int				token_flag;
-	int				original_stdout;
 	int				original_stdin;
 	struct s_lexer	*lexer;
 	struct s_parser	*parser;
