@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:15:47 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:08:42 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	get_here_doc(t_tools *tools, int fd[2])
 {
 	char	*line;
 
-	handle_sigaction(here_doc_sig);
+	handle_heredoc_sigaction();
 	g_status = 0;
 	while (1)
 	{
@@ -84,13 +84,11 @@ void	here_doc(t_tools *tools)
 	pid_t	pid;
 	int		status;
 
-	handle_sigaction(ignore_sig_pipex);
 	if (pipe(tools->parser->fd) == -1)
 	{
 		perror("Error creating pipes");
 		exit (EXIT_FAILURE);
 	}
-	handle_sigaction(sig_pipex_handler);
 	pid = fork();
 	if (pid == -1)
 	{

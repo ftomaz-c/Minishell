@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 15:37:46 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:54:00 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,17 @@ void	exec_err(t_tools *tools, int err, char *str, char *value)
 void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 {
 	int	i;
+	int	sig;
 
 	waitpid(pid, status, 0);
 	if (WIFSIGNALED(*status))
-		g_status = 130;
+	{
+		sig = WTERMSIG(*status);
+		if (sig == SIGINT)
+			g_status = 130;
+		else if (sig == SIGQUIT)
+			g_status = 131;
+	}
 	else if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
 	if (here_doc)
@@ -109,12 +116,15 @@ void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 			free_and_exit(tools, g_status);
 		dup2(tools->parser->fd[0], STDIN_FILENO);
 		close(tools->parser->fd[0]);
-		handle_sigaction(sig_pipex_handler);
 	}
 	else
 	{
 		i = 3;
 		while (i < 1024)
 			close(i++);
+		if (g_status == 130)
+			write(1, "\n", 1);
+		else if (g_status == 131)
+			write(1, "Quit (core dumped)\n", 19);
 	}
 }

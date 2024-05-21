@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 15:30:33 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:55:40 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ void	get_here_doc(t_tools *tools, int fd[2]);
 void	here_doc(t_tools *tools);
 
 /*src/executor/child_signals.c*/
-void	here_doc_sig(int sig);
-void	sig_pipex_handler(int sig);
+void	child_handler(int sig);
+void	handle_child_sigaction(void);
+void	handle_heredoc_sigaction(void);
 
 void	eof_sig_msg_exit(t_tools *tools, char *line);
-void	ignore_sig_pipex(int sig);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 15:35:27 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:47:59 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,10 @@ void	non_interactive_mode(t_tools *tools, char *line)
  */
 void	interactive_mode(t_tools *tools, char *line)
 {
-	line = prompt_line(tools);
+	static int i = 0;
+	//line = prompt_line(tools);
+	line = readline (".minishell: ");
+	i++;
 	if (!line)
 	{
 		tools->exit = 1;

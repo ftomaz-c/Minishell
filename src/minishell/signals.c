@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/16 20:39:24 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:40:55 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,27 @@ void	free_and_exit(t_tools *tools, int status)
 	exit (status);
 }
 
-void	ignore_sig_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		g_status = 130;
-	}
-}
-
 void	react_sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\n");
-		rl_replace_line("", 1);
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 		g_status = 130;
 	}
-	return ;
 }
 
-void	handle_sigaction(void (*handler)(int))
+void	handle_sigaction(void)
 {
 	struct sigaction	sa;
 
-	sa.sa_handler = handler;
-	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = react_sig_handler;
 	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigaction (SIGQUIT, &sa, NULL);
 }
-
-
 

@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:48:32 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:15:57 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #  define SA_RESTART 0x10000000
 # endif
 
+# include <signal.h>
 # include <unistd.h>
 # include "../libft/includes/libft.h"
 # include "structs.h"
@@ -30,7 +31,6 @@
 # include "executor.h"
 # include <stdio.h>
 # include <stdlib.h>
-# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
@@ -50,11 +50,8 @@ void	non_interactive_mode(t_tools *tools, char *line);
 void	minishell(t_tools *tools, char *line);
 
 /*src/minishell/signals.c*/
-void	ignore_sig_handler(int sig);
 void	react_sig_handler(int sig);
-void	handle_sigaction(void (*handler)(int));
-
-void	sig_handler(int sig);
+void	handle_sigaction(void);
 
 /*src/minishell/tools.c*/
 void	handle_shlvl(char *pre_lvl, char **new_lvl, size_t lvl);

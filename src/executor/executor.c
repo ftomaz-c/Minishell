@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 15:35:03 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:21:46 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,17 +164,16 @@ int	executor(t_tools *tools)
 	pid_t		pid;
 	int			status;
 
+	handle_child_sigaction();
 	parser = tools->parser;
 	status = 0;
 	if (exec_builtins(tools) && !tools->pipes && parser->str[0])
 		return (parser->builtin(tools, parser));
-	// handle_sigaction(ignore_sig_handler);
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		handle_sigaction(sig_pipex_handler);
 		while (parser)
 		{
 			set_and_exec(tools, parser);
