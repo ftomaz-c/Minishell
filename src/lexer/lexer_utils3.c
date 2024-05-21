@@ -160,7 +160,7 @@ int	valid_syntax(t_lexer *lexer, t_tools *tools)
 {
 	t_lexer	*current;
 
-	if (tools->tflag)
+	if (tools->token_flag)
 	{
 		if (!valid_token_starter(lexer))
 			return (0);

@@ -42,69 +42,31 @@ void	fd_exit(int exit_code, int original_stdout)
  * @param status The exit status for the program.
  * @return None.
  */
-void	close_heredoc_exit(t_tools *tools, int fd, int status)
-{
-	free_parser(&tools->parser);
-	free_tools(tools);
-	close(fd);
-	exit(status);
-}
 
-/**
- * @brief Exits the program if the status is 901.
- * 
- * This function closes the file descriptors associated with the
- * pipe, frees memory, and exits the program
- * if the global status is 901.
- * 
- * @param tools A pointer to the tools structure.
- * @param fd An array of file descriptors associated with the pipe.
- * @return None.
- */
-void	signal_exit(t_tools *tools, int fd[2])
-{
-	if (g_status == 901)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		free_and_exit(tools);
-	}
-}
-
-/**
- * @brief Reads input until a delimiter is encountered 
- * and writes it to a file descriptor.
- * 
- * This function reads input from stdin until the specified 
- *delimiter is encountered and
- * writes it to the provided file descriptor.
- * 
- * @param limiter The delimiter indicating the end of input.
- * @param fd The file descriptor to write the input to.
- * @param original_stdout The original file descriptor for stdout.
- */
-void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
+void	get_here_doc(t_tools *tools, int fd[2])
 {
 	char	*line;
 
-	close(fd[0]);
-	line = NULL;
-	while (g_status != 901)
+	handle_sigaction(here_doc_sig);
+	g_status = 0;
+	while (1)
 	{
 		line = readline("> ");
-		if (!line && g_status != 901)
-		{
-			printf("minishell: warning: here-document at line %d delimited by",
-				tools->nprompts);
-			printf("end-of-file (wanted `%s')\n", limiter);
-			close_heredoc_exit(tools, fd[1], EXIT_FAILURE);
-		}
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		if (g_status == 130)
 		{
 			free(line);
-			close_heredoc_exit(tools, fd[1], EXIT_SUCCESS);
+			free_and_exit(tools, g_status);
+		}
+		if (!line)
+			eof_sig_msg_exit(tools, line);
+		if (ft_strncmp(line, tools->parser->limiter,
+				ft_strlen(tools->parser->limiter)) == 0)
+		{
+			free(line);
+			free_and_exit(tools, EXIT_SUCCESS);
 		}
 		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
 		free(line);
 	}
 }
@@ -117,12 +79,13 @@ void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
  * @param limiter The delimiter indicating the end of input.
  * @param original_stdout The original file descriptor for stdout.
  */
-void	here_doc(t_tools *tools, char *limiter, int stdout)
+void	here_doc(t_tools *tools)
 {
-	int		fd[2];
 	pid_t	pid;
+	int		status;
 
-	if (pipe(fd) == -1)
+	handle_sigaction(ignore_sig_pipex);
+	if (pipe(tools->parser->fd) == -1)
 	{
 		perror("Error creating pipes");
 		exit (EXIT_FAILURE);
@@ -136,16 +99,12 @@ void	here_doc(t_tools *tools, char *limiter, int stdout)
 	}
 	if (pid == 0)
 	{
-		handle_sigaction(sig_pipex_handler);
-		get_here_doc(tools, limiter, fd, stdout);
-		signal_exit(tools, fd);
-		pipex_dup_and_close(-1, fd[1], stdout);
+		close(tools->parser->fd[0]);
+		get_here_doc(tools, tools->parser->fd);
 	}
 	else
 	{
-		signal_exit(tools, fd);
-		pipex_dup_and_close(fd[1], fd[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
+		close(tools->parser->fd[1]);
+		wait_status (tools, pid, &status, 1);
 	}
-	signal_exit(tools, fd);
 }

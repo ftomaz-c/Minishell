@@ -89,7 +89,6 @@ void	print_parser(t_tools *tools)
 		printf("\n");
 		printf("builtin: %p\n", parser->builtin);
 		printf("nb_redirections: %i\n", parser->nb_redirections);
-		printf("heredoc_limiter: %s\n", parser->heredoc_limiter);
 		print_parser_redirections(parser);
 		printf("\n");
 		printf("----------------------------------------------\n");

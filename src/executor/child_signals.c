@@ -12,38 +12,41 @@
 
 #include "../../includes/executor.h"
 
+void	eof_sig_msg_exit(t_tools *tools, char *line)
+{
+	ft_putstr_fd("minishell: warning: here-document at line ", 2);
+	ft_putnbr_fd(tools->nprompts, 2);
+	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(tools->parser->limiter, 2);
+	ft_putstr_fd("')\n", 2);
+	free(line);
+	free_and_exit(tools, EXIT_SUCCESS);
+}
+
+void	ignore_sig_pipex(int sig)
+{
+	if (sig == SIGINT)
+		g_status = 130;
+}
+
 void	sig_pipex_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_status = 901;
-		rl_replace_line("", 1);
+		printf("\n");
+		rl_replace_line("", 0);
 		rl_on_new_line();
-		// exit(EXIT_SUCCESS);
+		g_status = 130;
 	}
-	return ;
 }
 
-void	sig_pipex_handler_exit(int sig)
+void	here_doc_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_status = 901;
-		// rl_replace_line("", 1);
-		// rl_on_new_line();
-		exit(EXIT_SUCCESS);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		g_status = 130;
+		close(STDIN_FILENO);
 	}
-	return ;
-}
-
-void	handle_pipex_sigaction(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = &sig_pipex_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction (SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction (SIGQUIT, &sa, NULL);
 }

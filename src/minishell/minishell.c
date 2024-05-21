@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:20:19 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:35:27 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,28 +67,27 @@ void	non_interactive_mode(t_tools *tools, char *line)
 {
 	int		n;
 	int		i;
-	char	**lines;
+	char	*tmp;
 
 	n = 0;
-	lines = ft_calloc(sizeof(char **), 1024);
+	tools->lines = ft_calloc(sizeof(char **), 1024);
 	tools->nint_mode = 1;
 	line = get_next_line(0);
 	while (line)
 	{
-		lines[n] = ft_strdup(ft_strtrim(line, "\n"));
+		tmp = ft_strtrim(line, "\n");
+		tools->lines[n] = ft_strdup(tmp);
 		n++;
 		free(line);
+		free(tmp);
 		line = get_next_line(0);
 	}
 	i = 0;
 	while (i < n)
 	{
 		tools->line_count++;
-		minishell(tools, lines[i]);
-		free(lines[i]);
-		i++;
+		minishell(tools, tools->lines[i++]);
 	}
-	free(lines);
 	tools->exit = 1;
 }
 

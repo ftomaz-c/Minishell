@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:26:46 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:05:43 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			cmd_export(t_tools *tools, t_parser *command);
 void		copy_var_value_quotes(char *var_path, char *str, int start);
 int			copy_var_name(char *var_path, char *str, int equal_pos);
 char		*prepare_var(char *str);
-char		**get_env_export(char **envp, int i);
+void		get_env_export(char **envp, int i, char *tmp, char ***env);
 
 /*src/builtins/cmd_export/cmd_export_utils2.c*/
 int			check_var_path(char **env, char *var);

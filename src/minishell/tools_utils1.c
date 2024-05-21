@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:21:22 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:40:12 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	compare_var_to_env(char *env, char *var)
  */
 void	free_tools(t_tools *tools)
 {
+	int	i;
+
 	if (!tools)
 		return ;
 	if (tools && tools->env)
@@ -103,6 +105,13 @@ void	free_tools(t_tools *tools)
 		free(tools->user);
 	if (tools && tools->name)
 		free(tools->name);
+	if (tools->nint_mode)
+	{
+		i = 0;
+		while (tools->lines[i])
+			free(tools->lines[i++]);
+		free(tools->lines);
+	}
 }
 
 /**

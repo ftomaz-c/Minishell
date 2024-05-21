@@ -93,7 +93,7 @@ void	exit_err(int err, char *str)
 {
 	if (err == 1)
 	{
-		ft_putstr_fd("exit\nbash: exit: ", STDERR_FILENO);
+		ft_putstr_fd("exit\nminishell: exit: ", STDERR_FILENO);
 		if (ft_strcmp(str, "exit") != 0)
 		{
 			ft_putstr_fd(str, STDERR_FILENO);
@@ -103,7 +103,7 @@ void	exit_err(int err, char *str)
 	}
 	else if (err == 2)
 	{
-		ft_putstr_fd("exit\nbash: exit: ", STDERR_FILENO);
+		ft_putstr_fd("exit\nminishell: exit: ", STDERR_FILENO);
 		if (ft_strcmp(str, "exit") != 0)
 		{
 			ft_putstr_fd(str, STDERR_FILENO);
@@ -153,5 +153,6 @@ int	cmd_exit(t_tools *tools, t_parser *parser)
 		}
 	}
 	tools->exit = 1;
+	ft_putstr_fd("exit\n", STDIN_FILENO);
 	return (g_status);
 }

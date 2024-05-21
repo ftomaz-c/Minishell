@@ -64,3 +64,19 @@ int	check_empty_line(char *line)
 	}
 	return (0);
 }
+
+int	ft_isspace_special(int c, int flag)
+{
+	if (flag)
+	{
+		if (c == ' ')
+			return (1);
+	}
+	else
+	{
+		if (c == ' ' || c == '\t' || c == '\n'
+			|| c == '\v' || c == '\f' || c == '\r')
+			return (1);
+	}
+	return (0);
+}

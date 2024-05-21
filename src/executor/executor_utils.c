@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:13:58 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:37:46 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,12 @@ char	**basic_env(void)
 {
 	char	**b_env;
 
-	b_env = calloc (sizeof(char *), 2);
+	b_env = calloc (sizeof(char *), 3);
 	b_env[0] = ft_strdup("PATH=/bin:/usr/bin");
+	b_env[1] = ft_strdup("_=/bin/env");
 	return (b_env);
 }
 
-/**
- * @brief Frees the memory allocated for the tools
- * structure and exits the program.
- * 
- * This function frees the memory allocated for the tools structure,
- * including its parser,
- * and exits the program with the global status.
- * 
- * @param tools A pointer to the tools structure.
- * @return None.
- */
-void	free_and_exit(t_tools *tools)
-{
-	free_parser(&tools->parser);
-	free_tools(tools);
-	exit(g_status);
-}
-
-/**
- * @brief Outputs non-interactive mode information to stderr.
- * 
- * This function outputs information related to non-interactive mode
- * to the standard error stream if the shell is running
- * in non-interactive mode
- * and has not exited.
- * 
- * @param tools A pointer to the tools structure.
- * @return None.
- */
 void	nint_mode(t_tools *tools)
 {
 	if (tools->nint_mode && !tools->exit)
@@ -121,11 +93,28 @@ void	exec_err(t_tools *tools, int err, char *str, char *value)
  * @param pid    Process ID of the child process to wait for.
  * @param status Pointer to an integer to store the exit 
  * status of the child process.
- * */
-void	wait_status(int pid, int *status)
+ */
+void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 {
-	(void)pid;
-	waitpid(-1, status, 0);
-	if (WIFEXITED(*status))
+	int	i;
+
+	waitpid(pid, status, 0);
+	if (WIFSIGNALED(*status))
+		g_status = 130;
+	else if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
+	if (here_doc)
+	{
+		if (g_status == 130)
+			free_and_exit(tools, g_status);
+		dup2(tools->parser->fd[0], STDIN_FILENO);
+		close(tools->parser->fd[0]);
+		handle_sigaction(sig_pipex_handler);
+	}
+	else
+	{
+		i = 3;
+		while (i < 1024)
+			close(i++);
+	}
 }

@@ -44,11 +44,12 @@ void	syntax_err(char token)
  * @param i     Pointer to the current index within the string.
  * @param start Pointer to the start position within the string.
  */
-void	handle_characters(char *s, int *i, int *start)
+void	handle_characters(char *s, int *i, int *start, int flag)
 {
 	int	tmp;
 
-	while (s[*i] && (s[*i] != ' ' && s[*i] != '\"' && s[*i] != '\''))
+	while (s[*i] && (!ft_isspace_special(s[*i], flag)
+			&& s[*i] != '\"' && s[*i] != '\''))
 		(*i)++;
 	if (s[*i] == '\"' || s[*i] == '\'')
 	{
@@ -60,7 +61,7 @@ void	handle_characters(char *s, int *i, int *start)
 			*start = ++(*i);
 			(*i) = tmp;
 		}
-		*i = paired_quote(s, *i + 1, s[*i]);
+		*i = paired_quote(s, *i + 1, s[*i], flag);
 	}
 }
 
@@ -82,7 +83,7 @@ void	handle_characters(char *s, int *i, int *start)
  * @return An array of substrings split from the original string.
  *         The 'split' array contains pointers to dynamically allocated memory.
  */
-char	**create_split(char *s, char **split, int nwords, char c)
+char	**create_split(char *s, char **split, int nwords, int flag)
 {
 	int	i;
 	int	j;
@@ -95,10 +96,10 @@ char	**create_split(char *s, char **split, int nwords, char c)
 	nstart = 0;
 	while (i < (int)ft_strlen(s) && j < nwords)
 	{
-		if (s[i] == '\"' || s[i] == '\'' || s[i] == ' ')
-			handle_white_spaces_and_quotes(s, &i, &start);
-		if (s[i] && s[i] != c && s[i] != '\"' && s[i] != '\'')
-			handle_characters(s, &i, &start);
+		if (s[i] == '\"' || s[i] == '\'' || ft_isspace_special(s[i], flag))
+			handle_white_spaces_and_quotes(s, &i, &start, flag);
+		if (s[i] && s[i] != ' ' && s[i] != '\"' && s[i] != '\'')
+			handle_characters(s, &i, &start, flag);
 		split[j] = word_alloc(s, start, i);
 		i++;
 		j++;
@@ -126,18 +127,18 @@ char	**create_split(char *s, char **split, int nwords, char c)
  *         The 'split' array contains pointers to dynamically allocated memory.
  *         Returns NULL if memory allocation fails.
  */
-char	**lexer_split(char *s, char c)
+char	**lexer_split(char *s, int flag)
 {
 	char	**split;
 	int		nwords;
 	int		size;
 
 	size = ft_strlen(s);
-	nwords = count_words_and_quotes(s, c, size);
+	nwords = count_words_and_quotes(s, size, flag);
 	split = ft_calloc((nwords + 1), (sizeof(char *)));
 	if (split)
 	{
-		split = create_split(s, split, nwords, c);
+		split = create_split(s, split, nwords, flag);
 		return (split);
 	}
 	return (0);

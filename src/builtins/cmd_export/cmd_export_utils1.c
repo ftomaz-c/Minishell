@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 20:15:15 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:06:28 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,30 +130,30 @@ char	*prepare_var(char *str)
  * @return Returns a newly allocated array of strings containing
  *  the prepared environment variables, or NULL if memory allocation fails.
  */
-char	**get_env_export(char **envp, int i)
+void	get_env_export(char **envp, int i, char *tmp, char ***env)
 {
-	char	**env;
-	char	*tmp;
-
 	while (envp[i])
 		i++;
-	env = ft_calloc(sizeof(char *), i + 1);
-	if (env == NULL)
-		return (NULL);
+	*env = ft_calloc(sizeof(char **), i + 1);
+	if (*env == NULL)
+		return ;
 	i = 0;
 	while (envp[i])
 	{
 		if (ft_strchr(envp[i], '='))
 		{
 			tmp = prepare_var(envp[i]);
-			env[i] = ft_strjoin("declare -x ", tmp);
+			(*env)[i] = ft_strjoin("declare -x ", tmp);
 			free(tmp);
-			if (env[i] == NULL)
-				return (NULL);
+			if ((*env)[i] == NULL)
+			{
+				free_list(*env);
+				return ;
+			}
 		}
 		else
-			env[i] = ft_strjoin("declare -x ", envp[i]);
+			(*env)[i] = ft_strjoin("declare -x ", envp[i]);
 		i++;
 	}
-	return (env);
+	return ;
 }
