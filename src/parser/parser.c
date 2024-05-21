@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:03:14 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:20:05 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 		current = add_redirection(current, node, NULL);
 		if (current && (current->token == '<' || current->token == '>'))
 			current = add_redirection(current, node, start);
+		if (current && (current->token == '<' || current->token == '>'))
+		{
+			syntax_err(current->token);
+			return (NULL);
+		}
 		if (current && current->words)
 			current = add_redirection(current, node, start);
 		if (!current->next && (current->token == '<' || current->token == '>'))

@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 20:41:08 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:25:14 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/**
+ * @brief Checks for the presence of "<<" (here-document) in a list of strings.
+ * 
+ * This function iterates through each string in the given list `list` 
+ * to find the presence of the "<<" sequence, which is typically used to 
+ * indicate the start of a here-document in shell scripts. 
+ * It returns 1 if at least one instance of "<<" is found, otherwise returns 0.
+ * 
+ * @param list A null-terminated array of strings to search for the "<<" sequence.
+ * 
+ * @return Returns 1 if at least one instance of "<<" is found, otherwise returns 0.
+ */
+int	here_doc_present(char **list)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while (list[i])
+	{
+		while(list[i][j])	
+		{
+			if (strncmp(&list[i][j], "<<", ft_strlen(&list[i][j])))
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
 
 /**
  * @brief Finds the presence of single quotes in a string.

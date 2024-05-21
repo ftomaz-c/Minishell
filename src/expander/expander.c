@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:18:45 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:23:19 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,9 +178,11 @@ char	*expander(char **env, char **list, t_tools *tools)
 
 	(void)tools;
 	index = 0;
+	split = NULL;
 	while (list[index])
 	{
-		split = split_expander(list[index]);
+		if (!here_doc_present(list))
+			split = split_expander(list[index]);
 		if (split)
 		{
 			expand_split(env, split);
