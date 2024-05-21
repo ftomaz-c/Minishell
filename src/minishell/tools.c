@@ -163,6 +163,8 @@ void	config_tools(t_tools *tools, char **envp)
 	tools->nint_mode = 0;
 	tools->nprompts = 0;
 	tools->parser = NULL;
+	tools->original_stdin = 0;
+	tools->original_stdout = 0;
 	tools->exit = 0;
 	tools->line_count = 0;
 	update_env(tools);

@@ -16,7 +16,7 @@ void	export_err(int err, char *str)
 {
 	if (err == 1)
 	{
-		ft_putstr_fd("bash: export: `", STDERR_FILENO);
+		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 	}

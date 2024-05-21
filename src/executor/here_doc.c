@@ -35,50 +35,31 @@ void	fd_exit(int exit_code, int original_stdout)
  * @see get_next_line
  */
 
-void	close_heredoc_exit(t_tools *tools, int fd, int status)
-{
-	free_parser(&tools->parser);
-	free_tools(tools);
-	close(fd);
-	exit(status);
-}
-
-void	get_here_doc(t_tools *tools, char *limiter, int fd[2], int stdout)
+void	get_here_doc(t_tools *tools, int fd[2])
 {
 	char	*line;
 
-	close(fd[0]);
-	ft_putstr_fd("> ", stdout);
-	line = NULL;
+	handle_sigaction(here_doc_sig);
+	g_status = 0;
 	while (1)
 	{
-		line = get_next_line(1);
-		if (!line && g_status != 901)
-		{
-			ft_putstr_fd("\n", stdout);
-			printf("minishell: warning: here-document at line %d delimited by",
-				tools->nprompts);
-			printf("end-of-file (wanted `%s')\n", limiter);
-			close_heredoc_exit(tools, fd[1], EXIT_FAILURE);
-		}
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		line = readline("> ");
+		if (g_status == 130)
 		{
 			free(line);
-			close_heredoc_exit(tools, fd[1], EXIT_SUCCESS);
+			free_and_exit(tools, g_status);
+		}
+		if (!line)
+			eof_sig_msg_exit(tools, line);
+		if (ft_strncmp(line, tools->parser->limiter,
+				ft_strlen(tools->parser->limiter)) == 0)
+		{
+			free(line);
+			free_and_exit(tools, EXIT_SUCCESS);
 		}
 		write(fd[1], line, ft_strlen(line));
-		ft_putstr_fd("> ", stdout);
+		write(fd[1], "\n", 1);
 		free(line);
-	}
-}
-
-void	signal_exit(t_tools *tools, int fd[2])
-{
-	if (g_status == 901)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		free_and_exit(tools);
 	}
 }
 
@@ -95,12 +76,13 @@ void	signal_exit(t_tools *tools, int fd[2])
  * @see get_here_doc
  */
 
-void	here_doc(t_tools *tools, char *limiter, int stdout)
+void	here_doc(t_tools *tools)
 {
-	int		fd[2];
 	pid_t	pid;
+	int		status;
 
-	if (pipe(fd) == -1)
+	handle_sigaction(ignore_sig_pipex);
+	if (pipe(tools->parser->fd) == -1)
 	{
 		perror("Error creating pipes");
 		exit (EXIT_FAILURE);
@@ -113,13 +95,12 @@ void	here_doc(t_tools *tools, char *limiter, int stdout)
 	}
 	if (pid == 0)
 	{
-		get_here_doc(tools, limiter, fd, stdout);
-		pipex_dup_and_close(-1, fd[1], stdout);
+		close(tools->parser->fd[0]);
+		get_here_doc(tools, tools->parser->fd);
 	}
 	else
 	{
-		pipex_dup_and_close(fd[1], fd[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
+		close(tools->parser->fd[1]);
+		wait_status (tools, pid, &status, 1);
 	}
-	signal_exit(tools, fd);
 }

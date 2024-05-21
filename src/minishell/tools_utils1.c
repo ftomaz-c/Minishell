@@ -69,6 +69,8 @@ int	compare_var_to_env(char *env, char *var)
 
 void	free_tools(t_tools *tools)
 {
+	int	i;
+
 	if (!tools)
 		return ;
 	if (tools && tools->env)
@@ -85,6 +87,13 @@ void	free_tools(t_tools *tools)
 		free(tools->user);
 	if (tools && tools->name)
 		free(tools->name);
+	if (tools->nint_mode)
+	{
+		i = 0;
+		while (tools->lines[i])
+			free(tools->lines[i++]);
+		free(tools->lines);
+	}
 }
 
 /**

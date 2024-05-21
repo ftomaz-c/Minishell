@@ -58,5 +58,6 @@ void	free_list(char	**list);
 /*src/utils/utils3.c*/
 void	sort_array(char **env_copy);
 int		check_empty_line(char *line);
+int		ft_isspace_special(int c, int flag);
 
 #endif

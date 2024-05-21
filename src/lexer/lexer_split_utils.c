@@ -48,7 +48,7 @@
  * ```
  */
 
-int	paired_quote(char *str, int i, char ch)
+int	paired_quote(char *str, int i, char ch, int flag)
 {
 	int		pair;
 	char	quote;
@@ -66,7 +66,7 @@ int	paired_quote(char *str, int i, char ch)
 			ch = quote;
 			pair = 0;
 		}
-		else if (str[i] == ' ' && pair == 1)
+		else if (ft_isspace_special(str[i], flag) && pair == 1)
 			break ;
 		i++;
 	}
@@ -113,16 +113,16 @@ int	paired_quote(char *str, int i, char ch)
  * ```
  */
 
-void	handle_white_spaces_and_quotes(char *s, int *i, int *start)
+void	handle_white_spaces_and_quotes(char *s, int *i, int *start, int flag)
 {
-	if (s[*i] == ' ')
+	if (ft_isspace_special(s[*i], flag))
 	{
-		while (s[*i] == ' ')
+		while (ft_isspace_special(s[*i], flag))
 			(*i)++;
 		*start = *i;
 	}
 	if (s[*i] == '\"' || s[*i] == '\'')
-		*i = paired_quote(s, *i + 1, s[*i]);
+		*i = paired_quote(s, *i + 1, s[*i], flag);
 }
 
 /**
@@ -197,7 +197,7 @@ void	update_start_indexes(int *i, int *start, int *nstart)
  * ```
  */
 
-int	count_words_and_quotes(char *s, char c, size_t size)
+int	count_words_and_quotes(char *s, size_t size, int flag)
 {
 	size_t	i;
 	int		word;
@@ -206,20 +206,20 @@ int	count_words_and_quotes(char *s, char c, size_t size)
 	word = 0;
 	while (i < size + 1)
 	{
-		while (i < size && s[i] == c)
+		while (i < size && ft_isspace_special(s[i], flag))
 			i++;
 		if (i < size && s[i] && (s[i] == '\"' || s[i] == '\''))
 		{
 			word++;
-			i = paired_quote(s, i + 1, s[i]) + 1;
+			i = paired_quote(s, i + 1, s[i], flag) + 1;
 		}
 		else
 		{
 			word++;
 			i++;
 			if (i < size && (s[i] == '\"' || s[i] == '\''))
-				i = paired_quote(s, i + 1, s[i]) + 1;
-			while (i < size && s[i] != c)
+				i = paired_quote(s, i + 1, s[i], flag) + 1;
+			while (i < size && !ft_isspace_special(s[i], flag))
 				i++;
 		}
 	}

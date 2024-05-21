@@ -37,7 +37,7 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 		close(fd_infile);
 	}
 	else if (parser->stdin_flag == LESS_LESS)
-		here_doc(tools, parser->heredoc_limiter, STDOUT_FILENO);
+		here_doc(tools);
 	return ;
 }
 
@@ -64,7 +64,8 @@ t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 	if (parser->stdin_flag == LESS_LESS)
 	{
 		current = current->next;
-		parser->heredoc_limiter = current->words;
+		parser->limiter = current->words;
+		dup2(tools->original_stdin, STDIN_FILENO);
 	}
 	else if (parser->stdin_flag == LESS)
 		parser->stdin_file_name = current->words;

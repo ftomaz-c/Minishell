@@ -23,10 +23,12 @@ void	minishell(t_tools *tools, char *line)
 			free_lexer(&tools->lexer);
 			return ;
 		}
+		//print_lexer(tools);
 		if (!parser(tools))
 			return ;
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
+		//print_parser(tools);
 		if (tools->parser)
 		{
 			executor(tools);
@@ -41,28 +43,24 @@ void	non_interactive_mode(t_tools *tools, char *line)
 {
 	int		n;
 	int		i;
-	char	**lines;
+	char	*tmp;
 
 	n = 0;
-	lines = ft_calloc(sizeof(char **), 1024);
+	tools->lines = ft_calloc(sizeof(char **), 1024);
 	tools->nint_mode = 1;
 	line = get_next_line(0);
 	while (line)
 	{
-		lines[n] = ft_strdup(ft_strtrim(line, "\n"));
+		tmp = ft_strtrim(line, "\n");
+		tools->lines[n] = ft_strdup(tmp);
 		n++;
 		free(line);
+		free(tmp);
 		line = get_next_line(0);
 	}
 	i = 0;
 	while (i < n)
-	{
-		tools->line_count++;
-		minishell(tools, lines[i]);
-		free(lines[i]);
-		i++;
-	}
-	free(lines);
+		minishell(tools, tools->lines[i++]);
 	tools->exit = 1;
 }
 

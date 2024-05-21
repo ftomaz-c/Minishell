@@ -147,20 +147,19 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 	{
 		cmd_args[0] = parser->str[2];
 		cmd_args[1] = NULL;
-		exec_path(tools, cmd_args, basic_env());
-		free_and_exit(tools);
+		exec_path(tools->path, cmd_args, basic_env(), tools->nint_mode);
+		free_and_exit(tools, g_status);
 	}
 	if (parser->builtin && (exec_builtins(tools) || parser->builtin == cmd_echo
 			|| parser->builtin == cmd_env))
 	{
 		parser->builtin(tools, parser);
 		if (parser->next)
-			free_and_exit(tools);
+			free_and_exit(tools, g_status);
 	}
 	else
 	{
-		exec_path(tools, parser->str, tools->env);
-		free_and_exit(tools);
+		exec_path(tools->path, parser->str, tools->env, tools->nint_mode);
 	}
 	return ;
 }
@@ -182,12 +181,15 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 
 void	set_and_exec(t_tools *tools, t_parser *parser)
 {
+	tools->original_stdin = dup(STDIN_FILENO);
 	if (parser->redirections != NULL)
 		redirection(tools, parser);
 	if (parser->next)
 		minishell_pipex(tools, parser);
 	else
 		execute_cmd(tools, parser);
+	if (parser->builtin)
+		waitpid(0, NULL, 0);
 }
 
 /**
@@ -224,15 +226,15 @@ int	executor(t_tools *tools)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		handle_pipex_sigaction();
+		handle_sigaction(sig_pipex_handler);
 		while (parser)
 		{
 			set_and_exec(tools, parser);
 			parser = parser->next;
 		}
-		free_and_exit(tools);
+		free_and_exit(tools, g_status);
 	}
 	else
-		wait_status(pid, &status);
+		wait_status(tools, -1, &status, 0);
 	return (status);
 }

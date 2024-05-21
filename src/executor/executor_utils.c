@@ -21,13 +21,6 @@ char	**basic_env(void)
 	return (b_env);
 }
 
-void	free_and_exit(t_tools *tools)
-{
-	free_parser(&tools->parser);
-	free_tools(tools);
-	exit(g_status);
-}
-
 void	nint_mode(t_tools *tools)
 {
 	if (tools->nint_mode && !tools->exit)
@@ -77,15 +70,28 @@ void	exec_err(t_tools *tools, int err, char *str, char *value)
  * @param pid    Process ID of the child process to wait for.
  * @param status Pointer to an integer to store the exit 
  * status of the child process.
- * */
-void	wait_status(int pid, int *status)
+ */
+void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 {
 	int	i;
 
-	i = 0;
-	while (i < 1000000)
-		i++;
 	waitpid(pid, status, 0);
-	if (WIFEXITED(*status))
+	if (WIFSIGNALED(*status))
+		g_status = 130;
+	else if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
+	if (here_doc)
+	{
+		if (g_status == 130)
+			free_and_exit(tools, g_status);
+		dup2(tools->parser->fd[0], STDIN_FILENO);
+		close(tools->parser->fd[0]);
+		handle_sigaction(sig_pipex_handler);
+	}
+	else
+	{
+		i = 3;
+		while (i < 1024)
+			close(i++);
+	}
 }

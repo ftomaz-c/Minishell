@@ -33,6 +33,6 @@ int	main(int argc, char **argv, char **envp)
 		if (tools.exit)
 			break ;
 	}
-	free_and_exit(&tools);
+	free_and_exit(&tools, g_status);
 	return (0);
 }

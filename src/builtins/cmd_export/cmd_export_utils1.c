@@ -193,7 +193,7 @@ char	**get_env_export(char **envp, int i)
 
 	while (envp[i])
 		i++;
-	env = ft_calloc(sizeof(char *), i + 1);
+	env = ft_calloc(sizeof(char **), i + 1);
 	if (env == NULL)
 		return (NULL);
 	i = 0;
@@ -205,7 +205,10 @@ char	**get_env_export(char **envp, int i)
 			env[i] = ft_strjoin("declare -x ", tmp);
 			free(tmp);
 			if (env[i] == NULL)
+			{
+				free_list(env);
 				return (NULL);
+			}
 		}
 		else
 			env[i] = ft_strjoin("declare -x ", envp[i]);

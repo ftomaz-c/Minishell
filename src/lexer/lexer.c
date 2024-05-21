@@ -121,7 +121,7 @@ void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
 		node->index = 0;
 	node->next = NULL;
 	node->pre = NULL;
-	tools->tflag = 1;
+	tools->token_flag = 1;
 	ft_lstaddback_lexer(lexer, node);
 }
 
@@ -234,7 +234,7 @@ int	lex_line(char	**line_split_quotes, t_tools *tools)
 	new_line = expander(tools->env, line_split_quotes, tools);
 	if (!new_line)
 		return (0);
-	line_split_quotes = lexer_split(new_line, ' ');
+	line_split_quotes = lexer_split(new_line, 1);
 	free(new_line);
 	if (!line_split_quotes)
 		return (0);
@@ -249,8 +249,8 @@ int	lexer(char *line, t_tools *tools)
 
 	tools->lexer = NULL;
 	tools->pipes = 0;
-	tools->tflag = 0;
-	line_split_quotes = lexer_split(line, ' ');
+	tools->token_flag = 0;
+	line_split_quotes = lexer_split(line, 0);
 	if (!lex_line(line_split_quotes, tools))
 	{
 		free(line);

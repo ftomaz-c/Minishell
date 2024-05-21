@@ -31,8 +31,10 @@ typedef struct s_tools
 	int				exit;
 	int				nprompts;
 	int				nint_mode;
-	int				line_count;
-	int				tflag;
+	char			**lines;
+	int				token_flag;
+	int				original_stdout;
+	int				original_stdin;
 	struct s_lexer	*lexer;
 	struct s_parser	*parser;
 }	t_tools;
@@ -51,13 +53,13 @@ typedef struct s_parser
 	char			**str;
 	int				(*builtin)(struct s_tools *, struct s_parser *);
 	int				nb_redirections;
-	char			*heredoc_limiter;
 	char			*stdin_file_name;
 	char			*stdout_file_name;
 	int				stdin_flag;
 	int				stdout_flag;
-	int				original_stdout;
 	int				fd_err;
+	char			*limiter;
+	int				fd[2];
 	t_lexer			*redirections;
 	struct s_parser	*next;
 	struct s_parser	*prev;	
