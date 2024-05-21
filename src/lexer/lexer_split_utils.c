@@ -185,14 +185,13 @@ void	update_start_indexes(int *i, int *start, int *nstart)
  * ```
  */
 
-int	count_words_and_quotes(char *s, char c, size_t size, int flag)
+int	count_words_and_quotes(char *s, size_t size, int flag)
 {
 	size_t	i;
 	int		word;
 
 	i = 0;
 	word = 0;
-	(void)c;
 	while (i < size + 1)
 	{
 		while (i < size && ft_isspace_special(s[i], flag))

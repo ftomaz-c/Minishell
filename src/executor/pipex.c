@@ -1,10 +1,10 @@
 #include "../../includes/executor.h"
 
-void	pipex_dup_and_close(int close_fd, int dup_fd, int fd2)
+void	pipex_dup_and_close(int close_fd, int dup_fd, int dup_fd2)
 {
 	if (close_fd != -1)
 		close (close_fd);
-	dup2(dup_fd, fd2);
+	dup2(dup_fd, dup_fd2);
 	close(dup_fd);
 }
 

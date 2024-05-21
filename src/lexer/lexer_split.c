@@ -193,14 +193,14 @@ char	**create_split(char *s, char **split, int nwords, int flag)
  * ```
  */
 
-char	**lexer_split(char *s, char c, int flag)
+char	**lexer_split(char *s, int flag)
 {
 	char	**split;
 	int		nwords;
 	int		size;
 
 	size = ft_strlen(s);
-	nwords = count_words_and_quotes(s, c, size, flag);
+	nwords = count_words_and_quotes(s, size, flag);
 	split = ft_calloc((nwords + 1), (sizeof(char *)));
 	if (split)
 	{

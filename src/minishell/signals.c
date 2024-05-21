@@ -4,8 +4,6 @@ void	free_and_exit(t_tools *tools, int status)
 {
 	int	i;
 
-	dup2(tools->original_stdin, STDIN_FILENO);
-	close(tools->original_stdin);
 	i = 3;
 	while (i < 1024)
 		close(i++);

@@ -53,6 +53,7 @@ t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 	{
 		current = current->next;
 		parser->limiter = current->words;
+		dup2(tools->original_stdin, STDIN_FILENO);
 	}
 	else if (parser->stdin_flag == LESS)
 		parser->stdin_file_name = current->words;

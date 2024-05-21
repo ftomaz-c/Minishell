@@ -77,15 +77,23 @@ void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 {
 	int	i;
 
-	(void)pid;
-	(void)tools;
-	(void)here_doc;
-	waitpid(-1, status, 0);
-	if (WIFEXITED(*status))
+	waitpid(pid, status, 0);
+	if (WIFSIGNALED(*status))
+		g_status = 130;
+	else if (WIFEXITED(*status))
 		g_status = WEXITSTATUS(*status);
-	/*dup2(tools->original_stdin, STDIN_FILENO);
-	close(tools->original_stdin);*/
-	i = 3;
-	while (i < 1024)
-		close(i++);
+	if (here_doc)
+	{
+		if (g_status == 130)
+			free_and_exit(tools, g_status);
+		dup2(tools->parser->fd[0], STDIN_FILENO);
+		close(tools->parser->fd[0]);
+		handle_sigaction(sig_pipex_handler);
+	}
+	else
+	{
+		i = 3;
+		while (i < 1024)
+			close(i++);
+	}
 }

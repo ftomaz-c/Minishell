@@ -70,7 +70,6 @@ void	here_doc(t_tools *tools)
 	int		status;
 
 	handle_sigaction(ignore_sig_pipex);
-	dup2(tools->original_stdin, STDIN_FILENO);
 	if (pipe(tools->parser->fd) == -1)
 	{
 		perror("Error creating pipes");
@@ -90,15 +89,6 @@ void	here_doc(t_tools *tools)
 	else
 	{
 		close(tools->parser->fd[1]);
-		waitpid(pid, &status, 0);
-		if (WIFSIGNALED(status))
-			g_status = 130;
-		else if (WIFEXITED(status))
-			g_status = WEXITSTATUS(status);
-		if (g_status == 130)
-			free_and_exit(tools, g_status);
-		dup2(tools->parser->fd[0], STDIN_FILENO);
-		close(tools->parser->fd[0]);
-		handle_sigaction(sig_pipex_handler);
+		wait_status (tools, pid, &status, 1);
 	}
 }

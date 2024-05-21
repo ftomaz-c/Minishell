@@ -36,14 +36,14 @@ int		valid_syntax(t_lexer *lexer, t_tools *tools);
 void	syntax_err(char token);
 void	handle_characters(char *s, int *i, int *start, int flag);
 char	**create_split(char *s, char **split, int nwords, int flag);
-char	**lexer_split(char *s, char c, int flag);
+char	**lexer_split(char *s, int flag);
 int		check_token_flag(char *str, int i, int flag, int position);
 
 /*src/lexer/lexer_split_utils.c*/
 int		paired_quote(char *str, int i, char ch, int flag);
 void	handle_white_spaces_and_quotes(char *s, int *i, int *start, int flag);
 void	update_start_indexes(int *i, int *start, int *nstart);
-int		count_words_and_quotes(char *s, char c, size_t size, int flag);
+int		count_words_and_quotes(char *s, size_t size, int flag);
 char	*word_alloc(char *s, int start, int end);
 
 #endif

@@ -173,11 +173,6 @@ void	set_and_exec(t_tools *tools, t_parser *parser)
 	tools->original_stdin = dup(STDIN_FILENO);
 	if (parser->redirections != NULL)
 		redirection(tools, parser);
-	/*if (parser->stdin_flag == LESS_LESS)
-	{
-		dup2(tools->parser->fd[0], STDIN_FILENO);
-		close(tools->parser->fd[0]);
-	}*/
 	if (parser->next)
 		minishell_pipex(tools, parser);
 	else
@@ -229,6 +224,6 @@ int	executor(t_tools *tools)
 		free_and_exit(tools, g_status);
 	}
 	else
-		wait_status(tools, pid, &status, 0);
+		wait_status(tools, -1, &status, 0);
 	return (status);
 }
