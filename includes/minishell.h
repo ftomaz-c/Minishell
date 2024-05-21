@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
+/*   Updated: 2024/05/14 15:48:32 by ftomaz-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -56,9 +68,9 @@ char	**get_path(t_tools *tools, char **env);
 char	*get_pwd(t_tools *tools, char **env);
 
 /*src/minishell/tools_utils2.c*/
-void	remove_whoami(char **env, char *user);
+void	remove_whoami(char **env);
 void	get_whoami(char **env);
-char	*get_home_from_etc_passwd(char *line);
 char	*get_source_home_var(t_tools *tools, char *str);
+char	*get_source_user_var(t_tools *tools);
 
 #endif

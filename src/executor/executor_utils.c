@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
+/*   Updated: 2024/05/14 15:30:25 by ftomaz-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/executor.h"
 
 char	**basic_env(void)
@@ -9,8 +21,19 @@ char	**basic_env(void)
 	return (b_env);
 }
 
-void	exec_err(int err, char *str, char *value)
+void	nint_mode(t_tools *tools)
 {
+	if (tools->nint_mode && !tools->exit)
+	{
+		ft_putstr_fd("minishell: line ", STDERR_FILENO);
+		ft_putnbr_fd(tools->line_count, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+}
+
+void	exec_err(t_tools *tools, int err, char *str, char *value)
+{
+	nint_mode(tools);
 	if (err == 1)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
@@ -47,32 +70,7 @@ void	exec_err(int err, char *str, char *value)
  * @param pid    Process ID of the child process to wait for.
  * @param status Pointer to an integer to store the exit 
  * status of the child process.
- * 
- * @note This function assumes the process with the given PID 
- * is a child process.
- *       It assumes the status pointer is valid and points to 
- * a writable memory location.
- * 
- * @warning Behavior is undefined if status is NULL.
- * 
- * @see waitpid, WIFEXITED, WEXITSTATUS
- * 
- * @example
- * ```
- * // Example usage of wait_status function
- * int pid = fork(); // Fork a child process
- * if (pid == 0) {
- *     // Child process code
- * } else {
- *     int status;
- *     wait_status(pid, &status); // Wait for the child 
- * process to change state
- *     // Use the status variable to handle the exit status
- *  of the child process
- * }
- * ```
  */
-
 void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 {
 	int	i;

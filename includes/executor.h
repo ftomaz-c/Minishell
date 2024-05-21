@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
+/*   Updated: 2024/05/14 15:27:10 by ftomaz-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
 # include "minishell.h"
 
 /*src/executor/executor.c*/
-void	exec_path(char **path_list, char **cmd_args, char **envp, int gnl);
+void	exec_path(t_tools *tools, char **cmd_args, char **envp);
 int		exec_builtins(t_tools *tools);
 void	execute_cmd(t_tools *tools, t_parser *parser);
 void	set_and_exec(t_tools *tools, t_parser *parser);
