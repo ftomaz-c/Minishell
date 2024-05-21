@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:28:46 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:05:51 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,13 @@
 void	sort_print_env(t_tools *tools)
 {
 	char	**env_copy;
+	char	*tmp;
 	int		i;
 
 	i = 0;
-	env_copy = get_env_export(tools->env, i);
+	tmp = NULL;
+	env_copy = NULL;
+	get_env_export(tools->env, i, tmp, &env_copy);
 	sort_array(env_copy);
 	while (env_copy[i])
 	{

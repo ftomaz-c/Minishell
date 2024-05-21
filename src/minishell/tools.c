@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 15:44:00 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:52:18 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,16 @@ char	*get_name(t_tools *tools, char **env)
 	var = get_var_from_env(env, "NAME");
 	if (var)
 		return (var);
-	var = get_var_from_env(env, "SESSION_MANAGER");
-	if (!var)
-		return (ft_strdup(""));
-	i = find_char_position(var, '/');
-	name = ft_substr (var, i + 1, find_next_char_position(var, i, '.') - i - 1);
-	free(var);
+	else
+	{
+		var = get_var_from_env(env, "SESSION_MANAGER");
+		if (!var)
+			return (ft_strdup(""));
+		i = find_char_position(var, '/');
+		name = ft_substr (var, i + 1, find_next_char_position(var, i, '.') 
+				- i - 1);
+		free(var);
+	}
 	return (name);
 }
 
