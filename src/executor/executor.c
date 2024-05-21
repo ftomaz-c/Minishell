@@ -148,7 +148,7 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 	else
 	{
 		exec_path(tools->path, parser->str, tools->env, tools->nint_mode);
-		free_and_exit(tools, g_status);
+		//free_and_exit(tools, g_status);
 	}
 	return ;
 }

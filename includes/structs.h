@@ -19,7 +19,8 @@ typedef struct s_tools
 	int				exit;
 	int				nprompts;
 	int				nint_mode;
-	int				tflag;
+	char			**lines;
+	int				token_flag;
 	int				original_stdout;
 	int				original_stdin;
 	struct s_lexer	*lexer;
