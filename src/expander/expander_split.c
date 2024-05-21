@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   expander_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:31:09 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:19:18 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/expander.h"
 
+/**
+ * @brief Initializes the expander structure.
+ * 
+ * This function initializes the expander structure by
+ * setting its size, index, and start members,
+ * and allocates memory for the split array.
+ * 
+ * @param expander Pointer to the expander structure to be initialized.
+ */
 void	init_expander(t_expander *expander)
 {
 	expander->size = 1;
@@ -20,6 +29,19 @@ void	init_expander(t_expander *expander)
 	expander->split = ft_calloc(expander->size, sizeof(char *));
 }
 
+/**
+ * @brief Reallocates memory for the split array in the expander structure.
+ * 
+ * This function reallocates memory for the split
+ * array in the expander structure,
+ * accommodating additional elements as needed.
+ * 
+ * @param expander Pointer to the expander structure
+ *  containing the split array.
+ * @param str The input string being processed.
+ * @param i The current index in the input string.
+ * @return int Returns 1 on success, 0 on failure.
+ */
 int	realloc_split(t_expander *expander, char *str, int i)
 {
 	expander->size++;
@@ -45,6 +67,17 @@ int	realloc_split(t_expander *expander, char *str, int i)
 	return (1);
 }
 
+/**
+ * @brief Splits a string into parts for shell expansion.
+ * 
+ * This function splits a string into parts based on
+ * shell expansion rules,
+ * handling variable expansion, command substitution, and quoting.
+ * 
+ * @param str The input string to be split.
+ * @return char** Returns an array of strings representing 
+ * the split parts, or NULL on failure.
+ */
 char	**split_expander(char *str)
 {
 	t_expander	expander;

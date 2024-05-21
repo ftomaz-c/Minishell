@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:42:51 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:13:17 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,7 @@
  * @param start The start index of the word segment within 'word'.
  * @param end The end index of the word segment within 'word' (exclusive).
  * @param lexer Pointer to the pointer to the head of the lexer list.
- * 
- * @note This function assumes that 'word' is a null-terminated string.
- *       It also assumes that the 'lexer' pointer is pointing
- * to a valid lexer list.
- * 
- * @warning The function does not perform input validation on 'word' or 'lexer'.
- *          It may result in unexpected behavior if 'word' is not
- * a valid string or if 'lexer' is NULL.
- *          It also does not handle memory allocation failures.
- * 
- * @example
- * ```
- * char *word = "Hello";
- * t_lexer *lexer = NULL; // Assume lexer is initialized elsewhere
- * add_word_to_node(word, 0, 5, &lexer);
- * // A new lexer node containing "Hello" will be added to the end
- * of the lexer list
- * ```
  */
-
 void	add_word_to_node(char *word, t_lexer **lexer)
 {
 	t_lexer	*node;
@@ -73,6 +54,7 @@ void	add_word_to_node(char *word, t_lexer **lexer)
 	node->pre = NULL;
 	ft_lstaddback_lexer(lexer, node);
 }
+
 /**
  * @brief Adds a token to a lexer node.
  * 
@@ -82,24 +64,7 @@ void	add_word_to_node(char *word, t_lexer **lexer)
  * 
  * @param token The token to add to the lexer node.
  * @param lexer Pointer to the pointer to the head of the lexer list.
- * 
- * @note This function assumes that the 'lexer' pointer is
- * pointing to a valid lexer list.
- * 
- * @warning The function does not perform input validation on 'lexer'.
- *          It may result in unexpected behavior if 'lexer' is NULL.
- *          It also does not handle memory allocation failures.
- * 
- * @example
- * ```
- * char token = '<';
- * t_lexer *lexer = NULL; // Assume lexer is initialized elsewhere
- * add_token_to_node(token, &lexer);
- * // A new lexer node containing '<' as the token will be
- * added to the end of the lexer list
- * ```
  */
-
 void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
 {
 	t_lexer	*node;
@@ -134,29 +99,7 @@ void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
  * 
  * @param line_split An array of strings representing the split line.
  * @param lexer Pointer to the pointer to the head of the lexer list.
- * 
- * @note This function assumes that 'line_split' is a
- * null-terminated array of strings.
- *       It also assumes that the 'lexer' pointer is pointing
- * to a valid lexer list.
- * 
- * @warning The function does not perform input validation
- * on 'line_split' or 'lexer'.
- *          It may result in unexpected behavior if 'line_split' is not
- * a valid array of strings or if 'lexer' is NULL.
- * 
- * @see add_word_to_node(), add_token_to_node(), check_if_token()
- * 
- * @example
- * ```
- * char *line_split[] = {"echo", "Hello", "world", "<", NULL};
- * t_lexer *lexer = NULL; // Assume lexer is initialized elsewhere
- * add_line_to_lexer_struct(line_split, &lexer);
- * // The lexer list will contain nodes for words ("echo", "Hello", "world")
- * and a token ('<')
- * ```
  */
-
 void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer,
 		t_tools *tools)
 {
@@ -188,42 +131,18 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer,
 }
 
 /**
- * @brief Lexically analyzes a line and adds it to the lexer structure.
+ * @brief Lexically analyzes a line of input, splitting it into tokens.
  * 
- * This function performs lexical analysis on the input
- * 'line' by splitting it into words and tokens,
- * expanding environment variables, and adding the resulting segments
- * to the lexer structure.
+ * This function performs lexical analysis on a line of input, splitting it
+ * into tokens based on whitespace. It then checks for special characters
+ * and expands environment variables. The resulting tokens are added to
+ * the lexer structure.
  * 
- * @param line The input line to lexically analyze.
- * @param lexer Pointer to the pointer to the head of the lexer list.
- * @param envp The environment variables array for expansion.
- * 
- * @return Returns 1 on success.
- * 
- * @note This function assumes that 'line' is a null-terminated string.
- *       It also assumes that the 'lexer' pointer is
- * pointing to a valid lexer list.
- * 
- * @warning The function does not perform input validation on 'line' or 'lexer'.
- *          It may result in unexpected behavior if 'line' is not a
- * valid string or if 'lexer' is NULL.
- *          It also does not handle memory allocation failures.
- * 
- * @see init_lexer(), lexer_split(), expander(),
- * add_line_to_lexer_struct(), free_list()
- * 
- * @example
- * ```
- * char *line = "echo $HOME";
- * t_lexer *lexer = NULL; // Assume lexer is initialized elsewhere
- * char *envp[] = {"HOME=/home/user", NULL}; // Assume environment variables
- * are set elsewhere
- * lex_line(line, &lexer, envp);
- * // The lexer list will contain nodes for words ("echo", "/home/user")
- * ```
+ * @param line_split_quotes An array containing the line split into tokens.
+ * @param tools A pointer to the tools structure containing
+ * environment variables.
+ * @return int 1 if the line was successfully lexed, 0 otherwise.
  */
-
 int	lex_line(char	**line_split_quotes, t_tools *tools)
 {
 	char	*new_line;
@@ -243,6 +162,20 @@ int	lex_line(char	**line_split_quotes, t_tools *tools)
 	return (1);
 }
 
+/**
+ * @brief Lexically analyzes a line and adds it to the lexer structure.
+ * 
+ * This function performs lexical analysis on the input
+ * 'line' by splitting it into words and tokens,
+ * expanding environment variables, and adding the resulting segments
+ * to the lexer structure.
+ * 
+ * @param line The input line to lexically analyze.
+ * @param lexer Pointer to the pointer to the head of the lexer list.
+ * @param envp The environment variables array for expansion.
+ * 
+ * @return Returns 1 on success.
+ */
 int	lexer(char *line, t_tools *tools)
 {
 	char	**line_split_quotes;

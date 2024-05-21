@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:42:47 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:55:09 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
+
 /**
  * @brief Gets special character representation based on the input string.
  * 
@@ -21,18 +22,6 @@
  * @param i Index to start checking for the special character.
  * 
  * @return The special character if found, otherwise 0.
- * 
- * @note The input string (str) is assumed to be valid and null-terminated.
- * 
- * @warning None.
- * 
- * @see None.
- * 
- * @example
- * ```
- * char special_char = get_special_char("example\tstring", 7);
- * // special_char now contains '\t'
- * ```
  */
 char	get_special_char(char *str, int i)
 {
@@ -54,20 +43,6 @@ char	get_special_char(char *str, int i)
  * @param str The input string.
  * 
  * @return The new string with replaced special characters.
- * 
- * @note Memory is allocated within the function and needs to be freed 
- * by the caller to avoid memory leaks.
- * 
- * @warning None.
- * 
- * @see get_special_char
- * 
- * @example
- * ```
- * char *new_str = get_new_special_str("Example $'special' string");
- * // new_str now contains "Example special string"
- * free(new_str);
- * ```
  */
 char	*get_new_special_str(char *str)
 {
@@ -107,20 +82,6 @@ char	*get_new_special_str(char *str)
  * @param list The list of strings.
  * 
  * @return None.
- * 
- * @note None.
- * 
- * @warning Memory for the modified strings is allocated within 
- * the function and needs to be freed by the caller to avoid memory leaks.
- * 
- * @see get_new_special_str
- * 
- * @example
- * ```
- * char *list[] = {"Example $'special' string", NULL};
- * check_special_chars(list);
- * // list[0] now contains "Example special string"
- * ```
  */
 void	check_special_chars(char **list)
 {
@@ -152,30 +113,16 @@ void	check_special_chars(char **list)
 }
 
 /**
- * @brief Validates syntax of a command.
+ * @brief Checks if the current token is a valid starter for a command.
  * 
- * This function validates the syntax of a command based on certain rules.
+ * This function checks if the current token in a lexer structure is a valid
+ * starter for a command. A token is considered a valid starter if it is one
+ * of the following characters: '<', '>', '|'. However, if it is followed by
+ * another token without any words in between, it is considered invalid.
  * 
- * @param lexer The lexer structure representing the command.
- * @param tools The tools structure containing additional flags.
- * 
- * @return 1 if syntax is valid, otherwise 0.
- * 
- * @note None.
- * 
- * @warning None.
- * 
- * @see None.
- * 
- * @example
- * ```
- * t_lexer lexer;
- * t_tools tools;
- * int result = valid_syntax(&lexer, &tools);
- * // Returns 1 if syntax is valid, otherwise 0.
- * ```
+ * @param lexer A pointer to the lexer structure.
+ * @return int 1 if the token is a valid starter, 0 otherwise.
  */
-
 int	valid_token_starter(t_lexer *lexer)
 {
 	t_lexer	*current;
@@ -199,6 +146,16 @@ int	valid_token_starter(t_lexer *lexer)
 	return (1);
 }
 
+/**
+ * @brief Validates syntax of a command.
+ * 
+ * This function validates the syntax of a command based on certain rules.
+ * 
+ * @param lexer The lexer structure representing the command.
+ * @param tools The tools structure containing additional flags.
+ * 
+ * @return 1 if syntax is valid, otherwise 0.
+ */
 int	valid_syntax(t_lexer *lexer, t_tools *tools)
 {
 	t_lexer	*current;

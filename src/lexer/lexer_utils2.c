@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:42:43 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:52:09 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,7 @@
  * @param i Starting index to begin processing the string.
  * 
  * @return A new string without quotes. If no quotes are found, returns NULL.
- * 
- * @note This function allocates memory for the new string. The 
- * caller is responsible for freeing this memory.
- * 
- * @warning This function assumes that the input string is 
- * null-terminated and does not modify the original string.
- * 
- * @see add_temp_to_word() function for adding temporary 
- * substrings to the result.
- * 
- * @example
- * ```
- * // Example usage of remove_quotes() function
- * char *input = "This 'is' a 'test' string";
- * int index = 0;
- * char *result = remove_quotes(input, index);
- * // The result should be "This is a test string" after removing the quotes.
- * // Remember to free the memory allocated for 'result' when done.
- * ```
  */
-
 char	*remove_quotes(char	*str, int i)
 {
 	int		start;
@@ -83,10 +63,7 @@ char	*remove_quotes(char	*str, int i)
  * @param start The starting index of the substring.
  * @param j The ending index of the substring.
  * @param lexer Pointer to the lexer structure.
- * 
- * @note This function assumes that the input string is null-terminated.
  */
-
 void	remove_quotes_add_word(char *line, int start, int j, t_lexer **lexer)
 {
 	char	*new;
@@ -113,15 +90,7 @@ void	remove_quotes_add_word(char *line, int start, int j, t_lexer **lexer)
  *of the quote (closed or not).
  * @param i Pointer to the index within the string.
  * @param quote The quote character to handle.
- * 
- * @note This function modifies the values pointed to by 'flag' and 'i'.
- * 
- * @see check_unclosed_quotes() function for checking if 
- *quotes are properly closed.
- * 
- * @warning This function assumes that the input string is null-terminated.
  */
-
 void	handle_quote(char *line, int *flag, int *i, char quote)
 {
 	(*i)++;
@@ -141,12 +110,7 @@ void	handle_quote(char *line, int *flag, int *i, char quote)
  * @param line The input string to check.
  * 
  * @return Returns 0 if there are unclosed quotes, otherwise returns 1.
- * 
- * @see handle_quote() function for handling individual quotes.
- * 
- * @warning This function assumes that the input string is null-terminated.
  */
-
 int	check_unclosed_quotes(char *line)
 {
 	int		i;
@@ -183,13 +147,7 @@ int	check_unclosed_quotes(char *line)
  * @param word Pointer to the word to which the substring will be added.
  * @param start The starting index of the substring.
  * @param i The ending index of the substring.
- * 
- * @note This function allocates memory for the new word. The caller 
- * is responsible for freeing this memory.
- * 
- * @warning This function assumes that the input string is null-terminated.
  */
-
 void	add_temp_to_word(char *str, char **word, int start, int i)
 {
 	char	*new_word;

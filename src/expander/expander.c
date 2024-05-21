@@ -3,15 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:31:20 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:18:45 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/expander.h"
 
+/**
+ * @brief Checks the conditions for expanding a variable in a string.
+ * 
+ * This function checks if the conditions are met for
+ * expanding a variable in a string.
+ * The conditions include ensuring the position is within the 
+ * string bounds, no single quotes
+ * precede the position, and the character following the position
+ * is either '?' or an alphanumeric
+ * character or underscore.
+ * 
+ * @param str The input string to be checked.
+ * @param position The position in the string to be
+ * checked for variable expansion.
+ * @return int 1 if conditions are met for expansion, 0 otherwise.
+ */
 int	check_conditions_expander(char *str, int position)
 {
 	if (!(position < (int)ft_strlen(str)))
@@ -27,6 +43,19 @@ int	check_conditions_expander(char *str, int position)
 	return (1);
 }
 
+/**
+ * @brief Expands variables in an array of strings
+ * based on environment variables.
+ * 
+ * This function iterates over an array of strings and
+ * expands variables in each string
+ * based on the provided environment variables. It identifies
+ * variables by '$' prefix
+ * and expands them using the `add_prefix_and_suffix` function.
+ * 
+ * @param env The array of environment variables.
+ * @param split The array of strings to be expanded.
+ */
 void	expand_split(char **env, char **split)
 {
 	char	*str;
@@ -56,6 +85,18 @@ void	expand_split(char **env, char **split)
 	}
 }
 
+/**
+ * @brief Merges a list of strings into a single
+ * string with a specified separator.
+ * 
+ * This function merges a list of strings into a single
+ * string, concatenating them with
+ * the specified separator between each pair of strings.
+ * 
+ * @param list The list of strings to be merged.
+ * @param separator The separator to be used between strings.
+ * @return char* The merged string, or NULL on error.
+ */
 char	*merge_list_of_strings(char **list, char *separator)
 {
 	char	*str;
@@ -83,6 +124,22 @@ char	*merge_list_of_strings(char **list, char *separator)
 	return (str);
 }
 
+/**
+ * @brief Expands a tilde (~) character in a string
+ * to the home directory.
+ * 
+ * This function expands a tilde character in a string
+ * to the home directory path.
+ * If the tilde is followed by a slash or the end of the
+ * string, it replaces the tilde
+ * with the home directory path.
+ * 
+ * @param str The input string containing the tilde character.
+ * @param home_var The home directory path.
+ * @return char* The expanded string, or the original
+ * string if the tilde is not followed
+ * by a slash or the end of the string.
+ */
 char	*expand_tilde(char *str, char *home_var)
 {
 	char	*tmp;
@@ -112,22 +169,7 @@ char	*expand_tilde(char *str, char *home_var)
  * @param list The list of strings to be processed.
  * 
  * @return None.
- * 
- * @note The function modifies the strings in the list in place.
- * 
- * @see find_char_position_new, get_end_position, add_prefix_and_suffix
- * 
- * @example
- * ```
- * char *environment[] = {"USER=John", "HOME=/home/john", NULL};
- * char *list[] = {"Welcome, $USER!", 
- * "Your home directory is $HOME.", NULL};
- * expander(environment, list);
- * // list will be {"Welcome, John!", "Your home 
- * directory is /home/john.", NULL}
- * ```
  */
-
 char	*expander(char **env, char **list, t_tools *tools)
 {
 	int		index;

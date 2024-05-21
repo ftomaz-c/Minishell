@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
 /*   Updated: 2024/05/21 16:05:51 by ftomaz-c         ###   ########.fr       */
@@ -19,16 +19,7 @@
  * and prints them.
  * 
  * @param tools Pointer to tools structure containing environment variables.
- * 
- * @note This function assumes that the necessary helper
- * functions like get_env_export(), sort_array(), 
- * ft_strncmp(), and free_list() are defined elsewhere.
- * 
- * @see get_env_export(), sort_array(), ft_strncmp(), free_list()
- * 
- * @example
  */
-
 void	sort_print_env(t_tools *tools)
 {
 	char	**env_copy;
@@ -59,18 +50,6 @@ void	sort_print_env(t_tools *tools)
  * @param parser String to check for validity as an export identifier.
  * 
  * @return Returns 1 if the string is a valid export identifier, 0 otherwise.
- * 
- * @note This function assumes that the necessary helper functions 
- * like ft_strcmp(), find_char_position(),
- * and ft_isalpha_plus_underscore() are defined elsewhere.
- * 
- * @see ft_strcmp(), find_char_position(), ft_isalpha_plus_underscore()
- * 
- * @warning This function prints error messages to stdout if 
- * the identifier is not valid.
- * 
- * @example
- * 
  */
 int	check_valid_export(char *parser)
 {
@@ -97,6 +76,7 @@ int	check_valid_export(char *parser)
 	}
 	return (1);
 }
+
 /**
  * @brief Export a variable to the environment.
  * 
@@ -105,21 +85,7 @@ int	check_valid_export(char *parser)
  * 
  * @param tools Pointer to tools structure containing environment variables.
  * @param str String containing the variable to export.
- * 
- * @note This function assumes that the necessary helper 
- * functions like get_new_var(), 
- * ft_calloc(), copy_var_to_env(), and free_list() are defined elsewhere.
- * 
- * @see get_new_var(), ft_calloc(), copy_var_to_env(), free_list()
- * 
- * @warning This function modifies the environment by adding a new variable. 
- * It relies on memory allocation and deallocation, so care 
- * should be taken to avoid memory leaks.
- * 
- * @example
- * 
  */
-
 void	export_variable_to_env(t_tools *tools, char *str)
 {
 	int		i;
@@ -140,6 +106,7 @@ void	export_variable_to_env(t_tools *tools, char *str)
 	free_list(tools->env);
 	tools->env = new_array;
 }
+
 /**
  * @brief Check if a variable exists in the environment.
  * 
@@ -151,24 +118,7 @@ void	export_variable_to_env(t_tools *tools, char *str)
  * @param str String containing the variable to check.
  * 
  * @return Returns 1 if the variable exists, 0 otherwise.
- * 
- * @note This function assumes that the necessary helper functions 
- * like find_char_position(),
- * ft_calloc(), copy_var_name(), check_var_path(), and 
- * substitute_env_var_value() are defined elsewhere.
- * 
- * @see find_char_position(), ft_calloc(), copy_var_name(), check_var_path(),
- * substitute_env_var_value()
- * 
- * @warning This function modifies the input string by 
- * substituting the variable value. 
- * It also relies on memory allocation and deallocation, so care should be 
- * taken to avoid memory leaks.
- * 
- * @example
- * 
  */
-
 int	check_if_var_exists(t_tools *tools, char *str)
 {
 	char	*var_path;
@@ -195,6 +145,7 @@ int	check_if_var_exists(t_tools *tools, char *str)
 	free(var_path);
 	return (0);
 }
+
 /**
  * @brief Export environment variables.
  * 
@@ -208,31 +159,7 @@ int	check_if_var_exists(t_tools *tools, char *str)
  * command-line arguments.
  * 
  * @return Returns 0 on success.
- * 
- * @note This function assumes that the tools and parser 
- * structures are initialized 
- * and valid. It also assumes that the necessary functions
- *  like sort_print_env(), 
- * check_valid_export(), check_if_var_exists(), and 
- * export_variable_to_env() are defined elsewhere.
- * 
- * @warning This function modifies the environment by exporting variables. 
- * Care should be taken when using it in multithreaded or critical sections.
- * 
- * @see sort_print_env(), check_valid_export(), check_if_var_exists(), 
- * export_variable_to_env()
- * 
- * @example
- * 
- * ```
- * // Export a variable
- * export(&tools, &parser);
- * 
- * // Export multiple variables
- * export(&tools, &parser);
- * ```
  */
-
 int	cmd_export(t_tools *tools, t_parser *command)
 {
 	int	i;

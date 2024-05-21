@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:28:26 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:14:09 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,7 @@
  * 
  * @return 0 if the directory change is successful, 
  * otherwise prints an error message and returns 1.
- * 
- * @note This function assumes the validity of the tools struct.
- * 
- * @warning Behavior is undefined if tools is NULL.
- * 
- * @see chdir, printf, ft_strdup, getcwd
- * 
- * @example
- * ```
- * // Example usage of cd_no_path function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * t_parser *command = initialize_parser(); // Initialize parser struct
- * int status = cd_no_path(tools, command);
- * // Change directory to the home directory
- * // status will be 0 if the directory change is
- * successful, otherwise an error message will be printed.
- * ```
  */
-
 int	cd_no_path(t_tools *tools, t_parser *command)
 {
 	char	new_pwd[1024];
@@ -79,25 +61,6 @@ int	cd_no_path(t_tools *tools, t_parser *command)
  * 
  * @return 0 if the directory change is successful, otherwise 
  * prints an error message and returns 1.
- * 
- * @note This function assumes the validity of the tools struct
- *  and the presence of the directory path in command->str[1].
- * 
- * @warning Behavior is undefined if tools is NULL or if the 
- * directory path is not present.
- * 
- * @see chdir, printf, ft_strdup, getcwd
- * 
- * @example
- * ```
- * // Example usage of cd_handle_specific_path function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * t_parser *command = initialize_parser(); // Initialize parser struct
- * int status = cd_handle_specific_path(tools, command); 
- * // Change directory to a specific path
- * // status will be 0 if the directory change is successful, 
- * otherwise an error message will be printed.
- * ```
  */
 int	cd_handle_specific_path(t_tools *tools, t_parser *command)
 {
@@ -129,25 +92,6 @@ int	cd_handle_specific_path(t_tools *tools, t_parser *command)
  * 
  * @return 0 if the directory change is successful, otherwise
  *  prints an error message and returns 1.
- * 
- * @note This function assumes the validity of the tools struct and 
- * the presence of the directory path in command->str[1].
- * 
- * @warning Behavior is undefined if tools is NULL or if 
- * the directory path is not present.
- * 
- * @see chdir, printf, ft_strdup, getcwd
- * 
- * @example
- * ```
- * // Example usage of cd_path function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * t_parser *command = initialize_parser(); // Initialize parser struct
- * int status = cd_path(tools, command); // Change directory 
- * based on the provided path
- * // status will be 0 if the directory change is successful,
-  otherwise an error message will be printed.
- * ```
  */
 int	cd_path(t_tools *tools, t_parser *command)
 {
@@ -173,6 +117,7 @@ int	cd_path(t_tools *tools, t_parser *command)
 		return (cd_handle_specific_path(tools, command));
 	return (EXIT_SUCCESS);
 }
+
 /**
  * @brief Handles the execution of the cd command, 
  * changing the current working directory.
@@ -188,23 +133,7 @@ int	cd_path(t_tools *tools, t_parser *command)
  * command information.
  * 
  * @return The global status after executing the cd command.
- * 
- * @note This function assumes the validity of the tools struct.
- * 
- * @warning Behavior is undefined if tools is NULL.
- * 
- * @see printf, global_status, update_env_vars
- * 
- * @example
- * ```
- * // Example usage of cd function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * t_parser *command = initialize_parser(); // Initialize parser struct
- * int status = cd(tools, command); // Execute the cd command
- * // status will be the global status after executing the cd command.
- * ```
  */
-
 int	cmd_cd(t_tools *tools, t_parser *command)
 {
 	if (command && command->str[0][0] == '/')

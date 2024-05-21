@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_utils3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:28:37 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:18:13 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/builtins.h"
 
+/**
+ * @brief Prints error messages related to the export command.
+ * 
+ * This function prints error messages related to the export command
+ * to the standard error stream.
+ * 
+ * @param err The error code.
+ * @param str Additional string to be printed.
+ */
 void	export_err(int err, char *str)
 {
 	if (err == 1)
@@ -30,8 +39,6 @@ void	export_err(int err, char *str)
  * 
  * @param var Pointer to the destination string where the value will be stored.
  * @param str Input string containing the variable and its value.
- * 
- * @note This function allocates memory for the new value string.
  */
 void	get_new_var(char **var, char *str)
 {
@@ -57,12 +64,7 @@ void	get_new_var(char **var, char *str)
  * @param i Index to start copying.
  * 
  * @return Returns 1 if successful, otherwise returns 0.
- * 
- * @note This function assumes that the new 
- * array is large enough to hold the copied variable.
- *       It also frees the memory allocated for the old value.
  */
-
 int	copy_var_to_env(t_tools *tools, char **array, char *var_value, int i)
 {
 	int	j;

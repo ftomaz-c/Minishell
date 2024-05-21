@@ -3,15 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:29:16 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:23:29 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
+/**
+ * @brief Handles the arguments for the env command.
+ * 
+ * This function checks if the first argument of the env command
+ * is "-i". If it is, it sets the exit status to EXIT_SUCCESS
+ * and returns. If not, it prints an error message indicating
+ * that the specified file or directory does not exist and sets
+ * the exit status to 127.
+ * 
+ * @param command Pointer to the parsed env command.
+ */
 void	env_args(t_parser *command)
 {
 	if (ft_strcmp(command->str[1], "-i") == 0)
@@ -32,23 +43,7 @@ void	env_args(t_parser *command)
  * @param command Pointer to the parser struct containing command information.
  * 
  * @return The global status after executing the env command.
- * 
- * @note This function assumes the validity of the tools struct.
- * 
- * @warning Behavior is undefined if tools is NULL.
- * 
- * @see printf, global_status
- * 
- * @example
- * ```
- * // Example usage of env function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * t_parser *command = initialize_parser(); // Initialize parser struct
- * int status = env(tools, command); // Execute the env command
- * // status will be the global status after executing the env command.
- * ```
  */
-
 int	cmd_env(t_tools *tools, t_parser *command)
 {
 	int		i;

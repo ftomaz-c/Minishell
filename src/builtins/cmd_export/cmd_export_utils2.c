@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:28:33 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:15:56 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
  * @param var Pointer to the variable to check.
  * 
  * @return Returns 1 if a similar variable exists, otherwise returns 0.
- * 
- * @see find_char_position(), ft_strncmp()
  */
 int	check_var_path(char **env, char *var)
 {
@@ -55,9 +53,6 @@ int	check_var_path(char **env, char *var)
  * where the value will be copied.
  * @param str Input string containing the variable and its value.
  * @param start Starting position from where to copy the value.
- * 
- * @note This function assumes that the destination string 
- * is large enough to hold the copied value.
  */
 void	copy_var_value(char *var_path, char *str, int start)
 {
@@ -85,8 +80,6 @@ void	copy_var_value(char *var_path, char *str, int start)
  * @param var_value Pointer to the destination 
  * string where the value will be stored.
  * @param str Input string containing the variable and its value.
- * 
- * @note This function allocates memory for the new value string.
  */
 void	get_new_var_value(char **var_value, char *str)
 {
@@ -118,26 +111,7 @@ void	get_new_var_value(char **var_value, char *str)
  * @param str The string containing the new value to be added.
  * 
  * @return void
- * 
- * @note This function assumes that `tools->env` is a null-terminated 
- * array of strings representing environment variables.
- * 
- * @warning This function assumes that `var_path` and `str` are properly 
- * formatted and valid C strings. Improper usage may lead to undefined behavior.
- * 
- * @see check_if_var_exists(), get_new_var_value()
- * 
- * @example
- * 
- * ```
- * // Example usage of the function
- * t_tools *tools;
- * char *var_path = "PATH";
- * char *new_value = "/usr/local/bin";
- * add_value_to_var(tools, var_path, new_value);
- * ```
  */
-
 void	add_value_to_var(t_tools *tools, char *var_path, char *str)
 {
 	int		i;
@@ -173,8 +147,6 @@ void	add_value_to_var(t_tools *tools, char *var_path, char *str)
  * @param tools Pointer to the tools structure containing environment variables.
  * @param var_path Pointer to the variable path.
  * @param str Input string containing the variable and its new value.
- * 
- * @note This function frees the memory allocated for the old value and path.
  */
 void	substitute_env_var_value(t_tools *tools, char *var_path, char *str)
 {

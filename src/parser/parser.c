@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:43:45 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:03:14 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,7 @@
  * parser node's 'str' array.
  * 
  * @return Returns 1 on success, 0 on failure.
- * 
- * @note This function assumes that 'node' and
- * 'current' are valid pointers.
- * 
- * @warning Memory allocated for the duplicated word 
- * should be freed if the function fails.
  */
-
 int	parse_words(t_parser *node, t_lexer *current)
 {
 	int	i;
@@ -68,14 +61,7 @@ int	parse_words(t_parser *node, t_lexer *current)
  * 
  * @return Returns 1 if redirection tokens are parsed, 0 
  * otherwise. Returns -1 on failure.
- * 
- * @note This function assumes that 'node' and 'current' 
- * are valid pointers.
- * 
- * @warning Memory allocated for the redirection node 
- * should be freed if the function fails.
  */
-
 t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 {
 	if (current->token == '>' || current->token == '<'
@@ -111,11 +97,7 @@ t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
  * @param lexer A pointer to the lexer.
  * @param start The starting index in the lexer.
  * @param end The ending index in the lexer.
- * 
- * @note This function assumes that 'node' and 'lexer'
- *  are valid pointers.
  */
-
 int	get_command(t_parser *node, t_lexer *lexer, int *start, int end)
 {
 	t_lexer		*current;
@@ -158,14 +140,7 @@ int	get_command(t_parser *node, t_lexer *lexer, int *start, int end)
  * @param end The ending index in the lexer.
  * 
  * @return Returns 1 on success, 0 on failure.
- * 
- * @note This function assumes that 'parser' and 'lexer' 
- * are valid pointers.
- * 
- * @warning Memory allocated for the parser node should
- *  be freed if the function fails.
  */
-
 int	parse_lexer(t_parser **parser, t_lexer *lexer, int *start, int end)
 {
 	t_parser	*node;
@@ -199,10 +174,7 @@ int	parse_lexer(t_parser **parser, t_lexer *lexer, int *start, int end)
  * lexer and parser information.
  * 
  * @return Returns 1 on success, 0 on failure.
- * 
- * @note This function assumes that 'tools' is a valid pointer.
  */
-
 int	parser(t_tools *tools)
 {
 	t_lexer	*current;

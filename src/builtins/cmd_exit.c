@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:29:20 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:11:30 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
+
+/**
+ * @brief Checks if the given status string is within the range 
+ * of a long long integer.
+ * 
+ * This function converts the status string to a long long integer
+ * using ft_atoll().
+ * If the conversion results in an error due to overflow or underflow, it sets
+ * the errno to ERANGE and returns 0. Otherwise, it returns the converted number.
+ * 
+ * @param status The status string to be converted.
+ * @return The converted long long integer, or 0 if out of range.
+ */
+long long	check_if_within_range(char *status)
+{
+	long long	nbr;
+
+	nbr = ft_atoll(status);
+	if (errno == ERANGE)
+		nbr = 0;
+	return (nbr);
+}
+
 /**
  * @brief Checks if the argument provided to 
  * the exit command is a valid integer.
@@ -24,34 +47,7 @@
  * containing command information.
  * 
  * @return 1 if the argument is a valid integer, 0 otherwise.
- * 
- * @note This function assumes the validity of the parser struct.
- * 
- * @warning Behavior is undefined if parser is NULL or 
- * if the argument is not present in parser->str[1].
- * 
- * @see ft_isdigit
- * 
- * @example
- * ```
- * // Example usage of check_exit_args function
- * t_parser *parser = initialize_parser(); // Initialize parser struct
- * int valid = check_exit_args(parser); // Check if the
- *  argument to the exit command is a valid integer
- * // valid will be 1 if the argument is a valid integer, otherwise 0.
- * ```
  */
-
-long long	check_if_within_range(char *status)
-{
-	long long	nbr;
-
-	nbr = ft_atoll(status);
-	if (errno == ERANGE)
-		nbr = 0;
-	return (nbr);
-}
-
 int	check_exit_args(t_parser *parser)
 {
 	int	is_zero;
@@ -79,6 +75,7 @@ int	check_exit_args(t_parser *parser)
 		return (0);
 	return (1);
 }
+
 /**
  * @brief Handles the execution of the exit command.
  * 
@@ -91,23 +88,7 @@ int	check_exit_args(t_parser *parser)
  * @param parser Pointer to the parser struct containing command information.
  * 
  * @return The global status after executing the exit command.
- * 
- * @note This function assumes the validity of the tools and parser structs.
- * 
- * @warning Behavior is undefined if tools or parser is NULL.
- * 
- * @see check_exit_args, global_status, printf, ft_atoi
- * 
- * @example
- * ```
- * // Example usage of mini_exit function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * t_parser *parser = initialize_parser(); // Initialize parser struct
- * int status = mini_exit(tools, parser); // Execute the exit command
- * // status will be the global status after executing the exit command.
- * ```
  */
-
 void	exit_err(int err, char *str)
 {
 	if (err == 1)
@@ -132,6 +113,22 @@ void	exit_err(int err, char *str)
 	}
 }
 
+/**
+ * @brief Handles the exit command.
+ * 
+ * This function processes the exit command by checking for
+ * valid arguments and setting the exit status accordingly.
+ * If no argument is provided, it sets the exit status to
+ * EXIT_SUCCESS. If an argument is provided, it checks if
+ * it is a valid integer. If it is not a valid integer or
+ * if multiple arguments are provided, it sets the exit status
+ * to 2 and prints an error message. If the argument is a
+ * valid integer, it sets the exit status to that value.
+ * 
+ * @param tools Pointer to the tools structure.
+ * @param parser Pointer to the parsed exit command.
+ * @return The exit status.
+ */
 int	cmd_exit(t_tools *tools, t_parser *parser)
 {
 	if (parser->str[1])

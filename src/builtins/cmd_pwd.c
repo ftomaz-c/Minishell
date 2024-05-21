@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:29:24 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:26:09 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,7 @@
  * @param command Pointer to the parser struct containing command information.
  * 
  * @return The global status after executing the pwd command.
- * 
- * @note This function assumes the validity of the tools and command structs.
- * 
- * @warning Behavior is undefined if tools or command is NULL.
- * 
- * @see printf, getcwd, global_status
- * 
- * @example
- * ```
- * // Example usage of pwd function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * t_parser *command = initialize_parser(); // Initialize parser struct
- * int status = pwd(tools, command); // Execute the pwd command
- * // status will be the global status after executing the pwd command.
- * ```
  */
-
 int	cmd_pwd(t_tools *tools, t_parser *command)
 {
 	char	buf[1024];

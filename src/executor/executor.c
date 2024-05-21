@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
 /*   Updated: 2024/05/21 15:35:03 by ftomaz-c         ###   ########.fr       */
@@ -20,11 +20,7 @@
  * @param path_list The list of paths to search for the command.
  * @param cmd_args The command arguments.
  * @param envp The environment variables.
- * 
- * @note This function assumes that the command and path 
- * list are properly initialized.
  */
-
 void	exec_path(t_tools *tools, char **cmd_args, char **envp)
 {
 	char	*cmd_path;
@@ -66,27 +62,7 @@ void	exec_path(t_tools *tools, char **cmd_args, char **envp)
  * command information.
  * 
  * @return 1 if the parser contains a builtin command, 0 otherwise.
- * 
- * @note This function assumes the validity of the parser struct.
- *       It assumes the parser's builtin function pointer
- * accurately represents the command.
- * 
- * @warning Behavior is undefined if parser is NULL.
- * 
- * @see cd, pwd, export, unset, mini_exit, mini_history
- * 
- * @example
- * ```
- * // Example usage of exec_builtins function
- * t_parser *parser = initialize_parser(); // Initialize
- *  parser struct
- * int is_builtin = exec_builtins(parser); // Check if parser
- *  contains a builtin command
- * // is_builtin will be 1 if parser contains a builtin 
- * command, otherwise 0.
- * ```
  */
-
 int	exec_builtins(t_tools *tools)
 {
 	t_parser	*parser;
@@ -121,24 +97,7 @@ int	exec_builtins(t_tools *tools)
  *  necessary information.
  * @param parser Pointer to the parser struct containing
  * the command information.
- * 
- * @note This function assumes the validity of the tools
- *  and parser structs.
- * 
- * @see exec_path, global_status
- * 
- * @example
- * ```
- * // Example usage of execute_cmd function
- * t_tools *tools = initialize_tools(); // Initialize
- *  tools struct
- * t_parser *parser = initialize_parser(); // Initialize
- *  parser struct
- * execute_cmd(tools, parser); // Execute the command
- * specified in the parser
- * ```
  */
-
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
 	char	*cmd_args[2];
@@ -171,12 +130,7 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
  * 
  * @param parser The parser containing command and 
  * redirection information.
- * 
- * @note This function assumes that the parser is properly initialized.
- * 
- * @see redirection
  */
-
 void	set_and_exec(t_tools *tools, t_parser *parser)
 {
 	tools->original_stdin = dup(STDIN_FILENO);
@@ -203,11 +157,7 @@ void	set_and_exec(t_tools *tools, t_parser *parser)
  * other necessary information.
  * 
  * @return Returns 1 upon successful execution.
- * 
- * @warning This function assumes that the tools
- * struct is properly initialized.
  */
-
 int	executor(t_tools *tools)
 {
 	t_parser	*parser;
@@ -218,7 +168,7 @@ int	executor(t_tools *tools)
 	status = 0;
 	if (exec_builtins(tools) && !tools->pipes && parser->str[0])
 		return (parser->builtin(tools, parser));
-	handle_sigaction(ignore_sig_handler);
+	// handle_sigaction(ignore_sig_handler);
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
@@ -228,6 +178,8 @@ int	executor(t_tools *tools)
 		while (parser)
 		{
 			set_and_exec(tools, parser);
+			if (parser->builtin)
+				wait(0);
 			parser = parser->next;
 		}
 		free_and_exit(tools, g_status);

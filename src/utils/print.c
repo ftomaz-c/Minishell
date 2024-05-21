@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:44:14 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:07:27 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,7 @@
  * 
  * @param tools Pointer to the tools struct containing 
  * the lexer linked list.
- * 
- * @note This function assumes the validity of the tools struct.
- *       It assumes the lexer linked list is properly 
- * initialized and terminated.
- * 
- * @warning Behavior is undefined if tools is NULL or if 
- * the lexer linked list is corrupted.
- * 
- * @see printf
- * 
- * @example
- * ```
- * // Example usage of print_lexer function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * print_lexer(tools); // Print content of the lexer linked list
- * ```
  */
-
 void	print_lexer(t_tools *tools)
 {
 	t_lexer	*lexer;
@@ -56,32 +39,13 @@ void	print_lexer(t_tools *tools)
 }
 
 /**
- * @brief Prints the content of the parser linked list.
+ * @brief Prints the redirections stored in the parser structure.
  * 
- * This function prints the content of the parser linked 
- * list, including str, builtin, nb_redirections, 
- * heredoc_limiter, and redirections.
+ * This function prints the redirections stored in the parser structure,
+ * including tokens and words associated with redirections.
  * 
- * @param tools Pointer to the tools struct containing 
- * the parser linked list.
- * 
- * @note This function assumes the validity of the tools struct.
- *       It assumes the parser linked list is properly 
- * initialized and terminated.
- * 
- * @warning Behavior is undefined if tools is NULL or if 
- * the parser linked list is corrupted.
- * 
- * @see printf
- * 
- * @example
- * ```
- * // Example usage of print_parser function
- * t_tools *tools = initialize_tools(); // Initialize tools struct
- * print_parser(tools); // Print content of the parser linked list
- * ```
+ * @param parser A pointer to the parser structure containing redirections.
  */
-
 void	print_parser_redirections(t_parser *parser)
 {
 	t_lexer	*redirections;
@@ -98,6 +62,16 @@ void	print_parser_redirections(t_parser *parser)
 	}
 }
 
+/**
+ * @brief Prints the content of the parser linked list.
+ * 
+ * This function prints the content of the parser linked 
+ * list, including str, builtin, nb_redirections, 
+ * heredoc_limiter, and redirections.
+ * 
+ * @param tools Pointer to the tools struct containing 
+ * the parser linked list.
+ */
 void	print_parser(t_tools *tools)
 {
 	t_parser	*parser;

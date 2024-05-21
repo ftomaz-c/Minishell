@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:43:57 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:05:46 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,7 @@
  * 
  * @return int The index of the history section in the line, or 0 if no history
  *             section is found.
- * 
- * @note This function assumes that the `ft_isdigit()` function is available to
- *       check if a character is a digit.
- * 
- * @warning The returned index is based on a zero-based index. If the history
- *          section is not found, or if the line is NULL or empty, the function
- *          returns 0.
  */
-
 int	history_section(char *line)
 {
 	int	i;
@@ -65,23 +57,6 @@ int	history_section(char *line)
  * @param line Pointer to the string to be treated and split into lines.
  * 
  * @return None.
- * 
- * @note This function assumes that `line_array` is a valid pointer to store 
- * an array of strings representing lines, and
- *  `line` is a valid null-terminated string.
- * 
- * @warning None.
- * 
- * @see ft_calloc(), ft_substr(), ft_strlen(), find_next_char_position().
- * 
- * @example
- * 
- * ```
- * // Example usage:
- * char **line_array;
- * char *line = "Hello\nWorld\n";
- * treat_line(&line_array, line);
- * ```
  */
 void	treat_line(char ***line_array, char *line)
 {
@@ -105,6 +80,7 @@ void	treat_line(char ***line_array, char *line)
 		j++;
 	}
 }
+
 /**
  * @brief Adds a line to a line array, writes it 
  * to a history file, and frees the array.
@@ -120,27 +96,7 @@ void	treat_line(char ***line_array, char *line)
  * @param file_path Path to the history file.
  * 
  * @return void
- * 
- * @note This function assumes that `line_array` is a valid 
- * pointer to a dynamically allocated array of strings.
- * 
- * @warning This function assumes that `line` and `file_path` 
- * are valid pointers and that `fd` is a valid file descriptor.
- * 
- * @see add_history, treat_line, write_in_history_file, free_list
- * 
- * @example
- * ```
- * // Example usage:
- * char *line = "example line";
- * char **line_array = NULL;
- * int fd = open("history.txt", O_WRONLY | O_APPEND);
- * char *file_path = "history.txt";
- * 
- * add_line(line, &line_array, fd, file_path);
- * ```
  */
-
 void	add_line(char *line, char ***line_array, int fd, char *file_path)
 {
 	add_history(line);
@@ -161,13 +117,7 @@ void	add_line(char *line, char ***line_array, int fd, char *file_path)
  * 
  * @return Returns 1 if `line_count` is not -1, indicating
  *  success, otherwise returns 0.
- * 
- * @note This function is typically used after reading 
- * lines from a history file to verify its integrity.
- * 
- * @warning This function assumes that `fd` is a valid file descriptor.
  */
-
 int	check_line_count(int line_count, int fd)
 {
 	if (line_count == -1)

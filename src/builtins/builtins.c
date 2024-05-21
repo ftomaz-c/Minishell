@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:29:03 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:20:19 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,7 @@
  * 
  * @return Returns a function pointer to the built-in function if 
  * the command is built-in, otherwise NULL.
- * 
- * @note This function assumes that 'str' is a valid null-terminated string.
- *       The built-in commands and their function pointers are 
- * stored in a static array.
- *       Each entry in the array consists of the command name and its
- *  corresponding function pointer.
- *       The function pointers have the signature int 
- * (*)(t_tools *, t_parser *), where 't_tools' represents
- *       a structure containing information about the 
- * built-ins and 't_parser' represents a node
- *       in the parser linked list.
- *       This function iterates through the array of built-in
- *  commands to find a match with the input string.
- *       It uses strncmp() to compare the input string with each command name.
- *       If a match is found, it returns the function
- *  pointer associated with that command.
- *       If no match is found, it returns NULL.
  */
-
 int	(*is_builtin(char *str))(t_tools *tools, t_parser *parser)
 {
 	size_t		i;

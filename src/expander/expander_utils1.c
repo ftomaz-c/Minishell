@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:31:13 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:41:08 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,7 @@
  * @param str The input string to search for single quotes.
  * 
  * @return Returns 1 if at least one single quote is found, otherwise returns 0.
- * 
- * @note This function only checks for the presence of 
- * single quotes ('), not double quotes (").
- * 
- * @warning This function assumes that the input string is null-terminated.
- * 
- * @see No related functions.
- * 
- * @example
- * 
- * ```
- * // Example usage of find_single_quote function
- * char str1[] = "This is a 'sample' string.";
- * char str2[] = "This string has no single quotes.";
- * 
- * int result1 = find_single_quote(str1); // Returns 1
- * int result2 = find_single_quote(str2); // Returns 0
- * ```
  */
-
 int	find_single_quote(char *str)
 {
 	int		i;
@@ -61,6 +42,7 @@ int	find_single_quote(char *str)
 	}
 	return (0);
 }
+
 /**
  * @brief Finds the position of a character within a string.
  * 
@@ -72,18 +54,7 @@ int	find_single_quote(char *str)
  * 
  * @return Returns the position of the character within the string if 
  * found, otherwise returns the length of the string.
- * 
- * @note Assumes the input string is null-terminated.
- * 
- * @see None
- * 
- * @example
- * ```
- * int position = find_char_position_new("example", 'm');
- * // position will be 3
- * ```
  */
-
 int	find_char_position_new(char *str, char c)
 {
 	int	i;
@@ -111,19 +82,7 @@ int	find_char_position_new(char *str, char c)
  * @param position The starting position of the variable name within the string.
  * 
  * @return Returns the end position of the variable name.
- * 
- * @note Assumes the input string is null-terminated and follows 
- * the variable name syntax.
- * 
- * @see ft_isalphanum_or_underscore
- * 
- * @example
- * ```
- * int end = get_end_position("example_var=123", 7);
- * // end will be 10
- * ```
  */
-
 int	get_end_position(char *str, int position)
 {
 	int	end;
@@ -156,20 +115,7 @@ int	get_end_position(char *str, int position)
  * @param end The end position of the variable name within the original string.
  * 
  * @return Returns the modified string with the added prefix and suffix.
- * 
- * @note The function dynamically allocates memory for the
- *  new string and must be freed after use.
- * 
- * @see ft_substr, ft_strjoin, get_var_from_env
- * 
- * @example
- * ```
- * char *result = add_prefix_and_suffix("prefix$var_suffix",
- * environment, 6, 9);
- * // result will be "prefixvalue_suffix"
- * ```
  */
-
 char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 {
 	char	*prefix;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:44:10 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:06:24 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,7 @@
  * 
  * @param line The line to write to the history file.
  * @param fd The file descriptor of the history file.
- * 
- * @note This function assumes that the history file exists and is writable.
- * @note The line count is incremented by one for each new line added
- * to the history file.
- * 
- * @warning If the history file cannot be opened, this function will
- * print an error message and return without writing anything.
- * 
- * @see count_lines_in_file & add_history_file
- * 
- * @example
- * 
- * ```
- * // Example usage of the function
- * int history_fd = open(".minishell_history", O_WRONLY | O_APPEND);
- * if (history_fd == -1) {
- *     // Handle error opening history file
- * }
- * write_in_history_file("command", history_fd);
- * close(history_fd);
- * ```
  */
-
 void	write_in_history_file(char **line, int fd, char *file_path)
 {
 	int		line_count;
@@ -87,29 +65,7 @@ void	write_in_history_file(char **line, int fd, char *file_path)
  * be a null-terminated string
  *             obtained from the readline function or similar. The
  * function does not modify the contents of the string.
- * 
- * @note The function assumes that ".minishell_history" exists
- * in the current directory.
- *       If the file does not exist, it will be created.
- *       The function also assumes that the provided line is properly
- * formatted and does not contain newline characters,
- *       as newline characters will be automatically appended to the line when
- * written to the file.
- *       If the file or line cannot be processed, appropriate error messages 
- * will be printed to stderr.
- *       Ensure that the file has appropriate permissions for writing.
- *       The function may allocate additional memory temporarily while
- * reading the file.
- * 
- * @warning This function does not handle concurrent access to the history file.
- * If multiple instances of the program
- *           attempt to write to the history file simultaneously,
- * unexpected behavior
- * may occur.
- * 
- * @see count_lines_in_file
  */
-
 void	add_history_file(t_tools *tools, char *line, char *file_name)
 {
 	int		fd;
@@ -150,23 +106,7 @@ void	add_history_file(t_tools *tools, char *line, char *file_name)
  * @param line The line to be appended to the history.
  * 
  * @return void
- * 
- * @note This function assumes that the history_section function
- *  determines the starting index of the actual command in the line.
- * @note Assumes that the add_history function is available and handles
- *  the addition of the line to the history.
- * @note Assumes that ft_substr and ft_strlen functions are available 
- * to manipulate strings.
- * 
- * @warning It's the responsibility of the caller to ensure that the
- *  input line is properly formatted and does not exceed memory bounds.
- * 
- * @see history_section, add_history, ft_substr, ft_strlen
- * 
- * @example
- * 
  */
-
 void	append_to_history(char *line)
 {
 	char	*new_line;
@@ -201,25 +141,7 @@ void	append_to_history(char *line)
  *  function to add lines
  *       to the history and the `get_next_line()` function 
  * to read lines from the file.
- * 
- * @warning This function assumes that the ".minishell_history" 
- * file exists and can
- *          be opened for reading. Failure to open the file may 
- * result in errors or
- *          unexpected behavior.
- * 
- * @see append_to_history, get_next_line
- * 
- * @example
- * 
- * ```
- * // Example usage of update_history function
- * update_history();
- * // Updates the command history with lines from 
- * ".minishell_history" file
- * ```
  */
-
 void	update_history(t_tools *tools, char *file_name)
 {
 	char	*line;

@@ -3,15 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:40 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:15:47 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
+/**
+ * @brief Closes the original stdout file descriptor and exits the
+ * program with the specified exit code.
+ * 
+ * This function closes the original stdout file descriptor and then
+ * exits the program with the given exit code.
+ * 
+ * @param exit_code The exit code to be returned by the program.
+ * @param original_stdout The original file descriptor for stdout.
+ * @return None.
+ */
 void	fd_exit(int exit_code, int original_stdout)
 {
 	close(original_stdout);
@@ -19,20 +30,17 @@ void	fd_exit(int exit_code, int original_stdout)
 }
 
 /**
- * @brief Reads input until a delimiter is encountered 
- * and writes it to a file descriptor.
+ * @brief Closes the file descriptor for a here document and
+ * exits with the specified status.
  * 
- * This function reads input from stdin until the specified 
- *delimiter is encountered and
- * writes it to the provided file descriptor.
+ * This function frees memory associated with the parser and tools,
+ * closes the file descriptor for the here document,
+ * and exits with the specified status.
  * 
- * @param limiter The delimiter indicating the end of input.
- * @param fd The file descriptor to write the input to.
- * @param original_stdout The original file descriptor for stdout.
- * 
- * @note This function assumes that the input is properly terminated.
- * 
- * @see get_next_line
+ * @param tools A pointer to the tools structure.
+ * @param fd The file descriptor for the here document.
+ * @param status The exit status for the program.
+ * @return None.
  */
 
 void	get_here_doc(t_tools *tools, int fd[2])
@@ -70,12 +78,7 @@ void	get_here_doc(t_tools *tools, int fd[2])
  * 
  * @param limiter The delimiter indicating the end of input.
  * @param original_stdout The original file descriptor for stdout.
- * 
- * @warning This function assumes that pipe creation and forking succeed.
- * 
- * @see get_here_doc
  */
-
 void	here_doc(t_tools *tools)
 {
 	pid_t	pid;
@@ -87,6 +90,7 @@ void	here_doc(t_tools *tools)
 		perror("Error creating pipes");
 		exit (EXIT_FAILURE);
 	}
+	handle_sigaction(sig_pipex_handler);
 	pid = fork();
 	if (pid == -1)
 	{

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
 /*   Updated: 2024/05/21 15:37:46 by ftomaz-c         ###   ########.fr       */
@@ -12,6 +12,14 @@
 
 #include "../../includes/executor.h"
 
+/**
+ * @brief Creates a basic environment for the shell.
+ * 
+ * This function creates a basic environment for the shell containing
+ * only the PATH variable.
+ * 
+ * @return A pointer to the array of environment variables.
+ */
 char	**basic_env(void)
 {
 	char	**b_env;
@@ -32,6 +40,20 @@ void	nint_mode(t_tools *tools)
 	}
 }
 
+/**
+ * @brief Handles execution errors by printing error messages
+ * and updating the global status.
+ * 
+ * This function handles execution errors by printing the
+ * corresponding error message,
+ * updating the global status, and freeing any allocated memory.
+ * 
+ * @param tools A pointer to the tools structure.
+ * @param err The error code.
+ * @param str The string representing the command or file causing the error.
+ * @param value A pointer to the value to be freed, if applicable.
+ * @return None.
+ */
 void	exec_err(t_tools *tools, int err, char *str, char *value)
 {
 	nint_mode(tools);

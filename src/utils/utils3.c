@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:44:40 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:10:15 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,7 @@
  * using a simple bubble sort algorithm.
  * 
  * @param env_copy Array of strings to be sorted.
- * 
- * @note This function assumes that the array is null-terminated.
- * 
- * @see strcmp()
- * 
- * @example
  */
-
 void	sort_array(char **env_copy)
 {
 	int		i;	
@@ -57,21 +50,6 @@ void	sort_array(char **env_copy)
  * 
  * @return Returns 1 if the line contains non-whitespace 
  * characters, otherwise 0.
- * 
- * @note This function assumes that `line` points to a valid
- *  null-terminated string.
- * 
- * @warning None.
- * 
- * @see ft_isspace().
- * 
- * @example
- * 
- * ```
- * // Example usage:
- * char *str = "   ";
- * int result = check_empty_line(str);
- * ```
  */
 int	check_empty_line(char *line)
 {

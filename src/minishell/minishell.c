@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
 /*   Updated: 2024/05/21 15:35:27 by ftomaz-c         ###   ########.fr       */
@@ -12,6 +12,18 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Executes the minishell.
+ * 
+ * This function handles the execution of the minishell. It adds the input line
+ * to the history file, checks for unclosed quotes, lexes the input line,
+ * parses it, and executes the parsed commands using the executor.
+ * 
+ * @param tools A pointer to the tools structure containing
+ * environment variables and history information.
+ * @param line The input line to be executed.
+ * @return None.
+ */
 void	minishell(t_tools *tools, char *line)
 {
 	tools->nprompts++;
@@ -37,6 +49,20 @@ void	minishell(t_tools *tools, char *line)
 		ft_putstr_fd("minishell: input with unclosed quotes\n", STDERR_FILENO);
 }
 
+/**
+ * @brief Handles non-interactive mode execution.
+ * 
+ * This function handles the execution of the minishell
+ * in non-interactive mode.
+ * It reads lines from standard input, trims them, executes 
+ * them using the minishell,
+ * and then frees the memory allocated for the lines.
+ * 
+ * @param tools A pointer to the tools structure containing environment 
+ * variables and line count information.
+ * @param line The input line read from standard input.
+ * @return None.
+ */
 void	non_interactive_mode(t_tools *tools, char *line)
 {
 	int		n;
@@ -65,6 +91,18 @@ void	non_interactive_mode(t_tools *tools, char *line)
 	tools->exit = 1;
 }
 
+/**
+ * @brief Handles interactive mode execution.
+ * 
+ * This function handles the execution of the minishell in interactive mode.
+ * It prompts the user for input, executes the input line using the minishell,
+ * and then frees the memory allocated for the input line.
+ * 
+ * @param tools A pointer to the tools structure containing 
+ * environment variables and line count information.
+ * @param line The input line provided by the user.
+ * @return None.
+ */
 void	interactive_mode(t_tools *tools, char *line)
 {
 	line = prompt_line(tools);

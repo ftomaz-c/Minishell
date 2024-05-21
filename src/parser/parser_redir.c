@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:43:36 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:01:49 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,32 +27,7 @@
  * 
  * @return The next token after the redirection token, or NULL
  * if memory allocation fails.
- * 
- * @note The function assumes that the current token is a
- * redirection token ('>' or '<').
- * If current->words is not NULL, it assumes that the current
- * token has associated words.
- * 
- * @warning The function modifies the parser node's redirections
- * list and updates the current token pointer.
- * Ensure that the input parameters are valid and that memory
- * allocation is successful.
- * 
- * @see parse_tokens
- * 
- * @example
- * ```
- * t_lexer *current_token = get_next_token();
- * int start = 0;
- * t_parser *parser_node = initialize_parser();
- * while (current_token != NULL) {
- *     current_token = parse_tokens(parser_node, 
- * current_token, &start);
- *     // Handle error if current_token is NULL
- * }
- * ```
  */
-
 t_lexer	*add_redirection(t_lexer *current, t_parser *node, int *start)
 {
 	t_lexer		*redirections_node;
