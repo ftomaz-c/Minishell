@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:06:24 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:59:54 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	add_history_file(t_tools *tools, char *line, char *file_name)
 	if (line == NULL)
 	{
 		printf("exit\n");
-		exit(g_status);
+		exit(global_status()->nbr);
 	}
 	file_path = get_file_path_from_home(tools->home, file_name);
 	if (!file_path)

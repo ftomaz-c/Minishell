@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 16:19:04 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/22 23:49:28 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # define LESS_LESS 2
 # define GREAT 3
 # define GREAT_GREAT 4 
+
+typedef struct s_status
+{
+	int	nbr;
+}	t_status;
 
 typedef struct s_tools
 {

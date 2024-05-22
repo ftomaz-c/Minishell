@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 22:40:54 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/22 23:38:16 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char	*get_name(t_tools *tools, char **env)
 		if (!var)
 			return (ft_strdup(""));
 		i = find_char_position(var, '/');
-		name = ft_substr (var, i + 1, find_next_char_position(var, i, '.') 
+		name = ft_substr (var, i + 1, find_next_char_position(var, i, '.')
 				- i - 1);
 		free(var);
 	}

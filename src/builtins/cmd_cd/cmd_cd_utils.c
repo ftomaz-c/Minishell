@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:12:30 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:02:16 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	cd_err(int err, char *str, char root)
 		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
 	else if (err == 36)
 		ft_putstr_fd(": File name too long\n", STDERR_FILENO);
-	g_status = EXIT_FAILURE;
+	global_status()->nbr = EXIT_FAILURE;
 }
 
 /**
@@ -125,7 +125,7 @@ int	cd_handle_dot_path(t_tools *tools)
 		ft_putstr_fd("error retrieving current directory: ", STDERR_FILENO);
 		ft_putstr_fd("getcwd: cannot access parent directories", STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-		g_status = EXIT_FAILURE;
+		global_status()->nbr = EXIT_FAILURE;
 		tmp = ft_strdup(tools->pwd);
 		free(tools->pwd);
 		tools->pwd = ft_strjoin(tmp, "/.");

@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 17:23:56 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 00:05:14 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	here_doc_handler(int sig)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		g_status = 130;
+		global_status()->nbr = 130;
 		close(STDIN_FILENO);
 	}
 }
@@ -38,8 +38,9 @@ void	child_handler(int sig)
 {
 	(void)sig;
 	rl_on_new_line();
-	g_status = 130;
+	global_status()->nbr = 130;
 }
+
 void	handle_child_sigaction(void)
 {
 	struct sigaction	sa;

@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 20:31:31 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 00:00:15 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 	prefix = ft_substr(str, 0, position);
 	var = ft_substr(str, position + 1, end - position - 1);
 	if (ft_strncmp(var, "?", 1) == 0)
-		value = ft_itoa(g_status);
+		value = ft_itoa(global_status()->nbr);
 	else
 		value = get_var_from_env(env, var);
 	free(var);

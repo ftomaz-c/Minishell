@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 17:49:39 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/22 23:00:57 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		executor(t_tools *tools);
 char	**basic_env(void);
 void	free_and_exit(t_tools *tools, int status);
 void	exec_err(t_tools *tools, int err, char *str, char *value);
-void	wait_status(t_tools *tools, int pid, int *status, int here_doc);
+void	wait_status(t_tools *tools, int pid, int *status);
+void	wait_status_heredoc(t_tools *tools, int pid, int *status);
 
 /*src/executor/redirections.c*/
 void	set_stdin(t_tools *tools, t_parser *parser, int fd);

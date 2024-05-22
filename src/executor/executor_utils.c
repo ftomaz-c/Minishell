@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 17:53:36 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 00:04:21 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,21 @@ void	exec_err(t_tools *tools, int err, char *str, char *value)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-		g_status = 127;
+		global_status()->nbr = 127;
 	}
 	else if (err == 2)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		g_status = 127;
+		global_status()->nbr = 127;
 	}
 	else if (err == 8)
-		g_status = 0;
+		global_status()->nbr = 0;
 	else if (err == 13)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-		g_status = 130;
+		global_status()->nbr = 130;
 	}
 	if (value)
 		free(value);
@@ -94,7 +94,7 @@ void	exec_err(t_tools *tools, int err, char *str, char *value)
  * @param status Pointer to an integer to store the exit 
  * status of the child process.
  */
-void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
+void	wait_status(t_tools *tools, int pid, int *status)
 {
 	int	i;
 	int	sig;
@@ -104,30 +104,41 @@ void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 	{
 		sig = WTERMSIG(*status);
 		if (sig == SIGINT)
-			g_status = 130;
+			global_status()->nbr = 130;
 		else if (sig == SIGQUIT)
-			g_status = 131;
+			global_status()->nbr = 131;
 	}
 	else if (WIFEXITED(*status))
-		g_status = WEXITSTATUS(*status);
-	if (here_doc)
+		global_status()->nbr = WEXITSTATUS(*status);
+	i = 3;
+	while (i <= 1024)
+		close(i++);
+	if (global_status()->nbr == 130)
+		write(1, "\n", 1);
+	else if (global_status()->nbr == 131)
+		write(1, "Quit (core dumped)\n", 19);
+	dup2(tools->original_stdin, STDIN_FILENO);
+	dup2(tools->original_stdout, STDOUT_FILENO);
+}
+
+void	wait_status_heredoc(t_tools *tools, int pid, int *status)
+{
+	int	sig;
+
+	waitpid(pid, status, 0);
+	if (WIFSIGNALED(*status))
 	{
-		if (g_status)
-			free_and_exit(tools, g_status);
-		dup2(tools->parser->fd[0], STDIN_FILENO);
-		close(tools->parser->fd[0]);
-		handle_child_sigaction();
+		sig = WTERMSIG(*status);
+		if (sig == SIGINT)
+			global_status()->nbr = 130;
+		else if (sig == SIGQUIT)
+			global_status()->nbr = 131;
 	}
-	else
-	{
-		i = 3;
-		while (i < 1024)
-			close(i++);
-		if (g_status == 130)
-			write(1, "\n", 1);
-		else if (g_status == 131)
-			write(1, "Quit (core dumped)\n", 19);
-		dup2(tools->original_stdin, STDIN_FILENO);
-		dup2(tools->original_stdout, STDOUT_FILENO);
-	}
+	else if (WIFEXITED(*status))
+		global_status()->nbr = WEXITSTATUS(*status);
+	if (global_status()->nbr)
+		free_and_exit(tools, global_status()->nbr);
+	dup2(tools->parser->fd[0], STDIN_FILENO);
+	close(tools->parser->fd[0]);
+	handle_child_sigaction();
 }

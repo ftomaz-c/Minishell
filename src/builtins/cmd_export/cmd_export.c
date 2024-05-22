@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 16:05:51 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:02:29 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int	cmd_export(t_tools *tools, t_parser *command)
 	int	i;
 
 	i = 1;
-	g_status = EXIT_SUCCESS;
+	global_status()->nbr = EXIT_SUCCESS;
 	if (!command->str[1])
 		sort_print_env(tools);
 	else
@@ -186,5 +186,5 @@ int	cmd_export(t_tools *tools, t_parser *command)
 				i++;
 		}
 	}
-	return (g_status);
+	return (global_status()->nbr);
 }

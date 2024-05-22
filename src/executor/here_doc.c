@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 17:51:06 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 00:04:56 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void	get_here_doc(t_tools *tools, int fd[2], char *delimiter)
 {
 	char	*line;
 
-	g_status = 0;
+	global_status()->nbr = 0;
 	while (1)
 	{
 		line = readline("> ");
-		if (g_status == 130)
+		if (global_status()->nbr == 130)
 		{
 			free(line);
-			free_and_exit(tools, g_status);
+			free_and_exit(tools, global_status()->nbr);
 		}
 		if (!line)
 			eof_sig_msg_exit(tools, line, delimiter);
@@ -102,6 +102,6 @@ void	here_doc(t_tools *tools, char *delimiter)
 	else
 	{
 		close(tools->parser->fd[1]);
-		wait_status (tools, -1, &status, 1);
+		wait_status_heredoc (tools, pid, &status);
 	}
 }

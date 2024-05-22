@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_utils3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 20:18:13 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:02:37 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	export_err(int err, char *str)
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 	}
-	g_status = err;
+	global_status()->nbr = err;
 }
 
 /**

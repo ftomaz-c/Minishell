@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:11:30 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:01:32 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,22 +137,22 @@ int	cmd_exit(t_tools *tools, t_parser *parser)
 		{
 			if (check_exit_args(parser) == 0)
 			{
-				g_status = 2;
+				global_status()->nbr = 2;
 				tools->exit = 255;
 				exit_err(2, parser->str[1]);
-				return (g_status);
+				return (global_status()->nbr);
 			}
 			else
-				g_status = ft_atoi(parser->str[1]);
+				global_status()->nbr = ft_atoi(parser->str[1]);
 		}
 		if (parser->str[2] != NULL)
 		{
-			g_status = EXIT_FAILURE;
+			global_status()->nbr = EXIT_FAILURE;
 			exit_err(1, parser->str[0]);
-			return (g_status);
+			return (global_status()->nbr);
 		}
 	}
 	tools->exit = 1;
 	ft_putstr_fd("exit\n", STDIN_FILENO);
-	return (g_status);
+	return (global_status()->nbr);
 }

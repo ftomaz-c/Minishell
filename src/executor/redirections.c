@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 22:47:39 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 00:04:35 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,17 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 			std_err(errno, parser->stdin_file_name);
 			if (errno == 2 && parser->next)
 			{
-				g_status = 127;
+				global_status()->nbr = 127;
 				return ;
 			}
 			else
 			{
-				g_status = EXIT_FAILURE;
-				exit (g_status);
+				global_status()->nbr = EXIT_FAILURE;
+				exit (global_status()->nbr);
 			}
 		}
 		dup2(fd_infile, fd);
-		if (fd_infile != fd && fd_infile != STDIN_FILENO)
-			close(fd_infile);
+		close(fd_infile);
 	}
 	else if (parser->stdin_flag == LESS_LESS)
 		here_doc(tools, parser->delimiter);

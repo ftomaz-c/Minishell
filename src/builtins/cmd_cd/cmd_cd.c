@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 20:14:09 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:01:58 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	cd_handle_specific_path(t_tools *tools, t_parser *command)
 	}
 	else if ((chdir(command->str[1]) < 0) && command->str[1][0])
 		cd_err(errno, command->str[1], 0);
-	return (g_status);
+	return (global_status()->nbr);
 }
 
 /**
@@ -141,9 +141,9 @@ int	cmd_cd(t_tools *tools, t_parser *command)
 		chdir(command->str[0]);
 		cd_err(errno, command->str[0], '/');
 		if (errno == 2)
-			g_status = 127;
+			global_status()->nbr = 127;
 		else if (errno == 25)
-			g_status = 126;
+			global_status()->nbr = 126;
 		if (errno == 0)
 			chdir(tools->pwd);
 	}
@@ -155,5 +155,5 @@ int	cmd_cd(t_tools *tools, t_parser *command)
 	else
 		cd_err(1, NULL, 0);
 	update_env_vars(tools);
-	return (g_status);
+	return (global_status()->nbr);
 }

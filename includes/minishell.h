@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 19:15:57 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:09:37 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,32 @@
 # include <stdbool.h>
 # include <dirent.h>
 
-// extern int	global_status;
-extern int	g_status;
+t_status	*global_status(void);
 
 /*src/minishell/minishell.c*/
-void	interactive_mode(t_tools *tools, char *line);
-void	non_interactive_mode(t_tools *tools, char *line);
-void	minishell(t_tools *tools, char *line);
+void		interactive_mode(t_tools *tools, char *line);
+void		non_interactive_mode(t_tools *tools, char *line);
+void		minishell(t_tools *tools, char *line);
 
 /*src/minishell/signals.c*/
-void	react_sig_handler(int sig);
-void	handle_sigaction(void);
+void		react_sig_handler(int sig);
+void		handle_sigaction(void);
 
 /*src/minishell/tools.c*/
-void	handle_shlvl(char *pre_lvl, char **new_lvl, size_t lvl);
-void	update_env(t_tools *tools);
-void	config_tools(t_tools *tools, char **envp);
+void		handle_shlvl(char *pre_lvl, char **new_lvl, size_t lvl);
+void		update_env(t_tools *tools);
+void		config_tools(t_tools *tools, char **envp);
 
 /*src/minishell/tools_utils1.c*/
-int		compare_var_to_env(char *env, char *var);
-void	free_tools(t_tools *tools);
-char	**get_path(t_tools *tools, char **env);
-char	*get_pwd(t_tools *tools, char **env);
+int			compare_var_to_env(char *env, char *var);
+void		free_tools(t_tools *tools);
+char		**get_path(t_tools *tools, char **env);
+char		*get_pwd(t_tools *tools, char **env);
 
 /*src/minishell/tools_utils2.c*/
-void	remove_whoami(char **env);
-void	get_whoami(char **env);
-char	*get_source_home_var(t_tools *tools, char *str);
-char	*get_source_user_var(t_tools *tools);
+void		remove_whoami(char **env);
+void		get_whoami(char **env);
+char		*get_source_home_var(t_tools *tools, char *str);
+char		*get_source_user_var(t_tools *tools);
 
 #endif

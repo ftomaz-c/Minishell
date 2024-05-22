@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 16:42:50 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/22 23:16:11 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	minishell_pipex(t_tools *tools, t_parser *parser)
 	else
 	{
 		pipex_dup_and_close(pipe_fd[1], pipe_fd[0], STDIN_FILENO);
-		waitpid(-1, NULL, WNOHANG);
+		waitpid(0, NULL, WNOHANG);
 	}
 }

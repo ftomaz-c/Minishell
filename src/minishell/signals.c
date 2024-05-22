@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 22:44:07 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 00:05:40 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_and_exit(t_tools *tools, int status)
 	int	i;
 
 	i = 3;
-	while (i < 1024)
+	while (i <= 1024)
 		close(i++);
 	free_parser(&tools->parser);
 	free_tools(tools);
@@ -32,7 +32,7 @@ void	react_sig_handler(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		g_status = 130;
+		global_status()->nbr = 130;
 	}
 }
 

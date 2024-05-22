@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 20:26:43 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:02:49 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,6 @@ int	cmd_unset(t_tools *tools, t_parser *command)
 			unset_var_from_env(tools, command->str[i], pos);
 		i++;
 	}
-	g_status = EXIT_SUCCESS;
-	return (g_status);
+	global_status()->nbr = EXIT_SUCCESS;
+	return (global_status()->nbr);
 }

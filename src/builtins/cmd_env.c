@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 20:23:29 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:00:57 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	env_args(t_parser *command)
 {
 	if (ft_strcmp(command->str[1], "-i") == 0)
 	{
-		g_status = EXIT_SUCCESS;
+		global_status()->nbr = EXIT_SUCCESS;
 		return ;
 	}
 	printf("env: '%s': no such file or directory\n", command->str[1]);
-	g_status = 127;
+	global_status()->nbr = 127;
 }
 
 /**
@@ -53,7 +53,7 @@ int	cmd_env(t_tools *tools, t_parser *command)
 	if (command->str[1])
 	{
 		env_args(command);
-		return (g_status);
+		return (global_status()->nbr);
 	}
 	tmp = tools;
 	while (tmp->env[i])
@@ -68,6 +68,6 @@ int	cmd_env(t_tools *tools, t_parser *command)
 			i++;
 		}
 	}
-	g_status = EXIT_SUCCESS;
-	return (g_status);
+	global_status()->nbr = EXIT_SUCCESS;
+	return (global_status()->nbr);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 20:46:32 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:00:05 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  */
 void	syntax_err(char token)
 {
-	g_status = 2;
+	global_status()->nbr = 2;
 	ft_putstr_fd("minishell: syntax error near unexpected token '",
 		STDERR_FILENO);
 	ft_putchar_fd(token, STDERR_FILENO);

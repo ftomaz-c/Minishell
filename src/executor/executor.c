@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 16:52:10 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 00:04:09 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,19 +107,19 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 		cmd_args[0] = parser->str[2];
 		cmd_args[1] = NULL;
 		exec_path(tools, cmd_args, basic_env());
-		free_and_exit(tools, g_status);
+		free_and_exit(tools, global_status()->nbr);
 	}
 	if (parser->builtin && (exec_builtins(tools) || parser->builtin == cmd_echo
 			|| parser->builtin == cmd_env))
 	{
 		parser->builtin(tools, parser);
 		if (parser->next)
-			free_and_exit(tools, g_status);
+			free_and_exit(tools, global_status()->nbr);
 	}
 	else
 	{
 		exec_path(tools, parser->str, tools->env);
-		free_and_exit(tools, g_status);
+		free_and_exit(tools, global_status()->nbr);
 	}
 	return ;
 }
@@ -142,7 +142,8 @@ void	set_and_exec(t_tools *tools, t_parser *parser)
 		minishell_pipex(tools, parser);
 	else
 		execute_cmd(tools, parser);
-	waitpid(0, NULL, 0);
+	if (parser->builtin)
+		waitpid(-1, NULL, 0);
 }
 
 /**
@@ -180,9 +181,9 @@ int	executor(t_tools *tools)
 			set_and_exec(tools, parser);
 			parser = parser->next;
 		}
-		free_and_exit(tools, g_status);
+		free_and_exit(tools, global_status()->nbr);
 	}
 	else
-		wait_status(tools, -1, &status, 0);
-	return (status);
+		wait_status(tools, -1, &status);
+	return (global_status()->nbr);
 }

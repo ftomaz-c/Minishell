@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:09:04 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:39:49 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
+
 /**
  * @brief Find the position of a character in a string.
  * 
@@ -36,6 +37,7 @@ int	find_char_position(char *str, char c)
 	}
 	return (i);
 }
+
 /**
  * @brief Finds the next occurrence of a character in a string.
  * 

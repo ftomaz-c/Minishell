@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 21:19:25 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:01:08 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,16 @@
 int	echo_n_flag(char **str, int	*pos)
 {
 	size_t	i;
+	size_t	j;
 
 	i = 0;
-	if (ft_strncmp(str[*pos], "-n", ft_strlen(str[*pos])) != 0)
-		return (i);
+	j = 1;
+	while (j < ft_strlen(str[*pos]))
+	{
+		if (str[*pos][j] != '\0' && str[*pos][j] != 'n')
+			return (i);
+		j++;
+	}
 	while (str[*pos] && ft_strncmp(str[*pos], "-n", 2) == 0)
 	{
 		while (str[*pos][i] != ' ' && str[*pos][i])
@@ -95,6 +101,6 @@ int	cmd_echo(t_tools *tools, t_parser *command)
 		flag = echo_n_flag(cmd->str, &i);
 		echo_print(cmd, i, flag);
 	}
-	g_status = EXIT_SUCCESS;
-	return (g_status);
+	global_status()->nbr = EXIT_SUCCESS;
+	return (global_status()->nbr);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:16:49 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:04:46 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,6 @@ void	std_err(int err, char *str)
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 	else if (err == 21)
 		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
-	g_status = EXIT_FAILURE;
-	exit (g_status);
+	global_status()->nbr = EXIT_FAILURE;
+	exit (global_status()->nbr);
 }
