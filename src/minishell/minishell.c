@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 15:33:26 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/22 20:31:01 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,8 @@ void	non_interactive_mode(t_tools *tools, char *line)
  */
 void	interactive_mode(t_tools *tools, char *line)
 {
-	static int i = 0;
 	//line = prompt_line(tools);
 	line = readline (".minishell: ");
-	i++;
 	if (!line)
 	{
 		tools->exit = 1;

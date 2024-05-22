@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 17:12:12 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/22 20:30:22 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,11 +176,10 @@ char	*expander(char **env, char **list, t_tools *tools)
 	char	**split;
 	char	*line;
 
-	(void)tools;
 	index = 0;
-	split = NULL;
 	while (list[index])
 	{
+		split = NULL;
 		if (is_expandable(list, &index))
 			split = split_expander(list[index]);
 		if (split)

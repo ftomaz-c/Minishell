@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 15:23:00 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/22 20:31:31 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_expandable(char **list, int *index)
 
 	if (ft_strchr(list[*index], '$'))
 		return (1);
-	if (ft_strncmp(list[*index], "<<", ft_strlen(list[*index])) == 0)
+	if (ft_strcmp(list[*index], "<<") == 0)
 	{
 		(*index)++;
 		tmp = ft_calloc(sizeof(char), ft_strlen(list[*index]) + 1);

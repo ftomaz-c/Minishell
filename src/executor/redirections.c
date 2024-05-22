@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 17:57:46 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/22 19:58:47 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 {
 	int	fd_infile;
 
-	printf("stdin: %s\n", parser->stdin_file_name);
-	printf("delimiter: %s\n", parser->delimiter);
-	printf("fd: %d\n", parser->stdin_flag);
+	//printf("stdin: %s\n", parser->stdin_file_name);
+	//printf("delimiter: %s\n", parser->delimiter);
+	//printf("fd: %d\n", parser->stdin_flag);
 	if (parser->stdin_flag == LESS)
 	{
 		fd_infile = open (parser->stdin_file_name, O_RDONLY);
@@ -103,8 +103,8 @@ void	set_stdout(t_parser *parser, int fd)
 	int	fd_outfile;
 
 	fd_outfile = 0;
-	printf("stdout: %s\n", parser->stdout_file_name);
-	printf("fd: %d\n", parser->stdout_flag);
+	//printf("stdout: %s\n", parser->stdout_file_name);
+	//printf("fd: %d\n", parser->stdout_flag);
 	if (parser->stdout_flag == GREAT)
 	{
 		fd_outfile = open(parser->stdout_file_name, O_CREAT | O_RDWR
