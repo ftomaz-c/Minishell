@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 15:52:18 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:25:26 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ void	config_tools(t_tools *tools, char **envp)
 	tools->pipes = 0;
 	tools->nint_mode = 0;
 	tools->nprompts = 0;
-	tools->parser = NULL;
-	tools->original_stdin = 0;
+	tools->original_stdin = dup (STDIN_FILENO);
+	tools->original_stdout = dup (STDOUT_FILENO);
 	tools->exit = 0;
 	tools->line_count = 0;
 	update_env(tools);

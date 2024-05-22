@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 15:28:47 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:19:04 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_tools
 	char			**lines;
 	int				token_flag;
 	int				original_stdin;
+	int				original_stdout;
 	struct s_lexer	*lexer;
 	struct s_parser	*parser;
 }	t_tools;
@@ -58,8 +59,9 @@ typedef struct s_parser
 	int				stdin_flag;
 	int				stdout_flag;
 	int				fd_err;
-	char			*limiter;
+	char			*delimiter;
 	int				fd[2];
+	int				stdout_backup_fd;
 	t_lexer			*redirections;
 	struct s_parser	*next;
 	struct s_parser	*prev;	

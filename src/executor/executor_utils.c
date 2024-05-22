@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 20:54:00 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:53:36 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,11 @@ void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 		g_status = WEXITSTATUS(*status);
 	if (here_doc)
 	{
-		if (g_status == 130)
+		if (g_status)
 			free_and_exit(tools, g_status);
 		dup2(tools->parser->fd[0], STDIN_FILENO);
 		close(tools->parser->fd[0]);
+		handle_child_sigaction();
 	}
 	else
 	{
@@ -126,5 +127,7 @@ void	wait_status(t_tools *tools, int pid, int *status, int here_doc)
 			write(1, "\n", 1);
 		else if (g_status == 131)
 			write(1, "Quit (core dumped)\n", 19);
+		dup2(tools->original_stdin, STDIN_FILENO);
+		dup2(tools->original_stdout, STDOUT_FILENO);
 	}
 }

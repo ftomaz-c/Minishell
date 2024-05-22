@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   child_signals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 20:56:22 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:23:56 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
-void	eof_sig_msg_exit(t_tools *tools, char *line)
+void	eof_sig_msg_exit(t_tools *tools, char *line, char *delimiter)
 {
 	ft_putstr_fd("minishell: warning: here-document at line ", 2);
 	ft_putnbr_fd(tools->nprompts, 2);
 	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
-	ft_putstr_fd(tools->parser->limiter, 2);
+	ft_putstr_fd(delimiter, 2);
 	ft_putstr_fd("')\n", 2);
 	free(line);
 	free_and_exit(tools, EXIT_SUCCESS);
@@ -56,7 +56,7 @@ void	handle_heredoc_sigaction(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = here_doc_handler;
-	sa.sa_flags = SA_SIGINFO;
+	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;

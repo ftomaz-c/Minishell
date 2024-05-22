@@ -3,43 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 21:25:14 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:23:00 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
- * @brief Checks for the presence of "<<" (here-document) in a list of strings.
+ * @brief Checks if a string in the list is expandable.
  * 
- * This function iterates through each string in the given list `list` 
- * to find the presence of the "<<" sequence, which is typically used to 
- * indicate the start of a here-document in shell scripts. 
- * It returns 1 if at least one instance of "<<" is found, otherwise returns 0.
+ * This function determines if the string at the current index in the given
+ * list is expandable.
  * 
- * @param list A null-terminated array of strings to search for the "<<" sequence.
+ * @param list An array of strings representing the list of strings.
+ * @param index A pointer to an integer that represents the current index in 
+ * the list.
  * 
- * @return Returns 1 if at least one instance of "<<" is found, otherwise returns 0.
+ * @return Returns 1 if the current string contains a dollar sign ('$'), 
+ * indicating it is expandable. Otherwise, returns 0.
  */
-int	here_doc_present(char **list)
+int	is_expandable(char **list, int *index)
 {
-	int	i;
-	int	j;
-	
-	i = 0;
-	j = 0;
-	while (list[i])
+	char	*tmp;
+	int		i;
+	int		j;
+
+	if (ft_strchr(list[*index], '$'))
+		return (1);
+	if (ft_strncmp(list[*index], "<<", ft_strlen(list[*index])) == 0)
 	{
-		while(list[i][j])	
+		(*index)++;
+		tmp = ft_calloc(sizeof(char), ft_strlen(list[*index]) + 1);
+		i = 0;
+		j = 0;
+		while (list[*index][i])
 		{
-			if (strncmp(&list[i][j], "<<", ft_strlen(&list[i][j])))
-				return (1);
-			j++;
+			if (list[*index][i] == '$' && (list[*index][i + 1] == '\''
+				|| list[*index][i + 1] == '\"'))
+				i++;
+			tmp[j++] = list[*index][i++];
 		}
-		i++;
+		free(list[*index]);
+		list[*index] = ft_strdup(tmp);
+		free(tmp);
 	}
 	return (0);
 }

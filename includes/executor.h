@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 20:55:40 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:49:39 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	pipex_dup_and_close(int close_fd, int dup_fd, int dup_fd2);
 void	minishell_pipex(t_tools *tools, t_parser *parser);
 
 /*src/executor/here_doc.c*/
-void	get_here_doc(t_tools *tools, int fd[2]);
-void	here_doc(t_tools *tools);
+void	get_here_doc(t_tools *tools, int fd[2], char *delimiter);
+void	here_doc(t_tools *tools, char *delimiter);
 
 /*src/executor/child_signals.c*/
 void	child_handler(int sig);
 void	handle_child_sigaction(void);
 void	handle_heredoc_sigaction(void);
 
-void	eof_sig_msg_exit(t_tools *tools, char *line);
+void	eof_sig_msg_exit(t_tools *tools, char *line, char *delimiter);
 
 #endif

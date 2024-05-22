@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 21:08:42 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:51:06 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ void	fd_exit(int exit_code, int original_stdout)
  * @return None.
  */
 
-void	get_here_doc(t_tools *tools, int fd[2])
+void	get_here_doc(t_tools *tools, int fd[2], char *delimiter)
 {
 	char	*line;
 
-	handle_heredoc_sigaction();
 	g_status = 0;
 	while (1)
 	{
@@ -58,9 +57,8 @@ void	get_here_doc(t_tools *tools, int fd[2])
 			free_and_exit(tools, g_status);
 		}
 		if (!line)
-			eof_sig_msg_exit(tools, line);
-		if (ft_strncmp(line, tools->parser->limiter,
-				ft_strlen(tools->parser->limiter)) == 0)
+			eof_sig_msg_exit(tools, line, delimiter);
+		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
 		{
 			free(line);
 			free_and_exit(tools, EXIT_SUCCESS);
@@ -79,11 +77,12 @@ void	get_here_doc(t_tools *tools, int fd[2])
  * @param limiter The delimiter indicating the end of input.
  * @param original_stdout The original file descriptor for stdout.
  */
-void	here_doc(t_tools *tools)
+void	here_doc(t_tools *tools, char *delimiter)
 {
 	pid_t	pid;
 	int		status;
 
+	handle_heredoc_sigaction();
 	if (pipe(tools->parser->fd) == -1)
 	{
 		perror("Error creating pipes");
@@ -98,11 +97,11 @@ void	here_doc(t_tools *tools)
 	if (pid == 0)
 	{
 		close(tools->parser->fd[0]);
-		get_here_doc(tools, tools->parser->fd);
+		get_here_doc(tools, tools->parser->fd, delimiter);
 	}
 	else
 	{
 		close(tools->parser->fd[1]);
-		wait_status (tools, pid, &status, 1);
+		wait_status (tools, -1, &status, 1);
 	}
 }

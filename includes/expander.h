@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 21:24:44 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:06:09 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*expand_tilde(char *str, char *home_var);
 char	*expander(char **env, char **list, t_tools *tools);
 
 /*src/expander/expander_utils_1.c*/
-int		here_doc_present(char **list);
+int		is_expandable(char **list, int *index);
 int		find_single_quote(char *str);
 int		find_char_position_new(char *str, char c);
 int		get_end_position(char *str, int position);

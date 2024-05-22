@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 20:21:46 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:52:10 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,10 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
 			free_and_exit(tools, g_status);
 	}
 	else
+	{
 		exec_path(tools, parser->str, tools->env);
+		free_and_exit(tools, g_status);
+	}
 	return ;
 }
 
@@ -133,15 +136,13 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
  */
 void	set_and_exec(t_tools *tools, t_parser *parser)
 {
-	tools->original_stdin = dup(STDIN_FILENO);
 	if (parser->redirections != NULL)
 		redirection(tools, parser);
 	if (parser->next)
 		minishell_pipex(tools, parser);
 	else
 		execute_cmd(tools, parser);
-	if (parser->builtin)
-		waitpid(0, NULL, 0);
+	waitpid(0, NULL, 0);
 }
 
 /**
@@ -177,8 +178,6 @@ int	executor(t_tools *tools)
 		while (parser)
 		{
 			set_and_exec(tools, parser);
-			if (parser->builtin)
-				wait(0);
 			parser = parser->next;
 		}
 		free_and_exit(tools, g_status);

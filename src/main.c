@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 19:30:34 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:54:02 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ int	main(int argc, char **argv, char **envp)
 	error_check(argc, argv);
 	while (1)
 	{
+		printf("stdin: %i\n", STDIN_FILENO);
+		printf("stdout: %i\n", STDOUT_FILENO);
+		printf("stderr: %i\n", STDERR_FILENO);
 		handle_sigaction();
 		if (!isatty(STDIN_FILENO))
 			non_interactive_mode(&tools, line);

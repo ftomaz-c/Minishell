@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:15:00 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:57:46 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 {
 	int	fd_infile;
 
+	printf("stdin: %s\n", parser->stdin_file_name);
+	printf("delimiter: %s\n", parser->delimiter);
+	printf("fd: %d\n", parser->stdin_flag);
 	if (parser->stdin_flag == LESS)
 	{
 		fd_infile = open (parser->stdin_file_name, O_RDONLY);
@@ -53,7 +56,7 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 		close(fd_infile);
 	}
 	else if (parser->stdin_flag == LESS_LESS)
-		here_doc(tools);
+		here_doc(tools, parser->delimiter);
 	return ;
 }
 
@@ -75,8 +78,10 @@ t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 	current = current->next;
 	if (parser->stdin_flag == LESS_LESS)
 	{
+		close(parser->stdout_backup_fd);
 		current = current->next;
-		parser->limiter = current->words;
+		parser->delimiter = current->words;
+		dup2(tools->original_stdout, STDOUT_FILENO);
 		dup2(tools->original_stdin, STDIN_FILENO);
 	}
 	else if (parser->stdin_flag == LESS)
@@ -98,6 +103,8 @@ void	set_stdout(t_parser *parser, int fd)
 	int	fd_outfile;
 
 	fd_outfile = 0;
+	printf("stdout: %s\n", parser->stdout_file_name);
+	printf("fd: %d\n", parser->stdout_flag);
 	if (parser->stdout_flag == GREAT)
 	{
 		fd_outfile = open(parser->stdout_file_name, O_CREAT | O_RDWR
@@ -116,8 +123,9 @@ void	set_stdout(t_parser *parser, int fd)
 	}
 	if (parser->fd_err)
 		dup2(fd_outfile, parser->fd_err);
-	if (fd_outfile)
+	if (fd_outfile != fd)
 		close(fd_outfile);
+	parser->stdout_backup_fd = fd;
 	return ;
 }
 
