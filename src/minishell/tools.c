@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 20:13:41 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/22 22:40:54 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,5 @@ void	config_tools(t_tools *tools, char **envp)
 			STDERR_FILENO);
 		return ;
 	}
-	tools->original_stdin = dup (STDIN_FILENO);
-	tools->original_stdout = dup (STDOUT_FILENO);
 	update_env(tools);
 }
