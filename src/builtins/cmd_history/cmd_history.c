@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_history.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:03:07 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 18:15:42 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ int	invalid_history_options(t_tools *tools, t_parser *command)
 		if (!check_exit_args(command))
 		{
 			global_status()->nbr = EXIT_FAILURE;
-			printf("bash: history: %s: numeric argument required\n",
-				command->str[1]);
+			ft_putstr_fd("bash: history: ", STDOUT_FILENO);
+			ft_putstr_fd(command->str[1], STDOUT_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDOUT_FILENO);
 			return (global_status()->nbr);
 		}
 	}
 	if (command->str[2] != NULL)
 	{
-		printf("bash: history: too many arguments\n");
+		ft_putstr_fd("bash: history: too many arguments\n", STDOUT_FILENO);
 		global_status()->nbr = EXIT_FAILURE;
 		return (global_status()->nbr);
 	}

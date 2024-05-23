@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:02:29 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 18:05:01 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	sort_print_env(t_tools *tools)
 		if (ft_strncmp(env_copy[i], "declare -x _=", 13) == 0)
 			i++;
 		else
-			printf("%s\n", env_copy[i++]);
+		{
+			ft_putstr_fd(env_copy[i++], STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		}
 	}
 	free_list(env_copy);
 }

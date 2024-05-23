@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:01:08 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:24:58 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	echo_print(t_parser *command, int pos, int flag)
 {
 	while (command->str[pos])
 	{
-		printf(command->str[pos], 1);
+		ft_putstr_fd(command->str[pos], STDOUT_FILENO);
 		if (command->str[pos + 1])
-			printf(" ");
+			ft_putstr_fd(" ", STDOUT_FILENO);
 		pos++;
 	}
 	if (!flag)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
 /**
@@ -95,7 +95,7 @@ int	cmd_echo(t_tools *tools, t_parser *command)
 	(void)tools;
 	cmd = command;
 	if (!cmd->str[i])
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	else
 	{
 		flag = echo_n_flag(cmd->str, &i);

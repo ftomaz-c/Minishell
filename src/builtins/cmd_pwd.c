@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:00:27 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:39:50 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	cmd_pwd(t_tools *tools, t_parser *command)
 		tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
 		ft_strcpy(buf, tools->pwd);
 	}
-	printf("%s\n", buf);
+	ft_putstr_fd(buf, STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	global_status()->nbr = EXIT_SUCCESS;
 	return (global_status()->nbr);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:02:16 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:45:14 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int	cd_handle_slash_path(t_tools *tools)
 {
 	if (chdir(tools->oldpwd) == 0)
 	{
-		printf("%s\n", tools->oldpwd);
+		ft_putstr_fd(tools->oldpwd, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		free(tools->pwd);
 		tools->pwd = ft_strdup(tools->oldpwd);
 		free(tools->oldpwd);
