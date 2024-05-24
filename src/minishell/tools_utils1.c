@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   tools_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 12:07:51 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:15:52 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_and_exit(t_tools *tools, int status)
+{
+	int	i;
+
+	i = 3;
+	while (i < 1024)
+		close(i++);
+	free_parser(&tools->parser);
+	free_tools(tools);
+	exit (status);
+}
 
 /**
  * @brief Retrieves the current working directory (PWD).

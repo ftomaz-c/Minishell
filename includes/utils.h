@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/16 20:37:56 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:16:37 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_parser(t_tools *tools);
 /*src/utils/prompt.c*/
 char	**handle_home_abreviation(t_tools *tools, char **str);
 char	**generate_prompt(t_tools *tools);
-char	*prompt_line(t_tools *tools);
+void	prompt_line(t_tools *tools);
 
 /*src/utils/utils1.c*/
 int		find_char_position(char *str, char c);

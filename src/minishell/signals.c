@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:05:40 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 13:12:17 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	free_and_exit(t_tools *tools, int status)
-{
-	int	i;
-
-	i = 3;
-	while (i <= 1024)
-		close(i++);
-	free_parser(&tools->parser);
-	free_tools(tools);
-	exit (status);
-}
 
 void	react_sig_handler(int sig)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 16:53:25 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:19:42 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,16 @@ int	exec_builtins(t_tools *tools)
  */
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
-	if (parser->builtin && (exec_builtins(tools) || parser->builtin == cmd_echo
-			|| parser->builtin == cmd_env))
+	if (parser->builtin && (parser->builtin == cmd_echo
+			|| parser->builtin == cmd_env || parser->builtin == cmd_cd
+			|| parser->builtin == cmd_pwd || parser->builtin == cmd_export
+			|| parser->builtin == cmd_unset || parser->builtin == cmd_exit
+			|| parser->builtin == cmd_history))
 	{
 		parser->builtin(tools, parser);
-		if (parser->next)
-			free_and_exit(tools, global_status()->nbr);
+		free_and_exit(tools, global_status()->nbr);
 	}
-	else
+	else if (!parser->builtin)
 	{
 		exec_path(tools, parser->str, tools->env);
 		free_and_exit(tools, global_status()->nbr);
@@ -132,15 +134,14 @@ void	set_and_exec(t_tools *tools, t_parser *parser)
 	int	status;
 
 	tools->pids = ft_calloc(sizeof(int), tools->pipes + 1);
+	if (!tools->pids)
+		return ;
 	index = 0;
+	status = 0;
 	while (parser)
 	{
 		if (parser->redirections != NULL)
-		{
-			broadcast_signal(tools, index, SIGSTOP);
-			redirection(tools, parser);
-			broadcast_signal(tools, index, SIGCONT);
-		}
+			redirection(tools, parser, &index);
 		minishell_pipex(tools, parser, &index);
 		parser = parser->next;
 		index++;
@@ -148,9 +149,8 @@ void	set_and_exec(t_tools *tools, t_parser *parser)
 	i = 0;
 	while (i < tools->pipes + 1)
 	{
-		waitpid (tools->pids[i], &status, 0);
+		waitpid (tools->pids[i++], &status, 0);
 		get_status(&status);
-		i++;
 	}
 }
 
@@ -177,14 +177,14 @@ int	executor(t_tools *tools)
 	handle_child_sigaction();
 	parser = tools->parser;
 	status = 0;
-	if (exec_builtins(tools) && !tools->pipes && parser->str[0])
+	if (exec_builtins(tools) && !tools->pipes && parser->str[0]
+		&& !tools->parser->nb_redirections)
 		return (parser->builtin(tools, parser));
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		//printf("\n------entering child executor------\n");
 		set_and_exec(tools, parser);
 		free_and_exit(tools, global_status()->nbr);
 	}

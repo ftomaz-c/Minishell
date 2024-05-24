@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 18:17:34 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:33:42 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	error_check(int argc, char **argv)
 	(void)argv;
 	if (argc != 1)
 	{
-		ft_putstr_fd("Error: This program does not accept arguments\n", STDOUT_FILENO);
+		ft_putstr_fd("Error: This program does not accept arguments\n",
+			STDOUT_FILENO);
 		ft_putstr_fd("Usage: ./minishell\n", STDOUT_FILENO);
 		exit(EXIT_FAILURE);
 	}

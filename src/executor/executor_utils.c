@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 12:12:16 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:19:54 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,8 @@ void	wait_status(t_tools *tools, int pid, int *status)
 	waitpid(pid, status, 0);
 	get_status(status);
 	i = 3;
-	while (i <= 1024)
+	while (i < 1024)
 		close(i++);
-	if (global_status()->nbr == 130)
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	else if (global_status()->nbr == 131)
-		ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
 	dup2(tools->original_stdin, STDIN_FILENO);
 	dup2(tools->original_stdout, STDOUT_FILENO);
 }

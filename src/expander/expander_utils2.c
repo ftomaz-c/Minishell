@@ -3,28 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 23:19:55 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:34:47 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/expander.h"
 
 /**
- * @brief Treats and processes expandable input strings by handling special characters.
+ * @brief Treats and processes expandable input strings by handling special
+ * characters.
  * 
- * This function processes an array of strings, specifically focusing on the string
- * at the given index. It allocates a new string, copies the contents while handling
- * special characters (e.g., skipping certain characters following a '$' sign), and
- * replaces the original string with the processed one.
+ * This function processes an array of strings, specifically focusing on the
+ * string at the given index. It allocates a new string, copies the contents 
+ * while handling special characters (e.g., skipping certain characters 
+ * following a '$' sign), and replaces the original string with the processed
+ * one.
  * 
- * The function handles cases where a '$' sign is followed by either a single quote
- * (') or a double quote ("). In such cases, it skips the quote character.
+ * The function handles cases where a '$' sign is followed by either a single 
+ * quote (') or a double quote ("). In such cases, it skips the quote character.
  * 
  * @param list An array of strings to be processed.
- * @param index A pointer to the index of the string within the list to be treated.
+ * @param index A pointer to the index of the string within the list to be
+ * treated.
  */
 void	treat_expandable_input(char **list, int *index)
 {
@@ -32,19 +35,22 @@ void	treat_expandable_input(char **list, int *index)
 	int		i;
 	int		j;
 
-	tmp = ft_calloc(sizeof(char), ft_strlen(list[*index]) + 1);
-	i = 0;
-	j = 0;
-	while (list[*index][i])
+	if (list[*index])
 	{
-		if (list[*index][i] == '$' && (list[*index][i + 1] == '\''
-			|| list[*index][i + 1] == '\"'))
-			i++;
-		tmp[j++] = list[*index][i++];
+		tmp = ft_calloc(sizeof(char), ft_strlen(list[*index]) + 1);
+		i = 0;
+		j = 0;
+		while (list[*index][i])
+		{
+			if (list[*index][i] == '$' && (list[*index][i + 1] == '\''
+				|| list[*index][i + 1] == '\"'))
+				i++;
+			tmp[j++] = list[*index][i++];
+		}
+		free(list[*index]);
+		list[*index] = ft_strdup(tmp);
+		free(tmp);
 	}
-	free(list[*index]);
-	list[*index] = ft_strdup(tmp);
-	free(tmp);
 }
 
 /**

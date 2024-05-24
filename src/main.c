@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 23:58:45 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:18:35 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ int	main(int argc, char **argv, char **envp)
 		tools.original_stdin = dup (STDIN_FILENO);
 		tools.original_stdout = dup (STDOUT_FILENO);
 		handle_sigaction();
-		/*if (!isatty(STDIN_FILENO))
+		if (!isatty(STDIN_FILENO))
 			non_interactive_mode(&tools, line);
-		else*/
-		interactive_mode(&tools, line);
+		else
+			interactive_mode(&tools, line);
 		if (tools.exit)
 			break ;
 	}
 	free_and_exit(&tools, global_status()->nbr);
-	return (0);
+	return (global_status()->nbr);
 }

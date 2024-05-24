@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:07:59 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:54:22 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ char	**handle_home_abreviation(t_tools *tools, char **str)
 	if (!home_var)
 		return (str);
 	home_var_len = ft_strlen(home_var);
-	if (ft_strncmp(home_var, str[6], home_var_len) == 0)
+	if (ft_strncmp(home_var, str[4], home_var_len) == 0)
 	{
-		tmp = ft_substr(str[6], home_var_len, ft_strlen(str[6]) - home_var_len);
-		free(str[6]);
-		str[6] = ft_strjoin("~", tmp);
+		tmp = ft_substr(str[4], home_var_len, ft_strlen(str[4]) - home_var_len);
+		free(str[4]);
+		str[4] = ft_strjoin("~", tmp);
 		free(tmp);
 	}
 	free(home_var);
@@ -69,22 +69,19 @@ char	**generate_prompt(t_tools *tools)
 {
 	char	**str;
 
-	str = calloc(10, sizeof (char *));
+	str = ft_calloc(10, sizeof (char *));
 	if (!str)
 		return (NULL);
-	str[0] = ft_strdup("\033[1;32m");
-	str[1] = ft_strdup(tools->user);
-	str[2] = ft_strdup("@");
-	str[3] = ft_strdup(tools->name);
-	str[4] = ft_strdup("\033[0m:");
-	str[5] = ft_strdup("\033[1;34m");
-	str[6] = ft_strdup(tools->pwd);
-	str[7] = ft_strdup("\033[0m");
-	str[8] = ft_strdup("$ ");
+	str[0] = ft_strdup(tools->user);
+	str[1] = ft_strdup("@");
+	str[2] = ft_strdup(tools->name);
+	str[3] = ft_strdup(":");
+	str[4] = ft_strdup(tools->pwd);
+	str[5] = ft_strdup("$ ");
 	if (ft_strlen(str[1]) == 0)
 	{
-		free(str[1]);
-		str[1] = ft_strdup("guest");
+		free(str[0]);
+		str[0] = ft_strdup("guest");
 	}
 	str = handle_home_abreviation(tools, str);
 	return (str);
@@ -102,9 +99,8 @@ char	**generate_prompt(t_tools *tools)
  * @return A dynamically allocated string containing the user input line.
  *         If memory allocation fails or readline fails, returns NULL.
  */
-char	*prompt_line(t_tools *tools)
+void	prompt_line(t_tools *tools)
 {
-	char	*line;
 	char	*prompt;
 	char	**str;
 	char	*tmp;
@@ -112,7 +108,7 @@ char	*prompt_line(t_tools *tools)
 
 	str = generate_prompt(tools);
 	if (!str)
-		return (NULL);
+		return ;
 	i = 0;
 	prompt = ft_strdup("");
 	while (str[i])
@@ -125,7 +121,6 @@ char	*prompt_line(t_tools *tools)
 		i++;
 	}
 	free(str);
-	line = readline(prompt);
+	tools->prompt = ft_strdup(prompt);
 	free(prompt);
-	return (line);
 }

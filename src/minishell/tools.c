@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 23:38:16 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:28:13 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	handle_shlvl(char *pre_lvl, char **new_lvl, size_t lvl)
 	if (ft_atoll(*new_lvl) > 1000)
 	{
 		*new_lvl = ft_itoa(1);
-		ft_putstr_fd("bash: warning: shell level (", STDERR_FILENO);
+		ft_putstr_fd("minishell: warning: shell level (", STDERR_FILENO);
 		ft_putstr_fd(ft_itoa(lvl + 1), STDERR_FILENO);
 		ft_putstr_fd(") too high, resetting to ", STDERR_FILENO);
 		ft_putstr_fd(*new_lvl, STDERR_FILENO);

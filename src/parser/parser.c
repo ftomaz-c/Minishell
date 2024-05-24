@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 18:08:13 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 13:04:40 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_lexer	*parse_tokens(t_parser *node, t_lexer *current, int *start)
 		current = add_redirection(current, node, NULL);
 		if (current && (current->token == '<' || current->token == '>'))
 			current = add_redirection(current, node, start);
-		if (current && (current->token == '<' || current->token == '>'))
+		if (current && (current->token || !current->words))
 		{
 			syntax_err(current->token);
 			return (NULL);

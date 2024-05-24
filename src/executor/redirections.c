@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 12:10:32 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 13:39:59 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,11 +171,12 @@ t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd)
  * environment and execution context.
  * @param parser Pointer to the parser containing redirection information.
  */
-void	redirection(t_tools *tools, t_parser *parser)
+void	redirection(t_tools *tools, t_parser *parser, int *index)
 {
 	t_lexer	*current;
 	int		fd;
 
+	broadcast_signal(tools, *index, SIGSTOP);
 	current = parser->redirections;
 	while (current)
 	{
@@ -196,4 +197,5 @@ void	redirection(t_tools *tools, t_parser *parser)
 		}
 		current = current->next;
 	}
+	broadcast_signal(tools, *index, SIGCONT);
 }

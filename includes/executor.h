@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 12:12:27 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:11:34 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 			int fd);
 void	set_stdout(t_parser *parser, int fd);
 t_lexer	*set_output(t_parser *parser, t_lexer *redirection, int fd);
-void	redirection(t_tools *tools, t_parser *parser);
+void	redirection(t_tools *tools, t_parser *parser, int *index);
 
 /*src/executor/redirections_utils.c*/
 void	set_stdin_flag(t_parser *parser, t_lexer *redirections);

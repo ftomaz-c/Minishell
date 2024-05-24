@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 20:30:22 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 14:03:57 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ char	*expand_tilde(char *str, char *home_var)
 	char	*tmp;
 	char	*new_str;
 
+	if (!str)
+		return (NULL);
 	new_str = "\0";
 	if (str[0] == '~' && (str[1] == '\0' || str[1] == '/'))
 	{

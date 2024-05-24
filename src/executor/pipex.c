@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 12:11:25 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:08:09 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	minishell_pipex(t_tools *tools, t_parser *parser, int *index)
 		exit (EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		//printf("\n------entering child pipex------\n");
 		if (parser->stdout_flag)
 			execute_cmd(tools, parser);
 		else
@@ -65,8 +64,6 @@ void	minishell_pipex(t_tools *tools, t_parser *parser, int *index)
 	else
 	{
 		pipex_dup_and_close(pipe_fd[1], pipe_fd[0], STDIN_FILENO);
-		//printf("pipex pid %i: %i\n", *index, pid);
-		//printf("command: %s\n", parser->str[0]);
 		tools->pids[*index] = pid;
 	}
 }

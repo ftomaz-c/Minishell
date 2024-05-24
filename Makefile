@@ -85,7 +85,7 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)###############################$(NC)"
 
 v:
-	$(MAKE) fclean && $(MAKE) && valgrind --log-file="valgrind.txt" -s --leak-check=full --show-leak-kinds=all --suppressions=supp_rl --track-origins=yes --track-fds=all  ./$(NAME)
+	$(MAKE) fclean && $(MAKE) && valgrind --log-file="valgrind.txt" -s --leak-check=full --show-leak-kinds=all --suppressions=supp_rl --track-origins=yes --track-fds=yes  ./$(NAME)
 
 clean:
 	@echo "$(CYAN)\n# Cleaning libft...\n$(NC)"

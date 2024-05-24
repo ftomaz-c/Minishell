@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_history.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 18:15:42 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:28:06 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	invalid_history_options(t_tools *tools, t_parser *command)
 		if (!check_exit_args(command))
 		{
 			global_status()->nbr = EXIT_FAILURE;
-			ft_putstr_fd("bash: history: ", STDOUT_FILENO);
+			ft_putstr_fd("minishell: history: ", STDOUT_FILENO);
 			ft_putstr_fd(command->str[1], STDOUT_FILENO);
 			ft_putstr_fd(": numeric argument required\n", STDOUT_FILENO);
 			return (global_status()->nbr);
@@ -63,7 +63,7 @@ int	invalid_history_options(t_tools *tools, t_parser *command)
 	}
 	if (command->str[2] != NULL)
 	{
-		ft_putstr_fd("bash: history: too many arguments\n", STDOUT_FILENO);
+		ft_putstr_fd("minishell: history: too many arguments\n", STDOUT_FILENO);
 		global_status()->nbr = EXIT_FAILURE;
 		return (global_status()->nbr);
 	}

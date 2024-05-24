@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 08:49:26 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:11:55 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@ void	get_status(int *status)
 	{
 		sig = WTERMSIG(*status);
 		if (sig == SIGINT)
+		{
 			global_status()->nbr = 130;
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		}
 		else if (sig == SIGQUIT)
+		{
 			global_status()->nbr = 131;
+			ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
+		}
 	}
 	else if (WIFEXITED(*status))
 		global_status()->nbr = WEXITSTATUS(*status);
