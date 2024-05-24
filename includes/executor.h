@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 17:11:34 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:18:01 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		executor(t_tools *tools);
 void	broadcast_signal(t_tools *tools, int num_pids, int signal);
 char	**basic_env(void);
 void	free_and_exit(t_tools *tools, int status);
-void	exec_err(t_tools *tools, int err, char *str, char *value);
+void	exec_err(t_tools *tools, int err, char *str);
 void	wait_status(t_tools *tools, int pid, int *status);
 
 /*src/executor/redirections.c*/
@@ -51,7 +51,7 @@ void	minishell_pipex(t_tools *tools, t_parser *parser, int *index);
 /*src/executor/here_doc.c*/
 void	get_here_doc(t_tools *tools, int fd[2], char *delimiter);
 void	here_doc(t_tools *tools, char *delimiter);
-void	status_heredoc(t_tools *tools, int *status);
+void	status_heredoc(t_tools *tools, int *status, int pid);
 void	get_status(int *status);
 
 /*src/executor/child_signals.c*/

@@ -6,18 +6,13 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 17:18:35 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:42:01 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_status	*global_status(void)
-{
-	static t_status	status;
-
-	return (&status);
-}
+int g_sig = 0;
 
 int	main(int argc, char **argv, char **envp)
 {

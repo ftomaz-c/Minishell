@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 17:15:52 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:31:23 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ char	**get_path(t_tools *tools, char **env)
 	if (!path_from_envp)
 	{
 		path_from_envp = ft_strdup("PATH=/bin:/usr/bin");
-		export_variable_to_env(tools, path_from_envp);
+		export_variable_to_env(tools, "_=/usr/bin/env");
+		tools->empty_env = 1;
 	}
 	path_list = ft_split(path_from_envp, ":");
 	free(path_from_envp);

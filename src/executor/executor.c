@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 17:19:42 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:44:10 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,30 @@
 void	exec_path(t_tools *tools, char **cmd_args, char **envp)
 {
 	char	*cmd_path;
-	char	*value;
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	value = get_var_from_env(envp, "PATH");
-	if (!value)
-		exec_err(tools, 1, cmd_args[0], value);
-	else
+	if (!get_var_from_env(envp, "PATH"))
 	{
-		while (tools->path[i] && cmd_args[0] && cmd_args[0][0] != '.')
+		if (!tools->empty_env)
 		{
-			tmp = ft_strjoin(tools->path[i], "/");
-			cmd_path = ft_strjoin(tmp, cmd_args[0]);
-			free(tmp);
-			execve(cmd_path, cmd_args, envp);
-			free(cmd_path);
-			i++;
+			exec_err(tools, 1, cmd_args[0]);
+			return ;
 		}
-		if (cmd_args[0] && !tools->nint_mode)
-			execve(cmd_args[0], cmd_args, envp);
-		exec_err(tools, errno, cmd_args[0], value);
 	}
+	while (tools->path[i] && cmd_args[0] && cmd_args[0][0] != '.')
+	{
+		tmp = ft_strjoin(tools->path[i], "/");
+		cmd_path = ft_strjoin(tmp, cmd_args[0]);
+		free(tmp);
+		execve(cmd_path, cmd_args, envp);
+		free(cmd_path);
+		i++;
+	}
+	if (cmd_args[0] && !tools->nint_mode)
+		execve(cmd_args[0], cmd_args, envp);
+	exec_err(tools, errno, cmd_args[0]);
 }
 
 /**
@@ -73,13 +74,12 @@ int	exec_builtins(t_tools *tools)
 		parser->builtin = cmd_cd;
 		return (1);
 	}
-	if (parser->builtin && (parser->builtin == cmd_cd
-			|| parser->builtin == cmd_pwd
-			|| parser->builtin == cmd_export || parser->builtin == cmd_unset
-			|| parser->builtin == cmd_exit || parser->builtin == cmd_history))
-	{
+	if (parser->builtin && (parser->builtin == cmd_echo
+			|| parser->builtin == cmd_env || parser->builtin == cmd_cd
+			|| parser->builtin == cmd_pwd || parser->builtin == cmd_export
+			|| parser->builtin == cmd_unset || parser->builtin == cmd_exit
+			|| parser->builtin == cmd_history))
 		return (1);
-	}
 	return (0);
 }
 
@@ -100,11 +100,7 @@ int	exec_builtins(t_tools *tools)
  */
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
-	if (parser->builtin && (parser->builtin == cmd_echo
-			|| parser->builtin == cmd_env || parser->builtin == cmd_cd
-			|| parser->builtin == cmd_pwd || parser->builtin == cmd_export
-			|| parser->builtin == cmd_unset || parser->builtin == cmd_exit
-			|| parser->builtin == cmd_history))
+	if (parser->builtin && (exec_builtins(tools)))
 	{
 		parser->builtin(tools, parser);
 		free_and_exit(tools, global_status()->nbr);
@@ -176,7 +172,6 @@ int	executor(t_tools *tools)
 
 	handle_child_sigaction();
 	parser = tools->parser;
-	status = 0;
 	if (exec_builtins(tools) && !tools->pipes && parser->str[0]
 		&& !tools->parser->nb_redirections)
 		return (parser->builtin(tools, parser));

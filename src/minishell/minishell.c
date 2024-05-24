@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 17:54:41 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:39:04 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	minishell(t_tools *tools, char *line)
 			free_lexer(&tools->lexer);
 			return ;
 		}
+		//print_lexer(tools);
 		if (!parser(tools))
 			return ;
 		if (tools->lexer)
@@ -105,6 +106,8 @@ void	non_interactive_mode(t_tools *tools, char *line)
  */
 void	interactive_mode(t_tools *tools, char *line)
 {
+	if (g_sig)
+		global_status()->nbr = 0;
 	prompt_line(tools);
 	line = readline (tools->prompt);
 	if (!line)

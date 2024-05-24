@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 16:14:38 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:31:06 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_status
 
 typedef struct s_tools
 {
+	char			empty_env;
 	char			*prompt;
 	char			**env;
 	char			**path;

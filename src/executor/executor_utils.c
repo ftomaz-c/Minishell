@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 17:19:54 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:23:46 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ char	**basic_env(void)
 {
 	char	**b_env;
 
-	b_env = calloc (sizeof(char *), 3);
-	b_env[0] = ft_strdup("PATH=/bin:/usr/bin");
-	b_env[1] = ft_strdup("_=/bin/env");
+	b_env = calloc (sizeof(char *), 2);
+	b_env[0] = ft_strdup("_=/bin/env");
 	return (b_env);
 }
 
@@ -67,7 +66,7 @@ void	nint_mode(t_tools *tools)
  * @param value A pointer to the value to be freed, if applicable.
  * @return None.
  */
-void	exec_err(t_tools *tools, int err, char *str, char *value)
+void	exec_err(t_tools *tools, int err, char *str)
 {
 	nint_mode(tools);
 	if (err == 1)
@@ -90,8 +89,6 @@ void	exec_err(t_tools *tools, int err, char *str, char *value)
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 		global_status()->nbr = 130;
 	}
-	if (value)
-		free(value);
 }
 
 /**
@@ -116,6 +113,10 @@ void	wait_status(t_tools *tools, int pid, int *status)
 	i = 3;
 	while (i < 1024)
 		close(i++);
+	if (global_status()->nbr == 130)
+		ft_putstr_fd("\n", STDOUT_FILENO);
+	else if (global_status()->nbr == 131)
+		ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
 	dup2(tools->original_stdin, STDIN_FILENO);
 	dup2(tools->original_stdout, STDOUT_FILENO);
 }

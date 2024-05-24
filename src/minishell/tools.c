@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 17:28:13 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:52:47 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,11 @@ void	config_tools(t_tools *tools, char **envp)
 	tools->path = get_path(tools, tools->env);
 	tools->pwd = get_pwd(tools, tools->env);
 	tools->oldpwd = get_var_from_env(tools->env, "OLDPWD");
+	if (!tools->oldpwd)
+	{
+		tools->oldpwd = ft_strdup("");
+		export_variable_to_env(tools, "OLDPWD");
+	}
 	tools->user = get_var_from_env(tools->env, "USER");
 	if (!tools->user)
 		tools->user = get_source_user_var(tools);

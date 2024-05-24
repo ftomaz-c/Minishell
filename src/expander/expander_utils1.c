@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 13:06:32 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:49:44 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,8 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 	suffix = ft_substr(str, end, ft_strlen(str) - end);
 	if (prefix[0] == '\"' && str[1] == '$')
 	{
-		free(prefix);
-		prefix = ft_strdup("");
+		//free(prefix);
+		//prefix = ft_strdup("");
 		value = add_quotes_to_value(value, 0, 1, 0);
 	}
 	else

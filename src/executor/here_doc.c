@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 17:11:55 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:38:47 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,21 @@
 
 void	get_status(int *status)
 {
-	int	sig;
-
 	if (WIFSIGNALED(*status))
 	{
-		sig = WTERMSIG(*status);
-		if (sig == SIGINT)
-		{
+		g_sig = WTERMSIG(*status);
+		if (g_sig == SIGINT)
 			global_status()->nbr = 130;
-			ft_putstr_fd("\n", STDOUT_FILENO);
-		}
-		else if (sig == SIGQUIT)
-		{
+		else if (g_sig == SIGQUIT)
 			global_status()->nbr = 131;
-			ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
-		}
 	}
 	else if (WIFEXITED(*status))
 		global_status()->nbr = WEXITSTATUS(*status);
 }
 
-void	status_heredoc(t_tools *tools, int *status)
+void	status_heredoc(t_tools *tools, int *status, int pid)
 {
+	waitpid(pid, status, 0);
 	get_status(status);
 	if (global_status()->nbr)
 		free_and_exit(tools, global_status()->nbr);
@@ -62,12 +55,12 @@ void	get_here_doc(t_tools *tools, int fd[2], char *delimiter)
 {
 	char	*line;
 
-	global_status()->nbr = 0;
 	while (1)
 	{
 		line = readline("> ");
 		if (global_status()->nbr == 130)
 		{
+			ft_putchar_fd('\n', STDOUT_FILENO);
 			free(line);
 			free_and_exit(tools, global_status()->nbr);
 		}
@@ -114,12 +107,12 @@ void	here_doc(t_tools *tools, char *delimiter)
 	if (pid == 0)
 	{
 		close(tools->fd[0]);
+		global_status()->nbr = 0;
 		get_here_doc(tools, tools->fd, delimiter);
 	}
 	else
 	{
 		close(tools->fd[1]);
-		waitpid(pid, &status, 0);
-		status_heredoc (tools, &status);
+		status_heredoc (tools, &status, pid);
 	}
 }
