@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 20:06:33 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:17:32 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
-void	treat_expandable_input(char **list, int *index)
-{
-	char	*tmp;
-	int		i;
-	int		j;
-
-	tmp = ft_calloc(sizeof(char), ft_strlen(list[*index]) + 1);
-	i = 0;
-	j = 0;
-	while (list[*index][i])
-	{
-		if (list[*index][i] == '$' && (list[*index][i + 1] == '\''
-			|| list[*index][i + 1] == '\"'))
-			i++;
-		tmp[j++] = list[*index][i++];
-	}
-	free(list[*index]);
-	list[*index] = ft_strdup(tmp);
-	free(tmp);
-}
-
 
 /**
  * @brief Checks if a string in the list is expandable.

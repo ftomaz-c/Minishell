@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 13:06:09 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 23:19:14 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		get_end_position(char *str, int position);
 char	*add_prefix_and_suffix(char *str, char **env, int position, int end);
 
 /*src/expander/expander_utils_2.c*/
+void	treat_expandable_input(char **list, int *index);
 char	*add_quotes(int j, char *str, char quote, char *value);
 char	get_quote_flag(char *str, int i);
 char	*add_quotes_to_value(char *str, int flagquote, int j, int i);
