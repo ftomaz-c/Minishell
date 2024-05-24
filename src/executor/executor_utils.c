@@ -6,11 +6,24 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:04:21 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 12:12:16 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
+
+void	broadcast_signal(t_tools *tools, int num_pids, int signal)
+{
+	int	i;
+
+	i = 0;
+	while (i < num_pids)
+	{
+		if (kill (tools->pids[i], signal) < 0)
+			perror("Failed to broadcast signal");
+		i++;
+	}
+}
 
 /**
  * @brief Creates a basic environment for the shell.
@@ -97,48 +110,16 @@ void	exec_err(t_tools *tools, int err, char *str, char *value)
 void	wait_status(t_tools *tools, int pid, int *status)
 {
 	int	i;
-	int	sig;
 
 	waitpid(pid, status, 0);
-	if (WIFSIGNALED(*status))
-	{
-		sig = WTERMSIG(*status);
-		if (sig == SIGINT)
-			global_status()->nbr = 130;
-		else if (sig == SIGQUIT)
-			global_status()->nbr = 131;
-	}
-	else if (WIFEXITED(*status))
-		global_status()->nbr = WEXITSTATUS(*status);
+	get_status(status);
 	i = 3;
 	while (i <= 1024)
 		close(i++);
 	if (global_status()->nbr == 130)
-		write(1, "\n", 1);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	else if (global_status()->nbr == 131)
-		write(1, "Quit (core dumped)\n", 19);
+		ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
 	dup2(tools->original_stdin, STDIN_FILENO);
 	dup2(tools->original_stdout, STDOUT_FILENO);
-}
-
-void	wait_status_heredoc(t_tools *tools, int pid, int *status)
-{
-	int	sig;
-
-	waitpid(pid, status, 0);
-	if (WIFSIGNALED(*status))
-	{
-		sig = WTERMSIG(*status);
-		if (sig == SIGINT)
-			global_status()->nbr = 130;
-		else if (sig == SIGQUIT)
-			global_status()->nbr = 131;
-	}
-	else if (WIFEXITED(*status))
-		global_status()->nbr = WEXITSTATUS(*status);
-	if (global_status()->nbr)
-		free_and_exit(tools, global_status()->nbr);
-	dup2(tools->parser->fd[0], STDIN_FILENO);
-	close(tools->parser->fd[0]);
-	handle_child_sigaction();
 }

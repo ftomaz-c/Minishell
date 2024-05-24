@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/14 15:27:30 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:07:44 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int			parser(t_tools *tools);
 t_lexer		*add_redirection(t_lexer *current, t_parser *node, int *start);
 
 /*src/parser/parser_utils.c*/
+void		count_heredocs(t_parser *parser);
 void		ft_lstadd_parser_back(t_parser**lst, t_parser *new);
 void		free_parser(t_parser **parser);
 t_parser	*init_parser(int start, int end);

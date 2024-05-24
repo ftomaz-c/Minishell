@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 23:16:11 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 12:11:25 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	pipex_dup_and_close(int close_fd, int dup_fd, int dup_fd2)
  * @param parser The parser containing command information.
  * @param tools The tools struct containing necessary information.
  */
-void	minishell_pipex(t_tools *tools, t_parser *parser)
+void	minishell_pipex(t_tools *tools, t_parser *parser, int *index)
 {
 	int	pipe_fd[2];
 	int	pid;
@@ -52,17 +52,21 @@ void	minishell_pipex(t_tools *tools, t_parser *parser)
 		exit (EXIT_FAILURE);
 	else if (pid == 0)
 	{
+		//printf("\n------entering child pipex------\n");
 		if (parser->stdout_flag)
 			execute_cmd(tools, parser);
 		else
 		{
-			pipex_dup_and_close(pipe_fd[0], pipe_fd[1], STDOUT_FILENO);
+			if (parser->next)
+				pipex_dup_and_close(pipe_fd[0], pipe_fd[1], STDOUT_FILENO);
 			execute_cmd(tools, parser);
 		}
 	}
 	else
 	{
 		pipex_dup_and_close(pipe_fd[1], pipe_fd[0], STDIN_FILENO);
-		waitpid(0, NULL, WNOHANG);
+		//printf("pipex pid %i: %i\n", *index, pid);
+		//printf("command: %s\n", parser->str[0]);
+		tools->pids[*index] = pid;
 	}
 }

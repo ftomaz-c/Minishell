@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:04:09 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 12:12:00 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,31 @@ void	execute_cmd(t_tools *tools, t_parser *parser)
  */
 void	set_and_exec(t_tools *tools, t_parser *parser)
 {
-	if (parser->redirections != NULL)
-		redirection(tools, parser);
-	if (parser->next)
-		minishell_pipex(tools, parser);
-	else
-		execute_cmd(tools, parser);
-	if (parser->builtin)
-		waitpid(-1, NULL, 0);
+	int	index;
+	int	i;
+	int	status;
+
+	tools->pids = ft_calloc(sizeof(int), tools->pipes + 1);
+	index = 0;
+	while (parser)
+	{
+		if (parser->redirections != NULL)
+		{
+			broadcast_signal(tools, index, SIGSTOP);
+			redirection(tools, parser);
+			broadcast_signal(tools, index, SIGCONT);
+		}
+		minishell_pipex(tools, parser, &index);
+		parser = parser->next;
+		index++;
+	}
+	i = 0;
+	while (i < tools->pipes + 1)
+	{
+		waitpid (tools->pids[i], &status, 0);
+		get_status(&status);
+		i++;
+	}
 }
 
 /**
@@ -176,14 +193,11 @@ int	executor(t_tools *tools)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		while (parser)
-		{
-			set_and_exec(tools, parser);
-			parser = parser->next;
-		}
+		//printf("\n------entering child executor------\n");
+		set_and_exec(tools, parser);
 		free_and_exit(tools, global_status()->nbr);
 	}
 	else
-		wait_status(tools, -1, &status);
+		wait_status(tools, pid, &status);
 	return (global_status()->nbr);
 }
