@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 23:49:28 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 08:39:41 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_tools
 	int				token_flag;
 	int				original_stdin;
 	int				original_stdout;
+	int				*pids;
+	int				fd[2];
 	struct s_lexer	*lexer;
 	struct s_parser	*parser;
 }	t_tools;
@@ -59,14 +61,13 @@ typedef struct s_parser
 	char			**str;
 	int				(*builtin)(struct s_tools *, struct s_parser *);
 	int				nb_redirections;
+	int				nb_heredocs;
 	char			*stdin_file_name;
 	char			*stdout_file_name;
 	int				stdin_flag;
 	int				stdout_flag;
 	int				fd_err;
 	char			*delimiter;
-	int				fd[2];
-	int				stdout_backup_fd;
 	t_lexer			*redirections;
 	struct s_parser	*next;
 	struct s_parser	*prev;	

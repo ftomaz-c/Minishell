@@ -6,27 +6,36 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:04:56 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 08:49:26 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
-/**
- * @brief Closes the original stdout file descriptor and exits the
- * program with the specified exit code.
- * 
- * This function closes the original stdout file descriptor and then
- * exits the program with the given exit code.
- * 
- * @param exit_code The exit code to be returned by the program.
- * @param original_stdout The original file descriptor for stdout.
- * @return None.
- */
-void	fd_exit(int exit_code, int original_stdout)
+void	get_status(int *status)
 {
-	close(original_stdout);
-	exit(exit_code);
+	int	sig;
+
+	if (WIFSIGNALED(*status))
+	{
+		sig = WTERMSIG(*status);
+		if (sig == SIGINT)
+			global_status()->nbr = 130;
+		else if (sig == SIGQUIT)
+			global_status()->nbr = 131;
+	}
+	else if (WIFEXITED(*status))
+		global_status()->nbr = WEXITSTATUS(*status);
+}
+
+void	status_heredoc(t_tools *tools, int *status)
+{
+	get_status(status);
+	if (global_status()->nbr)
+		free_and_exit(tools, global_status()->nbr);
+	dup2(tools->fd[0], STDIN_FILENO);
+	close(tools->fd[0]);
+	handle_child_sigaction();
 }
 
 /**
@@ -57,7 +66,10 @@ void	get_here_doc(t_tools *tools, int fd[2], char *delimiter)
 			free_and_exit(tools, global_status()->nbr);
 		}
 		if (!line)
-			eof_sig_msg_exit(tools, line, delimiter);
+		{
+			eof_sig_msg(tools, line, delimiter);
+			free_and_exit(tools, EXIT_SUCCESS);
+		}
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
 		{
 			free(line);
@@ -82,8 +94,7 @@ void	here_doc(t_tools *tools, char *delimiter)
 	pid_t	pid;
 	int		status;
 
-	handle_heredoc_sigaction();
-	if (pipe(tools->parser->fd) == -1)
+	if (pipe(tools->fd) == -1)
 	{
 		perror("Error creating pipes");
 		exit (EXIT_FAILURE);
@@ -96,12 +107,13 @@ void	here_doc(t_tools *tools, char *delimiter)
 	}
 	if (pid == 0)
 	{
-		close(tools->parser->fd[0]);
-		get_here_doc(tools, tools->parser->fd, delimiter);
+		close(tools->fd[0]);
+		get_here_doc(tools, tools->fd, delimiter);
 	}
 	else
 	{
-		close(tools->parser->fd[1]);
-		wait_status_heredoc (tools, pid, &status);
+		close(tools->fd[1]);
+		waitpid(pid, &status, 0);
+		status_heredoc (tools, &status);
 	}
 }

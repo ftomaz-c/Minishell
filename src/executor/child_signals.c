@@ -6,13 +6,13 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:05:14 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 01:23:06 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
-void	eof_sig_msg_exit(t_tools *tools, char *line, char *delimiter)
+void	eof_sig_msg(t_tools *tools, char *line, char *delimiter)
 {
 	ft_putstr_fd("minishell: warning: here-document at line ", 2);
 	ft_putnbr_fd(tools->nprompts, 2);
@@ -20,7 +20,6 @@ void	eof_sig_msg_exit(t_tools *tools, char *line, char *delimiter)
 	ft_putstr_fd(delimiter, 2);
 	ft_putstr_fd("')\n", 2);
 	free(line);
-	free_and_exit(tools, EXIT_SUCCESS);
 }
 
 void	here_doc_handler(int sig)
@@ -36,9 +35,11 @@ void	here_doc_handler(int sig)
 
 void	child_handler(int sig)
 {
-	(void)sig;
 	rl_on_new_line();
-	global_status()->nbr = 130;
+	if (sig == SIGINT)
+		global_status()->nbr = 130;
+	else
+		global_status()->nbr = 131;
 }
 
 void	handle_child_sigaction(void)

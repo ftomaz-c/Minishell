@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:02:28 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:07:12 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parser.h"
+
+void	count_heredocs(t_parser *parser)
+{
+	t_lexer		*current;
+
+	parser->nb_heredocs = 0;
+	current = parser->redirections;
+	while (current)
+	{
+		if (current->token == '<' && current->next->token == '<')
+		{
+			parser->nb_heredocs++;
+			current = current->next;
+		}
+		current = current->next;
+	}
+}
 
 /**
  * @brief Adds a parser node to the end of a parser linked list.

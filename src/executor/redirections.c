@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:04:35 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/24 12:10:32 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 {
 	int	fd_infile;
 
+	(void)tools;
 	if (parser->stdin_flag == LESS)
 	{
 		fd_infile = open (parser->stdin_file_name, O_RDONLY);
@@ -52,8 +53,6 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 		dup2(fd_infile, fd);
 		close(fd_infile);
 	}
-	else if (parser->stdin_flag == LESS_LESS)
-		here_doc(tools, parser->delimiter);
 	return ;
 }
 
@@ -67,18 +66,20 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
  */
 
 t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
-	int fd)
+			int fd)
 {
-	t_lexer	*current;
+	t_lexer		*current;
 
 	current = redirection;
 	current = current->next;
 	if (parser->stdin_flag == LESS_LESS)
 	{
+		handle_heredoc_sigaction();
 		current = current->next;
 		parser->delimiter = current->words;
 		dup2(tools->original_stdout, STDOUT_FILENO);
 		dup2(tools->original_stdin, STDIN_FILENO);
+		here_doc(tools, parser->delimiter);
 	}
 	else if (parser->stdin_flag == LESS)
 		parser->stdin_file_name = current->words;
@@ -119,7 +120,6 @@ void	set_stdout(t_parser *parser, int fd)
 		dup2(fd_outfile, parser->fd_err);
 	if (fd_outfile != fd && fd_outfile != STDOUT_FILENO)
 		close(fd_outfile);
-	parser->stdout_backup_fd = fd;
 	return ;
 }
 

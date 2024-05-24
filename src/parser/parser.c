@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 21:20:05 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:08:13 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int	parse_lexer(t_parser **parser, t_lexer *lexer, int *start, int end)
 		free_parser(parser);
 		return (0);
 	}
+	count_heredocs(node);
 	ft_lstadd_parser_back(parser, node);
 	return (1);
 }
