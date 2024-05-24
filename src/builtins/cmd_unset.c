@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:02:49 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:40:34 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	cmd_unset(t_tools *tools, t_parser *command)
 	i = 1;
 	pos = 0;
 	if (!command->str[i])
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	while (command->str[i])
 	{
 		if (check_var(tools, command->str[i]))

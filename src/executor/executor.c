@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 12:12:00 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:53:25 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,6 @@ int	exec_builtins(t_tools *tools)
  */
 void	execute_cmd(t_tools *tools, t_parser *parser)
 {
-	char	*cmd_args[2];
-
-	if (parser->builtin && (parser->builtin == cmd_env && parser->str[1]))
-	{
-		cmd_args[0] = parser->str[2];
-		cmd_args[1] = NULL;
-		exec_path(tools, cmd_args, basic_env());
-		free_and_exit(tools, global_status()->nbr);
-	}
 	if (parser->builtin && (exec_builtins(tools) || parser->builtin == cmd_echo
 			|| parser->builtin == cmd_env))
 	{

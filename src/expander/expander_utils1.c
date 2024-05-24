@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:00:15 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/23 23:17:32 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,27 @@
 int	is_expandable(char **list, int *index)
 {
 	char	*tmp;
-	int		i;
-	int		j;
+	char	*line;
+	int		pos;
 
 	if (ft_strchr(list[*index], '$'))
+	{
+		pos = find_char_position(list[*index], '$');
+		if (ft_isdigit(list[*index][pos + 1]))
+		{
+			tmp = ft_strdup(list[*index]);
+			free(list[*index]);
+			line = ft_substr(tmp, pos + 2, (ft_strlen(tmp - pos + 1)));
+			list[*index] = ft_strdup(line);
+			free(tmp);
+			free(line);
+		}
 		return (1);
+	}
 	if (ft_strcmp(list[*index], "<<") == 0)
 	{
 		(*index)++;
-		tmp = ft_calloc(sizeof(char), ft_strlen(list[*index]) + 1);
-		i = 0;
-		j = 0;
-		while (list[*index][i])
-		{
-			if (list[*index][i] == '$' && (list[*index][i + 1] == '\''
-				|| list[*index][i + 1] == '\"'))
-				i++;
-			tmp[j++] = list[*index][i++];
-		}
-		free(list[*index]);
-		list[*index] = ft_strdup(tmp);
-		free(tmp);
+		treat_expandable_input(list, index);
 	}
 	return (0);
 }

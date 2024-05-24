@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_history_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:11:43 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:06:00 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ void	print_buffer(char **str)
 	i = 0;
 	while (str[i])
 	{
-		printf("%s", str[i]);
+		ft_putstr_fd(str[i], STDERR_FILENO);
 		i++;
 		if (!str[i])
-			printf("\n");
+			ft_putstr_fd("\n", STDOUT_FILENO);
 	}
 }
