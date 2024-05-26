@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 22:34:53 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/26 23:04:45 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	get_status(int *status)
  * @brief Waits for a here-document process to finish and handles its status.
  * 
  * @param tools Pointer to the tools structure containing necessary data.
- * @param status Pointer to the status variable containing the termination status of the process.
+ * @param status Pointer to the status variable containing the termination
+ * status of the process.
  * @param pid Process ID of the here-document process.
  */
 void	status_heredoc(t_tools *tools, int *status, int pid)

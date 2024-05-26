@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 22:14:03 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/26 23:05:58 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,17 @@ void	execute_cmd(t_tools *tools, t_parser *parser, int index);
 void	set_and_execute(t_tools *tools, t_parser *parser);
 int		executor(t_tools *tools);
 
-/*src/executor/executor_utils.c*/
+/*src/executor/executor_utils1.c*/
 void	broadcast_signal(t_tools *tools, int num_pids, int signal);
 char	**basic_env(void);
 void	free_and_exit(t_tools *tools, int status);
 void	exec_err(t_tools *tools, int err, char *str);
 void	wait_status(t_tools *tools, int pid, int *status);
+
+/*src/executor/executor_utils2.c*/
+void	execute_simple_cmd(t_tools *tools, t_parser *parser);
+int		is_executable(t_tools *tools, char **cmd_args, char **envp);
+int		is_valid(t_parser *parser);
 
 /*src/executor/redirections.c*/
 void	set_stdin(t_tools *tools, t_parser *parser, int fd);
@@ -60,9 +65,5 @@ void	child_handler(int sig);
 void	handle_child_sigaction(void);
 void	here_doc_handler(int sig);
 void	handle_heredoc_sigaction(void);
-
-void	execute_simple_cmd(t_tools *tools, t_parser *parser);
-int		is_executable(t_tools *tools, char **cmd_args, char **envp);
-int		is_valid(t_parser *parser);
 
 #endif

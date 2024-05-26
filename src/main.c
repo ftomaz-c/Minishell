@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 23:00:20 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/26 23:05:09 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
  * - The readline() function can cause memory leaks.
  */
 
-int g_sig = 0;
+int	g_sig = 0;
 
 int	main(int argc, char **argv, char **envp)
 {

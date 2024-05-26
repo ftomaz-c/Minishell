@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 16:16:37 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/26 23:05:30 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,5 @@ void	free_list(char	**list);
 void	sort_array(char **env_copy);
 int		check_empty_line(char *line);
 int		ft_isspace_special(int c, int flag);
-
-void	sig_pipex_handler_exit(int sig);
 
 #endif
