@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 22:59:05 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/26 23:00:20 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@
  *
  * Overview:
  * MiniShell is a simplified shell designed to mimic the functionality of the
- * Bourne Again Shell (Bash).
- * It serves as an educational project to learn about command parsing, process
- * creation, and signal handling in a Unix-like environment.
+ * Bourne-Again Shell (Bash).
  *
  * Key Features:
  * - Display a prompt when waiting for a new command.
