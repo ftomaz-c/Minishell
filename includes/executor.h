@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 20:18:01 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/26 22:14:03 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 /*src/executor/executor.c*/
 void	exec_path(t_tools *tools, char **cmd_args, char **envp);
-int		exec_builtins(t_tools *tools);
-void	execute_cmd(t_tools *tools, t_parser *parser);
-void	set_and_exec(t_tools *tools, t_parser *parser);
+int		simple_exec_and_buitlins(t_tools *tools, t_parser *parser);
+void	execute_cmd(t_tools *tools, t_parser *parser, int index);
+void	set_and_execute(t_tools *tools, t_parser *parser);
 int		executor(t_tools *tools);
 
 /*src/executor/executor_utils.c*/
@@ -60,5 +60,9 @@ void	child_handler(int sig);
 void	handle_child_sigaction(void);
 void	here_doc_handler(int sig);
 void	handle_heredoc_sigaction(void);
+
+void	execute_simple_cmd(t_tools *tools, t_parser *parser);
+int		is_executable(t_tools *tools, char **cmd_args, char **envp);
+int		is_valid(t_parser *parser);
 
 #endif

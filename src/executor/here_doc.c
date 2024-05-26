@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 20:38:47 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/26 22:34:53 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
+/**
+ * @brief Gets the status of a terminated process and updates the global status.
+ * 
+ * @param status Pointer to the status variable containing the termination
+ * status of the process.
+ */
 void	get_status(int *status)
 {
 	if (WIFSIGNALED(*status))
@@ -26,6 +32,13 @@ void	get_status(int *status)
 		global_status()->nbr = WEXITSTATUS(*status);
 }
 
+/**
+ * @brief Waits for a here-document process to finish and handles its status.
+ * 
+ * @param tools Pointer to the tools structure containing necessary data.
+ * @param status Pointer to the status variable containing the termination status of the process.
+ * @param pid Process ID of the here-document process.
+ */
 void	status_heredoc(t_tools *tools, int *status, int pid)
 {
 	waitpid(pid, status, 0);
@@ -48,7 +61,6 @@ void	status_heredoc(t_tools *tools, int *status, int pid)
  * @param tools A pointer to the tools structure.
  * @param fd The file descriptor for the here document.
  * @param status The exit status for the program.
- * @return None.
  */
 
 void	get_here_doc(t_tools *tools, int fd[2], char *delimiter)
@@ -60,7 +72,6 @@ void	get_here_doc(t_tools *tools, int fd[2], char *delimiter)
 		line = readline("> ");
 		if (global_status()->nbr == 130)
 		{
-			ft_putchar_fd('\n', STDOUT_FILENO);
 			free(line);
 			free_and_exit(tools, global_status()->nbr);
 		}

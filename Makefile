@@ -42,7 +42,8 @@ SRC :=	src/main.c \
 		src/parser/parser_redir.c \
 		src/parser/parser_utils.c \
 		src/executor/executor.c \
-		src/executor/executor_utils.c \
+		src/executor/executor_utils1.c \
+		src/executor/executor_utils2.c \
 		src/executor/redirections.c \
 		src/executor/redirections_utils.c \
 		src/executor/here_doc.c \

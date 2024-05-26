@@ -6,11 +6,33 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 12:54:02 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/26 22:35:55 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/expander.h"
+
+/**
+ * @brief Checks if there are quotes in the middle of a string.
+ * 
+ * @param str The input string to be checked.
+ * 
+ * @returns int Returns 1 if there are quotes in the middle of the string,
+ * otherwise returns 0.
+ */
+int	quotes_in_middle(char *str)
+{
+	int	i;
+
+	i = 1;
+	while (str[i] && i < (int)ft_strlen(str))
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 /**
  * @brief Initializes the expander structure.

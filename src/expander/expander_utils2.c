@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 13:34:47 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:35:15 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ char	*add_quotes_to_value(char *str, int flagquote, int j, int i)
  * 
  * @return The concatenated string.
  */
-char	*build_str(char *value, char *prefix, char *suffix)
+char	*build_str(char *value, char *prefix, char *suffix, char *var)
 {
 	char	*str;
 	char	*tmp;
@@ -190,6 +190,7 @@ char	*build_str(char *value, char *prefix, char *suffix)
 	else
 		tmp = ft_strjoin(prefix, value);
 	str = ft_strjoin(tmp, suffix);
+	free(var);
 	free(value);
 	free(tmp);
 	free(suffix);

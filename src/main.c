@@ -3,14 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 20:42:01 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/26 22:59:05 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/**
+ *     __  __   _           _   _____   _              _   _
+ *    |  \/  | (_)         (_) /  ___| | |            | | | |
+ *    | \  / |  _   _ __    _  \ `--.  | |___    ___  | | | |
+ *    | |\/| | | | | '_ \  | |  `--. \ | '_  \  / _ \ | | | |
+ *    | |  | | | | | | | | | | /\__/ / | | | | |  __/ | | | |
+ *    |_|  |_| |_| |_| |_| |_| \____/  |_| |_|  \___| |_| |_|
+ * 
+ * MiniShell: A Minimalistic Shell
+ *
+ * Overview:
+ * MiniShell is a simplified shell designed to mimic the functionality of the
+ * Bourne Again Shell (Bash).
+ * It serves as an educational project to learn about command parsing, process
+ * creation, and signal handling in a Unix-like environment.
+ *
+ * Key Features:
+ * - Display a prompt when waiting for a new command.
+ * - Have a working history.
+ * - Search and launch the right executable (based on the PATH variable or using
+ * a relative or an absolute path).
+ * - Avoid using more than one global variable to indicate a received signal.
+ * - Handle single quotes (') and double quotes (");
+ * - Implement redirections;
+ * - Implement pipes (| character). The output of each command in the pipeline
+ * is connected to the input of the next command via a pipe.
+ * - Handle environment variables ($ followed by a sequence of characters);
+ * - Handle $? which should expand to the exit status of the most recently
+ * executed;
+ * - Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
+ * - Implement the following builtins:
+ *		- echo with option -n
+ *		- cd with only a relative or absolute path
+ *		- pwd with no options
+ *		- export with no options
+ *		- unset with no options
+ *		- env with no options or arguments
+ *		- exit with no options
+ *
+ * Note:
+ * - The readline() function can cause memory leaks.
+ */
 
 int g_sig = 0;
 

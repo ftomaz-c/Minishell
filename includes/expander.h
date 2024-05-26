@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 23:19:14 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:23:47 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ void	treat_expandable_input(char **list, int *index);
 char	*add_quotes(int j, char *str, char quote, char *value);
 char	get_quote_flag(char *str, int i);
 char	*add_quotes_to_value(char *str, int flagquote, int j, int i);
-char	*build_str(char *value, char *prefix, char *suffix);
+char	*build_str(char *value, char *prefix, char *suffix, char *var);
 
 /*src/expander/expander_split.c*/
+int		quotes_in_middle(char *str);
 void	init_expander(t_expander *expander);
 int		realloc_split(t_expander *expander, char *str, int i);
 char	**split_expander(char *str);

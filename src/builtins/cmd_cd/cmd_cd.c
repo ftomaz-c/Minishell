@@ -6,7 +6,7 @@
 /*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 00:01:58 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/26 22:15:16 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,8 @@ int	cd_path(t_tools *tools, t_parser *command)
  */
 int	cmd_cd(t_tools *tools, t_parser *command)
 {
-	if (command && command->str[0][0] == '/')
+	if (command && (command->str[0][0] == '/'
+		|| ft_strncmp("./", command->str[0], 2) == 0))
 	{
 		chdir(command->str[0]);
 		cd_err(errno, command->str[0], '/');

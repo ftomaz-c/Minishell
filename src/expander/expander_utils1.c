@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 20:49:44 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:36:11 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,16 +170,18 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 		value = ft_itoa(global_status()->nbr);
 	else
 		value = get_var_from_env(env, var);
-	free(var);
 	suffix = ft_substr(str, end, ft_strlen(str) - end);
 	if (prefix[0] == '\"' && str[1] == '$')
 	{
-		//free(prefix);
-		//prefix = ft_strdup("");
+		if (quotes_in_middle(value))
+		{
+			free(prefix);
+			prefix = ft_strdup("");
+		}
 		value = add_quotes_to_value(value, 0, 1, 0);
 	}
 	else
 		value = add_quotes_to_value(value, 1, 1, 0);
-	str = build_str(value, prefix, suffix);
+	str = build_str(value, prefix, suffix, var);
 	return (str);
 }

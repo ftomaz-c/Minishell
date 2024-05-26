@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor_utils.c                                   :+:      :+:    :+:   */
+/*   executor_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 20:23:46 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/26 22:25:59 by ftomazc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
+/**
+ * @brief Sends a specified signal to multiple processes.
+ * 
+ * This function iterates through the process IDs stored in tools->pids
+ * and sends the specified signal to each process.
+ * 
+ * @param tools   A pointer to the tools structure containing process IDs.
+ * @param num_pids The number of process IDs to which the signal should be sent.
+ * @param signal  The signal to be sent to the processes.
+ */
 void	broadcast_signal(t_tools *tools, int num_pids, int signal)
 {
-	int	i;
+	int			i;
 
 	i = 0;
 	while (i < num_pids)
 	{
-		if (kill (tools->pids[i], signal) < 0)
-			perror("Failed to broadcast signal");
+		kill (tools->pids[i], signal);
 		i++;
 	}
 }
@@ -42,6 +51,15 @@ char	**basic_env(void)
 	return (b_env);
 }
 
+/**
+ * @brief Handles non-interactive mode for the shell.
+ * 
+ * This function checks if the shell is in non-interactive mode and if the
+ * exit flag is not set. If these conditions are met, it prints an error message
+ * indicating the line number.
+ * 
+ * @param tools A pointer to the tools structure.
+ */
 void	nint_mode(t_tools *tools)
 {
 	if (tools->nint_mode && !tools->exit)
@@ -92,17 +110,18 @@ void	exec_err(t_tools *tools, int err, char *str)
 }
 
 /**
- * @brief Waits for a child process to change state and 
- * updates the global status.
+ * @brief Waits for a child process to change state and updates the global 
+ * status.
  * 
- * This function waits for the child process with the specified 
- * PID to change state.
- * It updates the global_status variable with the exit status
- *  of the child process if it exited normally.
+ * This function waits for the child process with the specified PID to change
+ * state.
+ * It updates the global_status variable with the exit status of the child
+ * process if it exited normally.
  * 
+ * @param tools  A pointer to the tools structure.
  * @param pid    Process ID of the child process to wait for.
- * @param status Pointer to an integer to store the exit 
- * status of the child process.
+ * @param status Pointer to an integer to store the exit status of the child
+ * process.
  */
 void	wait_status(t_tools *tools, int pid, int *status)
 {
