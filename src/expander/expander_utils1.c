@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 18:36:11 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/27 10:04:57 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ char	*add_prefix_and_suffix(char *str, char **env, int position, int end)
 	suffix = ft_substr(str, end, ft_strlen(str) - end);
 	if (prefix[0] == '\"' && str[1] == '$')
 	{
-		if (quotes_in_middle(value))
+		if (value && quotes_in_middle(value))
 		{
 			free(prefix);
 			prefix = ft_strdup("");

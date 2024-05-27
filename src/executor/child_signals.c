@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_signals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 22:58:24 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/27 12:15:24 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	here_doc_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		rl_clear_history();
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		global_status()->nbr = 130;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 19:31:23 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:18:00 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ void	free_and_exit(t_tools *tools, int status)
 	i = 3;
 	while (i < 1024)
 		close(i++);
-	free_parser(&tools->parser);
+	if (tools->lexer)
+		free_lexer(&tools->lexer);
+	if (tools->parser)
+		free_parser(&tools->parser);
 	free_tools(tools);
+	rl_clear_history();
 	exit (status);
 }
 
@@ -119,6 +123,8 @@ void	free_tools(t_tools *tools)
 		free(tools->pids);
 	if (tools->nint_mode)
 		free_list(tools->lines);
+	if (tools->prompt)
+		free(tools->prompt);
 }
 
 /**
