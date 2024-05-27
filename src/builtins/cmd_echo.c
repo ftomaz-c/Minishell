@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 19:35:40 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 00:11:57 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,16 @@ int	echo_n_flag(char **str, int	*pos)
 {
 	size_t	i;
 
-	if (!str[2])
-		return (0);
 	i = 0;
+	if (!str[2])
+	{
+		if (ft_strncmp(str[*pos], "-n", 2) == 0)
+		{
+			(*pos)++;
+			i = 2;
+		}
+		return (i);
+	}
 	while (str[*pos] != NULL && ft_strncmp(str[*pos], "-n", 2) == 0)
 	{
 		i = 1;
@@ -59,7 +66,7 @@ void	echo_print(t_parser *command, int pos, int flag)
 	while (command->str[pos])
 	{
 		ft_putstr_fd(command->str[pos], STDOUT_FILENO);
-		if (command->str[pos + 1])
+		if (command->str[pos + 1] && flag != 2)
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		pos++;
 	}

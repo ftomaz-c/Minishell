@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 23:47:11 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:49:11 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	non_interactive_mode(t_tools *tools, char *line)
 void	interactive_mode(t_tools *tools, char *line)
 {
 	prompt_line(tools);
-	line = readline (tools->prompt);
+	// line = readline (tools->prompt);
+	line = readline(".minishell: ");
 	free(tools->prompt);
 	if (!line)
 	{

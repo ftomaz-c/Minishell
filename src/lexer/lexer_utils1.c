@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 23:44:17 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:53:11 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	invalid_redir_syntax(char **list)
 	i = 0;
 	while (list[i])
 	{
-		if ((ft_strncmp(list[i], "<", ft_strlen(list[i])) == 0
+		if ((list[i + 1] && ft_strncmp(list[i], "<", ft_strlen(list[i])) == 0
 				&& ft_strncmp(list[i + 1], "<", ft_strlen(list[i + 1])) == 0)
-			|| (ft_strncmp(list[i], ">", ft_strlen(list[i])) == 0
+			|| (list[i + 1] && ft_strncmp(list[i], ">", ft_strlen(list[i])) == 0
 				&& ft_strncmp(list[i + 1], ">", ft_strlen(list[i + 1])) == 0))
 		{
 			syntax_err(list[i][0]);
