@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 11:46:35 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/05/27 15:28:13 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:22:19 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
+
+void	child_waitpid(t_tools *tools, int *status)
+{
+	int	i;
+	
+	i = 0;
+	while (i < tools->pipes + 1)
+	{
+		waitpid (tools->pids[i++], status, 0);
+		get_status(status);
+	}
+}
 
 /**
  * @brief Executes a simple command by forking a child process and executing the

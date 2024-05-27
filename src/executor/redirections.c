@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 18:34:08 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/27 18:38:50 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
  * information.
  * @param fd The file descriptor associated with stdin redirection.
  */
-void	set_stdin(t_tools *tools, t_parser *parser, int fd)
+int	set_stdin(t_tools *tools, t_parser *parser, int fd)
 {
 	int	fd_infile;
 
@@ -42,18 +42,19 @@ void	set_stdin(t_tools *tools, t_parser *parser, int fd)
 			if (errno == 2 && parser->next)
 			{
 				global_status()->nbr = 127;
-				return ;
+				return (1);
 			}
 			else
 			{
 				global_status()->nbr = EXIT_FAILURE;
-				exit (global_status()->nbr);
+				free_and_exit(tools, global_status()->nbr);
 			}
 		}
 		dup2(fd_infile, fd);
-		close(fd_infile);
+		if (fd_infile != fd)
+			close(fd_infile);
 	}
-	return ;
+	return (0);
 }
 
 /**
@@ -83,7 +84,12 @@ t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 	}
 	else if (parser->stdin_flag == LESS)
 		parser->stdin_file_name = current->words;
-	set_stdin(tools, parser, fd);
+	if (set_stdin(tools, parser, fd))
+	{
+		free_list(parser->str);
+		parser->str = NULL;
+		parser = parser->next;
+	}
 	return (current);
 }
 
@@ -103,7 +109,7 @@ void	set_stdout(t_parser *parser, int fd)
 	if (parser->stdout_flag == GREAT)
 	{
 		fd_outfile = open(parser->stdout_file_name, O_CREAT | O_RDWR
-				|O_TRUNC, 0644);
+				|O_TRUNC, 0777);
 		if (fd_outfile < 0)
 			std_err(errno, parser->stdout_file_name);
 		dup2(fd_outfile, fd);
@@ -111,14 +117,14 @@ void	set_stdout(t_parser *parser, int fd)
 	else if (parser->stdout_flag == GREAT_GREAT)
 	{
 		fd_outfile = open(parser->stdout_file_name, O_CREAT | O_RDWR
-				| O_APPEND, 0644);
+				| O_APPEND, 0777);
 		if (fd_outfile < 0)
 			std_err(errno, parser->stdout_file_name);
 		dup2(fd_outfile, fd);
 	}
 	if (parser->fd_err)
 		dup2(fd_outfile, parser->fd_err);
-	if (fd_outfile != fd && fd_outfile != STDOUT_FILENO)
+	if (fd_outfile != fd)
 		close(fd_outfile);
 	return ;
 }
@@ -190,7 +196,7 @@ void	redirection(t_tools *tools, t_parser *parser, int *index)
 			set_stdin_flag(parser, current);
 			current = set_input(tools, parser, current, fd);
 		}
-		if (current->token == '>')
+		else if (current->token == '>')
 		{
 			set_stdout_flag(parser, current);
 			current = set_output(parser, current, fd);

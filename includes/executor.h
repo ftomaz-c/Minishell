@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 15:28:43 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:21:29 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ int		executor(t_tools *tools);
 
 /*src/executor/executor_utils1.c*/
 void	broadcast_signal(t_tools *tools, int num_pids, int signal);
-char	**basic_env(void);
 void	free_and_exit(t_tools *tools, int status);
 void	exec_err(t_tools *tools, int err, char *str);
 void	wait_status(t_tools *tools, int pid, int *status);
 
 /*src/executor/executor_utils2.c*/
+void	child_waitpid(t_tools *tools, int *status);
 void	execute_simple_cmd(t_tools *tools, t_parser *parser, char **env);
 int		is_executable(t_tools *tools, char **cmd_args, char **envp);
 int		is_valid(t_parser *parser);
 
 /*src/executor/redirections.c*/
-void	set_stdin(t_tools *tools, t_parser *parser, int fd);
+int		set_stdin(t_tools *tools, t_parser *parser, int fd);
 t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 			int fd);
 void	set_stdout(t_parser *parser, int fd);

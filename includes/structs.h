@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 19:31:06 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:20:14 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_tools
 	int				token_flag;
 	int				original_stdin;
 	int				original_stdout;
-	int				*pids;
+	pid_t			*pids;
 	int				fd[2];
 	struct s_lexer	*lexer;
 	struct s_parser	*parser;

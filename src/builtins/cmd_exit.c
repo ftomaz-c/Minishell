@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 14:26:58 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:30:14 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int	cmd_exit(t_tools *tools, t_parser *parser)
 		}
 	}
 	tools->exit = 1;
-	ft_putstr_fd("exit\n", STDIN_FILENO);
+	if (!parser->next)
+		ft_putstr_fd("exit\n", STDIN_FILENO);
 	return (global_status()->nbr);
 }

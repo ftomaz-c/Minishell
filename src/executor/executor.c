@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 15:29:13 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:39:25 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,28 +93,30 @@ void	execute_cmd(t_tools *tools, t_parser *parser, int index)
 void	set_and_execute(t_tools *tools, t_parser *parser)
 {
 	int	index;
-	int	i;
 	int	status;
 
-	tools->pids = ft_calloc(sizeof(int), tools->pipes + 1);
-	if (!tools->pids)
-		return ;
 	index = 0;
 	status = 0;
 	while (parser)
 	{
+		if (parser->prev && parser->prev->stdout_flag)
+			dup2(tools->original_stdout, STDOUT_FILENO);
+		if (parser->prev && parser->prev->stdin_flag)
+			dup2(tools->original_stdin, STDIN_FILENO);
 		if (parser->redirections != NULL)
+		{
 			redirection(tools, parser, &index);
+			if (!parser->str)
+			{
+				parser = parser->next;
+				continue ;
+			}
+		}
 		minishell_pipex(tools, parser, &index);
 		parser = parser->next;
 		index++;
 	}
-	i = 0;
-	while (i < tools->pipes + 1)
-	{
-		waitpid (tools->pids[i++], &status, 0);
-		get_status(&status);
-	}
+	child_waitpid(tools, &status);
 }
 
 /**
@@ -188,7 +190,9 @@ int	executor(t_tools *tools)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		set_and_execute(tools, parser);
+		tools->pids = ft_calloc(sizeof(int), tools->pipes + 1);
+		if (tools->pids)
+			set_and_execute(tools, parser);
 		free_and_exit(tools, global_status()->nbr);
 	}
 	else

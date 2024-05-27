@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 18:14:24 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/27 18:09:57 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	minishell_pipex(t_tools *tools, t_parser *parser, int *index)
 				pipex_dup_and_close(pipe_fd[0], pipe_fd[1], STDOUT_FILENO);
 			execute_cmd(tools, parser, *index);
 		}
+		free_and_exit(tools, global_status()->nbr);
 	}
 	else
 	{

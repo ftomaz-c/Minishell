@@ -105,10 +105,9 @@ void	non_interactive_mode(t_tools *tools, char *line)
  */
 void	interactive_mode(t_tools *tools, char *line)
 {
-	// prompt_line(tools);
-	// line = readline (tools->prompt);
-	// free(tools->prompt);
-	line = readline("minishell: ");
+	prompt_line(tools);
+	line = readline (tools->prompt);
+	free(tools->prompt);
 	if (!line)
 	{
 		tools->exit = 1;
