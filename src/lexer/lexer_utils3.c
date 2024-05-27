@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 20:55:09 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:15:15 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,8 @@ int	valid_syntax(t_lexer *lexer, t_tools *tools)
 		current = lexer;
 		while (current && !current->token)
 			current = current->next;
-		if (current->token == '|' && current->next
-			&& current->next->token == '|')
+		if (current->token == '|' && ((current->next
+			&& current->next->token == '|') || (!current->next)))
 		{
 			syntax_err(current->token);
 			return (0);

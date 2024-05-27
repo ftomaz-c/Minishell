@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 18:51:13 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:50:28 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ void	redirection(t_tools *tools, t_parser *parser, int *index)
 	t_lexer	*current;
 	int		fd;
 
+	(void)index;
 	broadcast_signal(tools, *index, SIGSTOP);
 	current = parser->redirections;
 	while (current)

@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 18:39:25 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:57:10 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,7 @@ void	set_and_execute(t_tools *tools, t_parser *parser)
 	index = 0;
 	status = 0;
 	while (parser)
-	{
-		if (parser->prev && parser->prev->stdout_flag)
-			dup2(tools->original_stdout, STDOUT_FILENO);
-		if (parser->prev && parser->prev->stdin_flag)
-			dup2(tools->original_stdin, STDIN_FILENO);
+ 	{
 		if (parser->redirections != NULL)
 		{
 			redirection(tools, parser, &index);
@@ -190,7 +186,7 @@ int	executor(t_tools *tools)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		tools->pids = ft_calloc(sizeof(int), tools->pipes + 1);
+		tools->pids = ft_calloc(sizeof(pid_t), tools->pipes + 1);
 		if (tools->pids)
 			set_and_execute(tools, parser);
 		free_and_exit(tools, global_status()->nbr);
