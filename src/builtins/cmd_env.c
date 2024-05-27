@@ -6,11 +6,38 @@
 /*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 17:38:35 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:37:57 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
+
+void	env_args(t_tools *tools, t_parser *command)
+{
+	char	*cmd_args[2];
+	char	**b_env;
+
+	if (ft_strcmp(command->str[1], "-i") == 0)
+	{
+		if (command->str[2])
+		{
+			b_env = calloc (sizeof(char *), 2);
+			b_env[0] = ft_strdup("_=/bin/env");
+			cmd_args[0] = command->str[2];
+			cmd_args[1] = NULL;
+			execute_simple_cmd(tools, command, b_env);
+			free_list(b_env);
+		}
+		global_status()->nbr = EXIT_SUCCESS;
+	}
+	else
+	{
+		ft_putstr_fd("env: invalid option -- '", STDERR_FILENO);
+		ft_putstr_fd(command->str[1], STDERR_FILENO);
+		ft_putstr_fd("'\n", STDERR_FILENO);
+		global_status()->nbr = 125;
+	}
+}
 
 /**
  * @brief Handles the arguments for the env command.
@@ -23,24 +50,26 @@
  * 
  * @param command Pointer to the parsed env command.
  */
-void	env_args(t_tools *tools, t_parser *command)
+int	validate_env(t_tools *tools, t_parser *command)
 {
-	char	*cmd_args[2];
+	char	*value;
 
-	if (ft_strcmp(command->str[1], "-i") == 0)
+	value = get_var_from_env(tools->env, "PATH");
+	if (!value)
 	{
-		cmd_args[0] = command->str[2];
-		cmd_args[1] = NULL;
-		exec_path(tools, cmd_args, basic_env());
-		free_and_exit(tools, global_status()->nbr);
-		global_status()->nbr = EXIT_SUCCESS;
-		return ;
+		ft_putstr_fd("minishell: env: no such file or directory\n",
+			STDOUT_FILENO);
+		global_status()->nbr = 127;
+		return (1);
 	}
-	ft_putstr_fd("env: '", STDOUT_FILENO);
-	ft_putstr_fd(command->str[1], STDOUT_FILENO);
-	ft_putstr_fd("'", STDOUT_FILENO);
-	ft_putstr_fd(": no such file or directory\n", STDOUT_FILENO);
-	global_status()->nbr = 127;
+	else if (command->str[1])
+	{
+		env_args(tools, command);
+		free(value);
+		return (1);
+	}
+	free(value);
+	return (0);
 }
 
 /**
@@ -57,13 +86,10 @@ int	cmd_env(t_tools *tools, t_parser *command)
 {
 	int		i;
 	t_tools	*tmp;
-
+	
 	i = 0;
-	if (command->str[1])
-	{
-		env_args(tools, command);
+	if (validate_env(tools, command))
 		return (global_status()->nbr);
-	}
 	tmp = tools;
 	while (tmp->env[i])
 	{

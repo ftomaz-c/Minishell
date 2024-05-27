@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 13:01:09 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:21:49 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ int	main(int argc, char **argv, char **envp)
 		tools.original_stdin = dup (STDIN_FILENO);
 		tools.original_stdout = dup (STDOUT_FILENO);
 		handle_sigaction();
-		if (!isatty(STDIN_FILENO))
-			non_interactive_mode(&tools, line);
-		else
-			interactive_mode(&tools, line);
+		// if (!isatty(STDIN_FILENO))
+		// 	non_interactive_mode(&tools, line);
+		// else
+		interactive_mode(&tools, line);
 		if (tools.exit)
 			break ;
 	}

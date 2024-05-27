@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 11:46:35 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/05/27 12:39:36 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:28:13 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param parser Pointer to the parser structure containing the command string
  * to be executed.
  */
-void	execute_simple_cmd(t_tools *tools, t_parser *parser)
+void	execute_simple_cmd(t_tools *tools, t_parser *parser, char **env)
 {
 	pid_t	pid;
 	int		status;
@@ -30,7 +30,7 @@ void	execute_simple_cmd(t_tools *tools, t_parser *parser)
 	if (pid < 0)
 		perror("minishell: ");
 	else if (pid == 0)
-		exec_path(tools, parser->str, tools->env);
+		exec_path(tools, parser->str, env);
 	else
 	{
 		waitpid(pid, &status, 0);

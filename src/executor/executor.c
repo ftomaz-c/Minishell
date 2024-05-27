@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 12:45:43 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:29:13 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,6 @@ void	exec_path(t_tools *tools, char **cmd_args, char **envp)
 	int		i;
 
 	i = 0;
-	if (!get_var_from_env(envp, "PATH"))
-	{
-		if (!tools->empty_env)
-		{
-			exec_err(tools, 1, cmd_args[0]);
-			return ;
-		}
-	}
 	while (tools->path[i] && cmd_args[0] && cmd_args[0][0] != '.')
 	{
 		tmp = ft_strjoin(tools->path[i], "/");
@@ -80,6 +72,8 @@ void	execute_cmd(t_tools *tools, t_parser *parser, int index)
 	}
 	else if (!parser->builtin)
 	{
+		if (!is_executable(tools, parser->str, tools->env))
+			return ;
 		exec_path(tools, parser->str, tools->env);
 		free_and_exit(tools, global_status()->nbr);
 	}
@@ -145,7 +139,7 @@ int	simple_exec_and_buitlins(t_tools *tools, t_parser *parser)
 		{
 			if (is_valid(parser) > 0)
 			{
-				execute_simple_cmd(tools, parser);
+				execute_simple_cmd(tools, parser, tools->env);
 				return (1);
 			}
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 23:05:58 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/27 15:28:43 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	exec_err(t_tools *tools, int err, char *str);
 void	wait_status(t_tools *tools, int pid, int *status);
 
 /*src/executor/executor_utils2.c*/
-void	execute_simple_cmd(t_tools *tools, t_parser *parser);
+void	execute_simple_cmd(t_tools *tools, t_parser *parser, char **env);
 int		is_executable(t_tools *tools, char **cmd_args, char **envp);
 int		is_valid(t_parser *parser);
 

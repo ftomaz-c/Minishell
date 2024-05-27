@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 22:25:59 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/27 15:34:40 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,6 @@ void	broadcast_signal(t_tools *tools, int num_pids, int signal)
 		kill (tools->pids[i], signal);
 		i++;
 	}
-}
-
-/**
- * @brief Creates a basic environment for the shell.
- * 
- * This function creates a basic environment for the shell containing
- * only the PATH variable.
- * 
- * @return A pointer to the array of environment variables.
- */
-char	**basic_env(void)
-{
-	char	**b_env;
-
-	b_env = calloc (sizeof(char *), 2);
-	b_env[0] = ft_strdup("_=/bin/env");
-	return (b_env);
 }
 
 /**
