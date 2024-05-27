@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 20:50:28 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:18:36 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,6 @@ void	redirection(t_tools *tools, t_parser *parser, int *index)
 	t_lexer	*current;
 	int		fd;
 
-	(void)index;
 	broadcast_signal(tools, *index, SIGSTOP);
 	current = parser->redirections;
 	while (current)

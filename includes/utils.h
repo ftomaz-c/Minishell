@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/26 23:05:30 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/27 23:38:39 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ char	**get_env(char **envp);
 void	free_list(char	**list);
 
 /*src/utils/utils3.c*/
-void	sort_array(char **env_copy);
-int		check_empty_line(char *line);
-int		ft_isspace_special(int c, int flag);
+t_status	*global_status(void);
+void		sort_array(char **env_copy);
+int			check_empty_line(char *line);
+int			ft_isspace_special(int c, int flag);
+void		ft_lstaddback_lexer(t_lexer **lst, t_lexer *new);
 
 #endif

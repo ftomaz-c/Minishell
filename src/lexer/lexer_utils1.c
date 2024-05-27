@@ -6,37 +6,41 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:13:01 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:44:17 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 
 /**
- * @brief Adds a new node to the end of a lexer list.
+ * @brief Checks for invalid redirection syntax in a list of strings.
  * 
- * This function adds the lexer node 'new' to the end of the
- * lexer list pointed by 'lst'.
+ * This function checks an array of strings for invalid redirection syntax,
+ * specifically looking for consecutive '<' or '>' characters, which indicate
+ * a syntax error.
  * 
- * @param lst Pointer to the pointer to the head of the lexer list.
- * @param new Pointer to the new lexer node to be added.
+ * @param list Array of strings to check for invalid redirection syntax.
+ * 
+ * @return Returns 1 if an invalid syntax is found, otherwise 0.
  */
-void	ft_lstaddback_lexer(t_lexer **lst, t_lexer *new)
+int	invalid_redir_syntax(char **list)
 {
-	t_lexer	*last;
+	int	i;
 
-	if (!new)
-		return ;
-	if (*lst == NULL)
+	i = 0;
+	while (list[i])
 	{
-		*lst = new;
-		return ;
+		if ((ft_strncmp(list[i], "<", ft_strlen(list[i])) == 0
+				&& ft_strncmp(list[i + 1], "<", ft_strlen(list[i + 1])) == 0)
+			|| (ft_strncmp(list[i], ">", ft_strlen(list[i])) == 0
+				&& ft_strncmp(list[i + 1], ">", ft_strlen(list[i + 1])) == 0))
+		{
+			syntax_err(list[i][0]);
+			return (1);
+		}
+		i++;
 	}
-	last = *lst;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-	new->pre = last;
+	return (0);
 }
 
 /**

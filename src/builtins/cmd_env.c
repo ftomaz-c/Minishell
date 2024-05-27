@@ -3,19 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 15:37:57 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:46:57 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
+/**
+ * @brief Handles the execution of the 'env' command with arguments.
+ * 
+ * This function processes the arguments passed to the 'env' command.
+ * If the first argument is "-i", it sets up a minimal environment and 
+ * executes a simple command. Otherwise, it prints an error message
+ * indicating an invalid option.
+ * 
+ * @param tools Pointer to a t_tools structure containing necessary
+ *  tools and settings.
+ * @param command Pointer to a t_parser structure containing the parsed 
+ * command and its arguments.
+ */
 void	env_args(t_tools *tools, t_parser *command)
 {
-	char	*cmd_args[2];
 	char	**b_env;
+	// char	*cmd_args[2];
 
 	if (ft_strcmp(command->str[1], "-i") == 0)
 	{
@@ -23,8 +36,8 @@ void	env_args(t_tools *tools, t_parser *command)
 		{
 			b_env = calloc (sizeof(char *), 2);
 			b_env[0] = ft_strdup("_=/bin/env");
-			cmd_args[0] = command->str[2];
-			cmd_args[1] = NULL;
+			// cmd_args[0] = command->str[2];
+			// cmd_args[1] = NULL;
 			execute_simple_cmd(tools, command, b_env);
 			free_list(b_env);
 		}
@@ -86,7 +99,7 @@ int	cmd_env(t_tools *tools, t_parser *command)
 {
 	int		i;
 	t_tools	*tmp;
-	
+
 	i = 0;
 	if (validate_env(tools, command))
 		return (global_status()->nbr);

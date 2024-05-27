@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 21:13:17 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:39:42 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,11 @@ int	lex_line(char	**line_split_quotes, t_tools *tools)
 	free(new_line);
 	if (!line_split_quotes)
 		return (0);
+	if (invalid_redir_syntax(line_split_quotes))
+	{
+		free_list(line_split_quotes);
+		return (0);
+	}
 	add_line_to_lexer_struct(line_split_quotes, &tools->lexer, tools);
 	free_list(line_split_quotes);
 	return (1);
@@ -186,7 +191,6 @@ int	lexer(char *line, t_tools *tools)
 	line_split_quotes = lexer_split(line, 0);
 	if (!lex_line(line_split_quotes, tools))
 	{
-		free(line);
 		free_list(line_split_quotes);
 		return (0);
 	}

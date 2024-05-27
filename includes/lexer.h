@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomazc < ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/22 23:55:27 by ftomazc          ###   ########.fr       */
+/*   Updated: 2024/05/27 23:42:21 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		lex_line(char	**line_split_quotes, t_tools *tools);
 int		lexer(char *line, t_tools *tools);
 
 /*src/lexer/lexer_utils1.c*/
-void	ft_lstaddback_lexer(t_lexer **lst, t_lexer *new);
+int		invalid_redir_syntax(char **list);
 int		is_fd_token(char *str, char c, int position);
 int		check_if_token_valid(char *str, char c, int position);
 int		check_if_token(char c);

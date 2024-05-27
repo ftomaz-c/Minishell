@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 20:37:54 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:43:19 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
 
+/**
+ * @brief Retrieves a global status instance.
+ * 
+ * This function returns a pointer to a static instance of t_status,
+ * ensuring that the same instance is used throughout the program.
+ * 
+ * @return Pointer to the static t_status instance.
+ */
 t_status	*global_status(void)
 {
 	static t_status	status;
@@ -72,6 +80,20 @@ int	check_empty_line(char *line)
 	return (0);
 }
 
+/**
+ * @brief Checks if a character is a whitespace character.
+ * 
+ * This function checks if a given character is a whitespace 
+ * character. If the flag is set, it only checks for space 
+ * characters. Otherwise, it checks for all standard whitespace 
+ * characters.
+ * 
+ * @param c Character to check.
+ * @param flag If set, only checks for space characters.
+ * 
+ * @return Returns 1 if the character is a whitespace character 
+ * according to the flag, otherwise 0.
+ */
 int	ft_isspace_special(int c, int flag)
 {
 	if (flag)
@@ -86,4 +108,31 @@ int	ft_isspace_special(int c, int flag)
 			return (1);
 	}
 	return (0);
+}
+
+/**
+ * @brief Adds a new node to the end of a lexer list.
+ * 
+ * This function adds the lexer node 'new' to the end of the
+ * lexer list pointed by 'lst'.
+ * 
+ * @param lst Pointer to the pointer to the head of the lexer list.
+ * @param new Pointer to the new lexer node to be added.
+ */
+void	ft_lstaddback_lexer(t_lexer **lst, t_lexer *new)
+{
+	t_lexer	*last;
+
+	if (!new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last = *lst;
+	while (last->next)
+		last = last->next;
+	last->next = new;
+	new->pre = last;
 }

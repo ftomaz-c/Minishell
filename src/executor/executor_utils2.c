@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 11:46:35 by ftomazc           #+#    #+#             */
-/*   Updated: 2024/05/27 18:22:19 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:18:13 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	child_waitpid(t_tools *tools, int *status)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < tools->pipes + 1)
 	{

@@ -1,0 +1,17 @@
+total 1776
+-rw-r--r-- 1 crebelo- crebelo-    3241 May 27 09:01 Makefile
+-rw-r--r-- 1 crebelo- crebelo-       1 May 27 12:56 OUT
+-rw-r--r-- 1 crebelo- crebelo-   12216 Feb 19 18:53 README.md
+-rw-r--r-- 1 crebelo- crebelo-     918 Jan 29 15:39 doc_template
+-rw-r--r-- 1 crebelo- crebelo- 1568461 Jan 29 15:39 en.subject.pdf
+-rw-r--r-- 1 crebelo- crebelo-       0 May 22 09:58 here_doc
+drwxr-xr-x 2 crebelo- crebelo-    4096 May 27 09:01 includes
+-rw-r--r-- 1 crebelo- crebelo-     115 Mar 22 11:44 input_file1.txt
+drwxr-xr-x 4 crebelo- crebelo-    4096 May 27 12:25 libft
+-rwxr-xr-x 1 crebelo- crebelo-  193768 May 27 12:56 minishell
+drwxr-xr-x 6 crebelo- crebelo-    4096 May 27 12:26 mpanic
+drwxr-xr-x 9 crebelo- crebelo-    4096 May 27 12:25 src
+-rw-r--r-- 1 crebelo- crebelo-     103 May  8 21:25 supp_rl
+-rw-r--r-- 1 crebelo- crebelo-       0 May 27 12:59 txt
+-rw-r--r-- 1 crebelo- crebelo-       0 May 27 09:01 txt.txt
+-rw-r--r-- 1 crebelo- crebelo-    1098 May 27 12:25 valgrind.txt
