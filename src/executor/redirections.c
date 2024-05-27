@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 18:38:50 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:51:13 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ t_lexer	*set_input(t_tools *tools, t_parser *parser, t_lexer *redirection,
 	{
 		free_list(parser->str);
 		parser->str = NULL;
-		parser = parser->next;
 	}
 	return (current);
 }
@@ -109,7 +108,7 @@ void	set_stdout(t_parser *parser, int fd)
 	if (parser->stdout_flag == GREAT)
 	{
 		fd_outfile = open(parser->stdout_file_name, O_CREAT | O_RDWR
-				|O_TRUNC, 0777);
+				|O_TRUNC, 0644);
 		if (fd_outfile < 0)
 			std_err(errno, parser->stdout_file_name);
 		dup2(fd_outfile, fd);
@@ -117,7 +116,7 @@ void	set_stdout(t_parser *parser, int fd)
 	else if (parser->stdout_flag == GREAT_GREAT)
 	{
 		fd_outfile = open(parser->stdout_file_name, O_CREAT | O_RDWR
-				| O_APPEND, 0777);
+				| O_APPEND, 0644);
 		if (fd_outfile < 0)
 			std_err(errno, parser->stdout_file_name);
 		dup2(fd_outfile, fd);
@@ -196,7 +195,7 @@ void	redirection(t_tools *tools, t_parser *parser, int *index)
 			set_stdin_flag(parser, current);
 			current = set_input(tools, parser, current, fd);
 		}
-		else if (current->token == '>')
+		if (current->token == '>')
 		{
 			set_stdout_flag(parser, current);
 			current = set_output(parser, current, fd);
