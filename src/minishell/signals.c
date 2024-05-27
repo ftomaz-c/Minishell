@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 10:25:58 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:02:29 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Signal handler for parent process, handles SIGINT to interrupt the
+ * process.
+ * 
+ * @param sig The signal number received.
+ */
 void	react_sig_handler(int sig)
 {
 	if (sig == SIGINT)
@@ -24,6 +30,10 @@ void	react_sig_handler(int sig)
 	}
 }
 
+/**
+ * @brief Sets up signal handlers for parent processes to handle SIGINT and
+ * ignore SIGQUIT.
+ */
 void	handle_sigaction(void)
 {
 	struct sigaction	sa;

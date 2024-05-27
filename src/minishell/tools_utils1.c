@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 12:18:00 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:52:07 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ void	free_tools(t_tools *tools)
 		free(tools->pids);
 	if (tools->nint_mode)
 		free_list(tools->lines);
-	if (tools->prompt)
-		free(tools->prompt);
 }
 
 /**
