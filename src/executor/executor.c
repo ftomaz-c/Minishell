@@ -6,7 +6,7 @@
 /*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 20:57:10 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:43:24 by ftomaz-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ void	set_and_execute(t_tools *tools, t_parser *parser)
 	status = 0;
 	while (parser)
  	{
+		if (parser->prev && parser->prev->stdout_flag)
+			dup2(tools->original_stdout, STDOUT_FILENO);
 		if (parser->redirections != NULL)
 		{
 			redirection(tools, parser, &index);
@@ -133,13 +135,11 @@ int	simple_exec_and_buitlins(t_tools *tools, t_parser *parser)
 {
 	if (!tools->pipes && parser->str[0] && !tools->parser->nb_redirections)
 	{
-		if (ft_strncmp("./", parser->str[0], 2) == 0)
+		if (is_valid(parser) > 0 
+			&& (ft_strncmp("./", parser->str[0], 2) == 0 || parser->str[0][0] == '/'))
 		{
-			if (is_valid(parser) > 0)
-			{
-				execute_simple_cmd(tools, parser, tools->env);
-				return (1);
-			}
+			execute_simple_cmd(tools, parser, tools->env);
+			return (1);
 		}
 		if (parser->str[0] && (parser->str[0][0] == '/'
 			|| (ft_strncmp("./", parser->str[0], 2) == 0)) && !parser->str[1])
