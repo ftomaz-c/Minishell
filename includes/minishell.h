@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/24 20:42:30 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:50:29 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,6 @@
 
 # include <signal.h>
 # include <unistd.h>
-# include "../libft/includes/libft.h"
-# include "structs.h"
-# include "utils.h"
-# include "expander.h"
-# include "lexer.h"
-# include "parser.h"
-# include "builtins.h"
-# include "executor.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -40,8 +32,14 @@
 # include <limits.h>
 # include <stdbool.h>
 # include <dirent.h>
-
-extern int	g_sig;
+# include "../libft/includes/libft.h"
+# include "structs.h"
+# include "utils.h"
+# include "expander.h"
+# include "lexer.h"
+# include "parser.h"
+# include "builtins.h"
+# include "executor.h"
 
 t_status	*global_status(void);
 

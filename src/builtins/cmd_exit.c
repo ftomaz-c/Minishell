@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 17:30:14 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:29:10 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,21 +133,19 @@ int	cmd_exit(t_tools *tools, t_parser *parser)
 {
 	if (parser->str[1])
 	{
-		if (parser->str[1])
+		if (check_exit_args(parser) == 0)
 		{
-			if (check_exit_args(parser) == 0)
-			{
-				global_status()->nbr = 2;
-				tools->exit = 255;
-				exit_err(2, parser->str[1]);
-				return (global_status()->nbr);
-			}
-			else
-				global_status()->nbr = ft_atoi(parser->str[1]);
+			global_status()->nbr = 2;
+			tools->exit = 255;
+			exit_err(2, parser->str[1]);
+			return (global_status()->nbr);
 		}
-		if (parser->str[2] != NULL)
+		else if (!parser->str[2])
+			global_status()->nbr = ft_atoi(parser->str[1]);
+		if (parser->str[2])
 		{
-			global_status()->nbr = EXIT_FAILURE;
+			if (global_status()->nbr == 0)
+				global_status()->nbr = EXIT_FAILURE;
 			exit_err(1, parser->str[0]);
 			return (global_status()->nbr);
 		}

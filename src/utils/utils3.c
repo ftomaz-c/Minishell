@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 23:43:19 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:00:56 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,17 @@ void	sort_array(char **env_copy)
 {
 	int		i;	
 	char	*tmp;
+	char	*tmp1;
+	char	*tmp2;
 
 	i = 0;
 	while (env_copy[i] && env_copy[i + 1])
 	{
 		tmp = env_copy[i];
-		if (strcmp(env_copy[i], env_copy[i + 1]) > 0)
+		tmp1 = ft_substr(env_copy[i], 0, find_char_position(env_copy[i], '='));
+		tmp2 = ft_substr(env_copy[i + 1], 0,
+				find_char_position(env_copy[i + 1], '='));
+		if (ft_strcmp(tmp1, tmp2) > 0)
 		{
 			env_copy[i] = env_copy[i + 1];
 			env_copy[i + 1] = tmp;
@@ -52,6 +57,8 @@ void	sort_array(char **env_copy)
 		}
 		else
 			i++;
+		free(tmp1);
+		free(tmp2);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/28 14:36:46 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:59:17 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ void	minishell(t_tools *tools, char *line)
 			free_lexer(&tools->lexer);
 			return ;
 		}
-		//print_lexer(tools);
 		if (!parser(tools))
 			return ;
-		// print_parser(tools);
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
 		if (tools->parser)
@@ -108,8 +106,7 @@ void	non_interactive_mode(t_tools *tools, char *line)
 void	interactive_mode(t_tools *tools, char *line)
 {
 	prompt_line(tools);
-	// line = readline (tools->prompt);
-	line = readline(".minishell: ");
+	line = readline (tools->prompt);
 	free(tools->prompt);
 	if (!line)
 	{

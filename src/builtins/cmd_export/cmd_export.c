@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/28 17:08:13 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:56:12 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	check_valid_export(char *str)
 
 	i = 0;
 	if (ft_strcmp(str, "=") == 0 || str[i] == '='
-		|| (!ft_isalnum(str[i]) && str[i] != '_'))
+		|| (!ft_isalpha(str[i]) && str[i] != '_'))
 	{
 		export_err(1, str);
 		return (0);
@@ -72,7 +72,7 @@ int	check_valid_export(char *str)
 		export_err(1, str);
 		return (0);
 	}
-	return (validate_export_name(str, equal_pos, 1));	
+	return (validate_export_name(str, equal_pos, 1));
 }
 
 /**

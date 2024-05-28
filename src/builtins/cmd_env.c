@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/28 13:26:31 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:53:02 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	env_args(t_tools *tools, t_parser *command)
 	}
 	else
 	{
-		ft_putstr_fd("env: invalid option -- '", STDERR_FILENO);
+		ft_putstr_fd("env: '", STDERR_FILENO);
 		ft_putstr_fd(command->str[1], STDERR_FILENO);
-		ft_putstr_fd("'\n", STDERR_FILENO);
+		ft_putstr_fd("': No such file or directory\n", STDERR_FILENO);
 		global_status()->nbr = 125;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/28 15:06:11 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:59:55 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ int	valid_token(t_lexer *lexer)
 	current = lexer;
 	if (lexer->token == '<' || lexer->token == '>')
 	{
-		if (lexer->token)
 		while (current->next && !current->next->words)
 			current = current->next;
 		if (current->token == '|')
@@ -172,13 +171,13 @@ int	valid_syntax(t_lexer *lexer, t_tools *tools)
 			if (!valid_token(lexer))
 				return (0);
 			if ((current->token == '|' && ((current->next 
-				&& current->next->token == '|' ) || !current->next))
+							&& current->next->token == '|' ) || !current->next))
 				|| (current->token == '>' && current->next 
-				&& current->next->token == '<'))
+					&& current->next->token == '<'))
 			{
 				syntax_err(current->token);
 				return (0);
-			}			
+			}
 			current = current->next;
 		}
 	}

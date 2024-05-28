@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 23:48:32 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:54:58 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,6 @@
  * Note:
  * - The readline() function can cause memory leaks.
  */
-
-int	g_sig = 0;
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_tools	tools;
@@ -69,9 +66,9 @@ int	main(int argc, char **argv, char **envp)
 		tools.original_stdin = dup (STDIN_FILENO);
 		tools.original_stdout = dup (STDOUT_FILENO);
 		handle_sigaction();
-		// if (!isatty(STDIN_FILENO))
-		// 	non_interactive_mode(&tools, line);
-		// else
+		if (!isatty(STDIN_FILENO))
+			non_interactive_mode(&tools, line);
+		else
 			interactive_mode(&tools, line);
 		if (tools.exit)
 			break ;

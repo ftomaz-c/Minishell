@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/19 20:15:56 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:50:08 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,13 @@
 int	check_var_path(char **env, char *var)
 {
 	int		index;
-	int		equal_pos;
 	int		equal_pos_var;
 
 	index = 0;
 	equal_pos_var = find_char_position(var, '=');
 	while (var && env[index])
 	{
-		equal_pos = find_char_position(env[index], '=');
-		if (equal_pos < equal_pos_var)
-			equal_pos = equal_pos_var;
-		if (!ft_strncmp(env[index], var, equal_pos))
+		if (!ft_strncmp(env[index], var, equal_pos_var))
 			return (1);
 		index++;
 	}
@@ -156,14 +152,16 @@ void	substitute_env_var_value(t_tools *tools, char *var_path, char *str)
 
 	i = 0;
 	get_new_var_value(&var_value, str);
+	equal_pos = find_char_position(var_path, '=');
 	while (tools->env[i])
 	{
-		equal_pos = find_char_position(tools->env[i], '=');
 		if (var_path && strncmp(tools->env[i], var_path, equal_pos) == 0)
 		{
 			free(tools->env[i]);
 			if (!var_value)
+			{
 				tools->env[i] = ft_strdup(var_path);
+			}
 			else
 				tools->env[i] = ft_strjoin(var_path, var_value);
 			break ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/28 15:43:24 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:57:29 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	set_and_execute(t_tools *tools, t_parser *parser)
 	index = 0;
 	status = 0;
 	while (parser)
- 	{
+	{
 		if (parser->prev && parser->prev->stdout_flag)
 			dup2(tools->original_stdout, STDOUT_FILENO);
 		if (parser->redirections != NULL)
@@ -135,8 +135,8 @@ int	simple_exec_and_buitlins(t_tools *tools, t_parser *parser)
 {
 	if (!tools->pipes && parser->str[0] && !tools->parser->nb_redirections)
 	{
-		if (is_valid(parser) > 0 
-			&& (ft_strncmp("./", parser->str[0], 2) == 0 || parser->str[0][0] == '/'))
+		if (is_valid(parser) > 0 && (ft_strncmp("./", parser->str[0], 2) == 0 
+				|| parser->str[0][0] == '/'))
 		{
 			execute_simple_cmd(tools, parser, tools->env);
 			return (1);
@@ -150,7 +150,7 @@ int	simple_exec_and_buitlins(t_tools *tools, t_parser *parser)
 				|| parser->builtin == cmd_unset || parser->builtin == cmd_exit
 				|| parser->builtin == cmd_history))
 		{
-			global_status()->nbr = parser->builtin(tools, parser);
+			parser->builtin(tools, parser);
 			return (1);
 		}
 	}

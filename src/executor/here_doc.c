@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftomaz-c <ftomaz-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 20:19:20 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:56:33 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
  */
 void	get_status(int *status)
 {
+	int	sig;
+
 	if (WIFSIGNALED(*status))
 	{
-		g_sig = WTERMSIG(*status);
-		if (g_sig == SIGINT)
+		sig = WTERMSIG(*status);
+		if (sig == SIGINT)
 			global_status()->nbr = 130;
-		else if (g_sig == SIGQUIT)
+		else if (sig == SIGQUIT)
 			global_status()->nbr = 131;
 	}
 	else if (WIFEXITED(*status))

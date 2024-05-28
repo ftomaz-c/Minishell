@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/28 17:08:24 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:55:53 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,12 @@ int	validate_export_name(char *str, int equal_pos, int i)
 			export_err(1, str);
 			return (0);
 		}
+		if (str[i] == '+' && str[i + 1] != '=')
+		{
+			export_err(1, str);
+			return (0);
+		}
 		i++;
 	}
-	return (1);	
+	return (1);
 }
