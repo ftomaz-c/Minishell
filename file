@@ -1,12 +1,16 @@
 doc_template
 en.subject.pdf
 file
+file1
+file2
+folder
 here_doc
 includes
 input_file1.txt
 libft
 Makefile
 minishell
+mpanic
 README.md
 src
 supp_rl

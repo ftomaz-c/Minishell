@@ -6,7 +6,7 @@
 /*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/23 18:05:01 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:08:13 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,30 +54,25 @@ void	sort_print_env(t_tools *tools)
  * 
  * @return Returns 1 if the string is a valid export identifier, 0 otherwise.
  */
-int	check_valid_export(char *parser)
+int	check_valid_export(char *str)
 {
 	int	i;
 	int	equal_pos;
 
 	i = 0;
-	if (ft_strcmp(parser, "=") == 0 || parser[i] == '='
-		|| (!ft_isalpha(parser[i]) && parser[i] != '_'))
+	if (ft_strcmp(str, "=") == 0 || str[i] == '='
+		|| (!ft_isalnum(str[i]) && str[i] != '_'))
 	{
-		export_err(1, parser);
+		export_err(1, str);
 		return (0);
 	}
-	i = 1;
-	equal_pos = find_char_position(parser, '=');
-	while (parser[i] && i < equal_pos)
+	equal_pos = find_char_position(str, '=');
+	if (equal_pos == (int)ft_strlen(str) && ft_strchr(str, '+'))
 	{
-		if (parser[i] != '_' && !ft_isalnum(parser[i]) && parser[i] != '+')
-		{
-			export_err(1, parser);
-			return (0);
-		}
-		i++;
+		export_err(1, str);
+		return (0);
 	}
-	return (1);
+	return (validate_export_name(str, equal_pos, 1));	
 }
 
 /**

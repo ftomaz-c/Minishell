@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/28 00:11:57 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:17:01 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,16 @@ int	echo_n_flag(char **str, int	*pos)
 	size_t	i;
 
 	i = 0;
-	if (!str[2])
-	{
-		if (ft_strncmp(str[*pos], "-n", 2) == 0)
-		{
-			(*pos)++;
-			i = 2;
-		}
-		return (i);
-	}
 	while (str[*pos] != NULL && ft_strncmp(str[*pos], "-n", 2) == 0)
 	{
 		i = 1;
 		while (str[*pos][i] && str[*pos][i] != ' ' && str[*pos][i] == 'n')
 			i++;
+		if (!str[2] && str[*pos][i] == '\0')
+		{
+			(*pos)++;
+			return (i);
+		}
 		if (*pos != 1 && str[*pos][i] != '\0')
 			return (i);
 		else if (*pos == 1 && str[*pos][i] != '\0')
@@ -66,7 +62,7 @@ void	echo_print(t_parser *command, int pos, int flag)
 	while (command->str[pos])
 	{
 		ft_putstr_fd(command->str[pos], STDOUT_FILENO);
-		if (command->str[pos + 1] && flag != 2)
+		if (command->str[pos + 1])
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		pos++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_utils1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/21 16:06:28 by ftomaz-c         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:08:24 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,4 +156,18 @@ void	get_env_export(char **envp, int i, char *tmp, char ***env)
 		i++;
 	}
 	return ;
+}
+
+int	validate_export_name(char *str, int equal_pos, int i)
+{
+	while (str[i] && i < equal_pos)
+	{
+		if (str[i] != '_' && !ft_isalnum(str[i]) && str[i] != '+')
+		{
+			export_err(1, str);
+			return (0);
+		}
+		i++;
+	}
+	return (1);	
 }
