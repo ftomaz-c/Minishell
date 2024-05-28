@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 23:39:42 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:27:25 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	add_word_to_node(char *word, t_lexer **lexer)
  * @param token The token to add to the lexer node.
  * @param lexer Pointer to the pointer to the head of the lexer list.
  */
-void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
+void	add_token_to_node(char token, t_lexer **lexer)
 {
 	t_lexer	*node;
 	t_lexer	*last;
@@ -86,7 +86,6 @@ void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
 		node->index = 0;
 	node->next = NULL;
 	node->pre = NULL;
-	tools->token_flag = 1;
 	ft_lstaddback_lexer(lexer, node);
 }
 
@@ -100,8 +99,7 @@ void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools)
  * @param line_split An array of strings representing the split line.
  * @param lexer Pointer to the pointer to the head of the lexer list.
  */
-void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer,
-		t_tools *tools)
+void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer)
 {
 	int		i;
 	int		j;
@@ -118,7 +116,7 @@ void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer,
 			{
 				if (start < j)
 					remove_quotes_add_word(line_split[i], start, j, lexer);
-				add_token_to_node(line_split[i][j], lexer, tools);
+				add_token_to_node(line_split[i][j], lexer);
 				start = ++j;
 			}
 			else
@@ -162,7 +160,7 @@ int	lex_line(char	**line_split_quotes, t_tools *tools)
 		free_list(line_split_quotes);
 		return (0);
 	}
-	add_line_to_lexer_struct(line_split_quotes, &tools->lexer, tools);
+	add_line_to_lexer_struct(line_split_quotes, &tools->lexer);
 	free_list(line_split_quotes);
 	return (1);
 }
@@ -187,7 +185,6 @@ int	lexer(char *line, t_tools *tools)
 
 	tools->lexer = NULL;
 	tools->pipes = 0;
-	tools->token_flag = 0;
 	line_split_quotes = lexer_split(line, 0);
 	if (!lex_line(line_split_quotes, tools))
 	{

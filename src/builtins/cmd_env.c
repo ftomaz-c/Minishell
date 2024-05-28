@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 23:46:57 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:26:31 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 void	env_args(t_tools *tools, t_parser *command)
 {
 	char	**b_env;
-	// char	*cmd_args[2];
 
 	if (ft_strcmp(command->str[1], "-i") == 0)
 	{
@@ -36,8 +35,6 @@ void	env_args(t_tools *tools, t_parser *command)
 		{
 			b_env = calloc (sizeof(char *), 2);
 			b_env[0] = ft_strdup("_=/bin/env");
-			// cmd_args[0] = command->str[2];
-			// cmd_args[1] = NULL;
 			execute_simple_cmd(tools, command, b_env);
 			free_list(b_env);
 		}

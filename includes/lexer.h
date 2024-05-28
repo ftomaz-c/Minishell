@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 23:42:21 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:37:13 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 
 /*src/lexer/lexer.c*/
 void	add_word_to_node(char *word, t_lexer **lexer);
-void	add_token_to_node(char token, t_lexer **lexer, t_tools *tools);
-void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer,
-			t_tools *tools);
+void	add_token_to_node(char token, t_lexer **lexer);
+void	add_line_to_lexer_struct(char **line_split, t_lexer **lexer);
 int		lex_line(char	**line_split_quotes, t_tools *tools);
 int		lexer(char *line, t_tools *tools);
 

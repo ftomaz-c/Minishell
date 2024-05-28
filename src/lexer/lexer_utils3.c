@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 23:21:37 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:06:11 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,14 @@ void	check_special_chars(char **list)
  * @param lexer A pointer to the lexer structure.
  * @return int 1 if the token is a valid starter, 0 otherwise.
  */
-int	valid_token_starter(t_lexer *lexer)
+int	valid_token(t_lexer *lexer)
 {
 	t_lexer	*current;
 
 	current = lexer;
 	if (lexer->token == '<' || lexer->token == '>')
 	{
+		if (lexer->token)
 		while (current->next && !current->next->words)
 			current = current->next;
 		if (current->token == '|')
@@ -160,24 +161,25 @@ int	valid_syntax(t_lexer *lexer, t_tools *tools)
 {
 	t_lexer	*current;
 
-	if (tools->token_flag)
+	(void)tools;
+	current = lexer;
+	while (current)
 	{
-		if (!valid_token_starter(lexer))
-			return (0);
-		current = lexer;
-		while (current && !current->token)
+		while (current && current->words)
 			current = current->next;
-		if (current->token == '|' && ((current->next
-					&& current->next->token == '|') || !current->next))
+		if (current)
 		{
-			syntax_err(current->token);
-			return (0);
-		}
-		if (current->token == '>' && current->next
-			&& current->next->token == '<')
-		{
-			syntax_err(current->token);
-			return (0);
+			if (!valid_token(lexer))
+				return (0);
+			if ((current->token == '|' && ((current->next 
+				&& current->next->token == '|' ) || !current->next))
+				|| (current->token == '>' && current->next 
+				&& current->next->token == '<'))
+			{
+				syntax_err(current->token);
+				return (0);
+			}			
+			current = current->next;
 		}
 	}
 	return (1);

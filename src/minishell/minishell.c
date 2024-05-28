@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crebelo- <crebelo-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: crebelo- <crebelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:26:27 by ftomaz-c          #+#    #+#             */
-/*   Updated: 2024/05/27 23:49:11 by crebelo-         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:36:46 by crebelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ void	minishell(t_tools *tools, char *line)
 			free_lexer(&tools->lexer);
 			return ;
 		}
+		//print_lexer(tools);
 		if (!parser(tools))
 			return ;
+		// print_parser(tools);
 		if (tools->lexer)
 			free_lexer(&tools->lexer);
 		if (tools->parser)
